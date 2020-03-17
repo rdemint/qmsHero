@@ -29,3 +29,8 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\MainWindow.g
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\CustomProcessing.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\MainWindow.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Skins\MainSkin.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignColors.dll
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignColors.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.xml
