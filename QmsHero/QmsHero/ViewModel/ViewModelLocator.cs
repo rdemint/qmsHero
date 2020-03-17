@@ -15,6 +15,8 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using System.ComponentModel;
+
 
 namespace QmsHero.ViewModel
 {
@@ -24,11 +26,10 @@ namespace QmsHero.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
-        MainViewModel mainViewModel;
-        CustomProcessingViewModel customProcessingViewModel;
-        /// <summary>
-        /// Initializes a new instance of the ViewModelLocator class.
-        /// </summary>
+        private ViewModelBase mainViewModel;
+        private CustomProcessingViewModel customProcessingViewModel;
+        private TestViewModel1 testViewModel1;
+        
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -45,9 +46,11 @@ namespace QmsHero.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<CustomProcessingViewModel>();
+            SimpleIoc.Default.Register<TestViewModel1>();
         }
 
-        public MainViewModel Main
+        public ViewModelBase MainViewModel
         {
             get
             {
@@ -55,28 +58,36 @@ namespace QmsHero.ViewModel
             }
         }
 
-        public MainViewModel MainViewModel {
+
+        //public MainViewModel MainViewModel {
+        //    get {
+        //        if (this.mainViewModel == null)
+        //        {
+        //            this.mainViewModel = new MainViewModel();
+        //        }
+        //            return this.mainViewModel;
+        //        }
+        //    set { 
+        //        this.mainViewModel = value;
+        //        }
+        //}
+
+    
+
+        public CustomProcessingViewModel CustomProcessingViewModel {
             get {
-                if (this.mainViewModel == null)
-                {
-                    this.mainViewModel = new MainViewModel();
-                }
-                    return this.mainViewModel;
-                }
-            set { 
-                this.mainViewModel = value;
-                }
+                //if (this.customProcessingViewModel == null)
+                //{
+                //    this.customProcessingViewModel = new CustomProcessingViewModel();
+                //}
+                //return this.customProcessingViewModel;
+                return ServiceLocator.Current.GetInstance<CustomProcessingViewModel>();
+            }
         }
 
-        internal CustomProcessingViewModel CustomProcessingViewModel {
-            get {
-                if (this.customProcessingViewModel == null)
-                {
-                    this.customProcessingViewModel = new CustomProcessingViewModel();
-                }
-                return this.customProcessingViewModel;
-            } 
-            set => customProcessingViewModel = value; }
+        public TestViewModel1 TestViewModel1 { 
+            get => ServiceLocator.Current.GetInstance<TestViewModel1>(); 
+            set => testViewModel1 = value; }
 
         public static void Cleanup()
         {

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using QmsHero.ViewModel;
 
 namespace QmsHero.View
 {
@@ -20,9 +21,28 @@ namespace QmsHero.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        TestPage1 testPage1;
+
+
         public MainWindow()
         {
             InitializeComponent();
+            var viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
+            //this.DataContext = new MainViewModel();
+            this.testPage1 = new TestPage1();
+            this.DataContext = this;
+
+        }
+        public TestPage1 MyTestPage1 { get => testPage1; set => testPage1 = value; }
+
+        private void TestPage1Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CustomProcessingButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

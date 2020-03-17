@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QmsHero"
+        xmlns:view="clr-namespace:QmsHero.View"
+        xmlns:vm="clr-namespace:QmsHero.ViewModel"
         mc:Ignorable="d"
         Title="qmsHero" Height="450" Width="800"
         
@@ -12,16 +14,27 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="{materialDesign:MaterialDesignFont}">
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+                <DataTemplate DataType="{x:Type vm:MainViewModel}">
+                    <view:MainWindow />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:CustomProcessingViewModel}">
+                    <view:CustomProcessing />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:TestViewModel1}">
+                    <view:TestPage1 />
+                </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <Border DockPanel.Dock="Top"
+        <Border 
+            DockPanel.Dock="Top"
              Padding="10"
              Margin="4"
              CornerRadius="5"
@@ -39,28 +52,26 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Expander Padding="10"
+            <Expander 
+                Padding="10"
              Margin="4"
              BorderBrush="DarkGray"
              ExpandDirection="Right"
              Grid.Row="0"
              Grid.Column="0"
              IsExpanded="True">
-            <Expander.Header>
-                <TextBlock Text="Control Panel"
-                     FontSize="14"
-                     FontWeight="Bold">
-                    <TextBlock.LayoutTransform>
-                        <RotateTransform Angle="90" />
-                    </TextBlock.LayoutTransform>
-                </TextBlock>
-            </Expander.Header>
+                <StackPanel>
+                    <Button Content="Test Page 1" Name="TestPage1Button" Command="{Binding NavToTestViewModel1}"/>
+                    <Button Content="Custom Processing" Name="CustomProcessingButton" Command="{Binding ShowMessageBox}"/>
+                    <TextBlock>Option 2</TextBlock>
+                    <TextBlock>Option 3</TextBlock>
+                </StackPanel>
         </Expander>
-        <TabControl Margin="4"
-             Grid.Row="0"
-             Grid.Column="1"
-             IsSynchronizedWithCurrentItem="True">
-        </TabControl>
-    </Grid>
+            <ContentControl
+                Content="{Binding MyTestPage1}"
+                Grid.Row="0"
+                Grid.Column="1"
+            />
+        </Grid>
     </DockPanel>
 </Window>
