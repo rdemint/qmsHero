@@ -16,7 +16,7 @@ using QmsDoc.Docs;
 
 namespace QmsDoc.Core
 {
-    class DocManager
+    public class DocManager
     {
         System.IO.DirectoryInfo topDir;
         DocManagerConfig config;

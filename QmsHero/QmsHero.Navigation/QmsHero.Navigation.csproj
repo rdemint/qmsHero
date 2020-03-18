@@ -45,10 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QmsHero.Interfaces\QmsHero.Interfaces.csproj">
-      <Project>{ddeb1286-1385-4782-b578-2f0f85987077}</Project>
-      <Name>QmsHero.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\QmsHero\QmsHero.csproj">
       <Project>{b0a26b50-200d-4bde-a7c7-858cb9a453a7}</Project>
       <Name>QmsHero</Name>
