@@ -1,4 +1,3 @@
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\obj\Debug\QmsDoc.Test.csprojAssemblyReference.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
@@ -13,6 +12,7 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\Microsoft.Vis
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\GalaSoft.MvvmLight.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\bin\Debug\GalaSoft.MvvmLight.xml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\obj\Debug\QmsDoc.Test.csprojAssemblyReference.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\obj\Debug\QmsDoc.Test.csproj.CopyComplete
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\obj\Debug\QmsDoc.Test.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc.Test\obj\Debug\QmsDoc.Test.pdb

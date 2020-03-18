@@ -1,3 +1,4 @@
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsHero.exe.config
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsHero.exe
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsHero.pdb
@@ -6,10 +7,9 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLigh
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLight.Extras.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLight.Platform.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignColors.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsHero.Interfaces.dll
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsDoc.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\System.Windows.Interactivity.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsHero.Interfaces.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\QmsDoc.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLight.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLight.xml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
@@ -29,7 +29,7 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\GeneratedInternal
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero_MarkupCompile.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero_MarkupCompile.lref
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\App.baml
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\ViewViewModelDict.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\ViewViewModelDict.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\CustomProcessing.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\MainWindow.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\TestPage1.baml

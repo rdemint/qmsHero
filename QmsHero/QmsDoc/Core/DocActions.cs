@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Interfaces;
-using QmsHero.Model;
 
 namespace QmsDoc.Core
 {

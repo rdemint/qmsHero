@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Interfaces;
 using QmsDoc.Core;
-using QmsHero.Model;
 using System.Windows.Controls;
 
 namespace QmsHero.ViewModel

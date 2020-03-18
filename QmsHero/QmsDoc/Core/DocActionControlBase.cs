@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace QmsDoc.Core
 {
@@ -14,15 +15,11 @@ namespace QmsDoc.Core
         string docActionName;
         object docActionVal;
 
-        public DocActionControlBase(string docActionName)
-        {
-            this.DocActionName = docActionName;
-        }
-
         public DocActionControlBase(string docActionName, object docActionVal)
         {
             this.DocActionVal = docActionVal;
             this.DocActionName = docActionName;
+            this.ControlIsEnabled = true;
         }
 
         public string DocActionName { 
@@ -37,7 +34,8 @@ namespace QmsDoc.Core
             } }
 
         public object DocActionVal { get => docActionVal; set => docActionVal = value; }
-
+        
+ 
         public static DocActionControlBase GetControl(DocActionControlBase currentVal, [CallerMemberName] string actionName=null)
         {
             if(currentVal != null)
@@ -46,7 +44,7 @@ namespace QmsDoc.Core
             }
             else
             {
-                return new DocActionControlBase(actionName);
+                return new DocActionControlBase(actionName, null);
             }
         }
     }

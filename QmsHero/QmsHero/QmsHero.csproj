@@ -87,7 +87,11 @@
     <Compile Include="View\TestPage1.xaml.cs">
       <DependentUpon>TestPage1.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\ViewViewModelDict.xaml">
+    <Resource Include="View\Resources\DocActionDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Page Include="View\Resources\ViewViewModelDict.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,7 +20,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
-                <ResourceDictionary Source="ViewViewModelDict.xaml"/>
+                <ResourceDictionary Source="Resources/ViewViewModelDict.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
