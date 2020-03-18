@@ -26,6 +26,8 @@ namespace QmsHero.ViewModel
         /// </summary>
         ViewModelBase activeViewModel;
         ViewModelLocator viewModelLocator;
+        RelayCommand navToTestViewModel1;
+        RelayCommand navToCustomProcessingViewModel;
         public MainViewModel()
         {
             ////if (IsInDesignMode)
@@ -48,32 +50,52 @@ namespace QmsHero.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName=null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            ShowMessageBox.RaiseCanExecuteChanged();
-            NavToTestViewModel1.RaiseCanExecuteChanged();
+            this.NavToCustomProcessingViewModel.RaiseCanExecuteChanged();
+            this.NavToTestViewModel1.RaiseCanExecuteChanged();
         }
-
-        public RelayCommand NavToTestViewModel1 => new RelayCommand(
-            () => {
-                this.ActiveViewModel = this.viewModelLocator.TestViewModel1;
-            },
-            () => this.activeViewModel != this.viewModelLocator.TestViewModel1
-            );
-
-        public RelayCommand ShowMessageBox => new RelayCommand(
-            () => {
-                this.ActiveViewModel = this.viewModelLocator.CustomProcessingViewModel;
-                },
-            () => {
-                return this.activeViewModel != this.viewModelLocator.CustomProcessingViewModel;
-            }
-            );
-
-        public ViewModelBase ActiveViewModel { 
+        public ViewModelBase ActiveViewModel
+        {
             get => activeViewModel;
-            set {
+            set
+            {
                 this.activeViewModel = value;
                 OnPropertyChanged("ActiveViewModel");
-            } }
+            }
+        }
+        public RelayCommand NavToCustomProcessingViewModel {
+            get {
+                    if (this.navToCustomProcessingViewModel == null)
+                    {
+                        this.navToCustomProcessingViewModel = new RelayCommand(
+                           () =>
+                           {
+                               this.ActiveViewModel = this.viewModelLocator.CustomProcessingViewModel;
+                           },
+                            () =>
+                            {
+                                return this.ActiveViewModel != this.viewModelLocator.CustomProcessingViewModel;
+                            }
+                       );
+                    }
+                     return this.navToCustomProcessingViewModel;
+                }
+            set => navToCustomProcessingViewModel = value; 
+            } 
+        public RelayCommand NavToTestViewModel1 {
+            get {
+                if (this.navToTestViewModel1 == null)
+                    {
+                        this.navToTestViewModel1 = new RelayCommand(
+                                () => {
+                                    this.ActiveViewModel = this.viewModelLocator.TestViewModel1;
+                                },
+                                () => this.activeViewModel != this.viewModelLocator.TestViewModel1
+                                );
+                    }
+                return this.navToTestViewModel1;
+            } 
+            set => navToTestViewModel1 = value; }
     }
+
 
 }
