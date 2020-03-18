@@ -63,7 +63,7 @@
                 Grid.Column="1"
                 Grid.Row="0"
                 x:Name="MainContentFrame"
-                Content="{Binding Source={StaticResource ViewModelLocator}, Path=TestViewModel1}"/>
+                Content="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.ActiveViewModel}"/>
         </Grid>
     </DockPanel>
 </Window>
