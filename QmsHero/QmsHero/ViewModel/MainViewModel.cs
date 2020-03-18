@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using IPageViewModel = QmsHero.Interfaces.IPageViewModel;
 
@@ -24,7 +25,6 @@ namespace QmsHero.ViewModel
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ViewModelBase activeViewModel;
-        TestViewModel1 testViewModel1;
         ViewModelLocator viewModelLocator;
         public MainViewModel()
         {
@@ -45,20 +45,27 @@ namespace QmsHero.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName = "ActiveViewModel")
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName=null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            System.Windows.MessageBox.Show("Changing property"); 
+            ShowMessageBox.RaiseCanExecuteChanged();
+            NavToTestViewModel1.RaiseCanExecuteChanged();
         }
 
         public RelayCommand NavToTestViewModel1 => new RelayCommand(
-            () => this.ActiveViewModel = this.viewModelLocator.TestViewModel1,
+            () => {
+                this.ActiveViewModel = this.viewModelLocator.TestViewModel1;
+            },
             () => this.activeViewModel != this.viewModelLocator.TestViewModel1
             );
 
         public RelayCommand ShowMessageBox => new RelayCommand(
-            () => this.ActiveViewModel = this.viewModelLocator.CustomProcessingViewModel,
-            () => this.activeViewModel != this.viewModelLocator.CustomProcessingViewModel
+            () => {
+                this.ActiveViewModel = this.viewModelLocator.CustomProcessingViewModel;
+                },
+            () => {
+                return this.activeViewModel != this.viewModelLocator.CustomProcessingViewModel;
+            }
             );
 
         public ViewModelBase ActiveViewModel { 
