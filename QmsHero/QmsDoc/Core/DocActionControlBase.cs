@@ -9,7 +9,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace QmsDoc.Core
 {
-    public class DocActionControlBase: ObservableObject
+    public class DocActionControlBase : ObservableObject, IDocActionControl
     {
         bool controlIsEnabled;
         string docActionName;
@@ -22,23 +22,29 @@ namespace QmsDoc.Core
             this.ControlIsEnabled = true;
         }
 
-        public string DocActionName { 
+        public string DocActionName
+        {
             get => docActionName;
-            set {
-                Set<string>(()=>this.DocActionName, ref docActionName, value);
-            } }
-        public bool ControlIsEnabled { 
+            set
+            {
+                Set<string>(() => this.DocActionName, ref docActionName, value);
+            }
+        }
+        public bool ControlIsEnabled
+        {
             get => controlIsEnabled;
-            set {
+            set
+            {
                 Set<bool>(() => this.ControlIsEnabled, ref controlIsEnabled, value);
-            } }
+            }
+        }
 
         public object DocActionVal { get => docActionVal; set => docActionVal = value; }
-        
- 
-        public static DocActionControlBase GetControl(DocActionControlBase currentVal, [CallerMemberName] string actionName=null)
+
+
+        public static DocActionControlBase GetControl(DocActionControlBase currentVal, [CallerMemberName] string actionName = null)
         {
-            if(currentVal != null)
+            if (currentVal != null)
             {
                 return currentVal;
             }

@@ -14,13 +14,19 @@
     <Page.Resources>
         <ResourceDictionary Source="Resources/DocActionDataTemplate.xaml"/>
     </Page.Resources>
-    <Grid
-        Background="Azure">
-        <TextBlock Text="Custom Processing View" />
+    <StackPanel
+        Background="White"
+        >
+        <Border 
+             Padding="10"
+             Margin="4"
+             CornerRadius="5">
+            <TextBlock Text="Custom Batch Processing" HorizontalAlignment="Center" FontWeight="Bold"/>
+        </Border>
         <ListView
             ItemsSource="{Binding Source={StaticResource ViewModelLocator}, Path=CustomProcessingViewModel.DocActionControls}"
             ItemTemplate="{StaticResource DocActionDataTemplate}"
             >
         </ListView>
-    </Grid>
+    </StackPanel>
 </Page>

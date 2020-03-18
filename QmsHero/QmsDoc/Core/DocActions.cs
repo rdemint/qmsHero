@@ -8,17 +8,17 @@ using QmsDoc.Interfaces;
 namespace QmsDoc.Core
 {
     
-    public class DocActions : IDocActions
+    public class DocActions
     {
-        string logoPath;
-        string logoText;
-        string effectiveDate;
-        string revision;
+        DocAction logoPath;
+        DocAction logoText;
+        DocAction effectiveDate;
+        DocAction revision;
 
-        public string LogoPath { get => logoPath; set => logoPath = value; }
-        public string LogoText { get => logoText; set => logoText = value; }
-        public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public string Revision { get => revision; set => revision = value; }
+        public DocAction LogoPath { get => logoPath; set => logoPath = value; }
+        public DocAction LogoText { get => logoText; set => logoText = value; }
+        public DocAction EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
+        public DocAction Revision { get => revision; set => revision = value; }
 
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)
         {
@@ -33,15 +33,15 @@ namespace QmsDoc.Core
             thisPropInfo.SetValue(this, objPropValue);
         }
 
-        public Dictionary<string, object> AsDict()
+        public Dictionary<string, DocAction> AsDict()
         {
-            var dict = new Dictionary<string, object>();
+            var dict = new Dictionary<string, DocAction>();
             var properties = this.GetType().GetProperties();
             foreach (System.Reflection.PropertyInfo property in properties)
             {
                 if (this.IsValidProperty(property))
                 {
-                    dict.Add(property.Name, property.GetValue(this));
+                    dict.Add(property.Name, (DocAction)property.GetValue(this));
                 }
             }
             return dict;
