@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:QmsHero"
+                    xmlns:qmsDoc="clr-namespace:QmsDoc.Core;assembly=QmsDoc">
+    <DataTemplate DataType="DocActionControlBase">
+        <StackPanel Orientation="Horizontal">
+            <CheckBox/>
+            <TextBox Text="{Binding DocActionVal}" Name="{Binding DocActionName}"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DocActionsTests.cs" />
     <Compile Include="DocActionsTests.cs" />
     <Compile Include="DocManagerTests.cs" />
     <Compile Include="FixtureUtil.cs" />

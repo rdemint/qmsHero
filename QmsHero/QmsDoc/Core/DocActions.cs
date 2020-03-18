@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Interfaces;
+using QmsHero.Model;
 
 namespace QmsDoc.Core
 {
@@ -46,6 +47,35 @@ namespace QmsDoc.Core
             }
             return dict;
         }
+
+        public List<DocActionControlBase> ToDocActionControlList()
+        {
+            var actionList = new List<DocActionControlBase>();
+            var properties = this.GetType().GetProperties();
+            foreach (System.Reflection.PropertyInfo property in properties)
+            {
+                actionList.Add(new DocActionControlBase(property.Name, property.GetValue(this)));
+            }
+
+            return actionList;
+        }
+
+        public List<DocActionControlBase> ToDocActionControlList(Dictionary<string, object> filterDict)
+        {
+            var actionList = new List<DocActionControlBase>();
+            var properties = this.GetType().GetProperties();
+            foreach (System.Reflection.PropertyInfo property in properties)
+            {
+                if (filterDict.Keys.Contains(property.Name))
+                {
+                    actionList.Add(new DocActionControlBase(property.Name, property.GetValue(this)));
+                }
+            }
+
+            return actionList;
+        }
+
+
 
         public Boolean IsValidProperty(System.Reflection.PropertyInfo propertyInfo) 
         {
