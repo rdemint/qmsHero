@@ -20,16 +20,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
+                <ResourceDictionary Source="ViewViewModelDict.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-                <DataTemplate DataType="{x:Type vm:MainViewModel}">
-                    <view:MainWindow />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:CustomProcessingViewModel}">
-                    <view:CustomProcessing />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:TestViewModel1}">
-                    <view:TestPage1 />
-                </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
@@ -67,11 +59,11 @@
                     <TextBlock>Option 3</TextBlock>
                 </StackPanel>
         </Expander>
-            <ContentControl
-                Content="{Binding MyTestPage1}"
-                Grid.Row="0"
+            <Frame
                 Grid.Column="1"
-            />
+                Grid.Row="0"
+                x:Name="MainContentFrame"
+                Content="{Binding Source={StaticResource ViewModelLocator}, Path=TestViewModel1}"/>
         </Grid>
     </DockPanel>
 </Window>
