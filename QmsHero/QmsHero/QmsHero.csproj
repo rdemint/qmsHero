@@ -145,6 +145,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
+      <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
+      <Name>QmsDoc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QmsHero.Interfaces\QmsHero.Interfaces.csproj">
       <Project>{ddeb1286-1385-4782-b578-2f0f85987077}</Project>
       <Name>QmsHero.Interfaces</Name>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsHero.Interfaces", "QmsHe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsHero.Navigation", "QmsHero.Navigation\QmsHero.Navigation.csproj", "{98D560FA-82C5-45F2-A931-C67614985CEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc", "QmsDoc\QmsDoc.csproj", "{18E880A8-81A4-42CC-8563-7066AC8D278B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{98D560FA-82C5-45F2-A931-C67614985CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98D560FA-82C5-45F2-A931-C67614985CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98D560FA-82C5-45F2-A931-C67614985CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E880A8-81A4-42CC-8563-7066AC8D278B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E880A8-81A4-42CC-8563-7066AC8D278B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E880A8-81A4-42CC-8563-7066AC8D278B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E880A8-81A4-42CC-8563-7066AC8D278B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
