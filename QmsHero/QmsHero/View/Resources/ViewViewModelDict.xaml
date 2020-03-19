@@ -7,9 +7,9 @@
         <view:MainWindow />
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:ConfigViewModel}">
-        <view:CustomProcessing />
+        <view:ConfigView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:CustomProcessingViewModel}">
-        <view:TestPage1 />
+        <view:CustomProcessingView />
     </DataTemplate>
 </ResourceDictionary>

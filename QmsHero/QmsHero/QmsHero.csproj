@@ -57,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -84,8 +85,8 @@
     <Compile Include="ViewModel\ConfigViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\CustomProcessing.xaml.cs">
-      <DependentUpon>CustomProcessing.xaml</DependentUpon>
+    <Compile Include="View\CustomProcessingView.xaml.cs">
+      <DependentUpon>CustomProcessingView.xaml</DependentUpon>
     </Compile>
     <Resource Include="View\Resources\DocActionDataTemplate.xaml">
       <SubType>Designer</SubType>
@@ -95,11 +96,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Resources\DocActionControlFolderPicker.xaml">
+    <Page Include="View\Resources\ControlFolderPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Resources\DocActionControlTextBox.xaml">
+    <Page Include="View\Resources\ControlTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,7 +131,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomProcessing.xaml">
+    <Page Include="View\CustomProcessingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

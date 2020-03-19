@@ -18,9 +18,9 @@ namespace QmsHero.View
     /// <summary>
     /// Interaction logic for CustomProcessing.xaml
     /// </summary>
-    public partial class CustomProcessing : Page
+    public partial class ConfigView : Page
     {
-        public CustomProcessing()
+        public ConfigView()
         {
             InitializeComponent();
         }

@@ -18,9 +18,9 @@ namespace QmsHero.View
     /// <summary>
     /// Interaction logic for TestPage1.xaml
     /// </summary>
-    public partial class TestPage1 : Page
+    public partial class CustomProcessingView : Page
     {
-        public TestPage1()
+        public CustomProcessingView()
         {
             InitializeComponent();
         }

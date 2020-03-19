@@ -21,8 +21,6 @@ namespace QmsHero.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        TestPage1 testPage1;
-
 
         public MainWindow()
         {

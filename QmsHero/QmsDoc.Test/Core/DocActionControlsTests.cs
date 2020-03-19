@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Test
+namespace QmsDoc.Core.Test
 {
     [TestClass()]
     public class DocActionControlsTests
     {
+
         [TestMethod()]
         public void SetPropertyTest()
         {
@@ -53,7 +54,9 @@ namespace QmsDoc.Test
             filterDict.Add("Revision", "1");
             filterDict.Add("EffectiveDate", "2020-03-01");
             var actionControls = new DocActionControls();
-            var actionControlsList = actionControls.ToDocActionControlList(filterDict);
+            var actionControlsList = actionControls.ToDocActionControlList();
+            Assert.IsTrue(actionControlsList.Count >= 4);
+            actionControlsList = actionControls.ToDocActionControlList(filterDict);
             Assert.AreEqual(actionControlsList.Count, 2);
         }
     }

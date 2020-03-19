@@ -3,14 +3,14 @@
                     xmlns:local="clr-namespace:QmsHero.View"
                     xmlns:core="clr-namespace:QmsDoc.Core;assembly=QmsDoc">
     <DataTemplate
-        DataType="{x:Type core:DocActionControlFolderPicker}">
+        DataType="{x:Type core:ControlTextBox}">
         <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding ControlIsEnabled, Mode=TwoWay}"/>
             <Label Content="{Binding DocActionName}"/>
-            <Button 
+            <TextBox 
                 MinWidth="200"
-                Content="Choose Folder"
+                Text="{Binding Mode=TwoWay, Path=DocActionVal}"
                 IsEnabled="{Binding ControlIsEnabled}"/>
         </StackPanel>
-    </DataTemplate>    
+    </DataTemplate>
 </ResourceDictionary>

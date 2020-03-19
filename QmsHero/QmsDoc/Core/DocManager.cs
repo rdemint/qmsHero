@@ -31,6 +31,19 @@ namespace QmsDoc.Core
         Boolean auto_close_doc;
 
         public List<FileInfo> DirFiles { get => dirFiles; set => dirFiles = value; }
+        public DocManagerConfig Config { 
+            get {
+                if(this.config ==null)
+                {
+                    this.config = new DocManagerConfig();
+                }
+                return this.config;
+                }
+            set
+            {
+                this.config = value;
+            }
+        }
 
         public DocManager()
         {
@@ -51,11 +64,6 @@ namespace QmsDoc.Core
             {
                 this.AddDirFiles(sub_dir_path);
             }
-        }
-
-        public void Config(DocManagerConfig config)
-        {
-            this.config = config;
         }
 
         public void ConfigDir(string dir_path)
@@ -132,10 +140,11 @@ namespace QmsDoc.Core
             {
                 QmsDocBase doc = this.CreateDoc(file_info, test);
                 this.ProcessDoc(doc, actionControls);
-                if (this.auto_close_doc)
+                if (this.Config.LeaveDocumentsOpen == false && test == false)
                 {
                     doc.CloseDocument();
                 }
+                System.Windows.Forms.MessageBox.Show("Finished Processing Files");
             }
         }
 

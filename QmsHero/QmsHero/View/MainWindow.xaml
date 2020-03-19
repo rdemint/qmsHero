@@ -56,8 +56,8 @@
                 <StackPanel
                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}"
                     >
-                    <Button Content="Test Page 1" Name="TestPage1Button" Command="{Binding NavToTestViewModel1}"/>
-                    <Button Content="Custom Processing" Name="CustomProcessingButton" Command="{Binding NavToCustomProcessingViewModel}"/>
+                    <Button Content="Config" Command="{Binding NavToConfigViewModel}"/>
+                    <Button Content="Process" Command="{Binding NavToCustomProcessingViewModel}"/>
                 </StackPanel>
         </Expander>
             <Frame

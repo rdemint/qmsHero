@@ -56,13 +56,13 @@ namespace QmsHero.ViewModel
 
    
 
-        public ConfigViewModel CustomProcessingViewModel {
+        public ConfigViewModel ConfigViewModel {
             get {
                 return ServiceLocator.Current.GetInstance<ConfigViewModel>();
             }
         }
 
-        public CustomProcessingViewModel TestViewModel1 { 
+        public CustomProcessingViewModel CustomProcessingViewModel { 
             get => ServiceLocator.Current.GetInstance<CustomProcessingViewModel>(); 
             }
 

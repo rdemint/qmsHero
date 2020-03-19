@@ -22,7 +22,7 @@ namespace QmsHero.ViewModel
             this.docActions = new DocActionControls();
             this.actionList = docActions.ToDocActionControlList();
             this.manager = new DocManager();
-            this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\ActiveQMSDocuments\\SOP-001 Quality Manual Documents");
+            this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\Active QMS Documents\\SOP-001 Quality Manual Documents");
         }
 
         public DocActionControls DocActions { get => docActions; set => docActions = value; }
@@ -32,7 +32,7 @@ namespace QmsHero.ViewModel
                 if (this.processFilesCommand == null)
                 {
                     this.processFilesCommand = new RelayCommand(
-                            () => this.manager.ProcessFiles(ActionList),
+                            () => this.manager.ProcessFiles(ActionList, true),
                             this.CanProcessFiles()
                         ) ;
                 }
