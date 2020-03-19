@@ -14,9 +14,9 @@ namespace QmsDoc.Test
         [TestMethod()]
         public void SetPropertyTest()
         {
-            var docActions1 = new DocActions();
+            var docActions1 = new DocActionControls();
             docActions1.Revision = "2";
-            var docActions2 = new DocActions();
+            var docActions2 = new DocActionControls();
             docActions2.SetProperty(docActions1, "Revision");
             Assert.AreEqual(docActions1.Revision, docActions2.Revision);
             Assert.AreEqual(docActions2.Revision, "2");
@@ -25,7 +25,7 @@ namespace QmsDoc.Test
         [TestMethod()]
         public void IsValidPropertyTest()
         {
-            var docActions = new DocActions();
+            var docActions = new DocActionControls();
             var revInfo = docActions.GetType().GetProperty("Revision");
             Assert.IsFalse(docActions.IsValidProperty(revInfo));
             docActions.Revision = "3";
@@ -37,7 +37,7 @@ namespace QmsDoc.Test
         [TestMethod()]
         public void AsDictTest()
         {
-            var docActions = new DocActions();
+            var docActions = new DocActionControls();
             var dict = docActions.AsDict();
             Assert.AreEqual(dict.Count, 0);
             docActions.Revision = "2";

@@ -11,16 +11,16 @@ namespace QmsHero.ViewModel
 {
     public class TestViewModel1: ViewModelBase
     {
-        DocActions docActions;
+        DocActionControls docActions;
         List<IDocActionControl> actionList;
 
         public TestViewModel1()
         {
-            this.docActions = new DocActions();
+            this.docActions = new DocActionControls();
             this.actionList = docActions.ToDocActionControlList();
         }
 
-        public DocActions DocActions { get => docActions; set => docActions = value; }
+        public DocActionControls DocActions { get => docActions; set => docActions = value; }
         public List<IDocActionControl> ActionList { get => actionList; set => actionList = value; }
     }
 }

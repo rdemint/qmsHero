@@ -17,7 +17,7 @@ namespace QmsDoc.Core.Tests
             var filterDict = new Dictionary<string, object>();
             filterDict.Add("Revision", "1");
             filterDict.Add("EffectiveDate", "2020-03-01");
-            var docActions = new DocActions();
+            var docActions = new DocActionControls();
             var actionControls = docActions.ToDocActionControlList(filterDict);
             Assert.AreEqual(actionControls.Count, 2);
         }
