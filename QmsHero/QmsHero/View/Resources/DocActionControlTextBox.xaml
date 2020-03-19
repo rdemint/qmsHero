@@ -6,10 +6,10 @@
         DataType="{x:Type core:DocActionControlTextBox}">
         <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding ControlIsEnabled, Mode=TwoWay}"/>
-            <Label Content="{Binding DocActionName}"/>
+            <Label Content="{Binding Name}"/>
             <TextBox 
                 MinWidth="200"
-                Text="{Binding DocActionVal}"
+                Text="{Binding Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Content.Value}"
                 IsEnabled="{Binding ControlIsEnabled}"/>
         </StackPanel>
     </DataTemplate>

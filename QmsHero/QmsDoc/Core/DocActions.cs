@@ -28,9 +28,9 @@ namespace QmsDoc.Core
         private void Initialize()
         {
             this.LogoPath = new DocAction("LogoPath", null, new DocActionControlFolderPicker("LogoPath", null));
-            this.LogoText = new DocAction("LogoText", null, new DocActionControlTextBox("LogoText", null));
-            this.EffectiveDate = new DocAction("EffectiveDate", null, new DocActionControlTextBox("EffectiveDate", null));
-            this.Revision = new DocAction("Revision", null, new DocActionControlTextBox("Revision", null));
+            this.LogoText = new DocAction("LogoText", "Awesome Company", new DocActionControlTextBox("LogoText", null));
+            this.EffectiveDate = new DocAction("EffectiveDate", "2020-03-03", new DocActionControlTextBox("EffectiveDate", null));
+            this.Revision = new DocAction("Revision", "1", new DocActionControlTextBox("Revision", null));
 
         }
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)

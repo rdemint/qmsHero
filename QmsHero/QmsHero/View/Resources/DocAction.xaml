@@ -4,6 +4,7 @@
                     xmlns:core="clr-namespace:QmsDoc.Core;assembly=QmsDoc">
     <DataTemplate
          DataType="{x:Type core:DocAction}">
-        <ContentControl Content="{Binding Path=DocActionControl}"/>
+        <ContentControl 
+            Content="{Binding Path=DocActionControl}"/>
     </DataTemplate>
 </ResourceDictionary>
