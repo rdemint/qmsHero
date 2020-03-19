@@ -5,21 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using QmsDoc.Core;
+using QmsDoc.Interfaces;
 
 namespace QmsHero.ViewModel
 {
     public class TestViewModel1: ViewModelBase
     {
         DocActions docActions;
-        List<DocAction> actionList;
+        List<IDocActionControl> actionList;
 
         public TestViewModel1()
         {
             this.docActions = new DocActions();
-            this.actionList = docActions.ToDocActionList();
+            this.actionList = docActions.ToDocActionControlList();
         }
 
         public DocActions DocActions { get => docActions; set => docActions = value; }
-        public List<DocAction> ActionList { get => actionList; set => actionList = value; }
+        public List<IDocActionControl> ActionList { get => actionList; set => actionList = value; }
     }
 }

@@ -11,26 +11,28 @@ namespace QmsDoc.Core
     
     public class DocActions
     {
-        DocAction logoPath;
-        DocAction logoText;
-        DocAction effectiveDate;
-        DocAction revision;
+        DocActionControlFolderPicker logoPath;
+        DocActionControlTextBox logoText;
+        DocActionControlTextBox effectiveDate;
+        DocActionControlTextBox revision;
+
+        public DocActionControlFolderPicker LogoPath { get => logoPath; set => logoPath = value; }
+        public DocActionControlTextBox LogoText { get => logoText; set => logoText = value; }
+        public DocActionControlTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
+        public DocActionControlTextBox Revision { get => revision; set => revision = value; }
 
         public DocActions()
         {
             this.Initialize();
         }
-        public DocAction LogoPath { get => logoPath; set => logoPath = value; }
-        public DocAction LogoText { get => logoText; set => logoText = value; }
-        public DocAction EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public DocAction Revision { get => revision; set => revision = value; }
+ 
 
         private void Initialize()
         {
-            this.LogoPath = new DocAction("LogoPath", null, new DocActionControlFolderPicker("LogoPath", null));
-            this.LogoText = new DocAction("LogoText", "Awesome Company", new DocActionControlTextBox("LogoText", null));
-            this.EffectiveDate = new DocAction("EffectiveDate", "2020-03-03", new DocActionControlTextBox("EffectiveDate", null));
-            this.Revision = new DocAction("Revision", "1", new DocActionControlTextBox("Revision", null));
+            this.LogoPath = new DocActionControlFolderPicker("LogoPath", null);
+            this.LogoText = new DocActionControlTextBox("LogoText", "Some text here");
+            this.EffectiveDate = new DocActionControlTextBox("EffectiveDate", "2020-03-03");
+            this.Revision = new DocActionControlTextBox("Revision", "1");
 
         }
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)
@@ -60,38 +62,28 @@ namespace QmsDoc.Core
             return dict;
         }
 
-        public List<DocActionControlBase> ToDocActionControlList()
+        public List<IDocActionControl> ToDocActionControlList()
         {
-            var actionList = new List<DocActionControlBase>();
+            var actionList = new List<IDocActionControl>();
             var properties = this.GetType().GetProperties();
             foreach (System.Reflection.PropertyInfo property in properties)
             {
-                actionList.Add(new DocActionControlBase(property.Name, property.GetValue(this)));
+                actionList.Add((IDocActionControl)property.GetValue(this));
             }
 
             return actionList;
         }
 
-        public List<DocAction> ToDocActionList()
-        {
-            var actionList = new List<DocAction>();
-            var properties = this.GetType().GetProperties();
-            foreach (System.Reflection.PropertyInfo property in properties)
-            {
-                actionList.Add((DocAction)property.GetValue(this));
-            }
 
-            return actionList;
-        }
-        public List<DocActionControlBase> ToDocActionControlList(Dictionary<string, object> filterDict)
+        public List<IDocActionControl> ToDocActionControlList(Dictionary<string, object> filterDict)
         {
-            var actionList = new List<DocActionControlBase>();
+            var actionList = new List<IDocActionControl>();
             var properties = this.GetType().GetProperties();
             foreach (System.Reflection.PropertyInfo property in properties)
             {
                 if (filterDict.Keys.Contains(property.Name))
                 {
-                    actionList.Add(new DocActionControlBase(property.Name, property.GetValue(this)));
+                    actionList.Add((IDocActionControl)property.GetValue(this));
                 }
             }
 

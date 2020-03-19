@@ -21,7 +21,6 @@ namespace QmsHero.ViewModel
         public CustomProcessingViewModel()
         {
             var docActions = new DocActions();
-            this.docActionControls = docActions.ToDocActionControlList();
         }
 
         public List<DocActionControlBase> DocActionControls { get => docActionControls; set => docActionControls = value; }
