@@ -125,7 +125,7 @@ namespace QmsDoc.Core
         {
             Contract.Requires(this.config != null);
             Contract.Requires(this.dirFiles.Count >= 1);
-            Contract.Requires(action_dict.Count >= 1);
+            Contract.Requires(actionControls.Count >= 1);
 
             foreach (FileInfo file_info in this.dirFiles)
             {

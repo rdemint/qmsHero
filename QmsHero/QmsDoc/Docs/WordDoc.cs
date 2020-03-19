@@ -9,7 +9,7 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs
 {
-    class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
+    public class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
     {
         Word.Application app;
         System.IO.FileInfo file_info;
@@ -60,6 +60,11 @@ namespace QmsDoc.Docs
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public WordDoc()
+        {
+
+        }
 
         public WordDoc(Word.Application app, System.IO.FileInfo file_info, Boolean save_changes = true, Boolean auto_close = true) : base()
         {

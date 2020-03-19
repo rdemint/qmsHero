@@ -30,9 +30,9 @@ namespace QmsDoc.Core
         private void Initialize()
         {
             this.LogoPath = new DocActionControlFolderPicker("LogoPath", null);
-            this.LogoText = new DocActionControlTextBox("LogoText", "Some text here", false);
-            this.EffectiveDate = new DocActionControlTextBox("EffectiveDate", "2020-03-03");
-            this.Revision = new DocActionControlTextBox("Revision", "1");
+            this.LogoText = new DocActionControlTextBox("LogoText", null, false);
+            this.EffectiveDate = new DocActionControlTextBox("EffectiveDate", null);
+            this.Revision = new DocActionControlTextBox("Revision", null);
 
         }
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)
@@ -94,7 +94,9 @@ namespace QmsDoc.Core
 
         public Boolean IsValidProperty(System.Reflection.PropertyInfo propertyInfo) 
         {
-            if (propertyInfo.GetValue(this) != null && propertyInfo.GetValue(this).ToString() != "") { return true; }
+            var actionControlVal = (IDocActionControl)propertyInfo.GetValue(this);
+
+            if (actionControlVal.DocActionVal != null && (string)actionControlVal.DocActionVal != "") { return true; }
             else { return false; }
         }
     }

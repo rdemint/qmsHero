@@ -29,6 +29,8 @@ namespace QmsDoc.Docs
         public string LogoPath { get => logoPath; set => logoPath = value; }
         public string LogoText { get => logoText; set => logoText = value; }
 
+        public ExcelDoc() { }
+        
         public ExcelDoc(Excel.Application app, System.IO.FileInfo file_info, Boolean save_changes=true, Boolean auto_close=true)
         {
             this.app = app;
