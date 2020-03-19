@@ -28,5 +28,10 @@
             ItemTemplate="{StaticResource DocActionDataTemplate}"
             >
         </ListView>
+        <Button
+            Style="{StaticResource MaterialDesignRaisedDarkButton}"
+            Width="auto"
+            Content="Begin Processing"
+            />
     </StackPanel>
 </Page>

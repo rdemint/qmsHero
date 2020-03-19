@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    class DocActionControlTextBox: DocActionControlBase
+    public class DocActionControlTextBox: DocActionControlBase
     {
+        public DocActionControlTextBox(): base()
+        {
+
+        }
         public DocActionControlTextBox(string docActionName, object docActionVal) : base(docActionName, docActionVal) { }
     }
 }

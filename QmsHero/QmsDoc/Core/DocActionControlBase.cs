@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using QmsDoc.Interfaces;
 
 namespace QmsDoc.Core
 {
@@ -15,6 +16,11 @@ namespace QmsDoc.Core
         string docActionName;
         object docActionVal;
 
+        public DocActionControlBase()
+        {
+
+        }
+        
         public DocActionControlBase(string docActionName, object docActionVal)
         {
             this.DocActionVal = docActionVal;

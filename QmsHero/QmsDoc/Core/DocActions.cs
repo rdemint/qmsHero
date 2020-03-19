@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,23 @@ namespace QmsDoc.Core
         DocAction effectiveDate;
         DocAction revision;
 
+        public DocActions()
+        {
+            this.Initialize();
+        }
         public DocAction LogoPath { get => logoPath; set => logoPath = value; }
         public DocAction LogoText { get => logoText; set => logoText = value; }
         public DocAction EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
         public DocAction Revision { get => revision; set => revision = value; }
 
+        private void Initialize()
+        {
+            this.LogoPath = new DocAction("LogoPath", null, new DocActionControlFolderPicker("LogoPath", null));
+            this.LogoText = new DocAction("LogoText", null, new DocActionControlTextBox("LogoText", null));
+            this.EffectiveDate = new DocAction("EffectiveDate", null, new DocActionControlTextBox("EffectiveDate", null));
+            this.Revision = new DocAction("Revision", null, new DocActionControlTextBox("Revision", null));
+
+        }
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)
         {
             return this.GetType().GetProperty(propertyName);
@@ -59,6 +72,17 @@ namespace QmsDoc.Core
             return actionList;
         }
 
+        public List<DocAction> ToDocActionList()
+        {
+            var actionList = new List<DocAction>();
+            var properties = this.GetType().GetProperties();
+            foreach (System.Reflection.PropertyInfo property in properties)
+            {
+                actionList.Add((DocAction)property.GetValue(this));
+            }
+
+            return actionList;
+        }
         public List<DocActionControlBase> ToDocActionControlList(Dictionary<string, object> filterDict)
         {
             var actionList = new List<DocActionControlBase>();

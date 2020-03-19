@@ -62,10 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DocAction.cs" />
     <Compile Include="Core\DocActionControlBase.cs" />
+    <Compile Include="Core\DocActionControlFolderPicker.cs" />
+    <Compile Include="Core\DocActionControlTextBox.cs" />
     <Compile Include="Core\DocActions.cs" />
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
+    <Compile Include="Interfaces\IDocActionControl.cs" />
     <Compile Include="Docs\ExcelDoc.cs" />
     <Compile Include="Docs\QmsDocBase.cs" />
     <Compile Include="Docs\WordDoc.cs" />

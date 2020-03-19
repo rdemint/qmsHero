@@ -12,9 +12,21 @@ namespace QmsDoc.Core
         string name;
         string value;
         IDocActionControl docActionControl;
-        public DocAction()
+        public DocAction(string name, string value, IDocActionControl docActionControl)
         {
-
+            this.Name = name;
+            this.Value = value;
+            this.DocActionControl = docActionControl;
         }
+
+        public string Name { get => name; set => name = value; }
+        public string Value { get => value; set => this.value = value; }
+        public IDocActionControl DocActionControl { get => docActionControl; set => docActionControl = value; }
+
+        //public IDocActionControl GetDocActionControl()
+        //{
+        //    var controlType = DocActionControlType.GetType();
+        //    return (IDocActionControl)Activator.CreateInstance(controlType);
+        //}
     }
 }

@@ -39,3 +39,6 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.Ge
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.CopyComplete
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.exe
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\DocActionControlFolderPicker.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\DocAction.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\DocActionControlTextBox.baml
