@@ -1,35 +1,48 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Interfaces;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using QmsDoc.Core;
-using System.Windows.Controls;
+using QmsDoc.Interfaces;
 
 namespace QmsHero.ViewModel
 {
-    public class CustomProcessingViewModel : ViewModelBase
+    public class CustomProcessingViewModel: ViewModelBase
     {
-        //DocActionControlBase logoPath;
-        //string logoText;
-        //string effectiveDate;
-        //string revision;
-        List<DocActionControlBase> docActionControls;
+        DocManager manager;
+        DocActionControls docActions;
+        List<IDocActionControl> actionList;
+        RelayCommand processFilesCommand;
 
         public CustomProcessingViewModel()
         {
-            var docActions = new DocActionControls();
+            this.docActions = new DocActionControls();
+            this.actionList = docActions.ToDocActionControlList();
+            this.manager = new DocManager();
+            this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\ActiveQMSDocuments\\SOP-001 Quality Manual Documents");
         }
 
-        public List<DocActionControlBase> DocActionControls { get => docActionControls; set => docActionControls = value; }
+        public DocActionControls DocActions { get => docActions; set => docActions = value; }
+        public List<IDocActionControl> ActionList { get => actionList; set => actionList = value; }
+        public RelayCommand ProcessFilesCommand {
+            get { 
+                if (this.processFilesCommand == null)
+                {
+                    this.processFilesCommand = new RelayCommand(
+                            () => this.manager.ProcessFiles(ActionList),
+                            this.CanProcessFiles()
+                        ) ;
+                }
+                return this.processFilesCommand;
+            } 
+            set => processFilesCommand = value; }
 
-        //public DocActionControlBase LogoPath {
-        //    get => DocActionControlBase.GetControl(this.logoPath); 
-        //    set => logoPath = value; }
-        //public string LogoText { get => logoText; set => logoText = value; }
-        //public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        //public string Revision { get => revision; set => revision = value; }
+        public bool CanProcessFiles()
+        {
+            return true;
+        }
     }
 }

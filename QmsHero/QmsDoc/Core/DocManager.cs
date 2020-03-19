@@ -121,15 +121,16 @@ namespace QmsDoc.Core
             return true;
         }
 
-        public void ProcessFiles(List<IDocActionControl> actionControls)
+        public void ProcessFiles(List<IDocActionControl> actionControls, bool test=false)
         {
             Contract.Requires(this.config != null);
             Contract.Requires(this.dirFiles.Count >= 1);
             Contract.Requires(actionControls.Count >= 1);
 
+
             foreach (FileInfo file_info in this.dirFiles)
             {
-                QmsDocBase doc = this.CreateDoc(file_info);
+                QmsDocBase doc = this.CreateDoc(file_info, test);
                 this.ProcessDoc(doc, actionControls);
                 if (this.auto_close_doc)
                 {
@@ -138,19 +139,35 @@ namespace QmsDoc.Core
             }
         }
 
-        public QmsDocBase CreateDoc(FileInfo file_info)
+        public QmsDocBase CreateDoc(FileInfo file_info, bool test=false)
         {
             if (this.wordDocExtensions.Contains(file_info.Extension))
             {
+                if (test == false)
+                {
+                    QmsDocBase doc = new WordDoc(this.wordApp, file_info);
+                    return doc;
+                }
+                else
+                {
+                    QmsDocBase doc = new WordDoc();
+                    return doc;
+                }
                 // create word doc and process
-                QmsDocBase doc = new WordDoc(this.wordApp, file_info);
-                return doc;
             }
             else if (this.excelDocExtensions.Contains(file_info.Extension))
             {
                 // create excel doc and process
-                QmsDocBase doc = new ExcelDoc(this.excelApp, file_info);
-                return doc;
+                if (test == false)
+                {
+                    QmsDocBase doc = new ExcelDoc(this.excelApp, file_info);
+                    return doc;
+                }
+                else
+                {
+                    QmsDocBase doc = new ExcelDoc();
+                    return doc;
+                }
             }
             else
             {

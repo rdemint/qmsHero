@@ -11,15 +11,15 @@ namespace QmsDoc.Core
     
     public class DocActionControls
     {
-        DocActionControlFolderPicker logoPath;
-        DocActionControlTextBox logoText;
-        DocActionControlTextBox effectiveDate;
-        DocActionControlTextBox revision;
+        ControlFolderPicker logoPath;
+        ControlTextBox logoText;
+        ControlTextBox effectiveDate;
+        ControlTextBox revision;
 
-        public DocActionControlFolderPicker LogoPath { get => logoPath; set => logoPath = value; }
-        public DocActionControlTextBox LogoText { get => logoText; set => logoText = value; }
-        public DocActionControlTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public DocActionControlTextBox Revision { get => revision; set => revision = value; }
+        public ControlFolderPicker LogoPath { get => logoPath; set => logoPath = value; }
+        public ControlTextBox LogoText { get => logoText; set => logoText = value; }
+        public ControlTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
+        public ControlTextBox Revision { get => revision; set => revision = value; }
 
         public DocActionControls()
         {
@@ -29,10 +29,10 @@ namespace QmsDoc.Core
 
         private void Initialize()
         {
-            this.LogoPath = new DocActionControlFolderPicker("LogoPath", null);
-            this.LogoText = new DocActionControlTextBox("LogoText", null, false);
-            this.EffectiveDate = new DocActionControlTextBox("EffectiveDate", null);
-            this.Revision = new DocActionControlTextBox("Revision", null);
+            this.LogoPath = new ControlFolderPicker("LogoPath", null);
+            this.LogoText = new ControlTextBox("LogoText", null, false);
+            this.EffectiveDate = new ControlTextBox("EffectiveDate", null);
+            this.Revision = new ControlTextBox("Revision", null);
 
         }
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)

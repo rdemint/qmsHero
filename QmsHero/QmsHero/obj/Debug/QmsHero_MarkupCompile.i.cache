@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\App.xaml
-8-1184149115
+8-1319159930
 
-141361433988
+14458990763
 125-495141527
-View\Resources\DocAction.xaml;View\Resources\DocActionControlFolderPicker.xaml;View\Resources\DocActionControlTextBox.xaml;View\Resources\ViewViewModelDict.xaml;View\CustomProcessing.xaml;View\MainWindow.xaml;View\Skins\MainSkin.xaml;View\TestPage1.xaml;
+View\Resources\DocAction.xaml;View\Resources\DocActionControlFolderPicker.xaml;View\Resources\DocActionControlTextBox.xaml;View\Resources\ViewViewModelDict.xaml;View\ConfigView.xaml;View\MainWindow.xaml;View\Skins\MainSkin.xaml;View\CustomProcessing.xaml;
 
 True
 

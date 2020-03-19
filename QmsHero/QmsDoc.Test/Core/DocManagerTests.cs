@@ -18,8 +18,8 @@ namespace QmsDoc.Core.Tests
         public void ProcessDocTest()
         {
             var l = new List<IDocActionControl>();
-            l.Add(new DocActionControlTextBox("Revision", "1"));
-            l.Add(new DocActionControlTextBox("EffectiveDate", "2020-03-12"));
+            l.Add(new ControlTextBox("Revision", "1"));
+            l.Add(new ControlTextBox("EffectiveDate", "2020-03-12"));
             var manager = new DocManager();
             var doc = new WordDoc();
             manager.ProcessDoc(doc, l);

@@ -10,18 +10,18 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Core
 {
-    public class DocActionControlBase : ObservableObject, IDocActionControl
+    public class ControlBase : ObservableObject, IDocActionControl
     {
         bool controlIsEnabled;
         string docActionName;
         object docActionVal;
 
-        public DocActionControlBase()
+        public ControlBase()
         {
 
         }
         
-        public DocActionControlBase(string docActionName, object docActionVal, bool controlIsEnabled=true)
+        public ControlBase(string docActionName, object docActionVal, bool controlIsEnabled=true)
         {
             this.DocActionVal = docActionVal;
             this.DocActionName = docActionName;
@@ -48,7 +48,7 @@ namespace QmsDoc.Core
         public object DocActionVal { get => docActionVal; set => docActionVal = value; }
 
 
-        public static DocActionControlBase GetControl(DocActionControlBase currentVal, [CallerMemberName] string actionName = null)
+        public static ControlBase GetControl(ControlBase currentVal, [CallerMemberName] string actionName = null)
         {
             if (currentVal != null)
             {
@@ -56,7 +56,7 @@ namespace QmsDoc.Core
             }
             else
             {
-                return new DocActionControlBase(actionName, null);
+                return new ControlBase(actionName, null);
             }
         }
     }

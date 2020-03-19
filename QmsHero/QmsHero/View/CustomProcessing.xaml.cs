@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace QmsHero.View
 {
     /// <summary>
-    /// Interaction logic for CustomProcessing.xaml
+    /// Interaction logic for TestPage1.xaml
     /// </summary>
-    public partial class CustomProcessing : Page
+    public partial class TestPage1 : Page
     {
-        public CustomProcessing()
+        public TestPage1()
         {
             InitializeComponent();
         }

@@ -6,10 +6,10 @@
     <DataTemplate DataType="{x:Type vm:MainViewModel}">
         <view:MainWindow />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:CustomProcessingViewModel}">
+    <DataTemplate DataType="{x:Type vm:ConfigViewModel}">
         <view:CustomProcessing />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:TestViewModel1}">
+    <DataTemplate DataType="{x:Type vm:CustomProcessingViewModel}">
         <view:TestPage1 />
     </DataTemplate>
 </ResourceDictionary>

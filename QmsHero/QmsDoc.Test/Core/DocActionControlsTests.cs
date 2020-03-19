@@ -15,7 +15,7 @@ namespace QmsDoc.Test
         public void SetPropertyTest()
         {
             var docActions1 = new DocActionControls();
-            docActions1.Revision = new DocActionControlTextBox("Revision", "2");
+            docActions1.Revision = new ControlTextBox("Revision", "2");
             var docActions2 = new DocActionControls();
             docActions2.SetProperty(docActions1, "Revision");
             Assert.AreEqual(docActions1.Revision, docActions2.Revision);
@@ -28,9 +28,9 @@ namespace QmsDoc.Test
             var docActions = new DocActionControls();
             var revInfo = docActions.GetType().GetProperty("Revision");
             Assert.IsFalse(docActions.IsValidProperty(revInfo));
-            docActions.Revision = new DocActionControlTextBox("Revision", "2");
+            docActions.Revision = new ControlTextBox("Revision", "2");
             Assert.IsTrue(docActions.IsValidProperty(revInfo));
-            docActions.Revision = new DocActionControlTextBox("Revision", null); ;
+            docActions.Revision = new ControlTextBox("Revision", null); ;
             Assert.IsFalse(docActions.IsValidProperty(revInfo));
         }
 

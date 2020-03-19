@@ -80,12 +80,12 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IPageViewModel.cs" />
     <Compile Include="Interfaces\IQmsHeroViewModels.cs" />
-    <Compile Include="ViewModel\TestViewModel1.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
+    <Compile Include="ViewModel\ConfigViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\TestPage1.xaml.cs">
-      <DependentUpon>TestPage1.xaml</DependentUpon>
+    <Compile Include="View\CustomProcessing.xaml.cs">
+      <DependentUpon>CustomProcessing.xaml</DependentUpon>
     </Compile>
     <Resource Include="View\Resources\DocActionDataTemplate.xaml">
       <SubType>Designer</SubType>
@@ -107,7 +107,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomProcessing.xaml">
+    <Page Include="View\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -119,8 +119,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\CustomProcessing.xaml.cs">
-      <DependentUpon>CustomProcessing.xaml</DependentUpon>
+    <Compile Include="View\ConfigView.xaml.cs">
+      <DependentUpon>ConfigView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -130,7 +130,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TestPage1.xaml">
+    <Page Include="View\CustomProcessing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

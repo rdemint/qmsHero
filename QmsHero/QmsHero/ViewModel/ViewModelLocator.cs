@@ -42,8 +42,8 @@ namespace QmsHero.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConfigViewModel>();
             SimpleIoc.Default.Register<CustomProcessingViewModel>();
-            SimpleIoc.Default.Register<TestViewModel1>();
         }
 
         public ViewModelBase MainViewModel
@@ -56,14 +56,14 @@ namespace QmsHero.ViewModel
 
    
 
-        public CustomProcessingViewModel CustomProcessingViewModel {
+        public ConfigViewModel CustomProcessingViewModel {
             get {
-                return ServiceLocator.Current.GetInstance<CustomProcessingViewModel>();
+                return ServiceLocator.Current.GetInstance<ConfigViewModel>();
             }
         }
 
-        public TestViewModel1 TestViewModel1 { 
-            get => ServiceLocator.Current.GetInstance<TestViewModel1>(); 
+        public CustomProcessingViewModel TestViewModel1 { 
+            get => ServiceLocator.Current.GetInstance<CustomProcessingViewModel>(); 
             }
 
         public static void Cleanup()

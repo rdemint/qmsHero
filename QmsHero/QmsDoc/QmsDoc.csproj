@@ -63,9 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DocAction.cs" />
-    <Compile Include="Core\DocActionControlBase.cs" />
-    <Compile Include="Core\DocActionControlFolderPicker.cs" />
-    <Compile Include="Core\DocActionControlTextBox.cs" />
+    <Compile Include="Core\ControlBase.cs" />
+    <Compile Include="Core\ControlFolderPicker.cs" />
+    <Compile Include="Core\ControlTextBox.cs" />
     <Compile Include="Core\DocActionControls.cs" />
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />

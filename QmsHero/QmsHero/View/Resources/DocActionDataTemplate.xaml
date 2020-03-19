@@ -4,7 +4,7 @@
                     xmlns:qmsDoc="clr-namespace:QmsDoc.Core;assembly=QmsDoc">
     <DataTemplate
                     x:Key="DocActionDataTemplate"
-                    DataType="{x:Type qmsDoc:DocActionControlBase}">
+                    DataType="{x:Type qmsDoc:ControlBase}">
         <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding ControlIsEnabled, Mode=TwoWay}"/>
             <Label Content="{Binding DocActionName}"/>
