@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Docs;
+using QmsDoc.Interfaces;
 
 namespace QmsDoc.Core
 {
@@ -39,6 +40,18 @@ namespace QmsDoc.Core
             excelApp = new Excel.Application();
             this.dirFiles = new List<FileInfo>();
         }
+        public void AddDirFiles(string dir_path)
+        {
+            var dir = new System.IO.DirectoryInfo(dir_path);
+            var dir_files = dir.GetFiles();
+            this.dirFiles.AddRange(dir_files);
+            var sub_dirs = Directory.GetDirectories(dir_path);
+
+            foreach (string sub_dir_path in Directory.EnumerateDirectories(dir_path))
+            {
+                this.AddDirFiles(sub_dir_path);
+            }
+        }
 
         public void Config(DocManagerConfig config)
         {
@@ -52,6 +65,8 @@ namespace QmsDoc.Core
             this.AddDirFiles(dir_path);
         }
 
+
+        public void DocMethodInfo() { }
         public void PreProcessing()
         {
             Word.Documents documents = this.wordApp.Documents;
@@ -71,7 +86,21 @@ namespace QmsDoc.Core
             var closed = doc.CloseDocument();
         }
 
-        public void DocMethodInfo() { }
+        public void ProcessDoc(QmsDocBase doc, List<IDocActionControl> actionControls)
+        {
+            foreach (IDocActionControl actionControl in actionControls)
+            {
+                var propertyInfo = doc.GetType().GetProperty(actionControl.DocActionName);
+                if (propertyInfo != null)
+                {
+                    propertyInfo.SetValue(doc, actionControl.DocActionVal);
+                }
+                else
+                {
+                    throw new Exception("The DocActionName passed is not part of IDocActions.");
+                }
+            }
+        }
         public Boolean ProcessFiles(Dictionary<string, object> action_dict)
         {
             Contract.Requires(this.config != null);
@@ -90,6 +119,23 @@ namespace QmsDoc.Core
 
 
             return true;
+        }
+
+        public void ProcessFiles(List<IDocActionControl> actionControls)
+        {
+            Contract.Requires(this.config != null);
+            Contract.Requires(this.dirFiles.Count >= 1);
+            Contract.Requires(action_dict.Count >= 1);
+
+            foreach (FileInfo file_info in this.dirFiles)
+            {
+                QmsDocBase doc = this.CreateDoc(file_info);
+                this.ProcessDoc(doc, actionControls);
+                if (this.auto_close_doc)
+                {
+                    doc.CloseDocument();
+                }
+            }
         }
 
         public QmsDocBase CreateDoc(FileInfo file_info)
@@ -112,18 +158,6 @@ namespace QmsDoc.Core
             }
         }
 
-        public void AddDirFiles(string dir_path)
-        {
-            var dir = new System.IO.DirectoryInfo(dir_path);
-            var dir_files = dir.GetFiles();
-            this.dirFiles.AddRange(dir_files);
-            var sub_dirs = Directory.GetDirectories(dir_path);
-
-            foreach (string sub_dir_path in Directory.EnumerateDirectories(dir_path))
-            {
-                this.AddDirFiles(sub_dir_path);
-            }
-        }
 
 
         public Boolean HasOpenFilePath(System.IO.FileInfo file_info)

@@ -21,11 +21,11 @@ namespace QmsDoc.Core
 
         }
         
-        public DocActionControlBase(string docActionName, object docActionVal)
+        public DocActionControlBase(string docActionName, object docActionVal, bool controlIsEnabled=true)
         {
             this.DocActionVal = docActionVal;
             this.DocActionName = docActionName;
-            this.ControlIsEnabled = true;
+            this.ControlIsEnabled = controlIsEnabled;
         }
 
         public string DocActionName

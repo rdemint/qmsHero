@@ -30,7 +30,7 @@ namespace QmsDoc.Core
         private void Initialize()
         {
             this.LogoPath = new DocActionControlFolderPicker("LogoPath", null);
-            this.LogoText = new DocActionControlTextBox("LogoText", "Some text here");
+            this.LogoText = new DocActionControlTextBox("LogoText", "Some text here", false);
             this.EffectiveDate = new DocActionControlTextBox("EffectiveDate", "2020-03-03");
             this.Revision = new DocActionControlTextBox("Revision", "1");
 

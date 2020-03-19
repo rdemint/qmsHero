@@ -12,6 +12,6 @@ namespace QmsDoc.Core
         {
 
         }
-        public DocActionControlTextBox(string docActionName, object docActionVal) : base(docActionName, docActionVal) { }
+        public DocActionControlTextBox(string docActionName, object docActionVal, bool controlIsEnabled=true) : base(docActionName, docActionVal, controlIsEnabled) { }
     }
 }
