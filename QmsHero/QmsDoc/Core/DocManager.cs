@@ -150,7 +150,7 @@ namespace QmsDoc.Core
             }
         }
 
-        private List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
+        public List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
         {
             var query = controls
                 .Where(control => control.ControlIsEnabled == true)

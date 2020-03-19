@@ -9,7 +9,7 @@ using QmsDoc.Core;
 using QmsDoc.Interfaces;
 using QmsDoc.Docs;
 
-namespace QmsDoc.Core.Tests
+namespace QmsDoc.Test.Core
 {
     [TestClass()]
     public class DocManagerTests
@@ -27,7 +27,16 @@ namespace QmsDoc.Core.Tests
             Assert.AreEqual(doc.EffectiveDate, "2020-03-12");
         }
 
-
-
+        [TestMethod()]
+        public void FilterControlsTest()
+        {
+            var l = new List<IDocActionControl>();
+            l.Add(new ControlTextBox("Revision", null));
+            l.Add(new ControlTextBox("EffectiveDate", ""));
+            l.Add(new ControlTextBox("EffectiveDate", "2020-03-12"));
+            var manager = new DocManager();
+            var controls = manager.FilterControls(l);
+            Assert.IsTrue(controls.Count == 1);
+        }
     }
 }
