@@ -9,7 +9,7 @@ using QmsDoc.Interfaces;
 namespace QmsDoc.Core
 {
     
-    public class DocActionControls
+    public class DocActionControlManager
     {
         ControlFolderPicker logoPath;
         ControlTextBox logoText;
@@ -21,7 +21,7 @@ namespace QmsDoc.Core
         public ControlTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
         public ControlTextBox Revision { get => revision; set => revision = value; }
 
-        public DocActionControls()
+        public DocActionControlManager()
         {
             this.Initialize();
         }
@@ -35,6 +35,7 @@ namespace QmsDoc.Core
             this.Revision = new ControlTextBox("Revision", null);
 
         }
+
         public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)
         {
             return this.GetType().GetProperty(propertyName);

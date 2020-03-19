@@ -13,19 +13,19 @@ namespace QmsHero.ViewModel
     public class CustomProcessingViewModel: ViewModelBase
     {
         DocManager manager;
-        DocActionControls docActions;
+        DocActionControlManager docActions;
         List<IDocActionControl> actionList;
         RelayCommand processFilesCommand;
 
         public CustomProcessingViewModel()
         {
-            this.docActions = new DocActionControls();
+            this.docActions = new DocActionControlManager();
             this.actionList = docActions.ToDocActionControlList();
             this.manager = new DocManager();
             this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\Active QMS Documents\\SOP-001 Quality Manual Documents");
         }
 
-        public DocActionControls DocActions { get => docActions; set => docActions = value; }
+        public DocActionControlManager DocActions { get => docActions; set => docActions = value; }
         public List<IDocActionControl> ActionList { get => actionList; set => actionList = value; }
         public RelayCommand ProcessFilesCommand {
             get { 

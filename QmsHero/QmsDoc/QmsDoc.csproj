@@ -67,7 +67,7 @@
     <Compile Include="Core\ControlBase.cs" />
     <Compile Include="Core\ControlFolderPicker.cs" />
     <Compile Include="Core\ControlTextBox.cs" />
-    <Compile Include="Core\DocActionControls.cs" />
+    <Compile Include="Core\DocActionControlManager.cs" />
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
     <Compile Include="Interfaces\IDocActionControl.cs" />

@@ -21,6 +21,7 @@ namespace QmsDoc.Core
     {
         System.IO.DirectoryInfo topDir;
         DocManagerConfig config;
+        List<FileInfo> dirFilesUnsafe;
         List<FileInfo> dirFiles;
         List<string> wordDocExtensions;
         List<string> excelDocExtensions;
@@ -30,7 +31,15 @@ namespace QmsDoc.Core
         string dirPath;
         Boolean auto_close_doc;
 
-        public List<FileInfo> DirFiles { get => dirFiles; set => dirFiles = value; }
+        public List<FileInfo> DirFiles { 
+            get => this.GetSafeFiles(dirFilesUnsafe);}
+
+
+        private List<FileInfo> GetSafeFiles(List<FileInfo> files)
+        {
+            var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();
+            return result;
+        }
         public DocManagerConfig Config { 
             get {
                 if(this.config ==null)
@@ -51,14 +60,13 @@ namespace QmsDoc.Core
             this.excelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
             wordApp = new Word.Application();
             excelApp = new Excel.Application();
-            this.dirFiles = new List<FileInfo>();
+            this.dirFilesUnsafe = new List<FileInfo>();
         }
-        public void AddDirFiles(string dir_path)
+        private void AddDirFiles(string dir_path)
         {
             var dir = new System.IO.DirectoryInfo(dir_path);
             var dir_files = dir.GetFiles();
-            this.dirFiles.AddRange(dir_files);
-            var sub_dirs = Directory.GetDirectories(dir_path);
+            this.dirFilesUnsafe.AddRange(dir_files);
 
             foreach (string sub_dir_path in Directory.EnumerateDirectories(dir_path))
             {
@@ -73,13 +81,6 @@ namespace QmsDoc.Core
             this.AddDirFiles(dir_path);
         }
 
-
-        public void DocMethodInfo() { }
-        public void PreProcessing()
-        {
-            Word.Documents documents = this.wordApp.Documents;
-            Excel.Workbooks workbooks = this.excelApp.Workbooks;
-        }
 
         public void ProcessDoc(QmsDocBase doc, Dictionary<string, object> action_dict)
         {
@@ -112,10 +113,10 @@ namespace QmsDoc.Core
         public Boolean ProcessFiles(Dictionary<string, object> action_dict)
         {
             Contract.Requires(this.config != null);
-            Contract.Requires(this.dirFiles.Count >= 1);
+            Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(action_dict.Count >= 1);
 
-            foreach (FileInfo file_info in this.dirFiles)
+            foreach (FileInfo file_info in this.dirFilesUnsafe)
             {
                 QmsDocBase doc = this.CreateDoc(file_info);
                 this.ProcessDoc(doc, action_dict);
@@ -132,14 +133,15 @@ namespace QmsDoc.Core
         public void ProcessFiles(List<IDocActionControl> actionControls, bool test=false)
         {
             Contract.Requires(this.config != null);
-            Contract.Requires(this.dirFiles.Count >= 1);
+            Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(actionControls.Count >= 1);
 
+            var filteredControls = this.FilterControls(actionControls);
 
-            foreach (FileInfo file_info in this.dirFiles)
+            foreach (FileInfo file_info in this.dirFilesUnsafe)
             {
                 QmsDocBase doc = this.CreateDoc(file_info, test);
-                this.ProcessDoc(doc, actionControls);
+                this.ProcessDoc(doc, filteredControls);
                 if (this.Config.LeaveDocumentsOpen == false && test == false)
                 {
                     doc.CloseDocument();
@@ -148,6 +150,15 @@ namespace QmsDoc.Core
             }
         }
 
+        private List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
+        {
+            var query = controls
+                .Where(control => control.ControlIsEnabled == true)
+                .Where(control => control.DocActionVal != null)
+                .Where(control=> (string)control.DocActionVal != "");
+            return query.ToList();
+
+        }
         public QmsDocBase CreateDoc(FileInfo file_info, bool test=false)
         {
             if (this.wordDocExtensions.Contains(file_info.Extension))

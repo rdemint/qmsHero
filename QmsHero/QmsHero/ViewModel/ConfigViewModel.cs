@@ -20,7 +20,7 @@ namespace QmsHero.ViewModel
 
         public ConfigViewModel()
         {
-            var docActions = new DocActionControls();
+            var docActions = new DocActionControlManager();
         }
 
         public List<ControlBase> DocActionControls { get => docActionControls; set => docActionControls = value; }

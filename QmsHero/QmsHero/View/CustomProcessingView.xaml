@@ -26,5 +26,6 @@
         </StackPanel.Resources>
         <ListView
             ItemsSource="{Binding ActionList}"/>
+        <Button Content="Process Files" Command="{Binding ProcessFilesCommand}"></Button>
     </StackPanel>
 </Page>

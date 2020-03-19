@@ -15,9 +15,9 @@ namespace QmsDoc.Core.Test
         [TestMethod()]
         public void SetPropertyTest()
         {
-            var docActions1 = new DocActionControls();
+            var docActions1 = new DocActionControlManager();
             docActions1.Revision = new ControlTextBox("Revision", "2");
-            var docActions2 = new DocActionControls();
+            var docActions2 = new DocActionControlManager();
             docActions2.SetProperty(docActions1, "Revision");
             Assert.AreEqual(docActions1.Revision, docActions2.Revision);
             Assert.AreEqual(docActions2.Revision.DocActionVal, "2");
@@ -26,7 +26,7 @@ namespace QmsDoc.Core.Test
         [TestMethod()]
         public void IsValidPropertyTest()
         {
-            var docActions = new DocActionControls();
+            var docActions = new DocActionControlManager();
             var revInfo = docActions.GetType().GetProperty("Revision");
             Assert.IsFalse(docActions.IsValidProperty(revInfo));
             docActions.Revision = new ControlTextBox("Revision", "2");
@@ -50,12 +50,13 @@ namespace QmsDoc.Core.Test
         [TestMethod()]
         public void ToDocActionControlListTest()
         {
+            var actionControls = new DocActionControlManager();
+            var actionControlsList = actionControls.ToDocActionControlList();
+            Assert.IsTrue(actionControlsList.Count >= 4);
+
             var filterDict = new Dictionary<string, object>();
             filterDict.Add("Revision", "1");
             filterDict.Add("EffectiveDate", "2020-03-01");
-            var actionControls = new DocActionControls();
-            var actionControlsList = actionControls.ToDocActionControlList();
-            Assert.IsTrue(actionControlsList.Count >= 4);
             actionControlsList = actionControls.ToDocActionControlList(filterDict);
             Assert.AreEqual(actionControlsList.Count, 2);
         }
