@@ -17,20 +17,15 @@ namespace QmsHero.ViewModel
         //string logoText;
         //string effectiveDate;
         //string revision;
-        List<ControlBase> docActionControls;
+        List<IDocActionControl> controlList;
 
         public ConfigViewModel()
         {
-            var docActions = new DocActionControlManager();
+            var manager = new DocConfigControlManager();
+            this.ControlList = manager.ToControlList();
         }
 
-        public List<ControlBase> DocActionControls { get => docActionControls; set => docActionControls = value; }
+        public List<IDocActionControl> ControlList { get => controlList; set => controlList = value; }
 
-        //public DocActionControlBase LogoPath {
-        //    get => DocActionControlBase.GetControl(this.logoPath); 
-        //    set => logoPath = value; }
-        //public string LogoText { get => logoText; set => logoText = value; }
-        //public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        //public string Revision { get => revision; set => revision = value; }
     }
 }

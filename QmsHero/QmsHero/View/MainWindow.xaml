@@ -21,6 +21,11 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
                 <ResourceDictionary Source="Resources/ViewViewModelDict.xaml"/>
+                <ResourceDictionary Source="Resources/ControlCheckBox.xaml"/>
+                <ResourceDictionary Source="Resources/ControlCheckTextBox.xaml"/>
+                <ResourceDictionary Source="Resources/ControlFolderPicker.xaml"/>
+                <ResourceDictionary Source="Resources/ControlTextbox.xaml"/>
+                <ResourceDictionary Source="Resources/DocAction.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -61,6 +66,7 @@
                 </StackPanel>
         </Expander>
             <Frame
+                NavigationUIVisibility="Hidden"
                 Grid.Column="1"
                 Grid.Row="0"
                 x:Name="MainContentFrame"

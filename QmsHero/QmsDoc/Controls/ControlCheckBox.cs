@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Controls
 {
-    class ControlCheckBox: ControlBase
+    public class ControlCheckBox: ControlBase
     {
         public ControlCheckBox(): base()
         {

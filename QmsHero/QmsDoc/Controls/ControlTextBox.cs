@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Controls
 {
-    class ControlTextBox: ControlBase
+    public class ControlTextBox: ControlBase
     {
         public ControlTextBox(): base()
         {

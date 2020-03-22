@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:QmsHero"
-                    xmlns:qmsDoc="clr-namespace:QmsDoc.Core;assembly=QmsDoc">
+                    xmlns:controls="clr-namespace:QmsDoc.Controls;assembly=QmsDoc">
     <DataTemplate
                     x:Key="DocActionDataTemplate"
-                    DataType="{x:Type qmsDoc:ControlBase}">
+                    DataType="{x:Type controls:ControlBase}">
         <StackPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding ControlIsEnabled, Mode=TwoWay}"/>
             <Label Content="{Binding DocActionName}"/>

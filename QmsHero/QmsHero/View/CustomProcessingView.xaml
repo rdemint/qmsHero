@@ -16,9 +16,8 @@
         <StackPanel.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="Resources/ControlFolderPicker.xaml"/>
-                    <ResourceDictionary Source="Resources/ControlTextbox.xaml"/>
-                    <ResourceDictionary Source="Resources/DocAction.xaml"/>
+
+                    
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
             

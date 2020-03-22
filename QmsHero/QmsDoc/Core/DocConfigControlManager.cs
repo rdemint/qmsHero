@@ -7,7 +7,7 @@ using QmsDoc.Controls;
 
 namespace QmsDoc.Core
 {
-    class DocConfigControlManager
+    public class DocConfigControlManager: DocControlManagerBase
 
     {
         ControlFolderPicker topDir;
@@ -15,7 +15,7 @@ namespace QmsDoc.Core
         ControlCheckBox leaveDocumentsOpen;
 
 
-        public DocConfigControlManager()
+        public DocConfigControlManager(): base()
         {
             this.Initialize();
         }

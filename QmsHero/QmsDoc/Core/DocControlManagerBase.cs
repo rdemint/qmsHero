@@ -7,8 +7,18 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Core
 {
-    class DocControlManagerBase
+    public class DocControlManagerBase
     {
+
+        private void Initialize()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public System.Reflection.PropertyInfo GetPropertyInfo(string propertyName)
+        {
+            return this.GetType().GetProperty(propertyName);
+        }
 
         public List<IDocActionControl> ToControlList()
         {

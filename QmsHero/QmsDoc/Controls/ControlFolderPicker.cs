@@ -12,6 +12,5 @@ namespace QmsDoc.Controls
         public ControlFolderPicker(): base()  {}
         public ControlFolderPicker(string docActionName, object docActionVal): base(docActionName, docActionVal) { }
 
-        public 
     }
 }
