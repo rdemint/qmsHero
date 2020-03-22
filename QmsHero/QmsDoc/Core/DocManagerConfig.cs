@@ -9,7 +9,7 @@ namespace QmsDoc.Core
     public class DocManagerConfig
     {
         string qmsPwd;
-        Boolean leaveDocumentsOpen;
+        bool leaveDocumentsOpen;
 
         public DocManagerConfig()
         {

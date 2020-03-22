@@ -20,7 +20,7 @@ namespace QmsHero.ViewModel
         public CustomProcessingViewModel()
         {
             this.docActions = new DocActionControlManager();
-            this.actionList = docActions.ToDocActionControlList();
+            this.actionList = docActions.ToControlList();
             this.manager = new DocManager();
             this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\Active QMS Documents\\SOP-001 Quality Manual Documents");
         }

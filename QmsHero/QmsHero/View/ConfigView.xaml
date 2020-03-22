@@ -23,7 +23,7 @@
             <TextBlock Text="Configure the Project" HorizontalAlignment="Center" FontWeight="Bold"/>
         </Border>
         <ListView
-            ItemsSource="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel.DocActionControls}"
+            ItemsSource="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel.DocActionControls}" HorizontalAlignment="Center" VerticalAlignment="Center"
             >
         </ListView>
         <Button

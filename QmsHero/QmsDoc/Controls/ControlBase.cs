@@ -8,7 +8,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using QmsDoc.Interfaces;
 
-namespace QmsDoc.Core
+namespace QmsDoc.Controls
 {
     public class ControlBase : ObservableObject, IDocActionControl
     {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QmsDoc.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +17,8 @@ namespace QmsDoc.Test.Core
         public void ProcessDocTest()
         {
             var l = new List<IDocActionControl>();
-            l.Add(new ControlTextBox("Revision", "1"));
-            l.Add(new ControlTextBox("EffectiveDate", "2020-03-12"));
+            l.Add(new ControlCheckTextBox("Revision", "1"));
+            l.Add(new ControlCheckTextBox("EffectiveDate", "2020-03-12"));
             var manager = new DocManager();
             var doc = new WordDoc();
             manager.ProcessDoc(doc, l);
@@ -31,9 +30,9 @@ namespace QmsDoc.Test.Core
         public void FilterControlsTest()
         {
             var l = new List<IDocActionControl>();
-            l.Add(new ControlTextBox("Revision", null));
-            l.Add(new ControlTextBox("EffectiveDate", ""));
-            l.Add(new ControlTextBox("EffectiveDate", "2020-03-12"));
+            l.Add(new ControlCheckTextBox("Revision", null));
+            l.Add(new ControlCheckTextBox("EffectiveDate", ""));
+            l.Add(new ControlCheckTextBox("EffectiveDate", "2020-03-12"));
             var manager = new DocManager();
             var controls = manager.FilterControls(l);
             Assert.IsTrue(controls.Count == 1);

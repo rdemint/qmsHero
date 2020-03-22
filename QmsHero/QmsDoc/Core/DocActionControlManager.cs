@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Interfaces;
+using QmsDoc.Controls;
 
 namespace QmsDoc.Core
 {
@@ -12,14 +13,14 @@ namespace QmsDoc.Core
     public class DocActionControlManager
     {
         ControlFolderPicker logoPath;
-        ControlTextBox logoText;
-        ControlTextBox effectiveDate;
-        ControlTextBox revision;
+        ControlCheckTextBox logoText;
+        ControlCheckTextBox effectiveDate;
+        ControlCheckTextBox revision;
 
         public ControlFolderPicker LogoPath { get => logoPath; set => logoPath = value; }
-        public ControlTextBox LogoText { get => logoText; set => logoText = value; }
-        public ControlTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public ControlTextBox Revision { get => revision; set => revision = value; }
+        public ControlCheckTextBox LogoText { get => logoText; set => logoText = value; }
+        public ControlCheckTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
+        public ControlCheckTextBox Revision { get => revision; set => revision = value; }
 
         public DocActionControlManager()
         {
@@ -30,9 +31,9 @@ namespace QmsDoc.Core
         private void Initialize()
         {
             this.LogoPath = new ControlFolderPicker("LogoPath", null);
-            this.LogoText = new ControlTextBox("LogoText", null, false);
-            this.EffectiveDate = new ControlTextBox("EffectiveDate", null);
-            this.Revision = new ControlTextBox("Revision", null);
+            this.LogoText = new ControlCheckTextBox("LogoText", null, false);
+            this.EffectiveDate = new ControlCheckTextBox("EffectiveDate", null);
+            this.Revision = new ControlCheckTextBox("Revision", null);
 
         }
 
@@ -63,7 +64,7 @@ namespace QmsDoc.Core
             return dict;
         }
 
-        public List<IDocActionControl> ToDocActionControlList()
+        public List<IDocActionControl> ToControlList()
         {
             var actionList = new List<IDocActionControl>();
             var properties = this.GetType().GetProperties();
@@ -76,7 +77,7 @@ namespace QmsDoc.Core
         }
 
 
-        public List<IDocActionControl> ToDocActionControlList(Dictionary<string, object> filterDict)
+        public List<IDocActionControl> ToControlList(Dictionary<string, object> filterDict)
         {
             var actionList = new List<IDocActionControl>();
             var properties = this.GetType().GetProperties();
