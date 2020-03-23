@@ -12,12 +12,30 @@
             Background="Azure"
             Orientation="Vertical"
             >
-        <TextBlock Text="{Binding EffectiveDate, Mode=TwoWay}"/>
+        <TextBlock Text="{Binding Path=EffectiveDate, Mode=TwoWay}"/>
         <TextBox
                 Text="Some text here"
                 ></TextBox>
         <controls:ToggleCheckBox
             DisplayName = "Effective Date"
             ControlValue = "{Binding EffectiveDate}"/>
+        
+        <ComboBox
+            x:Name="LogoComboBox"
+            DisplayMemberPath="DisplayName"
+            >
+         
+            <ComboBoxItem>
+                <controls:ToggleCheckBox
+                    DisplayName="Logo Path"
+                    ControlValue="{Binding LogoPath}"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <controls:ToggleCheckBox
+                    DisplayName="Logo Text"
+                    ControlValue="{Binding LogoText}"/>
+            </ComboBoxItem>
+        </ComboBox>
+        <ContentControl Content="{Binding ElementName=LogoComboBox, Path=SelectedItem}"/>
     </StackPanel>
 </Page>

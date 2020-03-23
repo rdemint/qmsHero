@@ -22,23 +22,23 @@ namespace QmsDoc.Controls
     public partial class ToggleCheckBox : UserControl, INotifyPropertyChanged
     {
         string controlName;
-        string displayName;
-        string controlValue;
-        bool controlIsEnabled;
+        //string displayName;
+        //string controlValue;
         public ToggleCheckBox()
         {
             InitializeComponent();
-            this.displayName = "some label";
-            this.controlValue = "initial value";
-            this.controlIsEnabled = true;
+            //this.displayName = "some label";
+            //this.controlValue = "initial value";
+            this.ControlIsEnabled = true;
+
         }
 
         public ToggleCheckBox(string name="SomeDocProperty", string displayName="Some Doc Property", string val="3")
         {
             InitializeComponent();
-            this.ControlName = name;
-            this.DisplayName = displayName;
-            this.ControlValue = val;
+            //this.ControlName = name;
+            //this.DisplayName = displayName;
+            //this.ControlValue = val;
         }
 
         public static DependencyProperty ControlValueProperty =
@@ -54,8 +54,8 @@ namespace QmsDoc.Controls
                 return (string)GetValue(ControlValueProperty);
             }
             set {
-                this.controlValue = value;
-                OnPropertyChanged();
+                //this.controlValue = value;
+                //OnPropertyChanged();
                 SetValue(ControlValueProperty, value);
             } }
 
@@ -74,8 +74,8 @@ namespace QmsDoc.Controls
                 return (string)GetValue(DisplayNameProperty);
             }
             set {
-                this.displayName = value;
-                OnPropertyChanged();
+                //this.displayName = value;
+                //OnPropertyChanged();
                 SetValue(DisplayNameProperty, value);
             } }
 
@@ -86,12 +86,23 @@ namespace QmsDoc.Controls
                 this.controlName = value;
                 this.OnPropertyChanged();
             } }
-        public bool ControlIsEnabled { 
-            get => controlIsEnabled;
-            set {
-                this.controlIsEnabled = value;
-                this.OnPropertyChanged();
-            } }
+
+
+
+        public bool ControlIsEnabled
+        {
+            get { return (bool)GetValue(ControlIsEnabledProperty); }
+            set { SetValue(ControlIsEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ControlIsEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ControlIsEnabledProperty =
+            DependencyProperty.Register("ControlIsEnabled", typeof(bool), typeof(ToggleCheckBox), new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true });
+
+        public override string ToString()
+        {
+            return this.DisplayName;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

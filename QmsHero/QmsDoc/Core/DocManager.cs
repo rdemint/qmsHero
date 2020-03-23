@@ -31,8 +31,8 @@ namespace QmsDoc.Core
         string dirPath;
         Boolean auto_close_doc;
 
-        public List<FileInfo> DirFiles { 
-            get => this.GetSafeFiles(dirFilesUnsafe);}
+        public List<FileInfo> DirFiles {
+            get => this.GetSafeFiles(dirFilesUnsafe); }
 
 
         private List<FileInfo> GetSafeFiles(List<FileInfo> files)
@@ -40,14 +40,14 @@ namespace QmsDoc.Core
             var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();
             return result;
         }
-        public DocManagerConfig Config { 
+        public DocManagerConfig Config {
             get {
-                if(this.config ==null)
+                if (this.config == null)
                 {
                     this.config = new DocManagerConfig();
                 }
                 return this.config;
-                }
+            }
             set
             {
                 this.config = value;
@@ -58,8 +58,8 @@ namespace QmsDoc.Core
         {
             this.wordDocExtensions = new List<string> { ".docx", ".doc" };
             this.excelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
-            wordApp = new Word.Application();
-            excelApp = new Excel.Application();
+            //wordApp = new Word.Application();
+            //excelApp = new Excel.Application();
             this.dirFilesUnsafe = new List<FileInfo>();
         }
         private void AddDirFiles(string dir_path)
@@ -110,12 +110,21 @@ namespace QmsDoc.Core
                 }
             }
         }
-        public Boolean ProcessFiles(Dictionary<string, object> action_dict)
+
+        private void ProcessFilesPrep(bool test)
+        {
+            if (this.wordApp == null && test==false || this.excelApp == null && test==false)
+            {
+                this.CreateApps();
+            }
+        }
+        public Boolean ProcessFiles(Dictionary<string, object> action_dict, bool test=false)
         {
             Contract.Requires(this.config != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(action_dict.Count >= 1);
-
+            
+            this.ProcessFilesPrep(test);
             foreach (FileInfo file_info in this.dirFilesUnsafe)
             {
                 QmsDocBase doc = this.CreateDoc(file_info);
@@ -136,6 +145,7 @@ namespace QmsDoc.Core
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(actionControls.Count >= 1);
 
+            this.ProcessFilesPrep(test);
             var filteredControls = this.FilterControls(actionControls);
 
             foreach (FileInfo file_info in this.dirFilesUnsafe)
@@ -195,7 +205,49 @@ namespace QmsDoc.Core
             }
         }
 
+        public void CreateApps()
+        {
+            if (this.wordApp == null)
+            {
+                this.wordApp = new Word.Application();
+            }
 
+            if (this.excelApp == null)
+            {
+                this.excelApp = new Excel.Application();
+            }
+        }
+
+        public bool CloseApps()
+        {
+            try
+            {
+                this.wordApp.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
+                this.wordApp.Documents.Close(
+                        Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
+                        Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat
+                    );
+                this.wordApp.Quit();
+            }
+            catch (Exception e) {
+                //Do something
+                return false;
+            }
+
+            try
+            {
+                this.excelApp.DisplayAlerts = false;
+                this.excelApp.Workbooks.Close();
+                this.excelApp.Quit();
+            }
+
+            catch (Exception e) {
+                //Do something
+                return false;
+            }
+
+            return true;
+            }
 
         public Boolean HasOpenFilePath(System.IO.FileInfo file_info)
         {

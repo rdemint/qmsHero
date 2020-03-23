@@ -19,3 +19,4 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.g.resources
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csproj.CopyComplete
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csprojAssemblyReference.cache
