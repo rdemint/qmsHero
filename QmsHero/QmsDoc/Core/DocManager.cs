@@ -82,7 +82,7 @@ namespace QmsDoc.Core
         }
 
 
-        public void ProcessDoc(QmsDocBase doc, Dictionary<string, object> action_dict)
+        public QmsDocBase ProcessDoc(QmsDocBase doc, Dictionary<string, object> action_dict)
         {
             foreach (string propertyName in action_dict.Keys)
             {
@@ -92,10 +92,10 @@ namespace QmsDoc.Core
                     propertyInfo.SetValue(doc, action_dict[propertyName]);
                 }
             }
-            var closed = doc.CloseDocument();
+            return doc;
         }
 
-        public void ProcessDoc(QmsDocBase doc, List<IDocActionControl> actionControls)
+        public QmsDocBase ProcessDoc(QmsDocBase doc, List<IDocActionControl> actionControls)
         {
             foreach (IDocActionControl actionControl in actionControls)
             {
@@ -109,6 +109,7 @@ namespace QmsDoc.Core
                     throw new Exception("The DocActionName passed is not part of IDocActions.");
                 }
             }
+            return doc;
         }
 
         private void ProcessFilesPrep(bool test)
@@ -125,7 +126,7 @@ namespace QmsDoc.Core
             Contract.Requires(action_dict.Count >= 1);
             
             this.ProcessFilesPrep(test);
-            foreach (FileInfo file_info in this.dirFilesUnsafe)
+            foreach (FileInfo file_info in this.DirFiles)
             {
                 try
                 {
@@ -157,7 +158,7 @@ namespace QmsDoc.Core
             this.ProcessFilesPrep(test);
             var filteredControls = this.FilterControls(actionControls);
 
-            foreach (FileInfo file_info in this.dirFilesUnsafe)
+            foreach (FileInfo file_info in this.DirFiles)
             {
                 
                 try

@@ -81,6 +81,12 @@ namespace QmsDoc.Docs
             {
                 throw e;
             }
+
+        }
+
+        public override void SaveAsPdf()
+        {
+            base.SaveAsPdf();
         }
         //public override void HeaderRev(string rev)
         //{

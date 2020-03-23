@@ -128,5 +128,10 @@ namespace QmsDoc.Docs
             }
         }
 
+        public override void SaveAsPdf()
+        {
+            base.SaveAsPdf();
+        }
+
     }
 }

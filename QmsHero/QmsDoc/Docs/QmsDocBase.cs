@@ -22,5 +22,8 @@ namespace QmsDoc.Docs
             throw new System.NotImplementedException();
         }
 
+        public virtual void SaveAsPdf()
+        { throw new NotImplementedException(); }
+
     }
 }
