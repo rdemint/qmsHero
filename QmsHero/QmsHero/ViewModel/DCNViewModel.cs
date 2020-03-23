@@ -7,7 +7,14 @@ using GalaSoft.MvvmLight;
 
 namespace QmsHero.ViewModel
 {
-    class DCNViewModel: ViewModelBase
+    public class DCNViewModel: ViewModelBase
     {
+        string effectiveDate;
+
+        public string EffectiveDate { 
+            get => effectiveDate;
+            set {
+                Set<string>(() => this.EffectiveDate, ref this.effectiveDate, value);
+            } }
     }
 }

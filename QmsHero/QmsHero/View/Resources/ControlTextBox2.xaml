@@ -7,7 +7,7 @@
         DataType="{x:Type controls:ControlTextBox2}">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding DocActionName}"/>
-            <TextBox MinWidth="200" Text="{Binding DocActionVal, Mode=TwoWay}"/>
+            <TextBox MinWidth="200" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MyLabel}"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

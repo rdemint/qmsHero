@@ -21,7 +21,6 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThe
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.xml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csprojAssemblyReference.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Skins\MainSkin.baml
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCN.g.cs
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\ConfigView.g.cs
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\MainWindow.g.cs
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\CustomProcessingView.g.cs
@@ -30,7 +29,6 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\GeneratedInternal
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero_MarkupCompile.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero_MarkupCompile.lref
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\App.baml
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCN.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\ViewViewModelDict.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\ConfigView.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\MainWindow.baml
@@ -41,3 +39,5 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.Ge
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.CopyComplete
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.exe
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCNView.g.cs
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCNView.baml

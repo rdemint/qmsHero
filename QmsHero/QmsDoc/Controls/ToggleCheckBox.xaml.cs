@@ -24,10 +24,13 @@ namespace QmsDoc.Controls
         string controlName;
         string displayName;
         string controlValue;
-        string controlIsEnabled;
+        bool controlIsEnabled;
         public ToggleCheckBox()
         {
             InitializeComponent();
+            this.displayName = "some label";
+            this.controlValue = "initial value";
+            this.controlIsEnabled = true;
         }
 
         public ToggleCheckBox(string name="SomeDocProperty", string displayName="Some Doc Property", string val="3")
@@ -38,23 +41,53 @@ namespace QmsDoc.Controls
             this.ControlValue = val;
         }
 
+        public static DependencyProperty ControlValueProperty =
+            DependencyProperty.Register(
+        "ControlValue",
+        typeof(string),
+        typeof(ToggleCheckBox),
+        new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
+        );
 
-        public string ControlValue { get => controlValue;
-            set { 
+        public string ControlValue {
+            get {
+                return (string)GetValue(ControlValueProperty);
+            }
+            set {
                 this.controlValue = value;
-                this.OnPropertyChanged();
+                OnPropertyChanged();
+                SetValue(ControlValueProperty, value);
             } }
-        public string DisplayName { get => displayName;
+
+
+
+        public static readonly DependencyProperty DisplayNameProperty =
+            DependencyProperty.Register(
+                "DisplayName",
+                typeof(string),
+                typeof(ToggleCheckBox),
+                new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
+           );
+
+        public string DisplayName {
+            get {
+                return (string)GetValue(DisplayNameProperty);
+            }
             set {
                 this.displayName = value;
-                this.OnPropertyChanged();
+                OnPropertyChanged();
+                SetValue(DisplayNameProperty, value);
             } }
+
+
+
         public string ControlName { get => controlName;
             set {
                 this.controlName = value;
                 this.OnPropertyChanged();
             } }
-        public string ControlIsEnabled { get => controlIsEnabled;
+        public bool ControlIsEnabled { 
+            get => controlIsEnabled;
             set {
                 this.controlIsEnabled = value;
                 this.OnPropertyChanged();

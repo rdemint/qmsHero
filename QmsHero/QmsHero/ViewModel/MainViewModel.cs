@@ -28,6 +28,7 @@ namespace QmsHero.ViewModel
         ViewModelLocator viewModelLocator;
         RelayCommand navToConfigViewModel;
         RelayCommand navToCustomProcessingViewModel;
+        RelayCommand navToDCNViewModel;
         public MainViewModel()
         {
             ////if (IsInDesignMode)
@@ -43,7 +44,7 @@ namespace QmsHero.ViewModel
             //this.viewModelLocator = new ViewModelLocator();
             // OR
             this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
-            this.activeViewModel = viewModelLocator.CustomProcessingViewModel;
+            this.activeViewModel = viewModelLocator.DCNViewModel;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -95,6 +96,22 @@ namespace QmsHero.ViewModel
                 return this.navToConfigViewModel;
             } 
             set => navToConfigViewModel = value; }
+
+        public RelayCommand NavToDCNViewModel {
+            get { 
+                if (this.navToDCNViewModel == null)
+                    {
+                        this.navToDCNViewModel = new RelayCommand(
+                            () =>
+                            {
+                                this.ActiveViewModel = this.viewModelLocator.DCNViewModel;
+                            },
+                            () => this.activeViewModel != this.viewModelLocator.DCNViewModel
+                        );
+                    }
+                return this.navToDCNViewModel;
+                } 
+            set => navToDCNViewModel = value; }
     }
 
 

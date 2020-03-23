@@ -18,9 +18,9 @@ namespace QmsHero.View
     /// <summary>
     /// Interaction logic for DCN.xaml
     /// </summary>
-    public partial class DCN : Page
+    public partial class DCNView : Page
     {
-        public DCN()
+        public DCNView()
         {
             InitializeComponent();
         }

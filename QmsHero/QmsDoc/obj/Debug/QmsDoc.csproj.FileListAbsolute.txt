@@ -11,7 +11,11 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\bin\Debug\GalaSoft.MvvmLight
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\bin\Debug\GalaSoft.MvvmLight.Extras.xml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\Controls\ToggleCheckBox.g.cs
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc_MarkupCompile.cache
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc_MarkupCompile.lref
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\Controls\ToggleCheckBox.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.g.resources
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csproj.CopyComplete
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.pdb
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csprojAssemblyReference.cache

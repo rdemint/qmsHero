@@ -7,9 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel
+        Orientation="Horizontal"
         Background="LightGray">
-        <CheckBox></CheckBox>
-        <Label/>
-        <TextBox Text="{Binding ControlValue}"></TextBox>
+        <CheckBox IsChecked="{Binding Path=ControlIsEnabled, Mode=TwoWay}"/>
+        <Label Content="{Binding DisplayName}"/>
+        <TextBox 
+            MinWidth="200"
+            Text="{Binding Path=ControlValue}"
+            IsEnabled="{Binding Path=ControlIsEnabled}"
+            ></TextBox>
     </StackPanel>
 </UserControl>

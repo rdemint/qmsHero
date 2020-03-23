@@ -65,6 +65,7 @@
                     >
                     <Button Content="Config" Command="{Binding NavToConfigViewModel}"/>
                     <Button Content="Process" Command="{Binding NavToCustomProcessingViewModel}"/>
+                    <Button Content="DCN" Command="{Binding NavToDCNViewModel}"/>
                 </StackPanel>
         </Expander>
             <Frame
