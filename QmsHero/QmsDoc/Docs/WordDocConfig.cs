@@ -6,17 +6,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs
 {
-    public class QmsDocBaseConfig
+    public class WordDocConfig
     {
-        
-        public QmsDocBaseConfig()
-        {
-
-        }
-
-        public void Initialize()
-        {
-
-        }
     }
 }

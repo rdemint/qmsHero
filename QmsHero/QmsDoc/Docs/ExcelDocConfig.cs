@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs
 {
-    class ExcelDocConfig
+    public class ExcelDocConfig: QmsDocBaseConfig
     {
     }
 }
