@@ -5,9 +5,9 @@
                     xmlns:core="clr-namespace:QmsDoc.Core;assembly=QmsDoc">
     <DataTemplate
         DataType="{x:Type controls:ControlTextBox2}">
-        <UniformGrid>
-            <Label Content="This is bound to ComboBox Label"/>
-            <TextBox MinWidth="200" Text="{Binding Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.MyLabel, NotifyOnTargetUpdated=True}"/>
-        </UniformGrid>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding DocActionName}"/>
+            <TextBox MinWidth="200" Text="{Binding DocActionVal, Mode=TwoWay}"/>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>
