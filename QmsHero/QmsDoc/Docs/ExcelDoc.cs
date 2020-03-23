@@ -6,40 +6,45 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using FileInfo = System.IO.FileInfo;
+using QmsDoc.Core;
 
 namespace QmsDoc.Docs
 
 {
     public class ExcelDoc : QmsDocBase
     {
-        public System.IO.FileInfo file_info;
-        public Excel.Application app;
-        public string password;
-        public Boolean save_changes;
-        public Boolean auto_close;
+        Excel.Application app;
+        Excel.Workbook doc;
+        ExcelDocConfig docConfig;
+        DocManagerConfig managerConfig;
+        FileInfo fileInfo;
         string logoText;
         string logoPath;
         string effectiveDate;
         string revision;
-        Boolean autoClose;
-        Boolean saveChanges;
 
+        public ExcelDoc() { }
+
+        public ExcelDoc(Excel.Application app, System.IO.FileInfo fileInfo, ExcelDocConfig docConfig, DocManagerConfig managerConfig)
+        {
+            this.app = app;
+            this.FileInfo = fileInfo;
+            this.DocConfig = docConfig;
+            this.ManagerConfig = managerConfig;
+            this.OpenDocument(fileInfo);
+        }
+
+        public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public DocManagerConfig ManagerConfig { get => managerConfig; set => managerConfig = value; }
+        public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
+        #region Header
         public string Revision { get => revision; set => revision = value; }
         public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
         public string LogoPath { get => logoPath; set => logoPath = value; }
         public string LogoText { get => logoText; set => logoText = value; }
-
-        public ExcelDoc() { }
         
-        public ExcelDoc(Excel.Application app, System.IO.FileInfo file_info, Boolean save_changes=true, Boolean auto_close=true)
-        {
-            this.app = app;
-            this.file_info = file_info;
-            this.password = "QMSpwd";
-            this.save_changes = save_changes;
-            this.auto_close = auto_close;
-            this.OpenDocument(file_info);
-        }
+        #endregion
+
 
 
         public Excel.Workbook OpenDocument(FileInfo file_info)

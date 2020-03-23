@@ -17,16 +17,13 @@ namespace QmsDoc.Docs
 
         }
 
-        public void Initialize()
-        {
+        public void Initialize(){}
 
-        }
-
-        public object GetProperty(QmsDocBase doc, string propertyName)
-        {
-            this.Doc = doc;
-            var propInfo = this.GetType().GetProperty(propertyName);
-            return propInfo.GetValue(this);
-        }
+        //public object GetProperty(QmsDocBase doc, string propertyName)
+        //{
+        //    this.Doc = doc;
+        //    var propInfo = this.GetType().GetProperty(propertyName);
+        //    return propInfo.GetValue(this);
+        //}
     }
 }
