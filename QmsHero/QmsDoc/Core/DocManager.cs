@@ -127,11 +127,20 @@ namespace QmsDoc.Core
             this.ProcessFilesPrep(test);
             foreach (FileInfo file_info in this.dirFilesUnsafe)
             {
-                QmsDocBase doc = this.CreateDoc(file_info);
-                this.ProcessDoc(doc, action_dict);
-                if (this.auto_close_doc)
+                try
                 {
-                    doc.CloseDocument();
+                    QmsDocBase doc = this.CreateDoc(file_info);
+                    this.ProcessDoc(doc, action_dict);
+                    if (this.auto_close_doc)
+                    {
+                        doc.CloseDocument();
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    this.CloseApps();
+                    throw e;
                 }
             }
 
@@ -150,13 +159,23 @@ namespace QmsDoc.Core
 
             foreach (FileInfo file_info in this.dirFilesUnsafe)
             {
-                QmsDocBase doc = this.CreateDoc(file_info, test);
-                this.ProcessDoc(doc, filteredControls);
-                if (this.Config.LeaveDocumentsOpen == false && test == false)
+                
+                try
                 {
-                    doc.CloseDocument();
+                    QmsDocBase doc = this.CreateDoc(file_info, test);
+                    this.ProcessDoc(doc, filteredControls);
+                    if (this.Config.LeaveDocumentsOpen == false && test == false)
+                    {
+                        doc.CloseDocument();
+                    }
+                    System.Windows.Forms.MessageBox.Show("Finished Processing Files");
                 }
-                System.Windows.Forms.MessageBox.Show("Finished Processing Files");
+
+                catch (Exception e)
+                {
+                    this.CloseApps();
+                    throw e;
+                }
             }
         }
 
