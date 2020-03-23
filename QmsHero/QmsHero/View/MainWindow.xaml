@@ -24,8 +24,10 @@
                 <ResourceDictionary Source="Resources/ControlCheckBox.xaml"/>
                 <ResourceDictionary Source="Resources/ControlCheckTextBox.xaml"/>
                 <ResourceDictionary Source="Resources/ControlFolderPicker.xaml"/>
-                <ResourceDictionary Source="Resources/ControlTextbox.xaml"/>
+                <ResourceDictionary Source="Resources/ControlTextBox.xaml"/>
+                <ResourceDictionary Source="Resources/ControlTextBox2.xaml"/>
                 <ResourceDictionary Source="Resources/DocAction.xaml"/>
+                <ResourceDictionary Source="Resources/ControlComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

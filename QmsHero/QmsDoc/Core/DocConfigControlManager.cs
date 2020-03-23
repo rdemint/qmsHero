@@ -29,6 +29,7 @@ namespace QmsDoc.Core
             this.QmsPwd = new ControlTextBox("QmsPwd", "QMSpwd");
             this.LeaveDocumentsOpen = new ControlCheckBox("LeaveDocumentsOpen", null);
             this.topDir = new ControlFolderPicker("TopDir", null);
+
         }
     }
 }

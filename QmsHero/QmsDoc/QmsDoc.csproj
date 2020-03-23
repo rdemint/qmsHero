@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ControlCheckBox.cs" />
+    <Compile Include="Controls\ControlTextBox2.cs" />
+    <Compile Include="Controls\ControlComboBox.cs" />
     <Compile Include="Controls\ControlTextBox.cs" />
     <Compile Include="Core\DocAction.cs" />
     <Compile Include="Controls\ControlBase.cs" />

@@ -8,21 +8,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TestPage1"
-        DataContext="{Binding CustomProcessingViewModel, Source={StaticResource ViewModelLocator}}"
+        DataContext="{
+            Binding CustomProcessingViewModel, Source={StaticResource ViewModelLocator}}"
       ShowsNavigationUI="False"
       >
     <StackPanel
         Background="AliceBlue">
-        <StackPanel.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-
-                    
-                </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
-            
-    
-        </StackPanel.Resources>
         <ListView
             ItemsSource="{Binding ActionList}"/>
         <Button Content="Process Files" Command="{Binding ProcessFilesCommand}"></Button>

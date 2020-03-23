@@ -83,6 +83,7 @@
     <Compile Include="Interfaces\IQmsHeroViewModels.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
     <Compile Include="ViewModel\ConfigViewModel.cs" />
+    <Compile Include="ViewModel\DCNViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\CustomProcessingView.xaml.cs">
@@ -112,6 +113,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Resource Include="View\Resources\ControlComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Page Include="View\DCN.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="View\Resources\ControlTextBox2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Page Include="View\Resources\ViewViewModelDict.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,6 +143,9 @@
     </Compile>
     <Compile Include="View\ConfigView.xaml.cs">
       <DependentUpon>ConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DCN.xaml.cs">
+      <DependentUpon>DCN.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

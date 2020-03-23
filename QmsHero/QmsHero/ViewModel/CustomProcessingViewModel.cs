@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using QmsDoc.Core;
 using QmsDoc.Interfaces;
+using QmsDoc.Controls;
 
 namespace QmsHero.ViewModel
 {
@@ -16,9 +17,11 @@ namespace QmsHero.ViewModel
         DocActionControlManager docActions;
         List<IDocActionControl> actionList;
         RelayCommand processFilesCommand;
+        DocAction logo;
 
         public CustomProcessingViewModel()
         {
+           
             this.docActions = new DocActionControlManager();
             this.actionList = docActions.ToControlList();
             this.manager = new DocManager();
@@ -39,6 +42,8 @@ namespace QmsHero.ViewModel
                 return this.processFilesCommand;
             } 
             set => processFilesCommand = value; }
+
+        public DocAction Logo { get => logo; set => logo = value; }
 
         public bool CanProcessFiles()
         {
