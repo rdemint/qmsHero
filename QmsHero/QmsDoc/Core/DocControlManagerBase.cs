@@ -31,15 +31,6 @@ namespace QmsDoc.Core
 
             return actionList;
         }
-
-        public void SetProperty(object obj, string propertyName)
-        {
-            var objPropInfo = obj.GetType().GetProperty(propertyName);
-            var objPropValue = objPropInfo.GetValue(obj);
-            var thisPropInfo = this.GetType().GetProperty(propertyName);
-            thisPropInfo.SetValue(this, objPropValue);
-        }
-
         public List<IDocActionControl> ToControlList(Dictionary<string, object> filterDict)
         {
             var actionList = new List<IDocActionControl>();
@@ -54,6 +45,15 @@ namespace QmsDoc.Core
 
             return actionList;
         }
+
+        public void SetProperty(object obj, string propertyName)
+        {
+            var objPropInfo = obj.GetType().GetProperty(propertyName);
+            var objPropValue = objPropInfo.GetValue(obj);
+            var thisPropInfo = this.GetType().GetProperty(propertyName);
+            thisPropInfo.SetValue(this, objPropValue);
+        }
+
 
         public Dictionary<string, DocAction> AsDict()
         {

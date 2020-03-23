@@ -16,6 +16,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
 using System.ComponentModel;
+using QmsDoc.Interfaces;
+using QmsDoc.Core;
 
 
 namespace QmsHero.ViewModel
@@ -45,6 +47,10 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<ConfigViewModel>();
             SimpleIoc.Default.Register<CustomProcessingViewModel>();
             SimpleIoc.Default.Register<DCNViewModel>();
+
+            SimpleIoc.Default.Register<DocManager>();
+            SimpleIoc.Default.Register<DocActionControlManager>();
+            SimpleIoc.Default.Register<DocConfigControlManager>();
         }
 
         public ViewModelBase MainViewModel

@@ -8,6 +8,8 @@ using GalaSoft.MvvmLight.Command;
 using QmsDoc.Core;
 using QmsDoc.Interfaces;
 using QmsDoc.Controls;
+using GalaSoft.MvvmLight.Ioc;
+
 
 namespace QmsHero.ViewModel
 {
@@ -22,9 +24,9 @@ namespace QmsHero.ViewModel
         public CustomProcessingViewModel()
         {
            
-            this.docActions = new DocActionControlManager();
+            this.docActions = SimpleIoc.Default.GetInstance<DocActionControlManager>();
             this.actionList = docActions.ToControlList();
-            this.manager = new DocManager();
+            this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\Active QMS Documents\\SOP-001 Quality Manual Documents");
         }
 
@@ -48,6 +50,18 @@ namespace QmsHero.ViewModel
         public bool CanProcessFiles()
         {
             return true;
+        }
+
+        public void ProcessFiles()
+        {
+            try
+            {
+                this.manager.ProcessFiles(this.ActionList, true);
+            }
+            catch (Exception e)
+            {
+                this.manager.CloseApps();
+            }
         }
     }
 }

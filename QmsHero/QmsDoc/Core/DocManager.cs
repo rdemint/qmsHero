@@ -17,7 +17,7 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Core
 {
-    public class DocManager
+    public class DocManager: IDocManager
     {
         System.IO.DirectoryInfo topDir;
         DocManagerConfig config;
@@ -144,7 +144,7 @@ namespace QmsDoc.Core
                 }
             }
 
-
+            this.CloseApps();
             return true;
         }
 
@@ -177,6 +177,7 @@ namespace QmsDoc.Core
                     throw e;
                 }
             }
+            this.CloseApps();
         }
 
         public List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
@@ -237,7 +238,7 @@ namespace QmsDoc.Core
             }
         }
 
-        public bool CloseApps()
+        public void CloseApps()
         {
             try
             {
@@ -250,7 +251,7 @@ namespace QmsDoc.Core
             }
             catch (Exception e) {
                 //Do something
-                return false;
+                throw e;
             }
 
             try
@@ -262,11 +263,9 @@ namespace QmsDoc.Core
 
             catch (Exception e) {
                 //Do something
-                return false;
+                throw e;
             }
-
-            return true;
-            }
+        }
 
         public Boolean HasOpenFilePath(System.IO.FileInfo file_info)
         {
