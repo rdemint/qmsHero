@@ -19,11 +19,11 @@ namespace QmsDoc.Docs
         {
             
         }
-        public virtual int CloseDocument()
+        public virtual void CloseDocument()
         {
             throw new System.NotImplementedException();
         }
-        public virtual int OpenDocument()
+        public virtual void OpenDocument()
         {
             throw new System.NotImplementedException();
         }

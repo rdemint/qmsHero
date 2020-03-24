@@ -128,7 +128,18 @@ namespace QmsDoc.Docs
         public string LogoPath
         {
             get => this.logoPath;
-            set { this.logoPath = value; this.OnPropertyChanged(); }
+            set { 
+                this.logoPath = value;
+                var cell = this.HeaderFooter.Range.Tables[0]
+                    .Cell(
+                    this.DocConfig.LogoRow,
+                    this.DocConfig.LogoCol
+                    );
+                cell.Range.Delete();
+                var picture = cell.Range.InlineShapes.AddPicture(value, false, true);
+                picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
+                picture.Height = 28;
+                this.OnPropertyChanged(); }
         }
         public string LogoText
         {
@@ -136,6 +147,13 @@ namespace QmsDoc.Docs
             set
             {
                 this.logoText = value;
+                var cell = this.HeaderFooter.Range.Tables[0]
+                    .Cell(
+                    this.DocConfig.LogoRow,
+                    this.DocConfig.LogoCol
+                    );
+                cell.Range.Delete();
+                cell.Range.Text = value;
                 OnPropertyChanged();
             }
         }
@@ -152,17 +170,12 @@ namespace QmsDoc.Docs
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-        public Document OpenDocument()
+        public override void OpenDocument()
         {
-            if (this.fileInfo.Name.StartsWith("~")) {
-                return null;
-            }
-
-           
+         
             try
             {
-                this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.password, WritePasswordDocument: this.password);
-                return this.doc;
+                this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.ManagerConfig.DocPassword, WritePasswordDocument: this.ManagerConfig.DocPassword);
             }
             catch (Exception e)
             {
@@ -171,24 +184,21 @@ namespace QmsDoc.Docs
             }
         }
 
-        public override int CloseDocument()
+        public override void CloseDocument()
         {
             try
             {
                 var documents = this.app.Documents;
                 var count = documents.Count;
-                if (this.saveChanges)
+                if (this.ManagerConfig.SaveChanges)
                 {
-                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:Word.WdSaveOptions.wdSaveChanges);
+                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdSaveChanges);
                 }
                 else
                 {
                     //this.app.Documents.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
-                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
+                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdDoNotSaveChanges);
                 }
-
-                var result = this.app.Documents.Count - count;
-                return result;
             }
 
             catch (Exception e)
