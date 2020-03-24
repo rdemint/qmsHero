@@ -67,6 +67,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Docs\DCN.cs" />
     <Compile Include="Controls\ControlCheckBox.cs" />
     <Compile Include="Controls\ControlTextBox2.cs" />
     <Compile Include="Controls\ControlComboBox.cs" />
@@ -83,6 +84,11 @@
     <Compile Include="Core\DocControlManagerBase.cs" />
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
+    <Compile Include="Docs\DCI.cs" />
+    <Compile Include="Docs\ExcelDocConfig.cs" />
+    <Compile Include="Docs\QmsDocBaseConfig.cs" />
+    <Compile Include="Docs\WordDocConfig.cs" />
+    <Compile Include="Exceptions\MultipleDocHeadersException.cs" />
     <Compile Include="Interfaces\IDocActionControl.cs" />
     <Compile Include="Docs\ExcelDoc.cs" />
     <Compile Include="Docs\QmsDocBase.cs" />
@@ -100,6 +106,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

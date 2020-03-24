@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs
 {
-    class DCI
+    public class DCI: ExcelDoc
     {
+
     }
 }

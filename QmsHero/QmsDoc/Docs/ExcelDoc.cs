@@ -50,7 +50,7 @@ namespace QmsDoc.Docs
         public Excel.Workbook OpenDocument(FileInfo file_info)
         {
        
-            if (this.file_info.Name.StartsWith("~"))
+            if (this.FileInfo.Name.StartsWith("~"))
             {
                 return null;
             }
@@ -76,7 +76,7 @@ namespace QmsDoc.Docs
             {
                 var workbooks = this.app.Workbooks;
                 var count = workbooks.Count;
-                this.app.Workbooks[this.file_info.Name].Close(SaveChanges: this.save_changes);
+                this.app.Workbooks[this.FileInfo.Name].Close(SaveChanges: this.ManagerConfig.SaveChanges);
 
                 var result = this.app.Workbooks.Count - count;
                 return result;

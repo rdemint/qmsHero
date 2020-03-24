@@ -3,46 +3,125 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Word = Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Word;
 using System.ComponentModel;
 using QmsDoc.Interfaces;
 using System.IO;
 using QmsDoc.Core;
+using QmsDoc.Exceptions;
 
 namespace QmsDoc.Docs
 {
     public class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
     {
-        Word.Application app;
-        Word.Document doc;
+        Application app;
+        Document doc;
         WordDocConfig docConfig;
         DocManagerConfig managerConfig;
         FileInfo fileInfo;
+        HeaderFooter headerFooter;
+        bool headerFootersChecked;
         string logoText;
         string logoPath;
         string effectiveDate;
         string revision;
 
+
+        public WordDoc()
+        {
+
+        }
+
+        public WordDoc(Application app, System.IO.FileInfo file_info, Boolean save_changes = true, Boolean auto_close = true) : base()
+        {
+            this.app = app;
+            this.FileInfo = file_info;
+            this.OpenDocument();
+        }
+
+        #region Config
         public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public DocManagerConfig ManagerConfig { get => managerConfig; set => managerConfig = value; }
+        public FileInfo FileInfo { get => fileInfo;
+            set { this.headerFootersChecked = false; this.fileInfo = value; } }
+        #endregion  
 
-        public string Header { get => Header; set => Header = value; }
+        #region Header
+
+        public HeaderFooter HeaderFooter {
+            get
+            {
+                if (this.headerFootersChecked == false)
+                    {
+                        for (int i=0; i < this.doc.Sections.Count; i++)
+                            {
+                                var section = this.doc.Sections[i];
+                                if (i != DocConfig.HeaderFooterSection)
+                                {
+                                    var evenHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Exists;
+                                    var firstHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Exists;
+                                    var primHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Exists;
+
+                                    if (evenHF || firstHF || primHF)
+                                    {
+                                        throw new MultipleDocHeadersException($"{this.FileInfo.Name} has multiple headers in Section {section}.  This must be fixed manually");
+                                    }
+
+                                }
+                    
+                            }
+                        this.headerFootersChecked = true;
+                    }
+                
+                var hfSections = this.doc.Sections;
+                var hfSection = hfSections[DocConfig.HeaderFooterSection];
+                return hfSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+
+            }
+        }
         public string EffectiveDate
         {
-            get { return effectiveDate; }
+            get {
+                return this.HeaderFooter.Range.Tables[0]
+                    .Cell(
+                        this.DocConfig.EffectiveDateRow,
+                        this.DocConfig.EffectiveDateCol
+                    )
+                    .Range.Text;
+               }
+            
             set
             {
-                effectiveDate = value;
+                this.HeaderFooter.Range.Tables[0]
+                    .Cell(
+                        this.DocConfig.EffectiveDateRow,
+                        this.DocConfig.EffectiveDateCol
+                    )
+                    .Range.Text = value;
                 this.OnPropertyChanged();
             }
         }
 
         public string Revision
         {
-            get { return revision; }
+            get
+            {
+                return this.HeaderFooter.Range.Tables[0]
+                    .Cell(
+                        this.DocConfig.RevisionRow,
+                        this.DocConfig.RevisionCol
+                    )
+                    .Range.Text;
+            }
+
             set
             {
-                revision = value;
+                this.HeaderFooter.Range.Tables[0]
+                    .Cell(
+                        this.DocConfig.RevisionRow,
+                        this.DocConfig.RevisionCol
+                    )
+                    .Range.Text = value;
                 this.OnPropertyChanged();
             }
         }
@@ -61,32 +140,19 @@ namespace QmsDoc.Docs
             }
         }
 
+        #endregion
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WordDoc()
-        {
 
-        }
-
-        public WordDoc(Word.Application app, System.IO.FileInfo file_info, Boolean save_changes = true, Boolean auto_close = true) : base()
-        {
-            this.app = app;
-            this.fileInfo = file_info;
-            this.saveChanges = save_changes;
-            this.autoClose = auto_close;
-            this.doc = null;
-            this.password = "QMSpwd";
-            this.OpenDocument();
-        }
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-        public Word.Document OpenDocument()
+        public Document OpenDocument()
         {
             if (this.fileInfo.Name.StartsWith("~")) {
                 return null;

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Common
+namespace QmsDoc.Docs
 {
-    public class DCN
+    public class DCN: WordDoc
     {
         DirectoryInfo targetDir;
         List<FileInfo> dirFiles;
