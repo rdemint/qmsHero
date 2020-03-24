@@ -9,6 +9,7 @@ using QmsDoc.Interfaces;
 using System.IO;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace QmsDoc.Docs
 {
@@ -32,10 +33,12 @@ namespace QmsDoc.Docs
 
         }
 
-        public WordDoc(Application app, System.IO.FileInfo file_info, Boolean save_changes = true, Boolean auto_close = true) : base()
+        public WordDoc(Application app, System.IO.FileInfo file_info) : base()
         {
             this.app = app;
             this.FileInfo = file_info;
+            this.DocConfig = SimpleIoc.Default.GetInstance<WordDocConfig>();
+            this.ManagerConfig = SimpleIoc.Default.GetInstance<DocManagerConfig>();
             this.OpenDocument();
         }
 

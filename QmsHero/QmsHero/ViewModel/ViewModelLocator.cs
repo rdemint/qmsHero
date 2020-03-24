@@ -18,6 +18,7 @@ using CommonServiceLocator;
 using System.ComponentModel;
 using QmsDoc.Interfaces;
 using QmsDoc.Core;
+using QmsDoc.Docs;
 
 
 namespace QmsHero.ViewModel
@@ -51,6 +52,9 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<DocManager>();
             SimpleIoc.Default.Register<DocActionControlManager>();
             SimpleIoc.Default.Register<DocConfigControlManager>();
+            SimpleIoc.Default.Register<DocManagerConfig>();
+            SimpleIoc.Default.Register<WordDocConfig>();
+            SimpleIoc.Default.Register<ExcelDocConfig>();
         }
 
         public ViewModelBase MainViewModel

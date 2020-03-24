@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using FileInfo = System.IO.FileInfo;
 using QmsDoc.Core;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace QmsDoc.Docs
 
@@ -25,12 +26,12 @@ namespace QmsDoc.Docs
 
         public ExcelDoc() { }
 
-        public ExcelDoc(Excel.Application app, System.IO.FileInfo fileInfo, ExcelDocConfig docConfig, DocManagerConfig managerConfig)
+        public ExcelDoc(Excel.Application app, System.IO.FileInfo fileInfo): base()
         {
             this.app = app;
             this.FileInfo = fileInfo;
-            this.DocConfig = docConfig;
-            this.ManagerConfig = managerConfig;
+            this.DocConfig = SimpleIoc.Default.GetInstance<ExcelDocConfig>();
+            this.ManagerConfig = SimpleIoc.Default.GetInstance<DocManagerConfig>();
             this.OpenDocument(fileInfo);
         }
 
@@ -58,7 +59,7 @@ namespace QmsDoc.Docs
             try
             {
 
-              Excel.Workbook workbook = this.app.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.password);
+              Excel.Workbook workbook = this.app.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword);
               return workbook;
             }
 
@@ -70,16 +71,13 @@ namespace QmsDoc.Docs
             
         }
 
-        public override int CloseDocument()
+        public override void CloseDocument()
         {
             try
             {
                 var workbooks = this.app.Workbooks;
                 var count = workbooks.Count;
                 this.app.Workbooks[this.FileInfo.Name].Close(SaveChanges: this.ManagerConfig.SaveChanges);
-
-                var result = this.app.Workbooks.Count - count;
-                return result;
             }
 
             catch (Exception e)
@@ -93,19 +91,5 @@ namespace QmsDoc.Docs
         {
             base.SaveAsPdf();
         }
-        //public override void HeaderRev(string rev)
-        //{
-        //    Console.WriteLine($"ExcelDoc changing HeaderRev to {rev}");
-        //}
-
-        //public override void HeaderEffectiveDate(string eff_date)
-        //{
-        //    Console.WriteLine($"ExcelDoc changing Effective Date to {eff_date}");
-        //}
-
-        //public override void HeaderLogo(string logo_path)
-        //{
-        //    Console.WriteLine($"ExcelDoc changing header logo to picture at to {logo_path}");
-        //}
     }
 }

@@ -14,13 +14,16 @@ using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Docs;
 using QmsDoc.Interfaces;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace QmsDoc.Core
 {
     public class DocManager: IDocManager
     {
         System.IO.DirectoryInfo topDir;
-        DocManagerConfig config;
+        DocManagerConfig managerConfig;
+        ExcelDocConfig excelConfig;
+        WordDocConfig wordConfig;
         List<FileInfo> dirFilesUnsafe;
         List<FileInfo> dirFiles;
         List<string> wordDocExtensions;
@@ -40,20 +43,7 @@ namespace QmsDoc.Core
             var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();
             return result;
         }
-        public DocManagerConfig Config {
-            get {
-                if (this.config == null)
-                {
-                    this.config = new DocManagerConfig();
-                }
-                return this.config;
-            }
-            set
-            {
-                this.config = value;
-            }
-        }
-
+ 
         public DocManager()
         {
             this.wordDocExtensions = new List<string> { ".docx", ".doc" };
@@ -121,7 +111,7 @@ namespace QmsDoc.Core
         }
         public Boolean ProcessFiles(Dictionary<string, object> action_dict, bool test=false)
         {
-            Contract.Requires(this.config != null);
+            Contract.Requires(this.managerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(action_dict.Count >= 1);
             
@@ -151,7 +141,7 @@ namespace QmsDoc.Core
 
         public void ProcessFiles(List<IDocActionControl> actionControls, bool test=false)
         {
-            Contract.Requires(this.config != null);
+            Contract.Requires(this.managerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(actionControls.Count >= 1);
 
@@ -165,7 +155,7 @@ namespace QmsDoc.Core
                 {
                     QmsDocBase doc = this.CreateDoc(file_info, test);
                     this.ProcessDoc(doc, filteredControls);
-                    if (this.Config.LeaveDocumentsOpen == false && test == false)
+                    if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true && test == false)
                     {
                         doc.CloseDocument();
                     }
@@ -211,7 +201,9 @@ namespace QmsDoc.Core
                 // create excel doc and process
                 if (test == false)
                 {
-                    QmsDocBase doc = new ExcelDoc(this.excelApp, file_info);
+                    QmsDocBase doc = new ExcelDoc(
+                        this.excelApp, 
+                        file_info);
                     return doc;
                 }
                 else
