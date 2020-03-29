@@ -233,31 +233,41 @@ namespace QmsDoc.Core
 
         public void CloseApps()
         {
-            try
+            if (this.wordApp != null)
             {
-                this.wordApp.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
-                this.wordApp.Documents.Close(
-                        Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
-                        Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat
-                    );
-                this.wordApp.Quit();
+                try
+                {
+                    this.wordApp.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
+                    this.wordApp.Documents.Close(
+                            Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
+                            Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat
+                        );
+                    this.wordApp.Quit();
+                }
+                catch (Exception e)
+                {
+                    //Do something
+                    throw e;
+                }
             }
-            catch (Exception e) {
-                //Do something
-                throw e;
-            }
-
-            try
+            
+            
+            if (this.excelApp != null)
             {
-                this.excelApp.DisplayAlerts = false;
-                this.excelApp.Workbooks.Close();
-                this.excelApp.Quit();
-            }
+                try
+                {
+                    this.excelApp.DisplayAlerts = false;
+                    this.excelApp.Workbooks.Close();
+                    this.excelApp.Quit();
+                }
 
-            catch (Exception e) {
-                //Do something
-                throw e;
+                catch (Exception e)
+                {
+                    //Do something
+                    throw e;
+                }
             }
+            
         }
 
         public Boolean HasOpenFilePath(System.IO.FileInfo file_info)

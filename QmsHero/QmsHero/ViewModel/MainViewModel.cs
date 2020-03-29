@@ -53,6 +53,7 @@ namespace QmsHero.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             this.NavToCustomProcessingViewModel.RaiseCanExecuteChanged();
             this.NavToConfigViewModel.RaiseCanExecuteChanged();
+            this.NavToDCNViewModel.RaiseCanExecuteChanged();
         }
         public ViewModelBase ActiveViewModel
         {

@@ -22,7 +22,6 @@ namespace QmsDoc.Controls
     public partial class ToggleCheckBox : UserControl, INotifyPropertyChanged
     {
         string controlName;
-        //string displayName;
         //string controlValue;
         public ToggleCheckBox()
         {

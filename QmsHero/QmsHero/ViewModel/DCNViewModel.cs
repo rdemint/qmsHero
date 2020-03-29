@@ -12,6 +12,8 @@ namespace QmsHero.ViewModel
     public class DCNViewModel: ViewModelBase
     {
         string effectiveDate;
+        string revision;
+        string logoText;
         DocManager manager;
 
         public DCNViewModel()
@@ -25,6 +27,9 @@ namespace QmsHero.ViewModel
             set {
                 Set<string>(() => this.EffectiveDate, ref this.effectiveDate, value);
             } }
+
+        public string Revision { get => revision; set => revision = value; }
+        public string LogoText { get => logoText; set => logoText = value; }
 
         //.manager.ConfigDir()
         //. foreach (fileinfo in manager.DirFiles) {

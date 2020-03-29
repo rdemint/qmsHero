@@ -61,6 +61,7 @@ namespace QmsHero.ViewModel
             catch (Exception e)
             {
                 this.manager.CloseApps();
+                throw e;
             }
         }
     }
