@@ -8,37 +8,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DCN">
+    <Page.Resources>
+        <ResourceDictionary Source="Resources/DocHeader.xaml"/>
+    </Page.Resources>
     <StackPanel
             Background="Azure"
             Orientation="Vertical"
             >
-        <TextBox
-                Text="Some text here"
-                ></TextBox>
-        <controls:ToggleCheckBox
-            DisplayName = "Effective Date"
-            ControlValue = "{Binding EffectiveDate}"/>
-        <controls:ToggleCheckBox
-            DisplayName="Revision"
-            ControlValue="{Binding Revision}"/>
-        <ComboBox
-            x:Name="LogoComboBox"
-            SelectedIndex="0">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <Frame Content="{Binding Path=SelectedItem}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-            <ComboBoxItem>
-                <controls:ToggleCheckBox
-                DisplayName = "Effective Date"
-                ControlValue = "1st option text"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <controls:ToggleCheckBox
-                DisplayName = "Effective Date"
-                ControlValue = "2nd option text"/>
-            </ComboBoxItem>
-        </ComboBox>
-        </StackPanel>
+        <ContentControl 
+            Content="{Binding Path=DocHeader}"
+            ContentTemplate="{StaticResource DocHeaderDataTemplate}"/>
+    </StackPanel>
 </Page>

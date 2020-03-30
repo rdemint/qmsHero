@@ -41,3 +41,4 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.exe
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCNView.g.cs
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCNView.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\DocHeader.baml

@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:QmsHero.View.Resources"
                     xmlns:core="clr-namespace:QmsDoc.Core;assembly=QmsDoc"
                     xmlns:controls="clr-namespace:QmsDoc.Controls;assembly=QmsDoc">
     <DataTemplate
@@ -14,19 +13,36 @@
             <controls:ToggleCheckBox
                 DisplayName="EffectiveDate"
                 ControlValue="{Binding EffectiveDate}"/>
-            <ComboBox>
-                
-                <ComboBoxItem>
-                    <controls:ToggleCheckBox
-                        DisplayName="Logo Path"
-                        ControlValue="{Binding LogoPath}"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <controls:ToggleCheckBox
-                        DisplayName="Logo Text"
-                        ControlValue="{Binding LogoText}"/>
-                </ComboBoxItem>
-            </ComboBox>
+            <StackPanel
+                Name="DocLogoPanel"
+                Orientation="Vertical"
+                />
+                <ComboBox
+                        Name="DocLogoComboBox"
+                        SelectedIndex="0"
+                        >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=DisplayName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                    <ComboBoxItem
+                            Name="LogoPath"
+                            >
+                        <controls:ToggleCheckBox
+                                DisplayName="Logo Path"
+                                ControlValue="{Binding Path=LogoPath}"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem
+                            Name="LogoText">
+                        <controls:ToggleCheckBox
+                                DisplayName="Logo Text"
+                                ControlValue="{Binding Path=LogoText}"/>
+                    </ComboBoxItem>
+                </ComboBox>
+                <ContentControl
+                        Name="DocComboBoxSelection"
+                        Content="{Binding ElementName=DocLogoComboBox, Path=SelectedItem.Content, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

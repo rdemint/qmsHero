@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 namespace QmsDoc.Core
 {
     class DocEdit
+
     {
+        DocHeader docheader;
+        DocBody docbody;
+        DocProperties docProperties;
     }
 }

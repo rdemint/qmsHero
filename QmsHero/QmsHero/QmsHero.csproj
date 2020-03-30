@@ -125,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Page Include="View\Resources\DocHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Resources\ViewViewModelDict.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

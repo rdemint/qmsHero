@@ -28,6 +28,7 @@
                 <ResourceDictionary Source="Resources/ControlTextBox2.xaml"/>
                 <ResourceDictionary Source="Resources/DocAction.xaml"/>
                 <ResourceDictionary Source="Resources/ControlComboBox.xaml"/>
+                <ResourceDictionary Source="Resources/DocHeader.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
