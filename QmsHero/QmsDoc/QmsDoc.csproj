@@ -70,6 +70,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Core\DocBody.cs" />
     <Compile Include="Core\DocEdit.cs" />
     <Compile Include="Core\DocHeader.cs" />
