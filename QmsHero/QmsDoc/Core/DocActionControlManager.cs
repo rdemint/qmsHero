@@ -5,24 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Interfaces;
-using QmsDoc.Controls;
 
 namespace QmsDoc.Core
 {
-    
     public class DocActionControlManager: DocControlManagerBase
     {
-        ControlComboBox logo;
-        ControlFolderPicker logoPath;
-        ControlCheckTextBox logoText;
-        ControlCheckTextBox effectiveDate;
-        ControlCheckTextBox revision;
-
-        public ControlFolderPicker LogoPath { get => logoPath; set => logoPath = value; }
-        public ControlCheckTextBox LogoText { get => logoText; set => logoText = value; }
-        public ControlCheckTextBox EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public ControlCheckTextBox Revision { get => revision; set => revision = value; }
-        public ControlComboBox Logo { get => logo; set => logo = value; }
 
         public DocActionControlManager():base()
         {

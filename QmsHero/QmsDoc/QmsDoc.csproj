@@ -71,30 +71,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\FilePicker.xaml.cs">
-      <DependentUpon>FilePicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FolderPicker.xaml.cs">
-      <DependentUpon>FolderPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\QBase.cs" />
-    <Compile Include="Controls\ToggleCheckBox.xaml.cs">
-      <DependentUpon>ToggleCheckBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Core\DocBody.cs" />
     <Compile Include="Core\DocEdit.cs" />
     <Compile Include="Core\DocHeader.cs" />
     <Compile Include="Core\DocProperties.cs" />
     <Compile Include="Interfaces\IDocHeader.cs" />
     <Compile Include="Docs\DCN.cs" />
-    <Compile Include="Controls\ControlCheckBox.cs" />
-    <Compile Include="Controls\ControlTextBox2.cs" />
-    <Compile Include="Controls\ControlComboBox.cs" />
-    <Compile Include="Controls\ControlTextBox.cs" />
     <Compile Include="Core\DocAction.cs" />
-    <Compile Include="Controls\ControlBase.cs" />
-    <Compile Include="Controls\ControlFolderPicker.cs" />
-    <Compile Include="Controls\ControlCheckTextBox.cs" />
     <Compile Include="Core\DocActionControlManager.cs" />
     <Compile Include="Core\DocConfigControlManager.cs" />
     <Compile Include="Core\DocControlManagerBase.cs" />
@@ -116,20 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\FilePicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\FolderPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ToggleCheckBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
