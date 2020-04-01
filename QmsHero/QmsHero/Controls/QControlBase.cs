@@ -47,7 +47,6 @@ namespace QmsHero.Controls
     public class QControlBase : Control
     {
 
-        FrameworkPropertyMetadata qStateMetaData;
         static QControlBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(QControlBase), new FrameworkPropertyMetadata(typeof(QControlBase)));
@@ -121,7 +120,7 @@ namespace QmsHero.Controls
         {
             QControlBase qb = (QControlBase)d;
             string state = (string)value;
-            if (qb.QOutput != null)
+            if (qb.QState != qb.QOutput && qb.QOutput != null)
             {
                 return qb.QOutput;
             }
@@ -134,7 +133,7 @@ namespace QmsHero.Controls
         public static void OnQStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             var qc = (QControlBase)d;
-            if (qc.QState != qc.QOutput)
+            if (qc.QState != qc.QOutput && qc.QIsValid)
             {
                 qc.CoerceValue(QOutputProperty);
             }

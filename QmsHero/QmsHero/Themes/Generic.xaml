@@ -24,7 +24,7 @@
                     <StackPanel Orientation="Horizontal">
                         <CheckBox
                             Name="myCheckTextBox"
-                            IsChecked="{Binding Path=QIsValid, Mode=TwoWay}"/>
+                            IsChecked="{Binding Path=QIsValid, Mode=OneWayToSource}"/>
                         <Label Content="{Binding Path=QDisplay, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
                         <TextBox 
                             MinWidth="200" 
