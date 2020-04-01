@@ -79,8 +79,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\QCheckBox.cs" />
-    <Compile Include="Controls\QCheckTextBox.cs" />
     <Compile Include="Interfaces\IPageViewModel.cs" />
     <Compile Include="Interfaces\IQmsHeroViewModels.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
@@ -91,48 +89,7 @@
     <Compile Include="View\CustomProcessingView.xaml.cs">
       <DependentUpon>CustomProcessingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\QControlBase.cs" />
-    <Resource Include="View\Resources\DocActionDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="View\Resources\ControlTextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="View\Resources\ControlCheckBoxTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="View\Resources\DocAction.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="View\Resources\ControlFolderPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="View\Resources\ControlCheckTextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="View\Resources\ControlComboBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\DCNView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Resource Include="View\Resources\ControlTextBox2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Page Include="View\Resources\DocHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
