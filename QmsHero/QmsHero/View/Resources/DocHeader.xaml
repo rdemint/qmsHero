@@ -17,18 +17,27 @@
             <controls:ToggleCheckBox
                 DisplayName="EffectiveDate"
                 ControlValue="{Binding EffectiveDate}"/>
-            <StackPanel
-                Name="DocLogoPanel"
-                Orientation="Vertical"
-                />
-            <controls:ToggleCheckBox
-                                    IsEnabled="{Binding ElementName=LogoPath, Path=IsEnabled, Converter={StaticResource InverseBoolConverter}, Mode=TwoWay}"
-                                    DisplayName="Logo Text"
-                                    ControlValue="{Binding Path=LogoText}"/>
-            <controls:ToggleCheckBox
-                                    Name="LogoPath"
-                                    DisplayName="Logo Path"
-                                    ControlValue="{Binding Path=LogoPath}"/>
+            <TabControl
+                Name="DocLogoControl"
+                TabStripPlacement="Bottom"
+                >
+                <TabItem
+                    Header="Image"
+                    Name="LogoPathTab"
+                    >
+                    <controls:FilePicker
+                                        IsEnabled="{Binding ElementName=LogoPathTab, Path=IsSelected}"
+                                        DisplayName="Choose Logo"
+                                        ControlValue="{Binding Path=LogoPath}"/>
+                </TabItem>
+                <TabItem
+                    Name="LogoTextButton"
+                    Header="Text"
+                    >
+                    <TextBox
+                        Text="{Binding Path=LogoText}"/>
+                </TabItem>
+            </TabControl>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

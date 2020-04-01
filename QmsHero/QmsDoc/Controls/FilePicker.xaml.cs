@@ -1,5 +1,9 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +20,12 @@ using System.Windows.Shapes;
 namespace QmsDoc.Controls
 {
     /// <summary>
-    /// Interaction logic for ToggleCheckBox.xaml
+    /// Interaction logic for FolderPicker.xaml
     /// </summary>
-    public partial class ToggleCheckBox : UserControl
+    public partial class FilePicker : UserControl
     {
-        public ToggleCheckBox()
+        RelayCommand openFileDialog;
+        public FilePicker()
         {
             InitializeComponent();
         }
@@ -29,7 +34,7 @@ namespace QmsDoc.Controls
            DependencyProperty.Register(
        "ControlValue",
        typeof(string),
-       typeof(ToggleCheckBox),
+       typeof(FilePicker),
        new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
        );
 
@@ -37,14 +42,7 @@ namespace QmsDoc.Controls
         {
             get
             {
-                if (this.MyCheckBox.IsChecked.HasValue ? this.MyCheckBox.IsChecked.Value : false)
-                {
-                    return (string)GetValue(ControlValueProperty);
-                }
-                else
-                {
-                    return null;
-                }
+                return (string)GetValue(ControlValueProperty);
             }
             set
             {
@@ -58,7 +56,7 @@ namespace QmsDoc.Controls
             DependencyProperty.Register(
                 "DisplayName",
                 typeof(string),
-                typeof(ToggleCheckBox),
+                typeof(FilePicker),
                 new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
            );
 
@@ -73,5 +71,28 @@ namespace QmsDoc.Controls
                 SetValue(DisplayNameProperty, value);
             }
         }
+
+        public RelayCommand OpenFileDialog {
+            get { 
+                if  (this.openFileDialog == null)
+                {
+                    this.openFileDialog = new RelayCommand(
+                        ()=>
+                        {
+                            var fd = new OpenFileDialog();
+                            var result = fd.ShowDialog();
+                            if (result == true)
+                            {
+                                ControlValue = fd.FileName;
+                            }
+                        },
+                        ()=> true
+                        );
+                }
+                return this.openFileDialog;
+            }
+            
+        }
+
     }
 }

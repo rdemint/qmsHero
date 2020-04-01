@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,35 +17,31 @@ using System.Windows.Shapes;
 namespace QmsDoc.Controls
 {
     /// <summary>
-    /// Interaction logic for ToggleCheckBox.xaml
+    /// Interaction logic for FolderPicker.xaml
     /// </summary>
-    public partial class ToggleCheckBox : UserControl
+    public partial class FolderPicker : UserControl
+
     {
-        public ToggleCheckBox()
+        RelayCommand openFolderDialog;
+
+        public FolderPicker()
         {
             InitializeComponent();
         }
 
         public static DependencyProperty ControlValueProperty =
-           DependencyProperty.Register(
-       "ControlValue",
-       typeof(string),
-       typeof(ToggleCheckBox),
-       new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
-       );
+   DependencyProperty.Register(
+"ControlValue",
+typeof(string),
+typeof(FolderPicker),
+new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
+);
 
         public string ControlValue
         {
             get
             {
-                if (this.MyCheckBox.IsChecked.HasValue ? this.MyCheckBox.IsChecked.Value : false)
-                {
-                    return (string)GetValue(ControlValueProperty);
-                }
-                else
-                {
-                    return null;
-                }
+                return (string)GetValue(ControlValueProperty);
             }
             set
             {
@@ -58,7 +55,7 @@ namespace QmsDoc.Controls
             DependencyProperty.Register(
                 "DisplayName",
                 typeof(string),
-                typeof(ToggleCheckBox),
+                typeof(FolderPicker),
                 new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }
            );
 
@@ -72,6 +69,30 @@ namespace QmsDoc.Controls
             {
                 SetValue(DisplayNameProperty, value);
             }
+        }
+
+        public RelayCommand OpenFileDialog
+        {
+            get
+            {
+                if (this.openFolderDialog == null)
+                {
+                    this.openFolderDialog = new RelayCommand(
+                        () =>
+                        {
+                            var fd = new System.Windows.Forms.FolderBrowserDialog();
+                            var result = fd.ShowDialog();
+                            if (result == System.Windows.Forms.DialogResult.OK)
+                            {
+                                ControlValue = fd.SelectedPath;
+                            }
+                        }, 
+                        ()=> true
+                        );
+                }
+                return this.openFolderDialog;
+            }
+
         }
     }
 }

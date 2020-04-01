@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-12145974394
+3665405902
 
-35-803924379
-126-1336634492
-Controls\ToggleCheckBox.xaml;
+37-1323164786
+1271351965178
+Controls\FilePicker.xaml;Controls\FolderPicker.xaml;Controls\ToggleCheckBox.xaml;
 
-False
+True
 
