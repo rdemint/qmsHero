@@ -89,7 +89,7 @@ namespace QmsDoc.Core
         {
             foreach (IDocActionControl actionControl in actionControls)
             {
-                var propertyInfo = doc.GetType().GetProperty(actionControl.DocActionName);
+                var propertyInfo = doc.GetType().GetProperty(actionControl.DisplayValue);
                 if (propertyInfo != null)
                 {
                     propertyInfo.SetValue(doc, actionControl.DocActionVal);
@@ -174,7 +174,7 @@ namespace QmsDoc.Core
         public List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
         {
             var query = controls
-                .Where(control => control.ControlIsEnabled == true)
+                .Where(control => control.ControlIsValid == true)
                 .Where(control => control.DocActionVal != null)
                 .Where(control=> (string)control.DocActionVal != "");
             return query.ToList();

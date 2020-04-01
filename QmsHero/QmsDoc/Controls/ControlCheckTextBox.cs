@@ -12,6 +12,6 @@ namespace QmsDoc.Controls
         {
 
         }
-        public ControlCheckTextBox(string docActionName, object docActionVal, bool controlIsEnabled=true) : base(docActionName, docActionVal, controlIsEnabled) { }
+        public ControlCheckTextBox(string displayValue, bool qInit) : base(displayValue, qInit) { }
     }
 }

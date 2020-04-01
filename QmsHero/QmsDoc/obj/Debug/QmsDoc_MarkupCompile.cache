@@ -16,5 +16,5 @@ DEBUG;TRACE
 1271351965178
 Controls\FilePicker.xaml;Controls\FolderPicker.xaml;Controls\ToggleCheckBox.xaml;
 
-False
+True
 

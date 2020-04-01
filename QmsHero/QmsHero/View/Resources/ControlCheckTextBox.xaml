@@ -5,11 +5,11 @@
     <DataTemplate
         DataType="{x:Type controls:ControlCheckTextBox}">
         <StackPanel Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding ControlIsEnabled, Mode=TwoWay}"/>
-            <Label Content="{Binding DocActionName}"/>
+            <CheckBox IsChecked="{Binding ControlIsValid, Mode=TwoWay}"/>
+            <Label Content="{Binding DisplayValue}"/>
             <TextBox 
                 MinWidth="200"
-                Text="{Binding Mode=TwoWay, Path=DocActionVal}"
+                Text="{Binding Mode=TwoWay, Path=ControlState}"
                 IsEnabled="{Binding ControlIsEnabled}"/>
         </StackPanel>
     </DataTemplate>

@@ -5,8 +5,8 @@
     <DataTemplate
         DataType="{x:Type controls:ControlCheckBox}">
         <StackPanel Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding Path=DocActionVal, Mode=TwoWay}"/>
-            <Label Content="{Binding Path=DocActionName}"/>
+            <CheckBox IsChecked="{Binding Path=ControlIsValid, Mode=TwoWay}"/>
+            <Label Content="{Binding Path=DisplayValue}"/>
         </StackPanel>
     </DataTemplate>
 

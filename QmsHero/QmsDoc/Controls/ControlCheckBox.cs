@@ -12,7 +12,5 @@ namespace QmsDoc.Controls
         {
 
         }
-
-        public ControlCheckBox(string Name, object value):base(Name, value) { }
     }
 }

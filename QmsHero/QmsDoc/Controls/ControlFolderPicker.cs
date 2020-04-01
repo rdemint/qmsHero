@@ -10,7 +10,6 @@ namespace QmsDoc.Controls
     public class ControlFolderPicker: ControlBase
     {
         public ControlFolderPicker(): base()  {}
-        public ControlFolderPicker(string docActionName, object docActionVal): base(docActionName, docActionVal) { }
 
     }
 }

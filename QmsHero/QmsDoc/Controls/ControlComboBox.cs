@@ -38,8 +38,7 @@ namespace QmsDoc.Controls
             set
                 {
                     Set<IDocActionControl>(() => this.SelectedControl, ref selectedControl, value);
-                    this.DocActionName = value.DocActionName;
-                    this.DocActionVal = value.DocActionVal;
+                    this.DisplayValue = value.DisplayValue;
                 }
         }
     }

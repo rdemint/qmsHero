@@ -10,54 +10,63 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Controls
 {
-    public class ControlBase : ObservableObject, IDocActionControl
+    public class ControlBase : ObservableObject
     {
-        bool controlIsEnabled;
-        string docActionName;
-        object docActionVal;
+        bool controlIsValid;
+        bool qInitial;
+        string displayValue;
+        string controlState;
+        string controlOutput;
 
         public ControlBase()
         {
 
         }
         
-        public ControlBase(string docActionName, object docActionVal, bool controlIsEnabled=true)
+        public string DisplayValue
         {
-            this.DocActionVal = docActionVal;
-            this.DocActionName = docActionName;
-            this.ControlIsEnabled = controlIsEnabled;
-        }
-
-        public string DocActionName
-        {
-            get => docActionName;
+            get => displayValue;
             set
             {
-                Set<string>(() => this.DocActionName, ref docActionName, value);
+                Set<string>(() => this.DisplayValue, ref displayValue, value);
             }
         }
-        public bool ControlIsEnabled
+        public bool ControlIsValid
         {
-            get => controlIsEnabled;
+            get => ControlIsValid;
             set
             {
-                Set<bool>(() => this.ControlIsEnabled, ref controlIsEnabled, value);
+                Set<bool>(() => this.ControlIsValid, ref controlIsValid, value);
             }
         }
 
-        public object DocActionVal { get => docActionVal; set => docActionVal = value; }
-
-
-        public static ControlBase GetControl(ControlBase currentVal, [CallerMemberName] string actionName = null)
+        public string ControlState
         {
-            if (currentVal != null)
+            get => controlState;
+            set
             {
-                return currentVal;
-            }
-            else
-            {
-                return new ControlBase(actionName, null);
+                Set<string>(() => this.ControlState, ref controlState, value);
             }
         }
+
+        public string ControlOutput {
+            get { 
+                    if (this.ControlIsValid)
+                    {
+                        return this.ControlState;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+            } 
+            set {
+                Set<string>(() => this.ControlState, ref controlState, value);
+            } 
+        }
+
+        public bool QInitial {
+            get => qInitial;
+            }
     }
 }

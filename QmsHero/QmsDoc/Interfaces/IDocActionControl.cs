@@ -2,8 +2,8 @@
 {
     public interface IDocActionControl
     {
-        bool ControlIsEnabled { get; set; }
-        string DocActionName { get; set; }
+        bool ControlIsValid { get; set; }
+        string DisplayValue { get; set; }
         object DocActionVal { get; set; }
     }
 }

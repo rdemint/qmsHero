@@ -12,7 +12,5 @@ namespace QmsDoc.Controls
         {
 
         }
-
-        public ControlTextBox2(string Name, object value) : base(Name, value) { }
     }
 }
