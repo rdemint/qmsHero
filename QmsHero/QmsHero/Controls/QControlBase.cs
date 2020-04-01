@@ -74,7 +74,15 @@ namespace QmsHero.Controls
         public static void OnQIsValidChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             var qc = (QControlBase)d;
-            qc.CoerceValue(QOutputProperty);
+            if ((bool)args.NewValue == false)
+            {
+                qc.QOutput = null;
+            }
+
+            else
+            {
+                qc.QOutput = qc.QState;
+            }
         }
 
         public string QDisplay
@@ -112,30 +120,30 @@ namespace QmsHero.Controls
                 new FrameworkPropertyMetadata(
                     null,
                     (FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits),
-                    new PropertyChangedCallback(OnQStateChanged),
-                    new CoerceValueCallback(CoerceQState)
+                    new PropertyChangedCallback(OnQStateChanged)
+                    //new CoerceValueCallback(CoerceQState)
                 ));
 
-        public static object CoerceQState(DependencyObject d, object value)
-        {
-            QControlBase qb = (QControlBase)d;
-            string state = (string)value;
-            if (qb.QState != qb.QOutput && qb.QOutput != null)
-            {
-                return qb.QOutput;
-            }
-            else
-            {
-                return state;
-            }
-        }
+        //public static object CoerceQState(DependencyObject d, object value)
+        //{
+        //    QControlBase qb = (QControlBase)d;
+        //    string state = (string)value;
+        //    if (qb.QState != qb.QOutput && qb.QOutput != null)
+        //    {
+        //        return qb.QOutput;
+        //    }
+        //    else
+        //    {
+        //        return state;
+        //    }
+        //}
 
         public static void OnQStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             var qc = (QControlBase)d;
             if (qc.QState != qc.QOutput && qc.QIsValid)
             {
-                qc.CoerceValue(QOutputProperty);
+                qc.QOutput = (string)args.NewValue;
             }
         }
 
@@ -167,31 +175,33 @@ namespace QmsHero.Controls
                 new FrameworkPropertyMetadata(
                     null,
                     (FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits),
-                    new PropertyChangedCallback(OnQOutputChanged),
-                    new CoerceValueCallback(CoerceQOutput)
+                    new PropertyChangedCallback(OnQOutputChanged)
+                    //new CoerceValueCallback(CoerceQOutput)
                     )
                 );
-        public static object CoerceQOutput(DependencyObject d, object value)
-        {
-            QControlBase qb = (QControlBase)d;
-            string state = (string)value;
-            if (qb.QIsValid)
-            {
-                return qb.QState;
-            }
+        //public static object CoerceQOutput(DependencyObject d, object value)
+        //{
+        //    //QControlBase qb = (QControlBase)d;
+        //    //string state = (string)value;
+        //    //if (qb.QIsValid)
+        //    //{
+        //    //    return qb.QState;
+        //    //}
 
-            else
-            {
-                return null;
-            }
-        }
+        //    //else
+        //    //{
+        //    //    return null;
+        //    //}
+        //    return value;
+        //}
 
         public static void OnQOutputChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             var qc = (QControlBase)d;
             if (args.NewValue != null && qc.QOutput != qc.QState)
             {
-                qc.CoerceValue(QStateProperty);
+                //qc.CoerceValue(QStateProperty);
+                qc.QState = (string)args.NewValue;
             }
         }
     }

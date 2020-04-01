@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using QmsDoc.Core;
 
@@ -16,6 +17,7 @@ namespace QmsHero.ViewModel
         string logoText;
         DocManager manager;
         DocHeader docHeader;
+        RelayCommand processFiles;
 
         public DCNViewModel()
         {
@@ -48,6 +50,29 @@ namespace QmsHero.ViewModel
             }
         }
 
+        public RelayCommand ProcessFiles {
+            get {
+                if (processFiles == null)
+                {
+                    processFiles = new RelayCommand(
+                            () => ShowMessage(EffectiveDate),
+                            () => true
+                        );
+                }
+                return processFiles;
+            }
+            set {
+                processFiles = value;
+
+            } }
+
+ 
+
+        public static void ShowMessage(string ed)
+        {
+            System.Windows.MessageBox.Show(ed);
+                
+        }
         //.manager.ConfigDir()
         //. foreach (fileinfo in manager.DirFiles) {
         //.     var doc = manager.CreateDoc(fileinfo)

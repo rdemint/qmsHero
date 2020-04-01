@@ -16,7 +16,7 @@
         <controls:QCheckBox QDisplay="Save as PDF" QOutput="{Binding Path=Revision}"/>
         <TextBlock Text="some more text here"/>
         <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=EffectiveDate, Mode=TwoWay}"/>
-      
-      
+        <Button Command="{Binding ProcessFiles}" Content="Process Files"/>
+
     </StackPanel>
 </Page>
