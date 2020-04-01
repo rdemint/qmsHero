@@ -21,11 +21,11 @@ namespace QmsHero.ViewModel
         {
             this.EffectiveDate = "2020-03-20";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.docHeader = new DocHeader();
-            this.docHeader.Revision = "1";
-            this.docHeader.EffectiveDate = "2020-03-20";
-            this.docHeader.LogoPath = "C:/raine/qmsProcessing";
-
+            //this.docHeader = new DocHeader();
+            //this.docHeader.Revision = "1";
+            //this.docHeader.EffectiveDate = "2020-03-20";
+            //this.docHeader.LogoPath = "C:/raine/qmsProcessing";
+            this.Revision = "1";
         }
 
         public string EffectiveDate { 
@@ -36,13 +36,17 @@ namespace QmsHero.ViewModel
 
         public string Revision { get => revision; set => revision = value; }
         public string LogoText { get => logoText; set => logoText = value; }
-        public DocHeader DocHeader { 
+
+        public DocHeader DocHeader
+        {
             get => docHeader;
-            set {
+            set
+            {
                 Set<DocHeader>(
                     () => this.DocHeader, ref this.docHeader, value
                     );
-            } }
+            }
+        }
 
         //.manager.ConfigDir()
         //. foreach (fileinfo in manager.DirFiles) {

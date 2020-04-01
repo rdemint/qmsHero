@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Controls
 {
-    public class ControlCheckTextBox: ControlBase
+    public class ControlCheckTextBox: QBase
     {
         public ControlCheckTextBox(): base()
         {
 
         }
-        public ControlCheckTextBox(string displayValue, bool qInit) : base(displayValue, qInit) { }
     }
 }

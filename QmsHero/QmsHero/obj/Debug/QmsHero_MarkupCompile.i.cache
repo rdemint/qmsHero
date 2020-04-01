@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\App.xaml
-7-2145878896
+81417443865
 
-16-10175859
+19-979228690
 126-280754791
-View\DCNView.xaml;View\Resources\DocHeader.xaml;View\Resources\ViewViewModelDict.xaml;View\ConfigView.xaml;View\MainWindow.xaml;View\Skins\MainSkin.xaml;View\CustomProcessingView.xaml;
+Themes\Generic.xaml;View\DCNView.xaml;View\Resources\DocHeader.xaml;View\Resources\ViewViewModelDict.xaml;View\ConfigView.xaml;View\MainWindow.xaml;View\Skins\MainSkin.xaml;View\CustomProcessingView.xaml;
 
 True
 

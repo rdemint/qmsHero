@@ -4,16 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:QmsHero.View"
-      xmlns:controls="clr-namespace:QmsDoc.Controls;assembly=QmsDoc"
+      xmlns:controls="clr-namespace:QmsHero.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DCN">
-
     <StackPanel
             Background="Azure"
             Orientation="Vertical"
             >
-        <controls:ControlCheckBox DisplayValue="Revision"/>
-        <controls:ControlCheckBox DisplayValue="Effective Date"/>
+        <TextBlock Text="some text here"/>
+        <controls:QCheckBox QDisplay="Save as PDF" QOutput="{Binding Path=Revision}"/>
+        <TextBlock Text="some more text here"/>
+        <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=EffectiveDate, Mode=TwoWay}"/>
     </StackPanel>
 </Page>
