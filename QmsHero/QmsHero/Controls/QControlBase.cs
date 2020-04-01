@@ -46,11 +46,14 @@ namespace QmsHero.Controls
     /// </summary>
     public class QControlBase : Control
     {
+
+        FrameworkPropertyMetadata qStateMetaData;
         static QControlBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(QControlBase), new FrameworkPropertyMetadata(typeof(QControlBase)));
         }
 
+        
         public bool QIsValid
         {
             get { return (bool)GetValue(QIsValidProperty); }
@@ -59,19 +62,36 @@ namespace QmsHero.Controls
 
         // Using a DependencyProperty as the backing store for QIsValid.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty QIsValidProperty =
-            DependencyProperty.Register("QIsValid", typeof(bool), typeof(QControlBase), new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true });
+            DependencyProperty.Register(
+                "QIsValid", 
+                typeof(bool), 
+                typeof(QControlBase), 
+                new FrameworkPropertyMetadata(
+                    true,
+                    (FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits),
+                    new PropertyChangedCallback(OnQIsValidChanged)
+                    ));
 
-
+        public static void OnQIsValidChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+        {
+            var qc = (QControlBase)d;
+            qc.CoerceValue(QOutputProperty);
+        }
 
         public string QDisplay
         {
-            get { return (string)GetValue(QDisplayProperty); }
+            get { 
+                return (string)GetValue(QDisplayProperty); }
             set { SetValue(QDisplayProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for QDisplay.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty QDisplayProperty =
-            DependencyProperty.Register("QDisplay", typeof(string), typeof(QControlBase), new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true });
+            DependencyProperty.Register(
+                "QDisplay", 
+                typeof(string), 
+                typeof(QControlBase), 
+                new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true, Inherits=true });
 
 
 
@@ -83,21 +103,42 @@ namespace QmsHero.Controls
                 
             }
         }
-
+       
         // Using a DependencyProperty as the backing store for QState.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty QStateProperty =
-            DependencyProperty.Register("QState", typeof(string), typeof(QControlBase), 
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits, new PropertyChangedCallback(OnQStateChanged), new CoerceValueCallback())
+            DependencyProperty.Register(
+                "QState", 
+                typeof(string), 
+                typeof(QControlBase), 
+                new FrameworkPropertyMetadata(
+                    null,
+                    (FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits),
+                    new PropertyChangedCallback(OnQStateChanged),
+                    new CoerceValueCallback(CoerceQState)
+                ));
 
-        public void OnQStateChanged(string value)
+        public static object CoerceQState(DependencyObject d, object value)
         {
-            this.QOutput = value;
-            if (this.QState != value)
+            QControlBase qb = (QControlBase)d;
+            string state = (string)value;
+            if (qb.QOutput != null)
             {
-                this.QState = value;
+                return qb.QOutput;
+            }
+            else
+            {
+                return state;
             }
         }
 
+        public static void OnQStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+        {
+            var qc = (QControlBase)d;
+            if (qc.QState != qc.QOutput)
+            {
+                qc.CoerceValue(QOutputProperty);
+            }
+        }
 
         public string QOutput
         {
@@ -111,17 +152,48 @@ namespace QmsHero.Controls
                 //{
                 //    return null;
                 //}
-                return (string)GetValue(QStateProperty);
+                return (string)GetValue(QOutputProperty);
             }
             set
             {
-                //SetValue(QOutputProperty, value);
-                SetValue(QStateProperty, value);
+                SetValue(QOutputProperty, value);
             }
         }
 
         //Using a DependencyProperty as the backing store for QOutput.This enables animation, styling, binding, etc...
         public static readonly DependencyProperty QOutputProperty =
-            DependencyProperty.Register("QOutput", typeof(string), typeof(QControlBase), new FrameworkPropertyMetadata() { BindsTwoWayByDefault = true }, );
+            DependencyProperty.Register(
+                "QOutput", typeof(string), 
+                typeof(QControlBase), 
+                new FrameworkPropertyMetadata(
+                    null,
+                    (FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits),
+                    new PropertyChangedCallback(OnQOutputChanged),
+                    new CoerceValueCallback(CoerceQOutput)
+                    )
+                );
+        public static object CoerceQOutput(DependencyObject d, object value)
+        {
+            QControlBase qb = (QControlBase)d;
+            string state = (string)value;
+            if (qb.QIsValid)
+            {
+                return qb.QState;
+            }
+
+            else
+            {
+                return null;
+            }
+        }
+
+        public static void OnQOutputChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+        {
+            var qc = (QControlBase)d;
+            if (args.NewValue != null && qc.QOutput != qc.QState)
+            {
+                qc.CoerceValue(QStateProperty);
+            }
+        }
     }
 }
