@@ -70,6 +70,8 @@
     <Compile Include="QCheckBox.cs" />
     <Compile Include="QCheckTextBox.cs" />
     <Compile Include="QControlBase.cs" />
+    <Compile Include="QFilePicker.cs" />
+    <Compile Include="QFolderPicker.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

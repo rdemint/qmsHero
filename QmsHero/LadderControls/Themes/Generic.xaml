@@ -32,4 +32,23 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="{x:Type local:QFilePicker}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QFilePicker}">
+                    <StackPanel
+                        Name="FilePickerPanel"
+                        Orientation="Horizontal"
+                        >
+                        <Button
+                            Name="FilePickerButton"
+                            Content="{TemplateBinding QDisplay}"
+                            MinWidth="0"
+                            />
+                        <TextBox MinWidth="200" Text="{TemplateBinding QState}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
