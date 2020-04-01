@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace QmsHero.Controls
+namespace LadderControls
 {
     public class QCheckBox: QControlBase
     {

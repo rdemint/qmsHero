@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:QmsHero"
         xmlns:view="clr-namespace:QmsHero.View"
         xmlns:vm="clr-namespace:QmsHero.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:controls="clr-namespace:LadderControls;assembly=LadderControls"
         mc:Ignorable="d"
         Title="qmsHero" Height="450" Width="800"
-        
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -21,13 +21,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
                 <ResourceDictionary Source="Resources/ViewViewModelDict.xaml"/>
-                <ResourceDictionary Source="Resources/ControlCheckTextBox.xaml"/>
-                <ResourceDictionary Source="Resources/ControlFolderPicker.xaml"/>
-                <ResourceDictionary Source="Resources/ControlTextBox.xaml"/>
-                <ResourceDictionary Source="Resources/ControlTextBox2.xaml"/>
-                <ResourceDictionary Source="Resources/DocAction.xaml"/>
-                <ResourceDictionary Source="Resources/ControlComboBox.xaml"/>
-                <ResourceDictionary Source="Resources/DocHeader.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

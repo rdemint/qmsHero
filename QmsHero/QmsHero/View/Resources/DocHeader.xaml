@@ -1,43 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="clr-namespace:QmsDoc.Core;assembly=QmsDoc"
-                    xmlns:controls="clr-namespace:QmsDoc.Controls;assembly=QmsDoc"
-                    xmlns:myConverters="clr-namespace:QmsDoc.Converters;assembly=QmsDoc">
+                    xmlns:controls="clr-namespace:LadderControls;assembly=LadderControls">
     <DataTemplate
         x:Key="DocHeaderDataTemplate"
         DataType="{x:Type core:DocHeader}">
-        <DataTemplate.Resources>
-            <myConverters:InverseBoolConverter x:Key="InverseBoolConverter"/>
-        </DataTemplate.Resources>
         <StackPanel
             Name="DocHeader">
-            <controls:ToggleCheckBox
-                DisplayName="Revision"
-                ControlValue="{Binding Revision}"/>
-            <controls:ToggleCheckBox
-                DisplayName="EffectiveDate"
-                ControlValue="{Binding EffectiveDate}"/>
-            <TabControl
-                Name="DocLogoControl"
-                TabStripPlacement="Bottom"
-                >
-                <TabItem
-                    Header="Image"
-                    Name="LogoPathTab"
-                    >
-                    <controls:FilePicker
-                                        IsEnabled="{Binding ElementName=LogoPathTab, Path=IsSelected}"
-                                        DisplayName="Choose Logo"
-                                        ControlValue="{Binding Path=LogoPath}"/>
-                </TabItem>
-                <TabItem
-                    Name="LogoTextButton"
-                    Header="Text"
-                    >
-                    <TextBox
-                        Text="{Binding Path=LogoText}"/>
-                </TabItem>
-            </TabControl>
-        </StackPanel>
+        <TextBlock Text="DocHeader has not been implemented"/>
+    </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

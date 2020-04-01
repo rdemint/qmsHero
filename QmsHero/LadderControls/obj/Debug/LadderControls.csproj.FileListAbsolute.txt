@@ -1,0 +1,11 @@
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\bin\Debug\LadderControls.dll
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\bin\Debug\LadderControls.pdb
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls_MarkupCompile.cache
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls_MarkupCompile.lref
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\Themes\Generic.baml
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.g.resources
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.Properties.Resources.resources
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.csproj.GenerateResource.cache
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.dll
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.pdb

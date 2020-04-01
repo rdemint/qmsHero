@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsHero.Test", "QmsHero.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc.Test", "QmsDoc.Test\QmsDoc.Test.csproj", "{60F3F5BD-76B9-4524-9946-B315CB80C91D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadderControls", "LadderControls\LadderControls.csproj", "{D949B936-F294-4F84-B4F2-6E1F86A932C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{60F3F5BD-76B9-4524-9946-B315CB80C91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60F3F5BD-76B9-4524-9946-B315CB80C91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60F3F5BD-76B9-4524-9946-B315CB80C91D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D949B936-F294-4F84-B4F2-6E1F86A932C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D949B936-F294-4F84-B4F2-6E1F86A932C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D949B936-F294-4F84-B4F2-6E1F86A932C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D949B936-F294-4F84-B4F2-6E1F86A932C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
