@@ -176,9 +176,11 @@ namespace QmsDoc.Core
                 {
                     this.CloseApps();
                     throw e;
+
                 }
             }
             this.CloseApps();
+            return true;
 
         }
 

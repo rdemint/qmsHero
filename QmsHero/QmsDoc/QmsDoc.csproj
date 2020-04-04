@@ -77,9 +77,6 @@
     <Compile Include="Core\DocProperty.cs" />
     <Compile Include="Interfaces\IDocHeader.cs" />
     <Compile Include="Docs\DCN.cs" />
-    <Compile Include="Core\DocAction.cs" />
-    <Compile Include="Core\DocActionControlManager.cs" />
-    <Compile Include="Core\DocConfigControlManager.cs" />
     <Compile Include="Core\DocControlManagerBase.cs" />
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
@@ -88,7 +85,6 @@
     <Compile Include="Docs\QmsDocBaseConfig.cs" />
     <Compile Include="Docs\WordDocConfig.cs" />
     <Compile Include="Exceptions\MultipleDocHeadersException.cs" />
-    <Compile Include="Interfaces\IDocActionControl.cs" />
     <Compile Include="Docs\ExcelDoc.cs" />
     <Compile Include="Docs\QmsDocBase.cs" />
     <Compile Include="Docs\WordDoc.cs" />

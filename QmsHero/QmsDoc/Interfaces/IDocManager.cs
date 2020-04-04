@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QmsDoc.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace QmsDoc.Interfaces
     public interface IDocManager
     {
         Boolean ProcessFiles(Dictionary<string, object> action_dict, bool test = false);
-        void ProcessFiles(List<IDocActionControl> actionControls, bool test = false);
+        bool ProcessFiles(DocEdit docEdit, bool test = false);
     }
 }

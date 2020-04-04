@@ -65,7 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DocManagerTests.cs" />
-    <Compile Include="Core\DocActionControlsTests.cs" />
     <Compile Include="FixtureUtil.cs" />
     <Compile Include="FixtureUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
