@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using QmsDoc.Docs;
 using QmsDoc.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
+using System.Collections.ObjectModel;
 
 namespace QmsDoc.Core
 {
@@ -30,9 +31,7 @@ namespace QmsDoc.Core
         List<string> excelDocExtensions;
         Word.Application wordApp;
         Excel.Application excelApp;
-        string doc_password;
         string dirPath;
-        Boolean auto_close_doc;
 
         public List<FileInfo> DirFiles {
             get => this.GetSafeFiles(dirFilesUnsafe); }
@@ -48,8 +47,6 @@ namespace QmsDoc.Core
         {
             this.wordDocExtensions = new List<string> { ".docx", ".doc" };
             this.excelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
-            //wordApp = new Word.Application();
-            //excelApp = new Excel.Application();
             this.dirFilesUnsafe = new List<FileInfo>();
         }
         private void AddDirFiles(string dir_path)
@@ -85,14 +82,14 @@ namespace QmsDoc.Core
             return doc;
         }
 
-        public QmsDocBase ProcessDoc(QmsDocBase doc, List<IDocActionControl> actionControls)
+        public QmsDocBase ProcessDoc(QmsDocBase doc, DocEdit docEdit)
         {
-            foreach (IDocActionControl actionControl in actionControls)
+            foreach (DocProperty docProp in docEdit.DocPropertiesCollection)
             {
-                var propertyInfo = doc.GetType().GetProperty(actionControl.DisplayValue);
+                var propertyInfo = doc.GetType().GetProperty(docProp.Name);
                 if (propertyInfo != null)
                 {
-                    propertyInfo.SetValue(doc, actionControl.DocActionVal);
+                    propertyInfo.SetValue(doc, docProp.Value);
                 }
                 else
                 {
@@ -101,6 +98,23 @@ namespace QmsDoc.Core
             }
             return doc;
         }
+
+        //public QmsDocBase ProcessDoc(QmsDocBase doc, List<IDocActionControl> actionControls)
+        //{
+        //    foreach (IDocActionControl actionControl in actionControls)
+        //    {
+        //        var propertyInfo = doc.GetType().GetProperty(actionControl.DisplayValue);
+        //        if (propertyInfo != null)
+        //        {
+        //            propertyInfo.SetValue(doc, actionControl.DocActionVal);
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("The DocActionName passed is not part of IDocActions.");
+        //        }
+        //    }
+        //    return doc;
+        //}
 
         private void ProcessFilesPrep(bool test)
         {
@@ -122,7 +136,7 @@ namespace QmsDoc.Core
                 {
                     QmsDocBase doc = this.CreateDoc(file_info);
                     this.ProcessDoc(doc, action_dict);
-                    if (this.auto_close_doc)
+                    if (this.managerConfig.CloseDocs)
                     {
                         doc.CloseDocument();
                     }
@@ -139,22 +153,18 @@ namespace QmsDoc.Core
             return true;
         }
 
-        public void ProcessFiles(List<IDocActionControl> actionControls, bool test=false)
+        public Boolean ProcessFiles(DocEdit docEdit, bool test=false) 
         {
             Contract.Requires(this.managerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
-            Contract.Requires(actionControls.Count >= 1);
-
-            this.ProcessFilesPrep(test);
-            var filteredControls = this.FilterControls(actionControls);
 
             foreach (FileInfo file_info in this.DirFiles)
             {
-                
+
                 try
                 {
                     QmsDocBase doc = this.CreateDoc(file_info, test);
-                    this.ProcessDoc(doc, filteredControls);
+                    this.ProcessDoc(doc, docEdit);
                     if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true && test == false)
                     {
                         doc.CloseDocument();
@@ -169,17 +179,50 @@ namespace QmsDoc.Core
                 }
             }
             this.CloseApps();
-        }
-
-        public List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
-        {
-            var query = controls
-                .Where(control => control.ControlIsValid == true)
-                .Where(control => control.DocActionVal != null)
-                .Where(control=> (string)control.DocActionVal != "");
-            return query.ToList();
 
         }
+
+        //public void ProcessFiles(List<IDocActionControl> actionControls, bool test=false)
+        //{
+        //    Contract.Requires(this.managerConfig != null);
+        //    Contract.Requires(this.dirFilesUnsafe.Count >= 1);
+        //    Contract.Requires(actionControls.Count >= 1);
+
+        //    this.ProcessFilesPrep(test);
+        //    var filteredControls = this.FilterControls(actionControls);
+
+        //    foreach (FileInfo file_info in this.DirFiles)
+        //    {
+
+        //        try
+        //        {
+        //            QmsDocBase doc = this.CreateDoc(file_info, test);
+        //            this.ProcessDoc(doc, filteredControls);
+        //            if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true && test == false)
+        //            {
+        //                doc.CloseDocument();
+        //            }
+        //            System.Windows.Forms.MessageBox.Show("Finished Processing Files");
+        //        }
+
+        //        catch (Exception e)
+        //        {
+        //            this.CloseApps();
+        //            throw e;
+        //        }
+        //    }
+        //    this.CloseApps();
+        //}
+
+        //public List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
+        //{
+        //    var query = controls
+        //        .Where(control => control.ControlIsValid == true)
+        //        .Where(control => control.DocActionVal != null)
+        //        .Where(control=> (string)control.DocActionVal != "");
+        //    return query.ToList();
+
+        //}
         public QmsDocBase CreateDoc(FileInfo file_info, bool test=false)
         {
             if (this.wordDocExtensions.Contains(file_info.Extension))

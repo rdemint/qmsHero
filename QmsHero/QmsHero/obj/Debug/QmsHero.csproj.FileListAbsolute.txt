@@ -31,9 +31,7 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\GalaSoft.MvvmLigh
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignColors.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\bin\Debug\MaterialDesignThemes.Wpf.xml
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\DocHeader.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\App.baml
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\Themes\Generic.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\DCNView.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\Resources\ViewViewModelDict.baml
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\ConfigView.baml

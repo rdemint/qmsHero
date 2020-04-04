@@ -14,6 +14,7 @@ namespace QmsHero.ViewModel
 {
     public class CustomProcessingViewModel: ViewModelBase
     {
+        string viewDisplayName;
         DocManager manager;
         DocActionControlManager docActions;
         List<IDocActionControl> actionList;
@@ -21,7 +22,8 @@ namespace QmsHero.ViewModel
 
         public CustomProcessingViewModel()
         {
-           
+
+            this.ViewDisplayName = "Custom";
             this.docActions = SimpleIoc.Default.GetInstance<DocActionControlManager>();
             this.actionList = docActions.ToControlList();
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
@@ -42,6 +44,8 @@ namespace QmsHero.ViewModel
                 return this.processFilesCommand;
             } 
             set => processFilesCommand = value; }
+
+        public string ViewDisplayName { get => viewDisplayName; set => viewDisplayName = value; }
 
         public bool CanProcessFiles()
         {

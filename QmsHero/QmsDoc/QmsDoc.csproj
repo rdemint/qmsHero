@@ -74,7 +74,7 @@
     <Compile Include="Core\DocBody.cs" />
     <Compile Include="Core\DocEdit.cs" />
     <Compile Include="Core\DocHeader.cs" />
-    <Compile Include="Core\DocProperties.cs" />
+    <Compile Include="Core\DocProperty.cs" />
     <Compile Include="Interfaces\IDocHeader.cs" />
     <Compile Include="Docs\DCN.cs" />
     <Compile Include="Core\DocAction.cs" />
