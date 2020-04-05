@@ -15,3 +15,4 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csproj.Copy
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.pdb
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csprojAssemblyReference.cache
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsDoc\obj\Debug\QmsDoc.csproj.CoreCompileInputs.cache

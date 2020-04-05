@@ -10,6 +10,7 @@ using System.IO;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
 using GalaSoft.MvvmLight.Ioc;
+using System.Collections.ObjectModel;
 
 namespace QmsDoc.Docs
 {
@@ -18,7 +19,7 @@ namespace QmsDoc.Docs
         Application app;
         Document doc;
         WordDocConfig docConfig;
-        DocManagerConfig managerConfig;
+        DocManagerConfig docManagerConfig;
         FileInfo fileInfo;
         HeaderFooter headerFooter;
         bool headerFootersChecked;
@@ -26,6 +27,7 @@ namespace QmsDoc.Docs
         string logoPath;
         string effectiveDate;
         string revision;
+        ObservableCollection<IDocSection> sections;
 
 
         public WordDoc()
@@ -33,51 +35,51 @@ namespace QmsDoc.Docs
 
         }
 
-        public WordDoc(Application app, System.IO.FileInfo file_info) : base()
+        public WordDoc(Application app, System.IO.FileInfo file_info, WordDocConfig docConfig, DocManagerConfig docManagerConfig) : base()
         {
             this.app = app;
             this.FileInfo = file_info;
-            this.DocConfig = SimpleIoc.Default.GetInstance<WordDocConfig>();
-            this.ManagerConfig = SimpleIoc.Default.GetInstance<DocManagerConfig>();
+            this.DocConfig = docConfig;
+            this.DocManagerConfig = docManagerConfig;
             this.OpenDocument();
         }
 
         #region Config
         public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public DocManagerConfig ManagerConfig { get => managerConfig; set => managerConfig = value; }
+        public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
         public FileInfo FileInfo { get => fileInfo;
             set { this.headerFootersChecked = false; this.fileInfo = value; } }
         #endregion  
 
         #region Header
 
-        public HeaderFooter HeaderFooter {
+        public HeaderFooter HeaderFooter
+        {
             get
             {
                 if (this.headerFootersChecked == false)
+                {
+                    for (int i = 1; i <= this.doc.Sections.Count; i++)
                     {
-                        for (int i=0; i < this.doc.Sections.Count; i++)
+                        var section = this.doc.Sections[i];
+                        if (i != DocConfig.HeaderFooterSection)
+                        {
+                            var evenHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Exists;
+                            var firstHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Exists;
+                            var primHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Exists;
+
+                            if (evenHF || firstHF)
                             {
-                                var section = this.doc.Sections[i];
-                                if (i != DocConfig.HeaderFooterSection)
-                                {
-                                    var evenHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Exists;
-                                    var firstHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Exists;
-                                    var primHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Exists;
-
-                                    if (evenHF || firstHF || primHF)
-                                    {
-                                        throw new MultipleDocHeadersException($"{this.FileInfo.Name} has multiple headers in Section {section}.  This must be fixed manually");
-                                    }
-
-                                }
-                    
+                                System.Windows.MessageBox.Show($"{this.FileInfo.Name} has multiple headers in Section {section}.  This must be fixed manually");
                             }
-                        this.headerFootersChecked = true;
+
+                        }
+
                     }
-                
-                var hfSections = this.doc.Sections;
-                var hfSection = hfSections[DocConfig.HeaderFooterSection];
+                    this.headerFootersChecked = true;
+                }
+
+                var hfSection = doc.Sections[DocConfig.HeaderFooterSection];
                 return hfSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
 
             }
@@ -161,8 +163,8 @@ namespace QmsDoc.Docs
             }
         }
 
-        #endregion
 
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -178,7 +180,7 @@ namespace QmsDoc.Docs
          
             try
             {
-                this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.ManagerConfig.DocPassword, WritePasswordDocument: this.ManagerConfig.DocPassword);
+                this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.DocManagerConfig.DocPassword, WritePasswordDocument: this.DocManagerConfig.DocPassword);
             }
             catch (Exception e)
             {
@@ -193,7 +195,7 @@ namespace QmsDoc.Docs
             {
                 var documents = this.app.Documents;
                 var count = documents.Count;
-                if (this.ManagerConfig.SaveChanges)
+                if (this.DocManagerConfig.SaveChanges)
                 {
                     this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdSaveChanges);
                 }

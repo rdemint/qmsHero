@@ -8,6 +8,26 @@ using QmsDoc.Core;
 using QmsDoc.Interfaces;
 using QmsDoc.Docs;
 using System.Collections.ObjectModel;
+using QmsDoc.Test;
+
+namespace QmsDoc.Core.Tests
+{
+    [TestClass()]
+    public class DocManagerTests
+    {
+        FixtureUtil fixture = new FixtureUtil();
+
+        [TestMethod()]
+        public void ConfigDirTest()
+        {
+            var manager = new DocManager();
+            manager.ConfigDir(fixture.ActiveQMSDocuments.FullName);
+
+            var processDirs = fixture.FixtureDir.GetDirectories("Processing");
+            Assert.IsTrue(processDirs.Length == 1);
+        }
+    }
+}
 
 namespace QmsDoc.Test.Core
 {
@@ -23,8 +43,10 @@ namespace QmsDoc.Test.Core
                 new DocProperty("Revision", "1"),
                 new DocProperty("EffectiveDate", "2020-03-30"),
             };
+            var fixture = new FixtureUtil();
+
             var manager = new DocManager();
-            var doc = (QmsDocBase)new WordDoc();
+            var doc = manager.CreateDoc(fixture.WordSample);
             doc = manager.ProcessDoc(doc, docEdit);
             Assert.AreEqual(doc.Revision, "1");
             Assert.AreEqual(doc.EffectiveDate, "2020-03-12");

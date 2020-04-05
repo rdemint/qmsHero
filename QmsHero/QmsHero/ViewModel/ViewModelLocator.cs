@@ -50,8 +50,6 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<DCNViewModel>();
 
             SimpleIoc.Default.Register<DocManager>();
-            SimpleIoc.Default.Register<DocActionControlManager>();
-            SimpleIoc.Default.Register<DocConfigControlManager>();
             SimpleIoc.Default.Register<DocManagerConfig>();
             SimpleIoc.Default.Register<WordDocConfig>();
             SimpleIoc.Default.Register<ExcelDocConfig>();

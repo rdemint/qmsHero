@@ -34,7 +34,7 @@ namespace QmsDoc.Docs
         private void Initialize()
         {
             //Header
-            this.HeaderFooterSection = 0;
+            this.HeaderFooterSection = 1;
             this.EffectiveDateRow = 2;
             this.EffectiveDateCol = 2;
             this.RevisionRow = 2;

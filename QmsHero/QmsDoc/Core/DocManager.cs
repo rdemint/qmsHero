@@ -16,13 +16,15 @@ using QmsDoc.Docs;
 using QmsDoc.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
 using System.Collections.ObjectModel;
+using Microsoft.Office.Interop.Word;
+using System.IO;
 
 namespace QmsDoc.Core
 {
     public class DocManager: IDocManager
     {
         System.IO.DirectoryInfo topDir;
-        DocManagerConfig managerConfig;
+        DocManagerConfig docManagerConfig;
         ExcelDocConfig excelConfig;
         WordDocConfig wordConfig;
         List<FileInfo> dirFilesUnsafe;
@@ -32,10 +34,38 @@ namespace QmsDoc.Core
         Word.Application wordApp;
         Excel.Application excelApp;
         string dirPath;
+        string originalDirPath;
 
+        public DocManager()
+        {
+            this.wordDocExtensions = new List<string> { ".docx", ".doc" };
+            this.excelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
+            this.excelConfig = new ExcelDocConfig();
+            this.wordConfig = new WordDocConfig();
+            this.docManagerConfig = new DocManagerConfig();
+            this.dirFilesUnsafe = new List<FileInfo>();
+        }
         public List<FileInfo> DirFiles {
             get => this.GetSafeFiles(dirFilesUnsafe); }
+        public Word.Application WordApp {
+            get { 
+                if(wordApp == null)
+                {
+                    wordApp = new Word.Application();
+                }
+                return wordApp;
+            }
+            set => wordApp = value; }
 
+        public Excel.Application ExcelApp {
+            get { 
+                if(excelApp == null)
+                {
+                    excelApp = new Excel.Application();
+                }
+                return excelApp;
+            }
+            set => excelApp = value; }
 
         private List<FileInfo> GetSafeFiles(List<FileInfo> files)
         {
@@ -43,12 +73,6 @@ namespace QmsDoc.Core
             return result;
         }
  
-        public DocManager()
-        {
-            this.wordDocExtensions = new List<string> { ".docx", ".doc" };
-            this.excelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
-            this.dirFilesUnsafe = new List<FileInfo>();
-        }
         private void AddDirFiles(string dir_path)
         {
             var dir = new System.IO.DirectoryInfo(dir_path);
@@ -61,13 +85,59 @@ namespace QmsDoc.Core
             }
         }
 
-        public void ConfigDir(string dir_path)
+        public void ConfigDir(string dir_path, string processingDirName="Processing")
         {
-            this.dirPath = dir_path;
-            this.topDir = new System.IO.DirectoryInfo(dir_path);
+            this.originalDirPath = dir_path;
+            this.dirPath = DirectoryCopy(new DirectoryInfo(dir_path), processingDirName, true).FullName;
+            this.topDir = new System.IO.DirectoryInfo(this.dirPath);
             this.AddDirFiles(dir_path);
         }
 
+        private DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
+        {
+            // Get the subdirectories for the specified directory.
+            var destDirPath = Path.Combine(dir.Parent.FullName, destDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + dir.FullName);
+            }
+
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirPath))
+            {
+                Directory.CreateDirectory(destDirPath);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            if (files.Length >= 30)
+            {
+                throw new Exception("The number of files is conspicuously large.  An error has been thrown to ensure the directory is correct.");
+            }
+
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirPath, file.Name);
+                file.CopyTo(temppath, true);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(destDirPath, subdir.Name);
+                    DirectoryCopy(subdir, temppath, copySubDirs);
+                }
+            }
+
+            return new DirectoryInfo(destDirPath);
+        }
 
         public QmsDocBase ProcessDoc(QmsDocBase doc, Dictionary<string, object> action_dict)
         {
@@ -125,7 +195,7 @@ namespace QmsDoc.Core
         }
         public Boolean ProcessFiles(Dictionary<string, object> action_dict, bool test=false)
         {
-            Contract.Requires(this.managerConfig != null);
+            Contract.Requires(this.docManagerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
             Contract.Requires(action_dict.Count >= 1);
             
@@ -136,7 +206,7 @@ namespace QmsDoc.Core
                 {
                     QmsDocBase doc = this.CreateDoc(file_info);
                     this.ProcessDoc(doc, action_dict);
-                    if (this.managerConfig.CloseDocs)
+                    if (this.docManagerConfig.CloseDocs)
                     {
                         doc.CloseDocument();
                     }
@@ -155,7 +225,7 @@ namespace QmsDoc.Core
 
         public Boolean ProcessFiles(DocEdit docEdit, bool test=false) 
         {
-            Contract.Requires(this.managerConfig != null);
+            Contract.Requires(this.docManagerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
 
             foreach (FileInfo file_info in this.DirFiles)
@@ -229,33 +299,21 @@ namespace QmsDoc.Core
         {
             if (this.wordDocExtensions.Contains(file_info.Extension))
             {
-                if (test == false)
-                {
-                    QmsDocBase doc = new WordDoc(this.wordApp, file_info);
+                    QmsDocBase doc = new WordDoc(this.WordApp, file_info, this.wordConfig, this.docManagerConfig);
                     return doc;
-                }
-                else
-                {
-                    QmsDocBase doc = new WordDoc();
-                    return doc;
-                }
-                // create word doc and process
             }
+ 
+                // create word doc and process
             else if (this.excelDocExtensions.Contains(file_info.Extension))
             {
                 // create excel doc and process
-                if (test == false)
-                {
                     QmsDocBase doc = new ExcelDoc(
                         this.excelApp, 
-                        file_info);
+                        file_info,
+                        this.excelConfig,
+                        this.docManagerConfig);
                     return doc;
-                }
-                else
-                {
-                    QmsDocBase doc = new ExcelDoc();
-                    return doc;
-                }
+
             }
             else
             {
@@ -331,5 +389,6 @@ namespace QmsDoc.Core
                 return false;
             }
         }
+
     }
 }

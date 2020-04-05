@@ -15,15 +15,11 @@ namespace QmsHero.ViewModel
         //string logoText;
         //string effectiveDate;
         //string revision;
-        List<IDocActionControl> controlList;
 
         public ConfigViewModel()
         {
-            var manager = new DocConfigControlManager();
-            this.ControlList = manager.ToControlList();
         }
 
-        public List<IDocActionControl> ControlList { get => controlList; set => controlList = value; }
 
     }
 }

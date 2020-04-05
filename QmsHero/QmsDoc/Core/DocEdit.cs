@@ -14,14 +14,13 @@ namespace QmsDoc.Core
         DocBody docbody;
         ObservableCollection<DocProperty> docPropertiesCollection;
 
+        public DocEdit()
+        {
+            this.DocPropertiesCollection = new ObservableCollection<DocProperty>();
+        }
+
         public ObservableCollection<DocProperty> DocPropertiesCollection {
-            get { 
-                if (this.DocPropertiesCollection == null)
-                {
-                    this.DocPropertiesCollection = new ObservableCollection<DocProperty>();
-                }
-                return this.DocPropertiesCollection;
-            }
+            get => docPropertiesCollection;
             set => docPropertiesCollection = value; }
 
         Dictionary<string, object> ToDict()

@@ -16,28 +16,23 @@ namespace QmsHero.ViewModel
     {
         string viewDisplayName;
         DocManager manager;
-        DocActionControlManager docActions;
-        List<IDocActionControl> actionList;
         RelayCommand processFilesCommand;
+        DocEdit docEdit;
 
         public CustomProcessingViewModel()
         {
 
             this.ViewDisplayName = "Custom";
-            this.docActions = SimpleIoc.Default.GetInstance<DocActionControlManager>();
-            this.actionList = docActions.ToControlList();
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\Active QMS Documents\\SOP-001 Quality Manual Documents");
         }
 
-        public DocActionControlManager DocActions { get => docActions; set => docActions = value; }
-        public List<IDocActionControl> ActionList { get => actionList; set => actionList = value; }
         public RelayCommand ProcessFilesCommand {
             get { 
                 if (this.processFilesCommand == null)
                 {
                     this.processFilesCommand = new RelayCommand(
-                            () => this.manager.ProcessFiles(ActionList, true),
+                            () => this.manager.ProcessFiles(this.DocEdit, true),
                             this.CanProcessFiles()
                         ) ;
                 }
@@ -46,6 +41,7 @@ namespace QmsHero.ViewModel
             set => processFilesCommand = value; }
 
         public string ViewDisplayName { get => viewDisplayName; set => viewDisplayName = value; }
+        public DocEdit DocEdit { get => docEdit; set => docEdit = value; }
 
         public bool CanProcessFiles()
         {
@@ -56,7 +52,7 @@ namespace QmsHero.ViewModel
         {
             try
             {
-                this.manager.ProcessFiles(this.ActionList, true);
+                this.manager.ProcessFiles(this.DocEdit, true);
             }
             catch (Exception e)
             {

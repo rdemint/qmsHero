@@ -15,6 +15,7 @@ namespace QmsDoc.Core
 
         public DocManagerConfig()
         {
+            Initialize();
         }
 
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }

@@ -26,12 +26,12 @@ namespace QmsDoc.Docs
 
         public ExcelDoc() { }
 
-        public ExcelDoc(Excel.Application app, System.IO.FileInfo fileInfo): base()
+        public ExcelDoc(Excel.Application app, System.IO.FileInfo fileInfo, ExcelDocConfig docConfig, DocManagerConfig docManagerConfig): base()
         {
             this.app = app;
             this.FileInfo = fileInfo;
-            this.DocConfig = SimpleIoc.Default.GetInstance<ExcelDocConfig>();
-            this.ManagerConfig = SimpleIoc.Default.GetInstance<DocManagerConfig>();
+            this.DocConfig = docConfig;
+            this.ManagerConfig = docManagerConfig;
             this.OpenDocument(fileInfo);
         }
 

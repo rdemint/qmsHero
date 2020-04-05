@@ -12,7 +12,7 @@ namespace QmsDoc.Test
     public class FixtureUtil
     {
         DirectoryInfo unittest_dir;
-        DirectoryInfo fixture_dir;
+        DirectoryInfo fixtureDir;
         DirectoryInfo sop1_dir;
         DirectoryInfo qmsHero_dir;
         FileInfo open_file;
@@ -27,6 +27,7 @@ namespace QmsDoc.Test
         public DirectoryInfo Sop1Documents { get => sop1Documents; set => sop1Documents = value; }
         public List<FileInfo> Files { get => files; set => files = value; }
         public List<FileInfo> SafeFiles { get => safeFiles; set => safeFiles = value; }
+        public DirectoryInfo FixtureDir { get => fixtureDir; set => fixtureDir = value; }
 
         public FixtureUtil()
         {
@@ -35,9 +36,9 @@ namespace QmsDoc.Test
             var parent1 = this.unittest_dir.Parent;
             var parent = parent1.Parent;
             this.qmsHero_dir = parent;
-            this.fixture_dir = new DirectoryInfo(System.IO.Path.Combine(this.qmsHero_dir.FullName, "Fixtures"));
-            DirectoryInfo[] dirs = this.fixture_dir.GetDirectories();
-            this.activeQMSDocuments = dirs[0];
+            this.FixtureDir = new DirectoryInfo(System.IO.Path.Combine(this.qmsHero_dir.FullName, "Fixtures"));
+            DirectoryInfo[] dirs = this.FixtureDir.GetDirectories();
+            this.ActiveQMSDocuments = dirs[0];
             DirectoryInfo[] sub_dirs = dirs[0].GetDirectories();
             this.sop1Documents = sub_dirs[0];
             this.files = new List<FileInfo>();
