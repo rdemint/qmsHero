@@ -64,14 +64,18 @@ namespace QmsDoc.Docs
         
         public override string LogoText { get => logoText; set => logoText = value; }
         public Workbook Doc { get => doc; set => doc = value; }
-        public Application App { 
-            get { 
-                if(this.app == null)
+        public Excel.Application App {
+            get
+            {
+                if (this.app == null)
                 {
                     this.app = new Excel.Application();
                 }
-                    
-            set => app = value; }
+
+                return this.app;
+            }
+            set => app = value; 
+            }
 
         #endregion
 
@@ -88,7 +92,7 @@ namespace QmsDoc.Docs
             try
             {
 
-              Excel.Workbook workbook = this.app.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword);
+              Excel.Workbook workbook = this.App.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword);
               return workbook;
             }
 
