@@ -8,6 +8,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using FileInfo = System.IO.FileInfo;
 using QmsDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Office.Interop.Excel;
 
 namespace QmsDoc.Docs
 
@@ -39,9 +40,28 @@ namespace QmsDoc.Docs
         public DocManagerConfig ManagerConfig { get => managerConfig; set => managerConfig = value; }
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
-        public string Revision { get => revision; set => revision = value; }
+        
+        public override string Revision { 
+            get => revision;
+            set { 
+                foreach(Worksheet wksht in this.doc.Worksheets)
+                {
+                    wksht.PageSetup.RightHeader =
+                        this.DocConfig.EffectiveDateText +
+                        value +
+                        this.DocConfig.RevisionEffectiveDateSeparator +
+                        this.Revision;
+                }
+                this.revision = value;
+            }
+     
+        }
+
+        public string GetEffectiveDate() { return "not implemented";  }
         public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
         public string LogoPath { get => logoPath; set => logoPath = value; }
+
+        
         public string LogoText { get => logoText; set => logoText = value; }
         
         #endregion

@@ -16,7 +16,7 @@ namespace QmsDoc.Docs
             this.Initialize();
         }
 
-        public void Initialize(){
+        public virtual void Initialize(){
         }
     }
 }

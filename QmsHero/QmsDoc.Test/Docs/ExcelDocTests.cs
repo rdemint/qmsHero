@@ -14,22 +14,29 @@ namespace QmsDoc.Docs.Tests
     public class ExcelDocTests
     {
         [TestMethod()]
-        public void GetRevisionTest()
+        public void RevisionTest()
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
-
             var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
-            Assert.AreEqual("Revision: 2", wbk.GetRevision());
+            var rightHeader = wbk.Doc.Worksheets[1].PageSetup.RightHeader;
+            Assert.AreEqual(
+                rightHeader,
+                wbk.DocConfig.EffectiveDateText + wbk.EffectiveDate + wbk.DocConfig.RevisionEffectiveDateSeparator + wbk.DocConfig.RevisionText + wbk.Revision
+                );
         }
 
         [TestMethod()]
-        public void GetEffectiveDateTest()
+        public void EffectiveDateTest()
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
             var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
-            Assert.AreEqual("EffectiveDate: 2018-11-26", wbk.GetEffectiveDate());
+            var rightHeader = wbk.Doc.Worksheets[1].PageSetup.RightHeader;
+            Assert.AreEqual(
+                rightHeader,
+                wbk.DocConfig.EffectiveDateText + wbk.EffectiveDate+ wbk.DocConfig.RevisionEffectiveDateSeparator + wbk.DocConfig.RevisionText + wbk.Revision
+                );
         }
 
         [TestMethod()]

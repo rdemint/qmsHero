@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs
 {
-    public class WordDocConfig
+    public class WordDocConfig: QmsDocBaseConfig
     {
         int headerFooterSection;
         string effectiveDateText;
@@ -35,7 +35,7 @@ namespace QmsDoc.Docs
         public string RevisionText { get => revisionText; set => revisionText = value; }
 
         #endregion
-        private void Initialize()
+        public override void Initialize()
         {
             //Header
             this.HeaderFooterSection = 1;
