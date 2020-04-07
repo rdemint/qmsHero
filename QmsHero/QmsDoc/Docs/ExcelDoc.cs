@@ -33,7 +33,7 @@ namespace QmsDoc.Docs
             this.FileInfo = fileInfo;
             this.DocConfig = docConfig;
             this.ManagerConfig = docManagerConfig;
-            this.OpenDocument(fileInfo);
+            this.Doc  = this.OpenDocument(fileInfo);
         }
 
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
@@ -58,12 +58,21 @@ namespace QmsDoc.Docs
         }
 
         public string GetEffectiveDate() { return "not implemented";  }
-        public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public string LogoPath { get => logoPath; set => logoPath = value; }
+        public override string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
+        public override string LogoPath { get => logoPath; set => logoPath = value; }
 
         
-        public string LogoText { get => logoText; set => logoText = value; }
-        
+        public override string LogoText { get => logoText; set => logoText = value; }
+        public Workbook Doc { get => doc; set => doc = value; }
+        public Application App { 
+            get { 
+                if(this.app == null)
+                {
+                    this.app = new Excel.Application();
+                }
+                    
+            set => app = value; }
+
         #endregion
 
 
