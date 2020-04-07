@@ -84,58 +84,70 @@ namespace QmsDoc.Docs
 
             }
         }
-        public string EffectiveDate
+
+        public string GetEffectiveDate()
         {
-            get {
-                return this.HeaderFooter.Range.Tables[0]
+            return this.HeaderFooter.Range.Tables[1]
                     .Cell(
                         this.DocConfig.EffectiveDateRow,
                         this.DocConfig.EffectiveDateCol
                     )
                     .Range.Text;
+        }
+        public override string EffectiveDate
+        {
+            get {
+                return this.effectiveDate;
                }
             
             set
             {
-                this.HeaderFooter.Range.Tables[0]
+                this.HeaderFooter.Range.Tables[1]
                     .Cell(
                         this.DocConfig.EffectiveDateRow,
                         this.DocConfig.EffectiveDateCol
                     )
-                    .Range.Text = value;
+                    .Range.Text = DocConfig.EffectiveDateText + value;
+                this.effectiveDate = value;
                 this.OnPropertyChanged();
             }
         }
 
-        public string Revision
+        public string GetRevision()
+        {
+            return  this.HeaderFooter.Range.Tables[1]
+              .Cell(
+                  this.DocConfig.RevisionRow,
+                  this.DocConfig.RevisionCol
+              )
+              .Range.Text;
+        }
+        public override string Revision
         {
             get
             {
-                return this.HeaderFooter.Range.Tables[0]
-                    .Cell(
-                        this.DocConfig.RevisionRow,
-                        this.DocConfig.RevisionCol
-                    )
-                    .Range.Text;
+                return this.revision;
             }
 
             set
             {
-                this.HeaderFooter.Range.Tables[0]
-                    .Cell(
+                var tables = this.HeaderFooter.Range.Tables;
+                var table = tables[1];
+                var cell = table.Cell(
                         this.DocConfig.RevisionRow,
                         this.DocConfig.RevisionCol
-                    )
-                    .Range.Text = value;
+                    );
+                cell.Range.Text = DocConfig.RevisionText + value;
+                this.revision = value;
                 this.OnPropertyChanged();
             }
         }
-        public string LogoPath
+        public override string LogoPath
         {
             get => this.logoPath;
             set { 
                 this.logoPath = value;
-                var cell = this.HeaderFooter.Range.Tables[0]
+                var cell = this.HeaderFooter.Range.Tables[1]
                     .Cell(
                     this.DocConfig.LogoRow,
                     this.DocConfig.LogoCol
@@ -146,19 +158,19 @@ namespace QmsDoc.Docs
                 picture.Height = 28;
                 this.OnPropertyChanged(); }
         }
-        public string LogoText
+        public override string LogoText
         {
             get => this.logoText;
             set
             {
                 this.logoText = value;
-                var cell = this.HeaderFooter.Range.Tables[0]
+                var cell = this.HeaderFooter.Range.Tables[1]
                     .Cell(
                     this.DocConfig.LogoRow,
                     this.DocConfig.LogoCol
                     );
                 cell.Range.Delete();
-                cell.Range.Text = value;
+                cell.Range.Text = "Effective Date: " + value;
                 OnPropertyChanged();
             }
         }

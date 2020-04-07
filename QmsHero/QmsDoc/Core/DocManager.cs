@@ -152,7 +152,7 @@ namespace QmsDoc.Core
             return doc;
         }
 
-        public QmsDocBase ProcessDoc(QmsDocBase doc, DocEdit docEdit)
+            public QmsDocBase ProcessDoc(QmsDocBase doc, DocEdit docEdit)
         {
             foreach (DocProperty docProp in docEdit.DocPropertiesCollection)
             {

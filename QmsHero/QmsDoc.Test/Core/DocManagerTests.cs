@@ -49,7 +49,7 @@ namespace QmsDoc.Test.Core
             var doc = manager.CreateDoc(fixture.WordSample);
             doc = manager.ProcessDoc(doc, docEdit);
             Assert.AreEqual(doc.Revision, "1");
-            Assert.AreEqual(doc.EffectiveDate, "2020-03-12");
+            Assert.AreEqual(doc.EffectiveDate, "2020-03-30");
         }
 
     }
