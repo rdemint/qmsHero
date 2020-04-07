@@ -53,7 +53,7 @@ namespace QmsDoc.Docs
 
         #region Header
 
-        public HeaderFooter HeaderFooter
+        public Table HeaderFooterTable
         {
             get
             {
@@ -80,14 +80,14 @@ namespace QmsDoc.Docs
                 }
 
                 var hfSection = doc.Sections[DocConfig.HeaderFooterSection];
-                return hfSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary];
+                return hfSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Tables[1];
 
             }
         }
 
         public string GetEffectiveDate()
         {
-            return this.HeaderFooter.Range.Tables[1]
+            return this.HeaderFooterTable
                     .Cell(
                         this.DocConfig.EffectiveDateRow,
                         this.DocConfig.EffectiveDateCol
@@ -102,7 +102,7 @@ namespace QmsDoc.Docs
             
             set
             {
-                this.HeaderFooter.Range.Tables[1]
+                this.HeaderFooterTable
                     .Cell(
                         this.DocConfig.EffectiveDateRow,
                         this.DocConfig.EffectiveDateCol
@@ -115,7 +115,7 @@ namespace QmsDoc.Docs
 
         public string GetRevision()
         {
-            return  this.HeaderFooter.Range.Tables[1]
+            return  this.HeaderFooterTable
               .Cell(
                   this.DocConfig.RevisionRow,
                   this.DocConfig.RevisionCol
@@ -131,13 +131,11 @@ namespace QmsDoc.Docs
 
             set
             {
-                var tables = this.HeaderFooter.Range.Tables;
-                var table = tables[1];
-                var cell = table.Cell(
+                this.HeaderFooterTable
+                    .Cell(
                         this.DocConfig.RevisionRow,
                         this.DocConfig.RevisionCol
-                    );
-                cell.Range.Text = DocConfig.RevisionText + value;
+                    ).Range.Text = DocConfig.RevisionText + value;
                 this.revision = value;
                 this.OnPropertyChanged();
             }
@@ -147,7 +145,7 @@ namespace QmsDoc.Docs
             get => this.logoPath;
             set { 
                 this.logoPath = value;
-                var cell = this.HeaderFooter.Range.Tables[1]
+                var cell = this.HeaderFooterTable
                     .Cell(
                     this.DocConfig.LogoRow,
                     this.DocConfig.LogoCol
@@ -156,6 +154,7 @@ namespace QmsDoc.Docs
                 var picture = cell.Range.InlineShapes.AddPicture(value, false, true);
                 picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
                 picture.Height = 28;
+                this.logoPath = value;
                 this.OnPropertyChanged(); }
         }
         public override string LogoText
@@ -164,13 +163,14 @@ namespace QmsDoc.Docs
             set
             {
                 this.logoText = value;
-                var cell = this.HeaderFooter.Range.Tables[1]
+                var cell = this.HeaderFooterTable
                     .Cell(
                     this.DocConfig.LogoRow,
                     this.DocConfig.LogoCol
                     );
                 cell.Range.Delete();
                 cell.Range.Text = "Effective Date: " + value;
+                this.logoText = value;
                 OnPropertyChanged();
             }
         }
