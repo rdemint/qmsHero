@@ -41,6 +41,12 @@ namespace QmsDoc.Docs
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
         
+        public string GetRevision()
+        {
+            string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
+            return rightHeaders.TakeWhile(char.IsDigit).Last().ToString();
+        }
+        
         public override string Revision { 
             get => revision;
             set { 
@@ -57,8 +63,25 @@ namespace QmsDoc.Docs
      
         }
 
-        public string GetEffectiveDate() { return "not implemented";  }
-        public override string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
+        public string GetEffectiveDate() {
+            string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
+            string result = rightHeaders.Remove(this.DocConfig.EffectiveDateText.Length);
+            return (string)result.Take(10);
+        }
+        public override string EffectiveDate { 
+            get => effectiveDate; 
+            set {
+                foreach (Worksheet wkst in this.Doc.Worksheets)
+                {
+                    wkst.PageSetup.RightHeader =
+                        this.DocConfig.EffectiveDateText +
+                        value +
+                        this.DocConfig.RevisionEffectiveDateSeparator +
+                        this.Revision;
+                }
+                this.effectiveDate = value;
+            }
+        }
         public override string LogoPath { get => logoPath; set => logoPath = value; }
 
         
