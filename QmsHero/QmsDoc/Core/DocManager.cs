@@ -21,7 +21,7 @@ using System.IO;
 
 namespace QmsDoc.Core
 {
-    public class DocManager: IDocManager
+    public class DocManager: IDocManager, IDictionary
     {
         System.IO.DirectoryInfo topDir;
         DocManagerConfig docManagerConfig;
@@ -35,6 +35,7 @@ namespace QmsDoc.Core
         Excel.Application excelApp;
         string dirPath;
         string originalDirPath;
+        bool disposed = false;
 
         public DocManager()
         {
@@ -387,6 +388,23 @@ namespace QmsDoc.Core
             else
             {
                 return false;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        public virtual void Dispose(bool disposing)
+        {
+            if(!this.disposed)
+            {
+                if(disposing)
+                {
+                    ExcelApp.Quit();
+                    WordApp.Quit();
+                }
             }
         }
 
