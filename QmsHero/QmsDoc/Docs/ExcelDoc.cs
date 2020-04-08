@@ -82,10 +82,38 @@ namespace QmsDoc.Docs
                 this.effectiveDate = value;
             }
         }
-        public override string LogoPath { get => logoPath; set => logoPath = value; }
+        public string GetLogoPath()
+        {
+            return this.Doc.Worksheets[1].PageSetup.LeftHeaderPicture.Filename;
+        }
+        public override string LogoPath { 
+            get => logoPath;
+            set { 
+                foreach(Worksheet wkst in this.Doc.Worksheets)
+                {
+                    var picture = wkst.PageSetup.LeftHeaderPicture;
+                    picture.Filename = value;
+                    picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
+                    picture.Height = 28;
+                    wkst.PageSetup.LeftHeader = "&G";
+                 }
+                this.logoPath = value;
+            } }
 
         
-        public override string LogoText { get => logoText; set => logoText = value; }
+        public string GetLogoText()
+        {
+            return this.Doc.Worksheets[1].PageSetup.LeftHeader;
+        }
+        public override string LogoText { 
+            get => logoText;
+            set {
+                foreach (Worksheet wkst in this.Doc.Worksheets)
+                {
+                    wkst.PageSetup.LeftHeader = value;
+                }
+                this.logoText = value;
+            } }
         public Workbook Doc { get => doc; set => doc = value; }
         public Excel.Application App {
             get
