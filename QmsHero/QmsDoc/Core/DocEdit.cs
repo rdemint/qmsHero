@@ -21,6 +21,7 @@ namespace QmsDoc.Core
         }
 
         public DocHeader Docheader { get => docheader; set => docheader = value; }
+        public DocBody Docbody { get => docbody; set => docbody = value; }
 
         //public ObservableCollection<DocProperty> DocPropertiesCollection {
         //    get => docPropertiesCollection;
@@ -29,6 +30,7 @@ namespace QmsDoc.Core
         {
             var col = new ObservableCollection<DocProperty>();
             AddCollectionRange(col, this.Docheader.ToCollection());
+            //AddCollectionRange(col, this.Docbody.ToCollection());
             return col;
         }
 

@@ -47,18 +47,5 @@ namespace QmsHero.ViewModel
         {
             return true;
         }
-
-        public void ProcessFiles()
-        {
-            try
-            {
-                this.manager.ProcessFiles(this.DocEdit, true);
-            }
-            catch (Exception e)
-            {
-                this.manager.CloseApps();
-                throw e;
-            }
-        }
     }
 }
