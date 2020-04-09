@@ -54,6 +54,25 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="{x:Type local:QCheckFilePicker}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QCheckFilePicker}">
+                    <StackPanel
+                        Name="CheckFilePickerPanel"
+                        Orientation="Horizontal"
+                        >
+                        <CheckBox
+                            Name="myCheckBox"
+                            ></CheckBox>
+                        <local:QFilePicker 
+                            QIsValid="{Binding ElementName=myCheckBox, Path=IsChecked}" 
+                            IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="{x:Type local:QFolderPicker}">
         <Setter Property="Template">
             <Setter.Value>
@@ -75,6 +94,26 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
+    <Style TargetType="{x:Type local:QCheckFolderPicker}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QCheckFolderPicker}">
+                    <StackPanel
+                        Name="CheckFolderPickerPanel"
+                        Orientation="Horizontal"
+                        >
+                        <CheckBox
+                            Name="myCheckBox"
+                            ></CheckBox>
+                        <local:QFolderPicker 
+                            QIsValid="{Binding ElementName=myCheckBox, Path=IsChecked}" 
+                            IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>

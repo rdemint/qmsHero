@@ -71,6 +71,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="QCheckBox.cs" />
+    <Compile Include="QCheckFilePicker.cs" />
+    <Compile Include="QCheckFolderPicker.cs" />
     <Compile Include="QCheckTextBox.cs" />
     <Compile Include="QControlBase.cs" />
     <Compile Include="QFilePicker.cs" />

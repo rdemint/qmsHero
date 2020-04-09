@@ -13,6 +13,7 @@ namespace QmsDoc.Core
     {
         DocHeader docHeader;
         DocBody docBody;
+        string editPathName;
 
         public DocEdit()
         {
@@ -22,7 +23,9 @@ namespace QmsDoc.Core
 
         public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
         public DocBody DocBody { get => docBody; set => docBody = value; }
+        public string EditPathName { get => editPathName; set => editPathName = value; }
 
+        
         public ObservableCollection<DocProperty> ToCollection()
         {
             var col = new ObservableCollection<DocProperty>();

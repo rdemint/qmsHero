@@ -9,7 +9,6 @@ namespace QmsDoc.Interfaces
 {
     public interface IDocManager
     {
-        Boolean ProcessFiles(Dictionary<string, object> action_dict, bool test = false);
-        bool ProcessFiles(DocEdit docEdit, bool test = false);
+        bool ProcessFiles(DocEdit docEdit);
     }
 }

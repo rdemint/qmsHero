@@ -73,18 +73,5 @@ namespace QmsHero.ViewModel
             System.Windows.MessageBox.Show(ed);
                 
         }
-        //.manager.ConfigDir()
-        //. foreach (fileinfo in manager.DirFiles) {
-        //.     var doc = manager.CreateDoc(fileinfo)
-        //.     doc = manager.ProcessDoc(doc)
-        //.     
-        //.
-        //.
-        //.
-        //.
-        //.
-        //.
-        //.
-
     }
 }

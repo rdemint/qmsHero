@@ -25,30 +25,32 @@ namespace QmsDoc.Core
     public class DocManager : IDocManager, IDisposable
     {
         System.IO.DirectoryInfo topDir;
+        string originalDirPath;
         DocManagerConfig docManagerConfig;
         ExcelDocConfig excelConfig;
         WordDocConfig wordConfig;
         List<FileInfo> dirFilesUnsafe;
         List<FileInfo> dirFiles;
-        List<string> wordDocExtensions;
-        List<string> excelDocExtensions;
         Word.Application wordApp;
         Excel.Application excelApp;
         string dirPath;
-        string originalDirPath;
         bool disposed = false;
+        bool canProcess;
 
         public DocManager()
         {
-            this.wordDocExtensions = new List<string> { ".docx", ".doc" };
-            this.excelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
+           
             this.excelConfig = new ExcelDocConfig();
             this.wordConfig = new WordDocConfig();
             this.docManagerConfig = new DocManagerConfig();
             this.dirFilesUnsafe = new List<FileInfo>();
         }
+        
+        #region Properties
+        public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
         public List<FileInfo> DirFiles {
             get => this.GetSafeFiles(dirFilesUnsafe); }
+        
         public Word.Application WordApp {
             get {
                 if (wordApp == null)
@@ -69,7 +71,28 @@ namespace QmsDoc.Core
             }
             set => excelApp = value; }
 
+        public string OriginalDirPath { get => originalDirPath; set => originalDirPath = value; }
+        #endregion
 
+        #region Commands
+
+
+        #region Methods
+
+        public bool CanProcessFiles
+        {
+            get
+            {
+                if (this.OriginalDirPath.Length > this.DocManagerConfig.SafeProcessingLength)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
         private List<FileInfo> GetSafeFiles(List<FileInfo> files)
         {
             var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();
@@ -172,63 +195,9 @@ namespace QmsDoc.Core
             }
             return doc;
         }
-
-        //public QmsDocBase ProcessDoc(QmsDocBase doc, List<IDocActionControl> actionControls)
-        //{
-        //    foreach (IDocActionControl actionControl in actionControls)
-        //    {
-        //        var propertyInfo = doc.GetType().GetProperty(actionControl.DisplayValue);
-        //        if (propertyInfo != null)
-        //        {
-        //            propertyInfo.SetValue(doc, actionControl.DocActionVal);
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("The DocActionName passed is not part of IDocActions.");
-        //        }
-        //    }
-        //    return doc;
-        //}
-
-        private void ProcessFilesPrep(bool test)
+        public Boolean ProcessFiles(DocEdit docEdit) 
         {
-            if (this.wordApp == null && test==false || this.excelApp == null && test==false)
-            {
-                this.CreateApps();
-            }
-        }
-        public Boolean ProcessFiles(Dictionary<string, object> action_dict, bool test=false)
-        {
-            Contract.Requires(this.docManagerConfig != null);
-            Contract.Requires(this.dirFilesUnsafe.Count >= 1);
-            Contract.Requires(action_dict.Count >= 1);
-            
-            this.ProcessFilesPrep(test);
-            foreach (FileInfo file_info in this.DirFiles)
-            {
-                try
-                {
-                    QmsDocBase doc = this.CreateDoc(file_info);
-                    this.ProcessDoc(doc, action_dict);
-                    if (this.docManagerConfig.CloseDocs)
-                    {
-                        doc.CloseDocument();
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    this.CloseApps();
-                    throw e;
-                }
-            }
-
-            this.CloseApps();
-            return true;
-        }
-
-        public Boolean ProcessFiles(DocEdit docEdit, bool test=false) 
-        {
+            Contract.Requires(this.OriginalDirPath != null);
             Contract.Requires(this.docManagerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
 
@@ -262,16 +231,16 @@ namespace QmsDoc.Core
             return true;
 
         }
-        public QmsDocBase CreateDoc(FileInfo file_info, bool test=false)
+        public QmsDocBase CreateDoc(FileInfo file_info)
         {
-            if (this.wordDocExtensions.Contains(file_info.Extension))
+            if (this.DocManagerConfig.WordDocExtensions.Contains(file_info.Extension))
             {
                     QmsDocBase doc = new WordDoc(this.WordApp, file_info, this.wordConfig, this.docManagerConfig);
                     return doc;
             }
  
                 // create word doc and process
-            else if (this.excelDocExtensions.Contains(file_info.Extension))
+            else if (this.DocManagerConfig.ExcelDocExtensions.Contains(file_info.Extension))
             {
                 // create excel doc and process
                     QmsDocBase doc = new ExcelDoc(
@@ -375,7 +344,7 @@ namespace QmsDoc.Core
                 }
             }
         }
-
+        #endregion
     }
 
 }

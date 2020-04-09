@@ -12,6 +12,9 @@ namespace QmsDoc.Core
         bool closeDocs;
         string docPassword;
         int logoHeight;
+        int safeProcessingLength;
+        List<string> wordDocExtensions;
+        List<string> excelDocExtensions;
 
         public DocManagerConfig()
         {
@@ -22,6 +25,9 @@ namespace QmsDoc.Core
         public string DocPassword { get => docPassword; set => docPassword = value; }
         public bool SaveChanges { get => saveChanges; set => saveChanges = value; }
         public bool CloseDocs { get => closeDocs; set => closeDocs = value; }
+        public int SafeProcessingLength { get => safeProcessingLength; set => safeProcessingLength = value; }
+        public List<string> ExcelDocExtensions { get => excelDocExtensions; set => excelDocExtensions = value; }
+        public List<string> WordDocExtensions { get => wordDocExtensions; set => wordDocExtensions = value; }
 
         public void Initialize() {
             
@@ -29,6 +35,10 @@ namespace QmsDoc.Core
             this.CloseDocs = true;
             this.SaveChanges = true;
             this.LogoHeight = 28;
+            this.SafeProcessingLength = 15;
+            this.WordDocExtensions = new List<string> { ".docx", ".doc" };
+            this.ExcelDocExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
         }
     }
 }
+

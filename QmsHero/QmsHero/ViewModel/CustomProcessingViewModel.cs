@@ -9,6 +9,7 @@ using QmsDoc.Core;
 using QmsDoc.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace QmsHero.ViewModel
 {
@@ -29,24 +30,32 @@ namespace QmsHero.ViewModel
         }
 
         public RelayCommand ProcessFilesCommand {
-            get { 
+            get {
                 if (this.processFilesCommand == null)
                 {
                     this.processFilesCommand = new RelayCommand(
-                            () => this.manager.ProcessFiles(this.DocEdit, true),
-                            this.CanProcessFiles()
-                        ) ;
+                        () => ProcessFiles(),
+                        () => CanProcessFiles()
+                        );
                 }
                 return this.processFilesCommand;
+            }
+            set {
+                this.processFilesCommand = value;
             } 
-            set => processFilesCommand = value; }
+        }
+        private void ProcessFiles()
+        {
+            this.manager.ProcessFiles(this.DocEdit);
+        }
+
+        private bool CanProcessFiles()
+        {
+            return this.manager.CanProcessFiles;
+        }
 
         public string ViewDisplayName { get => viewDisplayName; set => viewDisplayName = value; }
         public DocEdit DocEdit { get => docEdit; set => docEdit = value; }
-
-        public bool CanProcessFiles()
-        {
-            return true;
-        }
+        public DocManager Manager { get => manager; set => manager = value; }
     }
 }
