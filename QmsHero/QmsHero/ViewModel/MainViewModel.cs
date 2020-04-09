@@ -44,7 +44,7 @@ namespace QmsHero.ViewModel
             //this.viewModelLocator = new ViewModelLocator();
             // OR
             this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
-            this.activeViewModel = viewModelLocator.DCNViewModel;
+            this.activeViewModel = viewModelLocator.CustomProcessingViewModel;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

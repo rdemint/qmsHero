@@ -62,7 +62,8 @@
                         <Button
                             Name="FolderPickerButton"
                             Content="{TemplateBinding QDisplay}"
-                            Command="{TemplateBinding ShowDialogCommand}"
+                            Command="{Binding Path=ShowDialogCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                             MinWidth="100"
                             />
                         <TextBox MinWidth="200" Text="{TemplateBinding QState}"/>
