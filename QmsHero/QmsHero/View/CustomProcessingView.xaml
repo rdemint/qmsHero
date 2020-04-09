@@ -14,8 +14,8 @@
       >
     <StackPanel
         Background="AliceBlue">
-        <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=EffectiveDate, Mode=TwoWay}"/>
-        <controls:QCheckBox QDisplay="Revision" QOutput="{Binding Path=Revision}"/>
+        <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=DocHeader.EffectiveDate.Value}"/>
+        <controls:QCheckBox QDisplay="Revision" QOutput="{Binding Path=DocHeader.Revision.Value}"/>
         <Button Command="{Binding ProcessFiles}" Content="Process Files"/>
     </StackPanel>
 </Page>

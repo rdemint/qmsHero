@@ -19,6 +19,7 @@ namespace QmsHero.ViewModel
         RelayCommand processFilesCommand;
         DocEdit docEdit;
         ObservableCollection<DocProperty> docProps;
+        DocHeader docHeader;
         public CustomProcessingViewModel()
         {
 

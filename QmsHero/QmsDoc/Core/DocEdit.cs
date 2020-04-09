@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QmsDoc.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,22 +8,37 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    public class DocEdit
+    public class DocEdit: ToDocPropertyCollection
 
     {
         DocHeader docheader;
         DocBody docbody;
-        ObservableCollection<DocProperty> docPropertiesCollection;
+        //ObservableCollection<DocProperty> docPropertiesCollection;
 
         public DocEdit()
         {
-            this.DocPropertiesCollection = new ObservableCollection<DocProperty>();
+            //this.DocPropertiesCollection = new ObservableCollection<DocProperty>();
         }
 
-        public ObservableCollection<DocProperty> DocPropertiesCollection {
-            get => docPropertiesCollection;
-            set => docPropertiesCollection = value; }
+        public DocHeader Docheader { get => docheader; set => docheader = value; }
 
+        //public ObservableCollection<DocProperty> DocPropertiesCollection {
+        //    get => docPropertiesCollection;
+        //    set => docPropertiesCollection = value; }
+        public ObservableCollection<DocProperty> ToCollection()
+        {
+            var col = new ObservableCollection<DocProperty>();
+            AddCollectionRange(col, this.Docheader.ToCollection());
+            return col;
+        }
+
+        private void AddCollectionRange(ObservableCollection<DocProperty> baseCollection, ObservableCollection<DocProperty> props)
+        {
+            foreach(DocProperty prop in props)
+            {
+                baseCollection.Add(prop);
+            }
+        }
         Dictionary<string, object> ToDict()
         {
             var propDict = new Dictionary<string, object>();
