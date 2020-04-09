@@ -38,18 +38,20 @@ namespace QmsDoc.Test.Core
         public void ProcessDocTest()
         {
             var docEdit = new DocEdit();
-            docEdit.DocPropertiesCollection = new ObservableCollection<DocProperty>
-            {
-                new DocProperty("Revision", "1"),
-                new DocProperty("EffectiveDate", "2020-03-30"),
-            };
             var fixture = new FixtureUtil();
-
             var manager = new DocManager();
+
+            docEdit.DocHeader.Revision.Value = "1";
+            docEdit.DocHeader.EffectiveDate.Value = "2020-03-30";
             var doc = manager.CreateDoc(fixture.WordSample);
             doc = manager.ProcessDoc(doc, docEdit);
-            Assert.AreEqual(doc.Revision, "1");
-            Assert.AreEqual(doc.EffectiveDate, "2020-03-30");
+            var worddoc = (WordDoc)doc;
+            var rev = worddoc.GetRevision();
+            var date = worddoc.GetEffectiveDate();
+            manager.Dispose();
+
+            Assert.AreEqual(rev, "1");
+            Assert.AreEqual(date, "2020-03-30");
         }
 
     }

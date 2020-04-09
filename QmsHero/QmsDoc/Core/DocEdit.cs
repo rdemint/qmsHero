@@ -11,29 +11,32 @@ namespace QmsDoc.Core
     public class DocEdit: ToDocPropertyCollection
 
     {
-        DocHeader docheader;
-        DocBody docbody;
-        //ObservableCollection<DocProperty> docPropertiesCollection;
+        DocHeader docHeader;
+        DocBody docBody;
 
         public DocEdit()
         {
-            //this.DocPropertiesCollection = new ObservableCollection<DocProperty>();
+            this.DocHeader = new DocHeader();
+            //this.DocBody = new DocBody();
         }
 
-        public DocHeader Docheader { get => docheader; set => docheader = value; }
-        public DocBody Docbody { get => docbody; set => docbody = value; }
+        public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
+        public DocBody DocBody { get => docBody; set => docBody = value; }
 
-        //public ObservableCollection<DocProperty> DocPropertiesCollection {
-        //    get => docPropertiesCollection;
-        //    set => docPropertiesCollection = value; }
         public ObservableCollection<DocProperty> ToCollection()
         {
             var col = new ObservableCollection<DocProperty>();
-            AddCollectionRange(col, this.Docheader.ToCollection());
+            AddCollectionRange(col, this.DocHeader.ToCollection());
             //AddCollectionRange(col, this.Docbody.ToCollection());
+            col = FilterCollection(col);
             return col;
         }
 
+        public ObservableCollection<DocProperty> FilterCollection(ObservableCollection<DocProperty> docProps)
+        {
+            var query = docProps.Where(prop => prop.IsValid());
+            return new ObservableCollection<DocProperty>(query);
+        }
         private void AddCollectionRange(ObservableCollection<DocProperty> baseCollection, ObservableCollection<DocProperty> props)
         {
             foreach(DocProperty prop in props)

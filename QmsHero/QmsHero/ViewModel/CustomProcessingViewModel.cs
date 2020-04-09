@@ -25,6 +25,7 @@ namespace QmsHero.ViewModel
 
             this.ViewDisplayName = "Custom";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
+            this.docEdit = new DocEdit();
         }
 
         public RelayCommand ProcessFilesCommand {

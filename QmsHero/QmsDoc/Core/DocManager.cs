@@ -157,12 +157,13 @@ namespace QmsDoc.Core
 
             public QmsDocBase ProcessDoc(QmsDocBase doc, DocEdit docEdit)
         {
-            foreach (DocProperty docProp in docEdit.ToCollection())
+            var docProps = docEdit.ToCollection();
+            foreach (DocProperty docProp in docProps)
             {
                 var propertyInfo = doc.GetType().GetProperty(docProp.Name);
                 if (propertyInfo != null)
                 {
-                    propertyInfo.SetValue(doc, docProp.Value);
+                        propertyInfo.SetValue(doc, docProp.Value);
                 }
                 else
                 {

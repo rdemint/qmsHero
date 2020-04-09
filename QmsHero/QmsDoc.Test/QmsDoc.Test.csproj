@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DocEditTests.cs" />
     <Compile Include="Core\DocManagerTests.cs" />
     <Compile Include="Docs\ExcelDocTests.cs" />
     <Compile Include="Docs\WordDocTests.cs" />

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace LadderControls.Commands
 {
-    class ShowFileDialogCommand: ICommand
+    public class ShowFileDialogCommand: ICommand
     {
         public bool CanExecute(object parameter)
         {

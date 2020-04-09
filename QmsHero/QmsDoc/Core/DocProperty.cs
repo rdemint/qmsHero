@@ -17,5 +17,14 @@
         }
         public object Value { get => value; set => this.value = value; }
         public string Name { get => name; set => name = value; }
+
+        public bool IsValid()
+        {
+            if (this.Value != null)
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }
