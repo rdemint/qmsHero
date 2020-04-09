@@ -13,7 +13,9 @@
       ShowsNavigationUI="False"
       >
     <StackPanel
+        Margin="20"
         Background="AliceBlue">
+        <controls:QFolderPicker QDisplay="Logo" QOutput="{Binding Path=DocHeader.LogoPath.Value}"/>
         <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=DocHeader.EffectiveDate.Value}"/>
         <controls:QCheckBox QDisplay="Revision" QOutput="{Binding Path=DocHeader.Revision.Value}"/>
         <Button Command="{Binding ProcessFilesCommand}" Content="Process Files"/>

@@ -41,15 +41,15 @@ namespace QmsDoc.Core
                 baseCollection.Add(prop);
             }
         }
-        Dictionary<string, object> ToDict()
-        {
-            var propDict = new Dictionary<string, object>();
-            foreach (DocProperty docProperty in this.DocPropertiesCollection)
-            {
+        //Dictionary<string, object> ToDict()
+        //{
+        //    var propDict = new Dictionary<string, object>();
+        //    foreach (DocProperty docProperty in this.DocPropertiesCollection)
+        //    {
                 
-                propDict.Add(docProperty.Name, docProperty.Value);
-            }
-            return propDict;
-        }
+        //        propDict.Add(docProperty.Name, docProperty.Value);
+        //    }
+        //    return propDict;
+        //}
     }
 }

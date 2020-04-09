@@ -43,12 +43,33 @@
                         <Button
                             Name="FilePickerButton"
                             Content="{TemplateBinding QDisplay}"
-                            MinWidth="0"
+                            MinWidth="100"
                             />
                         <TextBox MinWidth="200" Text="{TemplateBinding QState}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style TargetType="{x:Type local:QFolderPicker}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QFolderPicker}">
+                    <StackPanel
+                        Name="FolderPickerPanel"
+                        Orientation="Horizontal"
+                        >
+                        <Button
+                            Name="FolderPickerButton"
+                            Content="{TemplateBinding QDisplay}"
+                            Command="{TemplateBinding ShowDialogCommand}"
+                            MinWidth="100"
+                            />
+                        <TextBox MinWidth="200" Text="{TemplateBinding QState}"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 </ResourceDictionary>

@@ -75,6 +75,7 @@
     <Compile Include="Core\DocEdit.cs" />
     <Compile Include="Core\DocHeader.cs" />
     <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Exceptions\ProjectDirNotSetException.cs" />
     <Compile Include="Interfaces\IDocHeader.cs" />
     <Compile Include="Docs\DCN.cs" />
     <Compile Include="Core\DocManager.cs" />

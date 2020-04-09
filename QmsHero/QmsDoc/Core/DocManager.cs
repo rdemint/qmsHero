@@ -18,6 +18,7 @@ using GalaSoft.MvvmLight.Ioc;
 using System.Collections.ObjectModel;
 using Microsoft.Office.Interop.Word;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace QmsDoc.Core
 {
@@ -230,6 +231,11 @@ namespace QmsDoc.Core
             Contract.Requires(this.docManagerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
 
+            if(this.DirFiles == null)
+            {
+                throw new ProjectDirNotSetException();
+            }
+
             foreach (FileInfo file_info in this.DirFiles)
             {
 
@@ -370,4 +376,5 @@ namespace QmsDoc.Core
         }
 
     }
+
 }
