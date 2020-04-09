@@ -8,7 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using QmsDoc.Core;
 using QmsDoc.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
-
+using System.Collections.ObjectModel;
 
 namespace QmsHero.ViewModel
 {
@@ -18,13 +18,12 @@ namespace QmsHero.ViewModel
         DocManager manager;
         RelayCommand processFilesCommand;
         DocEdit docEdit;
-
+        ObservableCollection<DocProperty> docProps;
         public CustomProcessingViewModel()
         {
 
             this.ViewDisplayName = "Custom";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.manager.ConfigDir("C:\\Users\\raine\\Documents\\Dev\\qmsHero\\QmsHero\\QmsDoc.Test\\Fixtures\\Active QMS Documents\\SOP-001 Quality Manual Documents");
         }
 
         public RelayCommand ProcessFilesCommand {

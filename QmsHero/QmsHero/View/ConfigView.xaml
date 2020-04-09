@@ -10,9 +10,6 @@
       Title="ConfigView"
       ShowsNavigationUI="False"
       >
-    <Page.Resources>
-        <ResourceDictionary Source="Resources/DocActionDataTemplate.xaml"/>
-    </Page.Resources>
     <StackPanel
         Background="White"
         >
@@ -22,9 +19,5 @@
              CornerRadius="5">
             <TextBlock Text="Configure the Project" HorizontalAlignment="Center" FontWeight="Bold"/>
         </Border>
-        <ListView
-            ItemsSource="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel.ControlList}" HorizontalAlignment="Center" VerticalAlignment="Center"
-            >
-        </ListView>
     </StackPanel>
 </Page>

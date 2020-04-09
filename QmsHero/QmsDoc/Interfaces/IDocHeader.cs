@@ -2,9 +2,9 @@
 {
     public interface IDocHeader
     {
-        string EffectiveDate { get; set; }
-        string LogoPath { get; set; }
-        string LogoText { get; set; }
-        string Revision { get; set; }
+        DocProperty EffectiveDate { get; set; }
+        DocProperty LogoPath { get; set; }
+        DocProperty LogoText { get; set; }
+        DocProperty Revision { get; set; }
     }
 }
