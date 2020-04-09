@@ -35,7 +35,14 @@ namespace QmsDoc.Core
         public ObservableCollection<DocProperty> FilterCollection(ObservableCollection<DocProperty> docProps)
         {
             var query = docProps.Where(prop => prop.IsValid());
-            return new ObservableCollection<DocProperty>(query);
+            if(query.Any())
+            {
+                return new ObservableCollection<DocProperty>(query);
+            }
+            else
+            {
+                return new ObservableCollection<DocProperty>();
+            }
         }
         private void AddCollectionRange(ObservableCollection<DocProperty> baseCollection, ObservableCollection<DocProperty> props)
         {

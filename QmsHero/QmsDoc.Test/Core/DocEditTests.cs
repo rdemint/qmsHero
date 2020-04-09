@@ -16,7 +16,7 @@ namespace QmsDoc.Core.Tests
         {
             var docEdit = new DocEdit();
             var props = docEdit.ToCollection();
-            Assert.IsTrue(props.Count == 0);
+            Assert.IsTrue(props.Any() == false);
 
             docEdit.DocHeader.Revision.Value = "2";
             props = docEdit.ToCollection();
