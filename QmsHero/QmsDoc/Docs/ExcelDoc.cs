@@ -9,6 +9,7 @@ using FileInfo = System.IO.FileInfo;
 using QmsDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Office.Interop.Excel;
+using System.Text.RegularExpressions;
 
 namespace QmsDoc.Docs
 
@@ -44,7 +45,13 @@ namespace QmsDoc.Docs
         public string GetRevision()
         {
             string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            return rightHeaders.TakeWhile(char.IsDigit).Last().ToString();
+            //var myArr = new string[] { };
+            //myArr.Append(this.DocConfig.RevisionText);
+            //var result = rightHeaders.Split(myArr, StringSplitOptions.RemoveEmptyEntries);
+            var match = Regex.Match(rightHeaders, Regex.Escape(this.DocConfig.RevisionText) + @"\d");
+            var result = match.ToString();
+            var match2 = Regex.Match(result, @"\d");
+            return match2.ToString();
         }
         
         public override string Revision { 
@@ -65,8 +72,14 @@ namespace QmsDoc.Docs
 
         public string GetEffectiveDate() {
             string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            string result = rightHeaders.Remove(this.DocConfig.EffectiveDateText.Length);
-            return (string)result.Take(10);
+            //var myArr = new string[] { };
+            //myArr.Append(this.DocConfig.EffectiveDateText);
+            //myArr.Append(this.DocConfig.RevisionText);
+            //var result = rightHeaders.Split(myArr, StringSplitOptions.RemoveEmptyEntries);
+            //return result[2];
+            Regex rx = new Regex(@"\d\d\d\d-\d\d-\d\d", RegexOptions.None);
+            Match match = rx.Match(rightHeaders);
+            return match.ToString();
         }
         public override string EffectiveDate { 
             get => effectiveDate; 
@@ -118,11 +131,6 @@ namespace QmsDoc.Docs
         public Excel.Application App {
             get
             {
-                if (this.app == null)
-                {
-                    this.app = new Excel.Application();
-                }
-
                 return this.app;
             }
             set => app = value; 
@@ -143,7 +151,11 @@ namespace QmsDoc.Docs
             try
             {
 
-              Excel.Workbook workbook = this.App.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword);
+                int count = this.App.Workbooks.Count;
+                Excel.Workbook workbook = this.App.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword, WriteResPassword: this.ManagerConfig.DocPassword);
+                int count2 = this.App.Workbooks.Count;
+                var active = this.App.ActiveWorkbook;
+
               return workbook;
             }
 

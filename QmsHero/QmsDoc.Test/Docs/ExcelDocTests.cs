@@ -21,9 +21,10 @@ namespace QmsDoc.Docs.Tests
             var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
             var rightHeader = wbk.Doc.Worksheets[1].PageSetup.RightHeader;
             Assert.AreEqual(
-                rightHeader,
-                wbk.DocConfig.EffectiveDateText + wbk.EffectiveDate + wbk.DocConfig.RevisionEffectiveDateSeparator + wbk.DocConfig.RevisionText + wbk.Revision
+                "2",
+                wbk.GetRevision()
                 );
+            manager.Dispose();
         }
 
         [TestMethod()]
@@ -34,9 +35,10 @@ namespace QmsDoc.Docs.Tests
             var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
             var rightHeader = wbk.Doc.Worksheets[1].PageSetup.RightHeader;
             Assert.AreEqual(
-                rightHeader,
-                wbk.DocConfig.EffectiveDateText + wbk.EffectiveDate+ wbk.DocConfig.RevisionEffectiveDateSeparator + wbk.DocConfig.RevisionText + wbk.Revision
+                "2018-11-26",
+                wbk.GetEffectiveDate()
                 );
+            manager.Dispose();
         }
 
         [TestMethod()]
@@ -47,6 +49,7 @@ namespace QmsDoc.Docs.Tests
             Assert.AreEqual(0, manager.ExcelApp.Workbooks.Count);
             var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
             Assert.AreEqual(1, manager.ExcelApp.Workbooks.Count);
+            manager.Dispose();
 
         }
 
@@ -56,10 +59,13 @@ namespace QmsDoc.Docs.Tests
             var fixture = new FixtureUtil();
             var manager = new DocManager();
 
-            var wbk = manager.CreateDoc(fixture.ExcelSample);
-            Assert.AreEqual(1, manager.ExcelApp.Workbooks.Count);
+            var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
+            //Assert.AreEqual(wbk.App, manager.ExcelApp);
+            Assert.AreEqual(1, wbk.App.Workbooks.Count);
+            Assert.AreEqual(wbk.App, manager.ExcelApp);
             wbk.CloseDocument();
             Assert.AreEqual(0, manager.ExcelApp.Workbooks.Count);
+            manager.Dispose();
         }
     }
 }

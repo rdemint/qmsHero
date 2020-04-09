@@ -21,7 +21,7 @@ using System.IO;
 
 namespace QmsDoc.Core
 {
-    public class DocManager: IDocManager, IDictionary
+    public class DocManager : IDocManager, IDisposable
     {
         System.IO.DirectoryInfo topDir;
         DocManagerConfig docManagerConfig;
@@ -49,8 +49,8 @@ namespace QmsDoc.Core
         public List<FileInfo> DirFiles {
             get => this.GetSafeFiles(dirFilesUnsafe); }
         public Word.Application WordApp {
-            get { 
-                if(wordApp == null)
+            get {
+                if (wordApp == null)
                 {
                     wordApp = new Word.Application();
                 }
@@ -58,7 +58,7 @@ namespace QmsDoc.Core
             }
             set => wordApp = value; }
 
-        public Excel.Application ExcelApp {
+         public Excel.Application ExcelApp {
             get { 
                 if(excelApp == null)
                 {
@@ -67,6 +67,7 @@ namespace QmsDoc.Core
                 return excelApp;
             }
             set => excelApp = value; }
+
 
         private List<FileInfo> GetSafeFiles(List<FileInfo> files)
         {
@@ -254,48 +255,6 @@ namespace QmsDoc.Core
             return true;
 
         }
-
-        //public void ProcessFiles(List<IDocActionControl> actionControls, bool test=false)
-        //{
-        //    Contract.Requires(this.managerConfig != null);
-        //    Contract.Requires(this.dirFilesUnsafe.Count >= 1);
-        //    Contract.Requires(actionControls.Count >= 1);
-
-        //    this.ProcessFilesPrep(test);
-        //    var filteredControls = this.FilterControls(actionControls);
-
-        //    foreach (FileInfo file_info in this.DirFiles)
-        //    {
-
-        //        try
-        //        {
-        //            QmsDocBase doc = this.CreateDoc(file_info, test);
-        //            this.ProcessDoc(doc, filteredControls);
-        //            if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true && test == false)
-        //            {
-        //                doc.CloseDocument();
-        //            }
-        //            System.Windows.Forms.MessageBox.Show("Finished Processing Files");
-        //        }
-
-        //        catch (Exception e)
-        //        {
-        //            this.CloseApps();
-        //            throw e;
-        //        }
-        //    }
-        //    this.CloseApps();
-        //}
-
-        //public List<IDocActionControl> FilterControls(List<IDocActionControl> controls)
-        //{
-        //    var query = controls
-        //        .Where(control => control.ControlIsValid == true)
-        //        .Where(control => control.DocActionVal != null)
-        //        .Where(control=> (string)control.DocActionVal != "");
-        //    return query.ToList();
-
-        //}
         public QmsDocBase CreateDoc(FileInfo file_info, bool test=false)
         {
             if (this.wordDocExtensions.Contains(file_info.Extension))
@@ -309,7 +268,7 @@ namespace QmsDoc.Core
             {
                 // create excel doc and process
                     QmsDocBase doc = new ExcelDoc(
-                        this.excelApp, 
+                        this.ExcelApp, 
                         file_info,
                         this.excelConfig,
                         this.docManagerConfig);
