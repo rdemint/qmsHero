@@ -11,6 +11,7 @@ using QmsDoc.Core;
 using QmsDoc.Exceptions;
 using GalaSoft.MvvmLight.Ioc;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace QmsDoc.Docs
 {
@@ -87,12 +88,14 @@ namespace QmsDoc.Docs
 
         public string GetEffectiveDate()
         {
-            return this.HeaderFooterTable
+            string result =  this.HeaderFooterTable
                     .Cell(
                         this.DocConfig.EffectiveDateRow,
                         this.DocConfig.EffectiveDateCol
                     )
                     .Range.Text;
+            Match match = Regex.Match(result, @"\d\d\d\d-\d\d-\d\d");
+            return match.ToString();
         }
         public override string EffectiveDate
         {
@@ -115,12 +118,14 @@ namespace QmsDoc.Docs
 
         public string GetRevision()
         {
-            return  this.HeaderFooterTable
+            var result = this.HeaderFooterTable
               .Cell(
                   this.DocConfig.RevisionRow,
                   this.DocConfig.RevisionCol
               )
               .Range.Text;
+            Match match = Regex.Match(result, @"\d");
+            return match.ToString();
         }
         public override string Revision
         {

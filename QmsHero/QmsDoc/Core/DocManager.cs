@@ -301,10 +301,13 @@ namespace QmsDoc.Core
                 try
                 {
                     this.wordApp.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
-                    this.wordApp.Documents.Close(
+                    if (this.wordApp.Documents.Count > 0 )
+                    {
+                        this.wordApp.Documents.Close(
                             Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
                             Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat
                         );
+                    }
                     this.wordApp.Quit();
                 }
                 catch (Exception e)
@@ -320,7 +323,7 @@ namespace QmsDoc.Core
                 try
                 {
                     this.excelApp.DisplayAlerts = false;
-                    this.excelApp.Workbooks.Close();
+                    this.excelApp.Workbooks?.Close();
                     this.excelApp.Quit();
                 }
 
@@ -361,8 +364,7 @@ namespace QmsDoc.Core
             {
                 if(disposing)
                 {
-                    ExcelApp.Quit();
-                    WordApp.Quit();
+                    CloseApps();
                 }
             }
         }

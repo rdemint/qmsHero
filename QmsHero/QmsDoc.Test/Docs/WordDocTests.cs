@@ -19,7 +19,13 @@ namespace QmsDoc.Docs.Tests
             var fixture = new FixtureUtil();
             var manager = new DocManager();
             var doc = (WordDoc)manager.CreateDoc(fixture.WordSample);
-            Assert.AreEqual("Effective Date: 2018-11-26", doc.GetEffectiveDate());
+            var initial = doc.GetEffectiveDate();
+            doc.EffectiveDate = "2020-04-12";
+            var result = doc.GetEffectiveDate();
+            manager.Dispose();
+            Assert.AreEqual("2018-11-26", initial);
+            Assert.AreEqual("2020-04-12", result);
+
         }
 
         [TestMethod()]
@@ -28,7 +34,12 @@ namespace QmsDoc.Docs.Tests
             var fixture = new FixtureUtil();
             var manager = new DocManager();
             var doc = (WordDoc)manager.CreateDoc(fixture.WordSample);
-            Assert.AreEqual("Revision: 2", doc.GetRevision());
+            var initial = doc.GetRevision();
+            doc.Revision = "3";
+            var changeResult = doc.GetRevision();
+            manager.Dispose();
+            Assert.AreEqual("2", initial);
+            Assert.AreEqual("3", changeResult);
         }
 
         [TestMethod()]
@@ -36,9 +47,12 @@ namespace QmsDoc.Docs.Tests
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
-            Assert.AreEqual(0, manager.WordApp.Documents.Count);
+            int preCount = manager.WordApp.Documents.Count;
             manager.CreateDoc(fixture.WordSample);
-            Assert.AreEqual(1, manager.WordApp.Documents.Count);
+            int postCount = manager.WordApp.Documents.Count;
+            manager.Dispose();
+            Assert.AreEqual(0, preCount);
+            Assert.AreEqual(1, postCount);
         }
 
         [TestMethod()]
@@ -48,9 +62,12 @@ namespace QmsDoc.Docs.Tests
             var manager = new DocManager();
             
             var doc = manager.CreateDoc(fixture.WordSample);
-            Assert.AreEqual(1, manager.WordApp.Documents.Count);
+            int preCount = manager.WordApp.Documents.Count;
             doc.CloseDocument();
-            Assert.AreEqual(0, manager.WordApp.Documents.Count);
+            int postCount = manager.WordApp.Documents.Count;
+            manager.Dispose();
+            Assert.AreEqual(1, preCount);
+            Assert.AreEqual(0, postCount);
         }
 
         //[TestMethod()]
