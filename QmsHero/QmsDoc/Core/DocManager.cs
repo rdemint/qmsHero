@@ -72,26 +72,25 @@ namespace QmsDoc.Core
             set => excelApp = value; }
 
         public string OriginalDirPath { get => originalDirPath; set => originalDirPath = value; }
-        #endregion
 
-        #region Commands
+
+
+        #endregion
 
 
         #region Methods
 
-        public bool CanProcessFiles
+        public bool CanProcessFiles(string path)
         {
-            get
+            if (path!=null && path.Length > this.DocManagerConfig.SafeProcessingLength)
             {
-                if (this.OriginalDirPath.Length > this.DocManagerConfig.SafeProcessingLength)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
+            else
+            {
+                return false;
+            }
+
         }
         private List<FileInfo> GetSafeFiles(List<FileInfo> files)
         {
@@ -211,9 +210,9 @@ namespace QmsDoc.Core
 
                 try
                 {
-                    QmsDocBase doc = this.CreateDoc(file_info, test);
+                    QmsDocBase doc = this.CreateDoc(file_info);
                     this.ProcessDoc(doc, docEdit);
-                    if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true && test == false)
+                    if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true)
                     {
                         doc.CloseDocument();
                     }
@@ -227,6 +226,7 @@ namespace QmsDoc.Core
 
                 }
             }
+            this.dirFilesUnsafe = new List<FileInfo>();
             this.CloseApps();
             return true;
 

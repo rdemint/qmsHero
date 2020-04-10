@@ -40,7 +40,7 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\View\CustomProces
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.g.resources
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.Properties.Resources.resources
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.GenerateResource.cache
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.CoreCompileInputs.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.CopyComplete
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.exe
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.pdb
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero\obj\Debug\QmsHero.csproj.CoreCompileInputs.cache

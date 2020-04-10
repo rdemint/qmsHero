@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using QmsDoc.Core;
 using QmsDoc.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
@@ -21,23 +21,23 @@ namespace QmsHero.ViewModel
         DocEdit docEdit;
         ObservableCollection<DocProperty> docProps;
         DocHeader docHeader;
+        string originalDirPath;
+
         public CustomProcessingViewModel()
         {
 
             this.ViewDisplayName = "Custom";
-            this.manager = SimpleIoc.Default.GetInstance<DocManager>();
+            this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.docEdit = new DocEdit();
+            this.OriginalDirPath = null;
         }
 
         public RelayCommand ProcessFilesCommand {
             get {
-                if (this.processFilesCommand == null)
-                {
-                    this.processFilesCommand = new RelayCommand(
+                  this.processFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
                         () => CanProcessFiles()
                         );
-                }
                 return this.processFilesCommand;
             }
             set {
@@ -46,16 +46,27 @@ namespace QmsHero.ViewModel
         }
         private void ProcessFiles()
         {
+            this.manager.ConfigDir(this.OriginalDirPath);
             this.manager.ProcessFiles(this.DocEdit);
         }
 
         private bool CanProcessFiles()
         {
-            return this.manager.CanProcessFiles;
+            return this.Manager.CanProcessFiles(this.OriginalDirPath);
         }
 
-        public string ViewDisplayName { get => viewDisplayName; set => viewDisplayName = value; }
+        public string ViewDisplayName { 
+            get => viewDisplayName; 
+            set => viewDisplayName = value; }
         public DocEdit DocEdit { get => docEdit; set => docEdit = value; }
         public DocManager Manager { get => manager; set => manager = value; }
+        public string OriginalDirPath { 
+            get => originalDirPath;
+            set {
+                Set<string>(
+                    () => OriginalDirPath, ref originalDirPath, value
+                    );
+             
+            } }
     }
 }

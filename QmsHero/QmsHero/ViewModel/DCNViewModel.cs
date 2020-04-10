@@ -23,10 +23,6 @@ namespace QmsHero.ViewModel
         {
             this.EffectiveDate = "2020-03-20";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            //this.docHeader = new DocHeader();
-            //this.docHeader.Revision = "1";
-            //this.docHeader.EffectiveDate = "2020-03-20";
-            //this.docHeader.LogoPath = "C:/raine/qmsProcessing";
             this.Revision = "1";
         }
 

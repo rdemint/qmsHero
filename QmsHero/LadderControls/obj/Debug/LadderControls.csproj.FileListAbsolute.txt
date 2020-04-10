@@ -7,7 +7,6 @@ C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\Themes\Gen
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.g.resources
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.Properties.Resources.resources
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.csproj.GenerateResource.cache
+C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.csproj.CoreCompileInputs.cache
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.dll
 C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.pdb
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.csprojAssemblyReference.cache
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderControls\obj\Debug\LadderControls.csproj.CoreCompileInputs.cache
