@@ -37,7 +37,7 @@ namespace QmsHero.ViewModel
             get {
                   this.processFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
-                        () => CanProcessFiles()
+                        () => DirIsValid()
                         );
                 return this.processFilesCommand;
             }
@@ -52,9 +52,9 @@ namespace QmsHero.ViewModel
             this.manager.ProcessFiles(this.DocEdit);
         }
 
-        private bool CanProcessFiles()
+        private bool DirIsValid()
         {
-            return this.Manager.CanProcessFiles(this.OriginalDirPath);
+            return this.Manager.DirIsValid(OriginalDirPath);
         }
 
         public string ViewDisplayName { 

@@ -20,8 +20,6 @@ namespace QmsDoc.Core
 {
     public class DocManager : IDocManager, IDisposable
     {
-        string dirPath;
-        string processingDirPath;
         DirectoryInfo dir;
         DirectoryInfo processingDir;
         List<FileInfo> dirFilesUnsafe;
@@ -80,20 +78,6 @@ namespace QmsDoc.Core
             }
             set => excelApp = value; }
 
-        public string DirPath { 
-            get => dirPath; 
-            set {
-                this.dirPath = value;
-                this.Dir = new DirectoryInfo(value);
-            } }
-        public string ProcessingDirPath { 
-            get => processingDirPath;
-            set {
-                this.ProcessingDir = new DirectoryInfo(value);
-                this.processingDirPath = value;
-            }
-        }
-
         public DirectoryInfo ProcessingDir { 
             get => processingDir; 
             set => processingDir = value; }
@@ -124,7 +108,7 @@ namespace QmsDoc.Core
 
         public bool CanProcessFiles()
         {
-            if(this.DirIsValid(this.DirPath))
+            if(this.DirIsValid(this.Dir.FullName))
             {
                 return true;
             }
@@ -142,14 +126,10 @@ namespace QmsDoc.Core
 
         public void ConfigDir(string dirPath, string processingDirName="Processing")
         {
-            this.DirPath = dirPath;
-            this.ProcessingDirPath = Path.Combine(dirPath, processingDirName);
-            this.ProcessingDir = DirectoryCopy(new DirectoryInfo(dirPath), processingDirName, true);
-            this.Dir = new System.IO.DirectoryInfo(this.dirPath);
-            //this.DirFiles = this.AddDirFiles(this.DirPath, this.DirFiles);
+            this.Dir = new DirectoryInfo(dirPath);
+            this.ProcessingDir = DirectoryCopy(this.Dir, processingDirName, true);
             this.DirFiles = this.Dir.GetFiles("*", SearchOption.AllDirectories).ToList();
             this.ProcessingDirFiles = this.ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-            //this.ProcessingDirFiles = this.AddDirFiles(this.ProcessingDirPath, this.ProcessingDirFiles);
         }
 
         private DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
@@ -204,14 +184,7 @@ namespace QmsDoc.Core
             foreach (DocProperty docProp in docProps)
             {
                 var propertyInfo = doc.GetType().GetProperty(docProp.Name);
-                if (propertyInfo != null)
-                {
-                        propertyInfo.SetValue(doc, docProp.Value);
-                }
-                else
-                {
-                    throw new Exception("The DocActionName passed is not part of IDocActions.");
-                }
+                propertyInfo?.SetValue(doc, docProp.Value);
             }
             return doc;
         }
@@ -219,14 +192,8 @@ namespace QmsDoc.Core
         {
             Contract.Requires(this.CanProcessFiles() == true);
 
-            if(this.DirFiles == null)
+            foreach (FileInfo file_info in this.ProcessingDirFiles)
             {
-                throw new ProjectDirNotSetException();
-            }
-
-            foreach (FileInfo file_info in this.DirFiles)
-            {
-
                 try
                 {
                     QmsDocBase doc = this.CreateDoc(file_info);
@@ -239,7 +206,7 @@ namespace QmsDoc.Core
 
                 catch (Exception e)
                 {
-                    System.Windows.Forms.MessageBox.Show("An Error occured while processing the document");
+                    System.Windows.Forms.MessageBox.Show("An Error occured while processing a document");
                 }
             }
             return true;

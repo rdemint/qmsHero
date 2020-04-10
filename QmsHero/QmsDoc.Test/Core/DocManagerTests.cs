@@ -30,13 +30,9 @@ namespace QmsDoc.Core.Tests
                 );
             Assert.AreEqual(
                 manager.Dir.FullName,
-                manager.DirPath
+                fixture.ActiveQMSDocuments.FullName
                 );
-            Assert.AreEqual(
-                manager.ProcessingDir.FullName,
-                manager.ProcessingDirPath
-                );
-            fixture.ActiveQMSDocuments.GetFiles();
+            manager.DeleteProcessingDir();
         }
     }
 }
@@ -55,9 +51,9 @@ namespace QmsDoc.Test.Core
 
             docEdit.DocHeader.Revision.Value = "1";
             docEdit.DocHeader.EffectiveDate.Value = "2020-03-30";
-            var doc = manager.CreateDoc(fixture.WordSample);
-            doc = manager.ProcessDoc(doc, docEdit);
-            var worddoc = (WordDoc)doc;
+            manager.ConfigDir(fixture.Sop1Documents.FullName);
+            manager.ProcessFiles(docEdit);
+            var worddoc = (WordDoc)manager.CreateDoc(manager.ProcessingDirFiles[0]);
             var rev = worddoc.GetRevision();
             var date = worddoc.GetEffectiveDate();
             manager.Dispose();
