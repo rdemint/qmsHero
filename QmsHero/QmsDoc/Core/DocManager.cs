@@ -25,7 +25,8 @@ namespace QmsDoc.Core
     public class DocManager : IDocManager, IDisposable
     {
         System.IO.DirectoryInfo topDir;
-        string originalDirPath;
+        string dirPath;
+        string processingDirPath;
         DocManagerConfig docManagerConfig;
         ExcelDocConfig excelConfig;
         WordDocConfig wordConfig;
@@ -33,9 +34,7 @@ namespace QmsDoc.Core
         List<FileInfo> dirFiles;
         Word.Application wordApp;
         Excel.Application excelApp;
-        string dirPath;
         bool disposed = false;
-        bool canProcess;
 
         public DocManager()
         {
@@ -71,7 +70,10 @@ namespace QmsDoc.Core
             }
             set => excelApp = value; }
 
-        public string OriginalDirPath { get => originalDirPath; set => originalDirPath = value; }
+        public string DirPath { get => dirPath; set => dirPath = value; }
+        public string ProcessingDirPath { 
+            get => processingDirPath; 
+            set => processingDirPath = value; }
 
 
 
@@ -112,7 +114,7 @@ namespace QmsDoc.Core
 
         public void ConfigDir(string dir_path, string processingDirName="Processing")
         {
-            this.originalDirPath = dir_path;
+            this.dirPath = dir_path;
             this.dirPath = DirectoryCopy(new DirectoryInfo(dir_path), processingDirName, true).FullName;
             this.topDir = new System.IO.DirectoryInfo(this.dirPath);
             this.AddDirFiles(dir_path);
@@ -164,19 +166,6 @@ namespace QmsDoc.Core
             return new DirectoryInfo(destDirPath);
         }
 
-        public QmsDocBase ProcessDoc(QmsDocBase doc, Dictionary<string, object> action_dict)
-        {
-            foreach (string propertyName in action_dict.Keys)
-            {
-                var propertyInfo = doc.GetType().GetProperty(propertyName);
-                if (propertyInfo != null)
-                {
-                    propertyInfo.SetValue(doc, action_dict[propertyName]);
-                }
-            }
-            return doc;
-        }
-
             public QmsDocBase ProcessDoc(QmsDocBase doc, DocEdit docEdit)
         {
             var docProps = docEdit.ToCollection();
@@ -196,7 +185,7 @@ namespace QmsDoc.Core
         }
         public Boolean ProcessFiles(DocEdit docEdit) 
         {
-            Contract.Requires(this.OriginalDirPath != null);
+            Contract.Requires(this.DirPath != null);
             Contract.Requires(this.docManagerConfig != null);
             Contract.Requires(this.dirFilesUnsafe.Count >= 1);
 
@@ -216,19 +205,21 @@ namespace QmsDoc.Core
                     {
                         doc.CloseDocument();
                     }
-                    System.Windows.Forms.MessageBox.Show("Finished Processing Files");
                 }
 
                 catch (Exception e)
                 {
-                    this.CloseApps();
-                    throw e;
-
+                    System.Windows.Forms.MessageBox.Show("An Error occured while processing the document");
                 }
             }
-            this.dirFilesUnsafe = new List<FileInfo>();
-            this.CloseApps();
             return true;
+        }
+
+        public void ProcessingFilesCleanup()
+        {
+            System.Windows.Forms.MessageBox.Show("Finished Processing Files");
+            this.CloseApps();
+            this.dirFilesUnsafe = new List<FileInfo>();
 
         }
         public QmsDocBase CreateDoc(FileInfo file_info)

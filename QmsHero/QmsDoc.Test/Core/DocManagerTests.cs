@@ -22,9 +22,12 @@ namespace QmsDoc.Core.Tests
         {
             var manager = new DocManager();
             manager.ConfigDir(fixture.ActiveQMSDocuments.FullName);
-
-            var processDirs = fixture.FixtureDir.GetDirectories("Processing");
+            
+            var processDirs = fixture.FixtureProcessingDir.GetDirectories("Processing");
             Assert.IsTrue(processDirs.Length == 1);
+            var dirFiles = manager.DirFiles;
+            var parentDir = dirFiles[0].Directory;
+            Assert.AreEqual(parentDir, fixture.FixtureProcessingDir);
         }
     }
 }

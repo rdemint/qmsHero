@@ -19,8 +19,8 @@ namespace QmsHero.ViewModel
         DocManager manager;
         RelayCommand processFilesCommand;
         DocEdit docEdit;
-        ObservableCollection<DocProperty> docProps;
         DocHeader docHeader;
+        ObservableCollection<DocProperty> docProps;
         string originalDirPath;
 
         public CustomProcessingViewModel()
@@ -28,8 +28,9 @@ namespace QmsHero.ViewModel
 
             this.ViewDisplayName = "Custom";
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.docEdit = new DocEdit();
             this.OriginalDirPath = null;
+            this.DocEdit = new DocEdit();
+            //this.DocHeader = new DocHeader();
         }
 
         public RelayCommand ProcessFilesCommand {
@@ -47,6 +48,7 @@ namespace QmsHero.ViewModel
         private void ProcessFiles()
         {
             this.manager.ConfigDir(this.OriginalDirPath);
+            //var docEdit = new DocEdit(this.DocHeader);
             this.manager.ProcessFiles(this.DocEdit);
         }
 
@@ -58,7 +60,6 @@ namespace QmsHero.ViewModel
         public string ViewDisplayName { 
             get => viewDisplayName; 
             set => viewDisplayName = value; }
-        public DocEdit DocEdit { get => docEdit; set => docEdit = value; }
         public DocManager Manager { get => manager; set => manager = value; }
         public string OriginalDirPath { 
             get => originalDirPath;
@@ -68,5 +69,8 @@ namespace QmsHero.ViewModel
                     );
              
             } }
+
+        //public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
+        public DocEdit DocEdit { get => docEdit; set => docEdit = value; }
     }
 }

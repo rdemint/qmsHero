@@ -91,7 +91,7 @@
     <Compile Include="Interfaces\IDocActions.cs" />
     <Compile Include="Interfaces\IDocManager.cs" />
     <Compile Include="Interfaces\IDocSection.cs" />
-    <Compile Include="Interfaces\ToDocPropertyCollection.cs" />
+    <Compile Include="Interfaces\IToDocPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ErrorMessenger.cs" />
   </ItemGroup>

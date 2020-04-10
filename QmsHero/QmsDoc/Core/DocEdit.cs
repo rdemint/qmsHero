@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    public class DocEdit: ToDocPropertyCollection
+    public class DocEdit: INotifyPropertyChanged, IToDocPropertyCollection
 
     {
         DocHeader docHeader;
@@ -18,10 +20,25 @@ namespace QmsDoc.Core
         public DocEdit()
         {
             this.DocHeader = new DocHeader();
-            //this.DocBody = new DocBody();
         }
 
-        public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
+        public DocEdit(DocHeader docHeader)
+        {
+            this.DocHeader = docHeader;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public DocHeader DocHeader { 
+            get => docHeader;
+            set {
+                this.docHeader = value;
+                NotifyPropertyChanged();
+            } }
         public DocBody DocBody { get => docBody; set => docBody = value; }
         public string EditPathName { get => editPathName; set => editPathName = value; }
 

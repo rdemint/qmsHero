@@ -1,10 +1,12 @@
 ﻿using QmsDoc.Interfaces;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace QmsDoc.Core
 {
-    public class DocHeader : ObservableObject, IDocHeader, ToDocPropertyCollection
+    public class DocHeader : INotifyPropertyChanged, IDocHeader, IToDocPropertyCollection
     {
         DocProperty revision;
         DocProperty effectiveDate;
@@ -19,12 +21,36 @@ namespace QmsDoc.Core
             this.LogoText = new DocProperty() { Name = "Logo Text", Value = null };
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public DocProperty Revision { 
             get => revision;
-            set => revision = value; }
-        public DocProperty EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        public DocProperty LogoPath { get => logoPath; set => logoPath = value; }
-        public DocProperty LogoText { get => logoText; set => logoText = value; }
+            set {
+                this.revision = value;
+                NotifyPropertyChanged();
+            } 
+        }
+        public DocProperty EffectiveDate { 
+            get => effectiveDate;
+            set {
+                this.effectiveDate = value;
+                NotifyPropertyChanged();
+            } }
+        public DocProperty LogoPath { 
+            get => logoPath;
+            set {
+                this.logoPath = value;
+                NotifyPropertyChanged();
+            } }
+        public DocProperty LogoText { 
+            get => logoText;
+            set {
+                this.logoText = value;
+                NotifyPropertyChanged();
+            } }
 
         public ObservableCollection<DocProperty> ToCollection()
         {
