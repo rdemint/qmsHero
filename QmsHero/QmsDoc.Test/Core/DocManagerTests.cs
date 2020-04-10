@@ -36,6 +36,7 @@ namespace QmsDoc.Core.Tests
                 manager.ProcessingDir.FullName,
                 manager.ProcessingDirPath
                 );
+            fixture.ActiveQMSDocuments.GetFiles();
         }
     }
 }
