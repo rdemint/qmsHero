@@ -24,17 +24,21 @@ namespace QmsDoc.Core
 {
     public class DocManager : IDocManager, IDisposable
     {
-        System.IO.DirectoryInfo topDir;
         string dirPath;
         string processingDirPath;
+        DirectoryInfo dir;
+        DirectoryInfo processingDir;
+        List<FileInfo> dirFilesUnsafe;
+        List<FileInfo> dirFiles;
+        List<FileInfo> processingDirFiles;
+        bool disposed = false;
+
         DocManagerConfig docManagerConfig;
         ExcelDocConfig excelConfig;
         WordDocConfig wordConfig;
-        List<FileInfo> dirFilesUnsafe;
-        List<FileInfo> dirFiles;
+
         Word.Application wordApp;
         Excel.Application excelApp;
-        bool disposed = false;
 
         public DocManager()
         {
@@ -49,7 +53,11 @@ namespace QmsDoc.Core
         public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
         public List<FileInfo> DirFiles {
             get => this.GetSafeFiles(dirFilesUnsafe); }
-        
+
+        public List<FileInfo> ProcessingDirFiles { 
+            get => this.GetSafeFiles(); 
+            }
+
         public Word.Application WordApp {
             get {
                 if (wordApp == null)
@@ -70,21 +78,51 @@ namespace QmsDoc.Core
             }
             set => excelApp = value; }
 
-        public string DirPath { get => dirPath; set => dirPath = value; }
+        public string DirPath { 
+            get => dirPath; 
+            set {
+                this.dirPath = value;
+                this.Dir = new DirectoryInfo(value);
+            } }
         public string ProcessingDirPath { 
-            get => processingDirPath; 
-            set => processingDirPath = value; }
+            get => processingDirPath;
+            set {
+                this.ProcessingDir = new DirectoryInfo(value);
+                this.processingDirPath = value;
+            }
+        }
 
-
+        public DirectoryInfo ProcessingDir { 
+            get => processingDir; 
+            set => processingDir = value; }
+        public DirectoryInfo Dir { get => dir; set => dir = value; }
+        
 
         #endregion
 
 
         #region Methods
 
-        public bool CanProcessFiles(string path)
+        public void DeleteProcessingDir()
         {
-            if (path!=null && path.Length > this.DocManagerConfig.SafeProcessingLength)
+            this.ProcessingDir?.Delete(true);
+        }
+
+        public bool DirIsValid(string path)
+        {
+            if (path != null && path.Length > this.DocManagerConfig.SafeProcessingLength)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CanProcessFiles()
+        {
+            if(this.DirIsValid(this.DirPath))
             {
                 return true;
             }
@@ -112,12 +150,13 @@ namespace QmsDoc.Core
             }
         }
 
-        public void ConfigDir(string dir_path, string processingDirName="Processing")
+        public void ConfigDir(string dirPath, string processingDirName="Processing")
         {
-            this.dirPath = dir_path;
-            this.dirPath = DirectoryCopy(new DirectoryInfo(dir_path), processingDirName, true).FullName;
-            this.topDir = new System.IO.DirectoryInfo(this.dirPath);
-            this.AddDirFiles(dir_path);
+            this.DirPath = dirPath;
+            this.ProcessingDirPath = Path.Combine(dirPath, processingDirName);
+            this.ProcessingDir = DirectoryCopy(new DirectoryInfo(dirPath), processingDirName, true);
+            this.Dir = new System.IO.DirectoryInfo(this.dirPath);
+            this.DirFiles = this.AddDirFiles(dirPath);
         }
 
         private DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
@@ -185,9 +224,7 @@ namespace QmsDoc.Core
         }
         public Boolean ProcessFiles(DocEdit docEdit) 
         {
-            Contract.Requires(this.DirPath != null);
-            Contract.Requires(this.docManagerConfig != null);
-            Contract.Requires(this.dirFilesUnsafe.Count >= 1);
+            Contract.Requires(this.CanProcessFiles() == true);
 
             if(this.DirFiles == null)
             {

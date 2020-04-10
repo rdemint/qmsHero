@@ -40,8 +40,6 @@ namespace QmsDoc.Test
             var parent = parent1.Parent;
             this.qmsHero_dir = parent;
             this.FixtureDir = new DirectoryInfo(Path.Combine(this.qmsHero_dir.FullName, "Fixtures"));
-            //this.FixtureProcessingDir = DirectoryCopy(this.FixtureDir, "Processing", true);
-            //DirectoryInfo[] dirs = this.FixtureProcessingDir.GetDirectories();
             DirectoryInfo[] dirs = this.FixtureDir.GetDirectories();
             this.ActiveQMSDocuments = dirs[0];
             DirectoryInfo[] sub_dirs = dirs[0].GetDirectories();

@@ -9,6 +9,7 @@ using QmsDoc.Interfaces;
 using QmsDoc.Docs;
 using System.Collections.ObjectModel;
 using QmsDoc.Test;
+using System.IO;
 
 namespace QmsDoc.Core.Tests
 {
@@ -22,12 +23,19 @@ namespace QmsDoc.Core.Tests
         {
             var manager = new DocManager();
             manager.ConfigDir(fixture.ActiveQMSDocuments.FullName);
-            
-            var processDirs = fixture.FixtureProcessingDir.GetDirectories("Processing");
-            Assert.IsTrue(processDirs.Length == 1);
-            var dirFiles = manager.DirFiles;
-            var parentDir = dirFiles[0].Directory;
-            Assert.AreEqual(parentDir, fixture.FixtureProcessingDir);
+            Assert.AreEqual(fixture.ActiveQMSDocuments.FullName, manager.Dir.FullName);
+            Assert.AreEqual(
+                Path.Combine(fixture.FixtureDir.FullName, "Processing"),
+                manager.ProcessingDir.FullName
+                );
+            Assert.AreEqual(
+                manager.Dir.FullName,
+                manager.DirPath
+                );
+            Assert.AreEqual(
+                manager.ProcessingDir.FullName,
+                manager.ProcessingDirPath
+                );
         }
     }
 }

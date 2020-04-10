@@ -14,6 +14,13 @@ namespace QmsDoc.Test
         }
 
         [TestMethod]
+        public void FixtureDirTest()
+        {
+            var fixture = new FixtureUtil();
+            Assert.AreEqual(fixture.FixtureDir.Name, "Fixtures");
+        }
+
+        [TestMethod]
         public void ActiveQMSDocumentsTest()
         {
             var fixture = new FixtureUtil();
