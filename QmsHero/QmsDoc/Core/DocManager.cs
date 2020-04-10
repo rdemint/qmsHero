@@ -47,15 +47,21 @@ namespace QmsDoc.Core
             this.wordConfig = new WordDocConfig();
             this.docManagerConfig = new DocManagerConfig();
             this.dirFilesUnsafe = new List<FileInfo>();
+
+            this.DirFiles = new List<FileInfo>();
+            this.ProcessingDirFiles = new List<FileInfo>();
         }
         
         #region Properties
         public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
         public List<FileInfo> DirFiles {
-            get => this.GetSafeFiles(dirFilesUnsafe); }
+            get => this.dirFiles;
+            set => this.dirFiles = value;
+        }
 
         public List<FileInfo> ProcessingDirFiles { 
-            get => this.GetSafeFiles(); 
+            get => this.processingDirFiles;
+            set => this.processingDirFiles = value;
             }
 
         public Word.Application WordApp {
@@ -138,16 +144,15 @@ namespace QmsDoc.Core
             return result;
         }
  
-        private void AddDirFiles(string dir_path)
+        private List<FileInfo> AddDirFiles(string dir_path, List<FileInfo> fileList)
         {
-            var dir = new System.IO.DirectoryInfo(dir_path);
-            var dir_files = dir.GetFiles();
-            this.dirFilesUnsafe.AddRange(dir_files);
+            fileList.AddRange(dir.GetFiles());
 
-            foreach (string sub_dir_path in Directory.EnumerateDirectories(dir_path))
+            foreach (string subDirPath in Directory.EnumerateDirectories(dir_path))
             {
-                this.AddDirFiles(sub_dir_path);
+                this.AddDirFiles(subDirPath, fileList);
             }
+            return fileList;
         }
 
         public void ConfigDir(string dirPath, string processingDirName="Processing")
@@ -156,7 +161,8 @@ namespace QmsDoc.Core
             this.ProcessingDirPath = Path.Combine(dirPath, processingDirName);
             this.ProcessingDir = DirectoryCopy(new DirectoryInfo(dirPath), processingDirName, true);
             this.Dir = new System.IO.DirectoryInfo(this.dirPath);
-            this.DirFiles = this.AddDirFiles(dirPath);
+            this.DirFiles = this.AddDirFiles(this.DirPath, this.DirFiles);
+            this.ProcessingDirFiles = this.AddDirFiles(this.ProcessingDirPath, this.ProcessingDirFiles);
         }
 
         private DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
