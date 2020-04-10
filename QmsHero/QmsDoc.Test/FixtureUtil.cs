@@ -42,27 +42,17 @@ namespace QmsDoc.Test
             this.FixtureDir = new DirectoryInfo(Path.Combine(this.qmsHero_dir.FullName, "Fixtures"));
             DirectoryInfo[] dirs = this.FixtureDir.GetDirectories();
             this.ActiveQMSDocuments = dirs[0];
-            DirectoryInfo[] sub_dirs = dirs[0].GetDirectories();
-            this.Sop1Documents = sub_dirs[0];
-            this.Files = this.AddFiles(sub_dirs);
+            DirectoryInfo[] subDirs = dirs[0].GetDirectories();
+            this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
+            this.Files = this.ActiveQMSDocuments.GetFiles("*", SearchOption.AllDirectories).ToList();
             this.SafeFiles = this.GetSafeFiles(this.files);
-            this.WordSample = this.SafeFiles[0];
-            this.ExcelSample = this.SafeFiles[1];
+            this.WordSample = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
+            //this.ExcelSample = this.SafeFiles[1];
+            this.ExcelSample = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
+
         }
 
-        public List<FileInfo> AddFiles(DirectoryInfo[] subDirs)
-        {
-            var files = new List<FileInfo>();
-            foreach (DirectoryInfo subDir in subDirs)
-            {
-                foreach (FileInfo fileInfo in subDir.GetFiles())
-                {
-                    files.Add(fileInfo);
-                }
-            }
-            return files;
-        }
-        
+
         public List<FileInfo> GetSafeFiles(List<FileInfo> files)
         {
             var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();

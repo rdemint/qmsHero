@@ -136,6 +136,12 @@ namespace QmsDoc.Core
         {
             // Get the subdirectories for the specified directory.
             var destDirPath = Path.Combine(dir.Parent.FullName, destDirName);
+            var dirCopy = new DirectoryInfo(destDirPath);
+            if(dirCopy.Exists)
+            {
+                //Delete current processing directory, if one exists
+                dirCopy.Delete(true);
+            }
 
             if (!dir.Exists)
             {
@@ -198,7 +204,7 @@ namespace QmsDoc.Core
                 {
                     QmsDocBase doc = this.CreateDoc(file_info);
                     this.ProcessDoc(doc, docEdit);
-                    if (SimpleIoc.Default.GetInstance<DocManagerConfig>().CloseDocs == true)
+                    if (DocManagerConfig.CloseDocs == true)
                     {
                         doc.CloseDocument();
                     }
@@ -329,6 +335,7 @@ namespace QmsDoc.Core
                 if(disposing)
                 {
                     CloseApps();
+                    //DeleteProcessingDir();
                 }
             }
         }

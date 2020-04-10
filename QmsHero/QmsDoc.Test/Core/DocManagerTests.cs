@@ -32,7 +32,7 @@ namespace QmsDoc.Core.Tests
                 manager.Dir.FullName,
                 fixture.ActiveQMSDocuments.FullName
                 );
-            manager.DeleteProcessingDir();
+            manager.Dispose();
         }
     }
 }
@@ -56,10 +56,11 @@ namespace QmsDoc.Test.Core
             var worddoc = (WordDoc)manager.CreateDoc(manager.ProcessingDirFiles[0]);
             var rev = worddoc.GetRevision();
             var date = worddoc.GetEffectiveDate();
-            manager.Dispose();
-
+            worddoc.CloseDocument();
             Assert.AreEqual(rev, "1");
             Assert.AreEqual(date, "2020-03-30");
+            manager.Dispose();
+
         }
 
     }
