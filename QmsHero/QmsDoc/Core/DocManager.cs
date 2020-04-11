@@ -132,6 +132,7 @@ namespace QmsDoc.Core
             this.ProcessingDirFiles = this.ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
         }
 
+
         private DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
         {
             // Get the subdirectories for the specified directory.
