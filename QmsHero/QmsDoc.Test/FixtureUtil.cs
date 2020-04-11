@@ -12,6 +12,7 @@ namespace QmsDoc.Test
 {
     public class FixtureUtil
     {
+        
         DirectoryInfo unittest_dir;
         DirectoryInfo fixtureProcessingDir;
         DirectoryInfo fixtureDir;
@@ -20,6 +21,8 @@ namespace QmsDoc.Test
         FileInfo open_file;
         List<FileInfo> files;
         private List<FileInfo> safeFiles;
+        string wordSampleName;
+        string excelSampleName;
         public FileInfo WordSample;
         public FileInfo ExcelSample;
         DirectoryInfo activeQMSDocuments;
@@ -31,9 +34,13 @@ namespace QmsDoc.Test
         public List<FileInfo> SafeFiles { get => safeFiles; set => safeFiles = value; }
         public DirectoryInfo FixtureProcessingDir { get => fixtureProcessingDir; set => fixtureProcessingDir = value; }
         public DirectoryInfo FixtureDir { get => fixtureDir; set => fixtureDir = value; }
+        public string ExcelSampleName { get => excelSampleName; set => excelSampleName = value; }
+        public string WordSampleName { get => wordSampleName; set => wordSampleName = value; }
 
         public FixtureUtil()
         {
+            this.WordSampleName = "F-001A Document Change Notice Rev1";
+            this.ExcelSampleName = "F-001B Document Control Index Rev1";
             var unittest_dir_path = Directory.GetCurrentDirectory();
             this.unittest_dir = new DirectoryInfo(unittest_dir_path);
             var parent1 = this.unittest_dir.Parent;

@@ -151,7 +151,6 @@ namespace QmsDoc.Core
                     + dir.FullName);
             }
 
-
             DirectoryInfo[] dirs = dir.GetDirectories();
             // If the destination directory doesn't exist, create it.
             if (!Directory.Exists(destDirPath))
@@ -336,7 +335,7 @@ namespace QmsDoc.Core
                 if(disposing)
                 {
                     CloseApps();
-                    //DeleteProcessingDir();
+                    DeleteProcessingDir();
                 }
             }
         }

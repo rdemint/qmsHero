@@ -18,13 +18,15 @@ namespace QmsDoc.Docs.Tests
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
-            var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
-            var rightHeader = wbk.Doc.Worksheets[1].PageSetup.RightHeader;
-            Assert.AreEqual(
-                "2",
-                wbk.GetRevision()
-                );
+            manager.ConfigDir(fixture.Sop1Documents.FullName);
+            ExcelDoc doc = (ExcelDoc)manager.CreateDoc(manager.ProcessingDir.GetFiles(fixture.ExcelSampleName).ToList()[0]);
+            var initial = doc.GetEffectiveDate();
+            doc.EffectiveDate = "2020-04-12";
+            var result = doc.GetEffectiveDate();
             manager.Dispose();
+            Assert.AreEqual("2018-11-26", initial);
+            Assert.AreEqual("2020-04-12", result);
+            ExcelDoc wbk = (ExcelDoc)manager.CreateDoc(manager.ProcessingDirFiles[1]);
         }
 
         [TestMethod()]
@@ -32,11 +34,11 @@ namespace QmsDoc.Docs.Tests
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
-            var wbk = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
-            var rightHeader = wbk.Doc.Worksheets[1].PageSetup.RightHeader;
+            manager.ConfigDir(fixture.Sop1Documents.FullName);
+            ExcelDoc doc = (ExcelDoc)manager.CreateDoc(manager.ProcessingDir.GetFiles(fixture.ExcelSampleName).ToList()[0]);
             Assert.AreEqual(
                 "2018-11-26",
-                wbk.GetEffectiveDate()
+                doc.GetEffectiveDate()
                 );
             manager.Dispose();
         }

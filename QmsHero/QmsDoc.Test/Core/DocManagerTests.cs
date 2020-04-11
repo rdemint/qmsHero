@@ -54,13 +54,6 @@ namespace QmsDoc.Test.Core
             manager.ConfigDir(fixture.Sop1Documents.FullName);
             manager.ProcessFiles(docEdit);
             var wordDoc = (WordDoc)manager.CreateDoc(manager.ProcessingDirFiles[0]);
-
-            //var doc = manager.CreateDoc(fixture.WordSample);
-            //WordDoc wordDoc = (WordDoc)manager.ProcessDoc(doc, docEdit);
-            //var rev = wordDoc.GetRevision();
-            //var date = wordDoc.GetEffectiveDate();
-            //wordDoc.CloseDocument();
-
             var rev = wordDoc.GetRevision();
             var date = wordDoc.GetEffectiveDate();
             Assert.AreEqual(rev, "1");

@@ -18,13 +18,15 @@ namespace QmsDoc.Docs.Tests
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
-            var doc = (WordDoc)manager.CreateDoc(fixture.WordSample);
+            manager.ConfigDir(fixture.Sop1Documents.FullName);
+            WordDoc doc = (WordDoc)manager.CreateDoc(manager.ProcessingDir.GetFiles(fixture.WordSampleName).ToList()[0]);
             var initial = doc.GetEffectiveDate();
             doc.EffectiveDate = "2020-04-12";
             var result = doc.GetEffectiveDate();
             manager.Dispose();
             Assert.AreEqual("2018-11-26", initial);
             Assert.AreEqual("2020-04-12", result);
+            ExcelDoc wbk = (ExcelDoc)manager.CreateDoc(manager.ProcessingDirFiles[1]);
 
         }
 
@@ -33,7 +35,8 @@ namespace QmsDoc.Docs.Tests
         {
             var fixture = new FixtureUtil();
             var manager = new DocManager();
-            var doc = (WordDoc)manager.CreateDoc(fixture.WordSample);
+            manager.ConfigDir(fixture.Sop1Documents.FullName);
+            WordDoc doc = (WordDoc)manager.CreateDoc(manager.ProcessingDir.GetFiles(fixture.WordSampleName).ToList()[0]);
             var initial = doc.GetRevision();
             doc.Revision = "3";
             var changeResult = doc.GetRevision();

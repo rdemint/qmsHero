@@ -16,9 +16,9 @@ namespace QmsDoc.Core
         public DocHeader()
         {
             this.Revision = new DocProperty() { Name = "Revision", Value = null };
-            this.EffectiveDate = new DocProperty() { Name = "Effective Date", Value = null };
-            this.LogoPath = new DocProperty() { Name = "Logo Path", Value = null };
-            this.LogoText = new DocProperty() { Name = "Logo Text", Value = null };
+            this.EffectiveDate = new DocProperty() { Name = "EffectiveDate", Value = null };
+            this.LogoPath = new DocProperty() { Name = "LogoPath", Value = null };
+            this.LogoText = new DocProperty() { Name = "LogoText", Value = null };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
