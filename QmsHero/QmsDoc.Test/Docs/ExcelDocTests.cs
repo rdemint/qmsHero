@@ -19,14 +19,13 @@ namespace QmsDoc.Docs.Tests
             var fixture = new FixtureUtil();
             var manager = new DocManager();
             manager.ConfigDir(fixture.Sop1Documents.FullName);
-            ExcelDoc doc = (ExcelDoc)manager.CreateDoc(manager.ProcessingDir.GetFiles(fixture.ExcelSampleName).ToList()[0]);
+            ExcelDoc doc = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
             var initial = doc.GetEffectiveDate();
             doc.EffectiveDate = "2020-04-12";
             var result = doc.GetEffectiveDate();
             manager.Dispose();
             Assert.AreEqual("2018-11-26", initial);
             Assert.AreEqual("2020-04-12", result);
-            ExcelDoc wbk = (ExcelDoc)manager.CreateDoc(manager.ProcessingDirFiles[1]);
         }
 
         [TestMethod()]
