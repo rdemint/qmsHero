@@ -26,8 +26,9 @@ namespace QmsHero.ViewModel
         /// </summary>
         ViewModelBase activeViewModel;
         ViewModelLocator viewModelLocator;
-        RelayCommand navToTestViewModel1;
+        RelayCommand navToConfigViewModel;
         RelayCommand navToCustomProcessingViewModel;
+        RelayCommand navToDCNViewModel;
         public MainViewModel()
         {
             ////if (IsInDesignMode)
@@ -51,7 +52,8 @@ namespace QmsHero.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             this.NavToCustomProcessingViewModel.RaiseCanExecuteChanged();
-            this.NavToTestViewModel1.RaiseCanExecuteChanged();
+            this.NavToConfigViewModel.RaiseCanExecuteChanged();
+            this.NavToDCNViewModel.RaiseCanExecuteChanged();
         }
         public ViewModelBase ActiveViewModel
         {
@@ -81,20 +83,36 @@ namespace QmsHero.ViewModel
                 }
             set => navToCustomProcessingViewModel = value; 
             } 
-        public RelayCommand NavToTestViewModel1 {
+        public RelayCommand NavToConfigViewModel {
             get {
-                if (this.navToTestViewModel1 == null)
+                if (this.navToConfigViewModel== null)
                     {
-                        this.navToTestViewModel1 = new RelayCommand(
+                        this.navToConfigViewModel = new RelayCommand(
                                 () => {
-                                    this.ActiveViewModel = this.viewModelLocator.TestViewModel1;
+                                    this.ActiveViewModel = this.viewModelLocator.ConfigViewModel;
                                 },
-                                () => this.activeViewModel != this.viewModelLocator.TestViewModel1
+                                () => this.activeViewModel != this.viewModelLocator.ConfigViewModel
                                 );
                     }
-                return this.navToTestViewModel1;
+                return this.navToConfigViewModel;
             } 
-            set => navToTestViewModel1 = value; }
+            set => navToConfigViewModel = value; }
+
+        public RelayCommand NavToDCNViewModel {
+            get { 
+                if (this.navToDCNViewModel == null)
+                    {
+                        this.navToDCNViewModel = new RelayCommand(
+                            () =>
+                            {
+                                this.ActiveViewModel = this.viewModelLocator.DCNViewModel;
+                            },
+                            () => this.activeViewModel != this.viewModelLocator.DCNViewModel
+                        );
+                    }
+                return this.navToDCNViewModel;
+                } 
+            set => navToDCNViewModel = value; }
     }
 
 

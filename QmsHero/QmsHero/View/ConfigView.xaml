@@ -1,0 +1,23 @@
+﻿<Page x:Class="QmsHero.View.ConfigView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:QmsHero.View"
+      xmlns:qmsDoc="clr-namespace:QmsDoc.Core;assembly=QmsDoc"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ConfigView"
+      ShowsNavigationUI="False"
+      >
+    <StackPanel
+        Background="White"
+        >
+        <Border 
+             Padding="10"
+             Margin="4"
+             CornerRadius="5">
+            <TextBlock Text="Configure the Project" HorizontalAlignment="Center" FontWeight="Bold"/>
+        </Border>
+    </StackPanel>
+</Page>

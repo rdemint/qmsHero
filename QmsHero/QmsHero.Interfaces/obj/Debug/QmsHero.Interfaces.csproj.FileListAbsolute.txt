@@ -1,4 +1,0 @@
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero.Interfaces\bin\Debug\QmsHero.Interfaces.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero.Interfaces\bin\Debug\QmsHero.Interfaces.pdb
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero.Interfaces\obj\Debug\QmsHero.Interfaces.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\QmsHero.Interfaces\obj\Debug\QmsHero.Interfaces.pdb

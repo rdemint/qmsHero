@@ -10,7 +10,14 @@ namespace QmsDoc.Test
         public void GetSafeFilesTest()
         {
             var fixture = new FixtureUtil();
-            Assert.Equals(fixture.SafeFiles.Count, 28);
+            Assert.AreEqual(fixture.SafeFiles.Count, 28);
+        }
+
+        [TestMethod]
+        public void FixtureDirTest()
+        {
+            var fixture = new FixtureUtil();
+            Assert.AreEqual(fixture.FixtureDir.Name, "Fixtures");
         }
 
         [TestMethod]
@@ -18,7 +25,7 @@ namespace QmsDoc.Test
         {
             var fixture = new FixtureUtil();
             var name = fixture.ActiveQMSDocuments.Name;
-            Assert.Equals("Active QMS Documents", name);
+            Assert.AreEqual("Active QMS Documents", name);
         }
 
         [TestMethod]
@@ -26,7 +33,7 @@ namespace QmsDoc.Test
         {
             var fixture = new FixtureUtil();
             var name = fixture.Sop1Documents.Name;
-            Assert.Equals("SOP-001 Quality Manual Documents", name);
+            Assert.AreEqual("SOP-001 Quality Manual Documents", name);
         }
 
         [TestMethod]
@@ -34,7 +41,7 @@ namespace QmsDoc.Test
         {
             var fixture = new FixtureUtil();
             var ext = fixture.WordSample.Extension;
-            Assert.Equals("docx", ext);
+            Assert.AreEqual(".docx", ext);
         }
 
         [TestMethod]
@@ -42,7 +49,7 @@ namespace QmsDoc.Test
         {
             var fixture = new FixtureUtil();
             var ext = fixture.ExcelSample.Extension;
-            Assert.Equals("xlsx", ext);
+            Assert.AreEqual(".xlsx", ext);
         }
     }
 }

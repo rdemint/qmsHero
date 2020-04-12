@@ -1,36 +1,76 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Interfaces;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using QmsDoc.Core;
-using System.Windows.Controls;
+using QmsDoc.Interfaces;
+using GalaSoft.MvvmLight.Ioc;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace QmsHero.ViewModel
 {
-    public class CustomProcessingViewModel : ViewModelBase
+    public class CustomProcessingViewModel: ViewModelBase
     {
-        //DocActionControlBase logoPath;
-        //string logoText;
-        //string effectiveDate;
-        //string revision;
-        List<DocActionControlBase> docActionControls;
+        string viewDisplayName;
+        DocManager manager;
+        RelayCommand processFilesCommand;
+        DocEdit docEdit;
+        DocHeader docHeader;
+        ObservableCollection<DocProperty> docProps;
+        string originalDirPath;
 
         public CustomProcessingViewModel()
         {
-            var docActions = new DocActions();
-            this.docActionControls = docActions.ToDocActionControlList();
+
+            this.ViewDisplayName = "Custom";
+            this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
+            this.OriginalDirPath = null;
+            this.DocEdit = new DocEdit();
+            //this.DocHeader = new DocHeader();
         }
 
-        public List<DocActionControlBase> DocActionControls { get => docActionControls; set => docActionControls = value; }
+        public RelayCommand ProcessFilesCommand {
+            get {
+                  this.processFilesCommand = new RelayCommand(
+                        () => ProcessFiles(),
+                        () => DirIsValid()
+                        );
+                return this.processFilesCommand;
+            }
+            set {
+                this.processFilesCommand = value;
+            } 
+        }
+        private void ProcessFiles()
+        {
+            this.manager.ConfigDir(this.OriginalDirPath);
+            //var docEdit = new DocEdit(this.DocHeader);
+            this.manager.ProcessFiles(this.DocEdit);
+        }
 
-        //public DocActionControlBase LogoPath {
-        //    get => DocActionControlBase.GetControl(this.logoPath); 
-        //    set => logoPath = value; }
-        //public string LogoText { get => logoText; set => logoText = value; }
-        //public string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
-        //public string Revision { get => revision; set => revision = value; }
+        private bool DirIsValid()
+        {
+            return this.Manager.DirIsValid(OriginalDirPath);
+        }
+
+        public string ViewDisplayName { 
+            get => viewDisplayName; 
+            set => viewDisplayName = value; }
+        public DocManager Manager { get => manager; set => manager = value; }
+        public string OriginalDirPath { 
+            get => originalDirPath;
+            set {
+                Set<string>(
+                    () => OriginalDirPath, ref originalDirPath, value
+                    );
+             
+            } }
+
+        //public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
+        public DocEdit DocEdit { get => docEdit; set => docEdit = value; }
     }
 }

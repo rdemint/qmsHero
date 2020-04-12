@@ -57,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -80,22 +81,23 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IPageViewModel.cs" />
     <Compile Include="Interfaces\IQmsHeroViewModels.cs" />
-    <Compile Include="ViewModel\TestViewModel1.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
+    <Compile Include="ViewModel\ConfigViewModel.cs" />
+    <Compile Include="ViewModel\DCNViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\TestPage1.xaml.cs">
-      <DependentUpon>TestPage1.xaml</DependentUpon>
+    <Compile Include="View\CustomProcessingView.xaml.cs">
+      <DependentUpon>CustomProcessingView.xaml</DependentUpon>
     </Compile>
-    <Resource Include="View\Resources\DocActionDataTemplate.xaml">
+    <Page Include="View\DCNView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Resource>
+    </Page>
     <Page Include="View\Resources\ViewViewModelDict.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomProcessing.xaml">
+    <Page Include="View\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,8 +109,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\CustomProcessing.xaml.cs">
-      <DependentUpon>CustomProcessing.xaml</DependentUpon>
+    <Compile Include="View\ConfigView.xaml.cs">
+      <DependentUpon>ConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DCNView.xaml.cs">
+      <DependentUpon>DCNView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -118,7 +123,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TestPage1.xaml">
+    <Page Include="View\CustomProcessingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +156,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LadderControls\LadderControls.csproj">
+      <Project>{d949b936-f294-4f84-b4f2-6e1f86a932c1}</Project>
+      <Name>LadderControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
       <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
       <Name>QmsDoc</Name>

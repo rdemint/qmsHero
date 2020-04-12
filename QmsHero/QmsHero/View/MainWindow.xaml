@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:QmsHero"
         xmlns:view="clr-namespace:QmsHero.View"
         xmlns:vm="clr-namespace:QmsHero.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:controls="clr-namespace:LadderControls;assembly=LadderControls"
         mc:Ignorable="d"
         Title="qmsHero" Height="450" Width="800"
-        
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -45,9 +45,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
             <Expander 
-                Padding="10"
+             Padding="5"
              Margin="4"
-             BorderBrush="DarkGray"
+             Background="LightSlateGray"
+             BorderBrush="Black"
              ExpandDirection="Right"
              Grid.Row="0"
              Grid.Column="0"
@@ -55,13 +56,13 @@
                 <StackPanel
                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}"
                     >
-                    <Button Content="Test Page 1" Name="TestPage1Button" Command="{Binding NavToTestViewModel1}"/>
-                    <Button Content="Custom Processing" Name="CustomProcessingButton" Command="{Binding NavToCustomProcessingViewModel}"/>
-                    <TextBlock>Option 2</TextBlock>
-                    <TextBlock>Option 3</TextBlock>
+                    <Button Content="Config" Command="{Binding NavToConfigViewModel}"/>
+                    <Button Content="Custom" Command="{Binding NavToCustomProcessingViewModel}"/>
+                    <Button Content="DCN" Command="{Binding NavToDCNViewModel}"/>
                 </StackPanel>
         </Expander>
             <Frame
+                NavigationUIVisibility="Hidden"
                 Grid.Column="1"
                 Grid.Row="0"
                 x:Name="MainContentFrame"

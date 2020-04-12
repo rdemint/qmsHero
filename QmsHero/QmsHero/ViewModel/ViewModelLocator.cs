@@ -16,6 +16,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
 using System.ComponentModel;
+using QmsDoc.Interfaces;
+using QmsDoc.Core;
+using QmsDoc.Docs;
 
 
 namespace QmsHero.ViewModel
@@ -42,8 +45,14 @@ namespace QmsHero.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConfigViewModel>();
             SimpleIoc.Default.Register<CustomProcessingViewModel>();
-            SimpleIoc.Default.Register<TestViewModel1>();
+            SimpleIoc.Default.Register<DCNViewModel>();
+
+            SimpleIoc.Default.Register<DocManager>();
+            SimpleIoc.Default.Register<DocManagerConfig>();
+            SimpleIoc.Default.Register<WordDocConfig>();
+            SimpleIoc.Default.Register<ExcelDocConfig>();
         }
 
         public ViewModelBase MainViewModel
@@ -56,15 +65,20 @@ namespace QmsHero.ViewModel
 
    
 
-        public CustomProcessingViewModel CustomProcessingViewModel {
+        public ConfigViewModel ConfigViewModel {
             get {
-                return ServiceLocator.Current.GetInstance<CustomProcessingViewModel>();
+                return ServiceLocator.Current.GetInstance<ConfigViewModel>();
             }
         }
 
-        public TestViewModel1 TestViewModel1 { 
-            get => ServiceLocator.Current.GetInstance<TestViewModel1>(); 
+        public CustomProcessingViewModel CustomProcessingViewModel { 
+            get => ServiceLocator.Current.GetInstance<CustomProcessingViewModel>(); 
             }
+
+        public DCNViewModel DCNViewModel
+        {
+            get => ServiceLocator.Current.GetInstance<DCNViewModel>();
+        }
 
         public static void Cleanup()
         {

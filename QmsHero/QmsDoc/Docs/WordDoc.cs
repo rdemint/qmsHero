@@ -3,91 +3,201 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Word = Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Word;
 using System.ComponentModel;
 using QmsDoc.Interfaces;
+using System.IO;
+using QmsDoc.Core;
+using QmsDoc.Exceptions;
+using GalaSoft.MvvmLight.Ioc;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace QmsDoc.Docs
 {
-    class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
+    public class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
     {
-        Word.Application app;
-        System.IO.FileInfo file_info;
-        Word.Document doc;
-        string password;
+        Application app;
+        Document doc;
+        WordDocConfig docConfig;
+        DocManagerConfig docManagerConfig;
+        FileInfo fileInfo;
+        HeaderFooter headerFooter;
+        bool headerFootersChecked;
         string logoText;
         string logoPath;
         string effectiveDate;
         string revision;
-        Boolean autoClose;
-        Boolean saveChanges;
+        ObservableCollection<IDocSection> sections;
 
-        public string Header { get => Header; set => Header = value; }
-        public string EffectiveDate
+
+        public WordDoc()
         {
-            get { return effectiveDate; }
+
+        }
+
+        public WordDoc(Application app, System.IO.FileInfo file_info, WordDocConfig docConfig, DocManagerConfig docManagerConfig) : base()
+        {
+            this.app = app;
+            this.FileInfo = file_info;
+            this.DocConfig = docConfig;
+            this.DocManagerConfig = docManagerConfig;
+            this.OpenDocument();
+        }
+
+        #region Config
+        public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
+        public FileInfo FileInfo { get => fileInfo;
+            set { this.headerFootersChecked = false; this.fileInfo = value; } }
+        #endregion  
+
+        #region Header
+
+        public Table HeaderFooterTable
+        {
+            get
+            {
+                if (this.headerFootersChecked == false)
+                {
+                    for (int i = 1; i <= this.doc.Sections.Count; i++)
+                    {
+                        var section = this.doc.Sections[i];
+                        if (i != DocConfig.HeaderFooterSection)
+                        {
+                            var evenHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Exists;
+                            var firstHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Exists;
+                            var primHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Exists;
+
+                            if (evenHF || firstHF)
+                            {
+                                System.Windows.MessageBox.Show($"{this.FileInfo.Name} has multiple headers in Section {section}.  This must be fixed manually");
+                            }
+
+                        }
+
+                    }
+                    this.headerFootersChecked = true;
+                }
+
+                var hfSection = doc.Sections[DocConfig.HeaderFooterSection];
+                return hfSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Tables[1];
+
+            }
+        }
+
+        public string GetEffectiveDate()
+        {
+            string result =  this.HeaderFooterTable
+                    .Cell(
+                        this.DocConfig.EffectiveDateRow,
+                        this.DocConfig.EffectiveDateCol
+                    )
+                    .Range.Text;
+            Match match = Regex.Match(result, @"\d\d\d\d-\d\d-\d\d");
+            return match.ToString();
+        }
+        public override string EffectiveDate
+        {
+            get {
+                return this.effectiveDate;
+               }
+            
             set
             {
-                effectiveDate = value;
+                this.HeaderFooterTable
+                    .Cell(
+                        this.DocConfig.EffectiveDateRow,
+                        this.DocConfig.EffectiveDateCol
+                    )
+                    .Range.Text = DocConfig.EffectiveDateText + value;
+                this.effectiveDate = value;
                 this.OnPropertyChanged();
             }
         }
 
-        public string Revision
+        public string GetRevision()
         {
-            get { return revision; }
+            var result = this.HeaderFooterTable
+              .Cell(
+                  this.DocConfig.RevisionRow,
+                  this.DocConfig.RevisionCol
+              )
+              .Range.Text;
+            Match match = Regex.Match(result, @"\d");
+            return match.ToString();
+        }
+        public override string Revision
+        {
+            get
+            {
+                return this.revision;
+            }
+
             set
             {
-                revision = value;
+                this.HeaderFooterTable
+                    .Cell(
+                        this.DocConfig.RevisionRow,
+                        this.DocConfig.RevisionCol
+                    ).Range.Text = DocConfig.RevisionText + value;
+                this.revision = value;
                 this.OnPropertyChanged();
             }
         }
-        public string LogoPath
+        public override string LogoPath
         {
             get => this.logoPath;
-            set { this.logoPath = value; this.OnPropertyChanged(); }
+            set { 
+                this.logoPath = value;
+                var cell = this.HeaderFooterTable
+                    .Cell(
+                    this.DocConfig.LogoRow,
+                    this.DocConfig.LogoCol
+                    );
+                cell.Range.Delete();
+                var picture = cell.Range.InlineShapes.AddPicture(value, false, true);
+                picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
+                picture.Height = 28;
+                this.logoPath = value;
+                this.OnPropertyChanged(); }
         }
-        public string LogoText
+        public override string LogoText
         {
             get => this.logoText;
             set
             {
+                this.logoText = value;
+                var cell = this.HeaderFooterTable
+                    .Cell(
+                    this.DocConfig.LogoRow,
+                    this.DocConfig.LogoCol
+                    );
+                cell.Range.Delete();
+                cell.Range.Text = "Effective Date: " + value;
                 this.logoText = value;
                 OnPropertyChanged();
             }
         }
 
 
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WordDoc(Word.Application app, System.IO.FileInfo file_info, Boolean save_changes = true, Boolean auto_close = true) : base()
-        {
-            this.app = app;
-            this.file_info = file_info;
-            this.saveChanges = save_changes;
-            this.autoClose = auto_close;
-            this.doc = null;
-            this.password = "QMSpwd";
-            this.OpenDocument();
-        }
+
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-        public Word.Document OpenDocument()
+        public override void OpenDocument()
         {
-            if (this.file_info.Name.StartsWith("~")) {
-                return null;
-            }
-
-           
+         
             try
             {
-                this.doc = this.app.Documents.Open(this.file_info.FullName, PasswordDocument: this.password, WritePasswordDocument: this.password);
-                return this.doc;
+                this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.DocManagerConfig.DocPassword, WritePasswordDocument: this.DocManagerConfig.DocPassword);
             }
             catch (Exception e)
             {
@@ -96,24 +206,21 @@ namespace QmsDoc.Docs
             }
         }
 
-        public override int CloseDocument()
+        public override void CloseDocument()
         {
             try
             {
                 var documents = this.app.Documents;
                 var count = documents.Count;
-                if (this.saveChanges)
+                if (this.DocManagerConfig.SaveChanges)
                 {
-                    this.app.Documents[this.file_info.Name].Close(SaveChanges:Word.WdSaveOptions.wdSaveChanges);
+                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdSaveChanges);
                 }
                 else
                 {
                     //this.app.Documents.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
-                    this.app.Documents[this.file_info.Name].Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
+                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdDoNotSaveChanges);
                 }
-
-                var result = this.app.Documents.Count - count;
-                return result;
             }
 
             catch (Exception e)
@@ -121,6 +228,11 @@ namespace QmsDoc.Docs
                 throw e;
 
             }
+        }
+
+        public override void SaveAsPdf()
+        {
+            base.SaveAsPdf();
         }
 
     }
