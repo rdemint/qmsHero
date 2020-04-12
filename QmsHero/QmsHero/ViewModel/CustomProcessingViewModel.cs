@@ -18,7 +18,7 @@ namespace QmsHero.ViewModel
         string viewDisplayName;
         DocManager manager;
         RelayCommand processFilesCommand;
-        DocState docEdit;
+        DocState docState;
         DocHeader docHeader;
         ObservableCollection<DocProperty> docProps;
         string originalDirPath;
@@ -71,6 +71,6 @@ namespace QmsHero.ViewModel
             } }
 
         //public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
-        public DocState DocEdit { get => docEdit; set => docEdit = value; }
+        public DocState DocEdit { get => docState; set => docState = value; }
     }
 }

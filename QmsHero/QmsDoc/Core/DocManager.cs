@@ -1,8 +1,7 @@
 ﻿using System;
 using Directory = System.IO.Directory;
 using FileInfo = System.IO.FileInfo;
-using Word = Microsoft.Office.Interop.Word;
-using Excel = Microsoft.Office.Interop.Excel;
+
 using System.Collections.Generic;
 using Contract = System.Diagnostics.Contracts.Contract;
 using System.Linq;
@@ -29,9 +28,6 @@ namespace QmsDoc.Core
         ExcelDocConfig excelConfig;
         WordDocConfig wordConfig;
 
-        Word.Application wordApp;
-        Excel.Application excelApp;
-
         public DocManager()
         {
            
@@ -55,26 +51,6 @@ namespace QmsDoc.Core
             get => this.processingDirFiles;
             set => this.processingDirFiles = value;
             }
-
-        public Word.Application WordApp {
-            get {
-                if (wordApp == null)
-                {
-                    wordApp = new Word.Application();
-                }
-                return wordApp;
-            }
-            set => wordApp = value; }
-
-         public Excel.Application ExcelApp {
-            get { 
-                if(excelApp == null)
-                {
-                    excelApp = new Excel.Application();
-                }
-                return excelApp;
-            }
-            set => excelApp = value; }
 
         public DirectoryInfo ProcessingDir { 
             get => processingDir; 
@@ -182,30 +158,6 @@ namespace QmsDoc.Core
             return new DirectoryInfo(destDirPath);
         }
 
-        public void ProcessDoc(FileInfo file, DocState docEdit)
-        {   
-            if(DocManagerConfig.WordDocExtensions.Contains(file.Extension)) {
-                this.ProcessWordDoc(file, docEdit);
-            }
-            else if(DocManagerConfig.ExcelDocExtensions.Contains(file.Extension)) {
-                this.ProcessExcelDoc(file, docEdit);
-            }
-        }
-
-        public void ProcessWordDoc(FileInfo file, DocState docEdit)
-        {
-            var docProps = docEdit.ToCollection();
-            foreach (DocProperty docProp in docProps)
-            {
-                var propertyInfo = doc.GetType().GetProperty(docProp.Name);
-                propertyInfo?.SetValue(doc, docProp.Value);
-            }
-        }
-
-        public void ProcessExcelDoc(FileInfo file, DocState docEdit)
-        {
-            throw new NotImplementedException();
-        }
         public Boolean ProcessFiles(DocState docEdit) 
         {
             Contract.Requires(this.CanProcessFiles() == true);
@@ -214,7 +166,18 @@ namespace QmsDoc.Core
             {
                 try
                 {
-                    this.Doc(file, docEdit);
+                    if(DocManagerConfig.WordDocExtensions.Contains(file.Extension))
+                    {
+                        WordDoc doc = new WordDoc(file, this.wordConfig, this.DocManagerConfig);
+                        doc.Process(docEdit);
+                    }
+
+                    else if(DocManagerConfig.ExcelDocExtensions.Contains(file.Extension))
+                    {
+                        ExcelDoc doc = new ExcelDoc(file, this.excelConfig, this.DocManagerConfig);
+                        doc.Process(docEdit);
+                    }
+
                 }
 
                 catch (Exception e)

@@ -20,9 +20,7 @@ namespace QmsDoc.Docs
 
         public virtual QmsDocBaseConfig Config { get => docConfig; set => docConfig = value; }
         
-        public virtual string GetRevision() { throw new NotImplementedException(); }
         public virtual string Revision { get => revision; set => revision = value; }
-        public virtual string GetEffectiveDate() { throw new NotImplementedException(); }
         public virtual string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
         public virtual string LogoPath { get => logoPath; set => logoPath = value; }
         public virtual string LogoText { get => logoText; set => logoText = value; }
@@ -32,20 +30,15 @@ namespace QmsDoc.Docs
                         
         }
 
-        public void Process(DocState docEdit)
+        public virtual void Process(DocState docEdit)
         {
-            var docProps = docEdit.ToCollection();
-            foreach (DocProperty docProp in docProps)
-            {
-                var propertyInfo = this.GetType().GetProperty(docProp.Name);
-                propertyInfo?.SetValue(this, docProp.Value);
-            }
+            throw new NotImplementedException();
         }
 
         public DocState Inspect() {
             var state = new DocState();
             state.DocHeader.Revision.Value = this.GetRevision();
-            state.DocHeader.EffectiveDate.Value = this.GetEffectiveDate();
+            state.DocHeader.EffectiveDate.Value = this.FetchEffectiveDate();
             return state;
 
 

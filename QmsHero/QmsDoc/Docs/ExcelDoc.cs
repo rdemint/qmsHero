@@ -126,62 +126,27 @@ namespace QmsDoc.Docs
                 }
                 this.logoText = value;
             } }
-        public Workbook Doc { get => doc; set => doc = value; }
-        public Excel.Application App {
-            get
-            {
-                return this.app;
-            }
-            set => app = value; 
-            }
 
         #endregion
 
 
 
-        //public Excel.Workbook OpenDocument(FileInfo file_info)
-        //{
-       
-        //    if (this.FileInfo.Name.StartsWith("~"))
-        //    {
-        //        return null;
-        //    }
 
-        //    try
-        //    {
+        public void Process(DocState docState)
+        {
 
-        //        int count = this.App.Workbooks.Count;
-        //        Excel.Workbook workbook = this.App.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword, WriteResPassword: this.ManagerConfig.DocPassword);
-        //        int count2 = this.App.Workbooks.Count;
-        //        var active = this.App.ActiveWorkbook;
-
-        //      return workbook;
-        //    }
-
-        //    catch (Exception e)
-        //    {
-        //        this.CloseDocument();
-        //        throw e;
-        //    }
-            
-        //}
-
-        //public override void CloseDocument()
-        //{
-        //    try
-        //    {
-        //        var workbooks = this.app.Workbooks;
-        //        var count = workbooks.Count;
-        //        this.app.Workbooks[this.FileInfo.Name].Close(SaveChanges: this.ManagerConfig.SaveChanges);
-        //    }
-
-        //    catch (Exception e)
-        //    {
-        //        throw e;
-        //    }
-
-        //}
-
+            using (ExcelprocessingDocument doc = ExcelprocessingDocument.Open(this.FileInfo.FullName, true))
+            {
+                var docProps = docState.ToCollection();
+                foreach (DocProperty docProp in docProps)
+                {
+                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    propertyInfo?.SetValue(this, docProp.Value);
+                }
+            }
+            throw new NotImplementedException();
+        }
+        
         public override void SaveAsPdf()
         {
             base.SaveAsPdf();

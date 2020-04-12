@@ -54,8 +54,8 @@ namespace QmsDoc.Test.Core
             manager.ConfigDir(fixture.Sop1Documents.FullName);
             manager.ProcessFiles(docEdit);
             var wordDoc = (WordDoc)manager.CreateDoc(manager.ProcessingDirFiles[0]);
-            var rev = wordDoc.GetRevision();
-            var date = wordDoc.GetEffectiveDate();
+            var rev = wordDoc.FetchRevision();
+            var date = wordDoc.FetchEffectiveDate();
             Assert.AreEqual(rev, "1");
             Assert.AreEqual(date, "2020-03-30");
             manager.Dispose();

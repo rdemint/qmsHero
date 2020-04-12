@@ -11,7 +11,8 @@ using System.IO;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
 using GalaSoft.MvvmLight.Ioc;
-using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace QmsDoc.Docs
 {
@@ -19,6 +20,8 @@ namespace QmsDoc.Docs
     {
         WordDocConfig docConfig;
         DocManagerConfig docManagerConfig;
+        WordprocessingDocument doc;
+        MainDocumentPart mainDocumentPart;
         FileInfo fileInfo;
         object headerFooter;
         bool headerFootersChecked;
@@ -38,7 +41,6 @@ namespace QmsDoc.Docs
             this.FileInfo = file_info;
             this.DocConfig = docConfig;
             this.DocManagerConfig = docManagerConfig;
-            this.OpenDocument();
         }
 
         #region Config
@@ -54,43 +56,32 @@ namespace QmsDoc.Docs
         {
             get
             {
-                if (this.headerFootersChecked == false)
-                {
-                    for (int i = 1; i <= this.doc.Sections.Count; i++)
-                    {
-                        var section = this.doc.Sections[i];
-                        if (i != DocConfig.HeaderFooterSection)
-                        {
-                            var evenHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterEvenPages].Exists;
-                            var firstHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterFirstPage].Exists;
-                            var primHF = section.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Exists;
-
-                            if (evenHF || firstHF)
-                            {
-                                System.Windows.MessageBox.Show($"{this.FileInfo.Name} has multiple headers in Section {section}.  This must be fixed manually");
-                            }
-
-                        }
-
-                    }
-                    this.headerFootersChecked = true;
-                }
-
-                var hfSection = doc.Sections[DocConfig.HeaderFooterSection];
-                return hfSection.Headers[WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Tables[1];
-
+                return this.mainDocumentPart.HeaderParts.FirstOrDefault().RootElement.Elements<Table>().FirstOrDefault();
             }
         }
 
-        public string GetEffectiveDate()
+        public TableCell FetchHeaderFooterTableCell(int row, int col)
         {
-            string result =  this.HeaderFooterTable
-                    .Cell(
-                        this.DocConfig.EffectiveDateRow,
-                        this.DocConfig.EffectiveDateCol
-                    )
-                    .Range.Text;
-            Match match = Regex.Match(result, @"\d\d\d\d-\d\d-\d\d");
+            var table = this.HeaderFooterTable;
+            TableRow r = table.Elements<TableRow>().ElementAt(row);
+            TableCell cell = r.Elements<TableCell>().ElementAt(col);
+            return cell;
+        }
+        public Text FetchEffectiveDatePart()
+        {
+            var table = this.HeaderFooterTable;
+            TableRow row = table.Elements<TableRow>().ElementAt(DocConfig.EffectiveDateRow);
+            TableCell cell = row.Elements<TableCell>().ElementAt(DocConfig.EffectiveDateCol);
+            Paragraph p = cell.Elements<Paragraph>().First();
+            Run r = p.Elements<Run>().First();
+            Text text = r.Elements<Text>().First();
+            return text;
+        }
+        public string FetchEffectiveDate()
+        {
+            Text text = FetchEffectiveDatePart();
+            Match match = Regex.Match(text.ToString(), @"\d\d\d\d-\d\d-\d\d");
+            this.effectiveDate = match.ToString();
             return match.ToString();
         }
         public override string EffectiveDate
@@ -101,28 +92,30 @@ namespace QmsDoc.Docs
             
             set
             {
-                this.HeaderFooterTable
-                    .Cell(
-                        this.DocConfig.EffectiveDateRow,
-                        this.DocConfig.EffectiveDateCol
-                    )
-                    .Range.Text = DocConfig.EffectiveDateText + value;
+                var part = FetchEffectiveDatePart();
+                part.Text = value;
                 this.effectiveDate = value;
                 this.OnPropertyChanged();
+
             }
         }
 
-        public string GetRevision()
+        public Text FetchRevisionPart()
         {
-            var result = this.HeaderFooterTable
-              .Cell(
-                  this.DocConfig.RevisionRow,
-                  this.DocConfig.RevisionCol
-              )
-              .Range.Text;
-            Match match = Regex.Match(result, @"\d");
+            TableCell cell = this.FetchHeaderFooterTableCell(this.DocConfig.RevisionRow, DocConfig.RevisionCol);
+            Paragraph p = cell.Elements<Paragraph>().First();
+            Run r = p.Elements<Run>().First();
+            Text text = r.Elements<Text>().First();
+            return text;
+
+        }
+        public string FetchRevision()
+        {
+            Text text = FetchRevisionPart();
+            Match match = Regex.Match(text.ToString(), @"\d");
             return match.ToString();
         }
+
         public override string Revision
         {
             get
@@ -132,13 +125,12 @@ namespace QmsDoc.Docs
 
             set
             {
-                this.HeaderFooterTable
-                    .Cell(
-                        this.DocConfig.RevisionRow,
-                        this.DocConfig.RevisionCol
-                    ).Range.Text = DocConfig.RevisionText + value;
+                TableCell cell = FetchHeaderFooterTableCell(DocConfig.RevisionRow, DocConfig.RevisionCol);
+                Paragraph p = cell.Elements<Paragraph>().First();
+                Run r = p.Elements<Run>().First();
+                Text text = r.Elements<Text>().First();
+                text.Text = value;
                 this.revision = value;
-                this.OnPropertyChanged();
             }
         }
         public override string LogoPath
@@ -181,52 +173,26 @@ namespace QmsDoc.Docs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-
+        public void Process(DocState docState)
+        {
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
+            {
+                this.doc = doc;
+                this.mainDocumentPart = doc.MainDocumentPart;
+                var docProps = docState.ToCollection();
+                foreach (DocProperty docProp in docProps)
+                {
+                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    propertyInfo?.SetValue(this, docProp.Value);
+                }
+            }
+        }
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-
-        //public override void OpenDocument()
-        //{
-         
-        //    try
-        //    {
-        //        this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.DocManagerConfig.DocPassword, WritePasswordDocument: this.DocManagerConfig.DocPassword);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        this.CloseDocument();
-        //        throw e;
-        //    }
-        //}
-
-        //public override void CloseDocument()
-        //{
-        //    try
-        //    {
-        //        var documents = this.app.Documents;
-        //        var count = documents.Count;
-        //        if (this.DocManagerConfig.SaveChanges)
-        //        {
-        //            this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdSaveChanges);
-        //        }
-        //        else
-        //        {
-        //            //this.app.Documents.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
-        //            this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdDoNotSaveChanges);
-        //        }
-        //    }
-
-        //    catch (Exception e)
-        //    {
-        //        throw e;
-
-        //    }
-        //}
-
         public override void SaveAsPdf()
         {
             base.SaveAsPdf();

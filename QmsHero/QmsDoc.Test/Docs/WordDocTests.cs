@@ -20,9 +20,9 @@ namespace QmsDoc.Docs.Tests
             var manager = new DocManager();
             manager.ConfigDir(fixture.Sop1Documents.FullName);
             WordDoc doc = (WordDoc)manager.CreateDoc(fixture.WordSample);
-            var initial = doc.GetEffectiveDate();
+            var initial = doc.FetchEffectiveDate();
             doc.EffectiveDate = "2020-04-12";
-            var result = doc.GetEffectiveDate();
+            var result = doc.FetchEffectiveDate();
             manager.Dispose();
             Assert.AreEqual("2019-11-05", initial);
             Assert.AreEqual("2020-04-12", result);
@@ -35,9 +35,9 @@ namespace QmsDoc.Docs.Tests
             var manager = new DocManager();
             manager.ConfigDir(fixture.Sop1Documents.FullName);
             WordDoc doc = (WordDoc)manager.CreateDoc(fixture.WordSample);
-            var initial = doc.GetRevision();
+            var initial = doc.FetchRevision();
             doc.Revision = "3";
-            var changeResult = doc.GetRevision();
+            var changeResult = doc.FetchRevision();
             manager.Dispose();
             Assert.AreEqual("4", initial);
             Assert.AreEqual("3", changeResult);
