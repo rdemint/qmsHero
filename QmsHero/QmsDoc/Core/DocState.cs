@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    public class DocEdit: INotifyPropertyChanged, IToDocPropertyCollection
+    public class DocState: INotifyPropertyChanged, IToDocPropertyCollection
 
     {
         DocHeader docHeader;
         DocBody docBody;
         string editPathName;
 
-        public DocEdit()
+        public DocState()
         {
             this.DocHeader = new DocHeader();
         }
 
-        public DocEdit(DocHeader docHeader)
+        public DocState(DocHeader docHeader)
         {
             this.DocHeader = docHeader;
         }

@@ -10,11 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Docs;
 using QmsDoc.Interfaces;
-using GalaSoft.MvvmLight.Ioc;
-using System.Collections.ObjectModel;
-using Microsoft.Office.Interop.Word;
 using System.IO;
-using System.Runtime.Serialization;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace QmsDoc.Core
 {
@@ -184,7 +182,17 @@ namespace QmsDoc.Core
             return new DirectoryInfo(destDirPath);
         }
 
-            public QmsDocBase ProcessDoc(QmsDocBase doc, DocEdit docEdit)
+        public void ProcessDoc(FileInfo file, DocState docEdit)
+        {   
+            if(DocManagerConfig.WordDocExtensions.Contains(file.Extension)) {
+                this.ProcessWordDoc(file, docEdit);
+            }
+            else if(DocManagerConfig.ExcelDocExtensions.Contains(file.Extension)) {
+                this.ProcessExcelDoc(file, docEdit);
+            }
+        }
+
+        public void ProcessWordDoc(FileInfo file, DocState docEdit)
         {
             var docProps = docEdit.ToCollection();
             foreach (DocProperty docProp in docProps)
@@ -192,22 +200,21 @@ namespace QmsDoc.Core
                 var propertyInfo = doc.GetType().GetProperty(docProp.Name);
                 propertyInfo?.SetValue(doc, docProp.Value);
             }
-            return doc;
         }
-        public Boolean ProcessFiles(DocEdit docEdit) 
+
+        public void ProcessExcelDoc(FileInfo file, DocState docEdit)
+        {
+            throw new NotImplementedException();
+        }
+        public Boolean ProcessFiles(DocState docEdit) 
         {
             Contract.Requires(this.CanProcessFiles() == true);
 
-            foreach (FileInfo file_info in this.ProcessingDirFiles)
+            foreach (FileInfo file in this.ProcessingDirFiles)
             {
                 try
                 {
-                    QmsDocBase doc = this.CreateDoc(file_info);
-                    this.ProcessDoc(doc, docEdit);
-                    if (DocManagerConfig.CloseDocs == true)
-                    {
-                        doc.CloseDocument();
-                    }
+                    this.Doc(file, docEdit);
                 }
 
                 catch (Exception e)
@@ -225,31 +232,33 @@ namespace QmsDoc.Core
             this.dirFilesUnsafe = new List<FileInfo>();
 
         }
-        public QmsDocBase CreateDoc(FileInfo file_info)
-        {
-            if (this.DocManagerConfig.WordDocExtensions.Contains(file_info.Extension))
-            {
-                    QmsDocBase doc = new WordDoc(this.WordApp, file_info, this.wordConfig, this.docManagerConfig);
-                    return doc;
-            }
- 
-                // create word doc and process
-            else if (this.DocManagerConfig.ExcelDocExtensions.Contains(file_info.Extension))
-            {
-                // create excel doc and process
-                    QmsDocBase doc = new ExcelDoc(
-                        this.ExcelApp, 
-                        file_info,
-                        this.excelConfig,
-                        this.docManagerConfig);
-                    return doc;
 
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
+
+        //public QmsDocBase CreateDoc(FileInfo file_info)
+        //{
+        //    if (this.DocManagerConfig.WordDocExtensions.Contains(file_info.Extension))
+        //    {
+        //            QmsDocBase doc = new WordDoc(this.WordApp, file_info, this.wordConfig, this.docManagerConfig);
+        //            return doc;
+        //    }
+ 
+        //        // create word doc and process
+        //    else if (this.DocManagerConfig.ExcelDocExtensions.Contains(file_info.Extension))
+        //    {
+        //        // create excel doc and process
+        //            QmsDocBase doc = new ExcelDoc(
+        //                this.ExcelApp, 
+        //                file_info,
+        //                this.excelConfig,
+        //                this.docManagerConfig);
+        //            return doc;
+
+        //    }
+        //    else
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
         public void CreateApps()
         {

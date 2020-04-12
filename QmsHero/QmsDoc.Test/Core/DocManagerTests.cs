@@ -45,7 +45,7 @@ namespace QmsDoc.Test.Core
         [TestMethod()]
         public void ProcessDocTest()
         {
-            var docEdit = new DocEdit();
+            var docEdit = new DocState();
             var fixture = new FixtureUtil();
             var manager = new DocManager();
 

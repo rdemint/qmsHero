@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
 using FileInfo = System.IO.FileInfo;
 using QmsDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 
 namespace QmsDoc.Docs
@@ -16,8 +14,6 @@ namespace QmsDoc.Docs
 {
     public class ExcelDoc : QmsDocBase
     {
-        Excel.Application app;
-        Excel.Workbook doc;
         ExcelDocConfig docConfig;
         DocManagerConfig managerConfig;
         FileInfo fileInfo;
@@ -28,13 +24,11 @@ namespace QmsDoc.Docs
 
         public ExcelDoc() { }
 
-        public ExcelDoc(Excel.Application app, System.IO.FileInfo fileInfo, ExcelDocConfig docConfig, DocManagerConfig docManagerConfig): base()
+        public ExcelDoc(System.IO.FileInfo fileInfo, ExcelDocConfig docConfig, DocManagerConfig docManagerConfig): base()
         {
-            this.app = app;
             this.FileInfo = fileInfo;
             this.DocConfig = docConfig;
             this.ManagerConfig = docManagerConfig;
-            this.Doc  = this.OpenDocument(fileInfo);
         }
 
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
@@ -145,48 +139,48 @@ namespace QmsDoc.Docs
 
 
 
-        public Excel.Workbook OpenDocument(FileInfo file_info)
-        {
+        //public Excel.Workbook OpenDocument(FileInfo file_info)
+        //{
        
-            if (this.FileInfo.Name.StartsWith("~"))
-            {
-                return null;
-            }
+        //    if (this.FileInfo.Name.StartsWith("~"))
+        //    {
+        //        return null;
+        //    }
 
-            try
-            {
+        //    try
+        //    {
 
-                int count = this.App.Workbooks.Count;
-                Excel.Workbook workbook = this.App.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword, WriteResPassword: this.ManagerConfig.DocPassword);
-                int count2 = this.App.Workbooks.Count;
-                var active = this.App.ActiveWorkbook;
+        //        int count = this.App.Workbooks.Count;
+        //        Excel.Workbook workbook = this.App.Workbooks.Open(file_info.FullName, IgnoreReadOnlyRecommended: true, Password: this.ManagerConfig.DocPassword, WriteResPassword: this.ManagerConfig.DocPassword);
+        //        int count2 = this.App.Workbooks.Count;
+        //        var active = this.App.ActiveWorkbook;
 
-              return workbook;
-            }
+        //      return workbook;
+        //    }
 
-            catch (Exception e)
-            {
-                this.CloseDocument();
-                throw e;
-            }
+        //    catch (Exception e)
+        //    {
+        //        this.CloseDocument();
+        //        throw e;
+        //    }
             
-        }
+        //}
 
-        public override void CloseDocument()
-        {
-            try
-            {
-                var workbooks = this.app.Workbooks;
-                var count = workbooks.Count;
-                this.app.Workbooks[this.FileInfo.Name].Close(SaveChanges: this.ManagerConfig.SaveChanges);
-            }
+        //public override void CloseDocument()
+        //{
+        //    try
+        //    {
+        //        var workbooks = this.app.Workbooks;
+        //        var count = workbooks.Count;
+        //        this.app.Workbooks[this.FileInfo.Name].Close(SaveChanges: this.ManagerConfig.SaveChanges);
+        //    }
 
-            catch (Exception e)
-            {
-                throw e;
-            }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
 
-        }
+        //}
 
         public override void SaveAsPdf()
         {

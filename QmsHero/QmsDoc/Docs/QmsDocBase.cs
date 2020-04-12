@@ -1,6 +1,8 @@
-﻿using System;
+﻿using QmsDoc.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +12,17 @@ namespace QmsDoc.Docs
 {
     public class QmsDocBase
     {
-        QmsDocBaseConfig config;
-        object doc;
+        QmsDocBaseConfig docConfig;
         string revision;
         string effectiveDate;
         string logoPath;
         string logoText;
 
-        public virtual QmsDocBaseConfig Config { get => config; set => config = value; }
-        public virtual object Doc { get => doc; set => doc = value; }
+        public virtual QmsDocBaseConfig Config { get => docConfig; set => docConfig = value; }
+        
+        public virtual string GetRevision() { throw new NotImplementedException(); }
         public virtual string Revision { get => revision; set => revision = value; }
+        public virtual string GetEffectiveDate() { throw new NotImplementedException(); }
         public virtual string EffectiveDate { get => effectiveDate; set => effectiveDate = value; }
         public virtual string LogoPath { get => logoPath; set => logoPath = value; }
         public virtual string LogoText { get => logoText; set => logoText = value; }
@@ -28,21 +31,30 @@ namespace QmsDoc.Docs
         {
                         
         }
-        public virtual void CloseDocument()
+
+        public void Process(DocState docEdit)
         {
-            throw new System.NotImplementedException();
+            var docProps = docEdit.ToCollection();
+            foreach (DocProperty docProp in docProps)
+            {
+                var propertyInfo = this.GetType().GetProperty(docProp.Name);
+                propertyInfo?.SetValue(this, docProp.Value);
+            }
         }
-        public virtual void OpenDocument()
-        {
-            throw new System.NotImplementedException();
+
+        public DocState Inspect() {
+            var state = new DocState();
+            state.DocHeader.Revision.Value = this.GetRevision();
+            state.DocHeader.EffectiveDate.Value = this.GetEffectiveDate();
+            return state;
+
+
         }
+
 
         public virtual void SaveAsPdf()
         { throw new NotImplementedException(); }
 
-        //private object GetConfig([CallerMemberName] string propName="")
-        //{
-        //    return this.Config.GetProperty(this.Doc, propName);
-        //}
+
     }
 }

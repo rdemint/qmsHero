@@ -34,6 +34,7 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -72,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DocBody.cs" />
-    <Compile Include="Core\DocEdit.cs" />
+    <Compile Include="Core\DocState.cs" />
     <Compile Include="Core\DocHeader.cs" />
     <Compile Include="Core\DocProperty.cs" />
     <Compile Include="Exceptions\ProjectDirNotSetException.cs" />

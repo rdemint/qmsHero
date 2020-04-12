@@ -14,7 +14,7 @@ namespace QmsDoc.Core.Tests
         [TestMethod()]
         public void ToCollectionTest()
         {
-            var docEdit = new DocEdit();
+            var docEdit = new DocState();
             var props = docEdit.ToCollection();
             Assert.IsTrue(props.Any() == false);
 
@@ -34,7 +34,7 @@ namespace QmsDoc.Core.Tests
         [TestMethod()]
         public void FilterCollectionTest()
         {
-            var docEdit = new DocEdit();
+            var docEdit = new DocState();
             var props = docEdit.ToCollection();
             Assert.IsTrue(props != null);
         }

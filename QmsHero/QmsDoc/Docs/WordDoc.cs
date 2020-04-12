@@ -3,32 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Word;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using QmsDoc.Interfaces;
 using System.IO;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
 using GalaSoft.MvvmLight.Ioc;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml;
 
 namespace QmsDoc.Docs
 {
     public class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
     {
-        Application app;
-        Document doc;
         WordDocConfig docConfig;
         DocManagerConfig docManagerConfig;
         FileInfo fileInfo;
-        HeaderFooter headerFooter;
+        object headerFooter;
         bool headerFootersChecked;
         string logoText;
         string logoPath;
         string effectiveDate;
         string revision;
-        ObservableCollection<IDocSection> sections;
 
 
         public WordDoc()
@@ -36,9 +33,8 @@ namespace QmsDoc.Docs
 
         }
 
-        public WordDoc(Application app, System.IO.FileInfo file_info, WordDocConfig docConfig, DocManagerConfig docManagerConfig) : base()
+        public WordDoc(System.IO.FileInfo file_info, WordDocConfig docConfig, DocManagerConfig docManagerConfig) : base()
         {
-            this.app = app;
             this.FileInfo = file_info;
             this.DocConfig = docConfig;
             this.DocManagerConfig = docManagerConfig;
@@ -192,43 +188,44 @@ namespace QmsDoc.Docs
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-        public override void OpenDocument()
-        {
+
+        //public override void OpenDocument()
+        //{
          
-            try
-            {
-                this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.DocManagerConfig.DocPassword, WritePasswordDocument: this.DocManagerConfig.DocPassword);
-            }
-            catch (Exception e)
-            {
-                this.CloseDocument();
-                throw e;
-            }
-        }
+        //    try
+        //    {
+        //        this.doc = this.app.Documents.Open(this.fileInfo.FullName, PasswordDocument: this.DocManagerConfig.DocPassword, WritePasswordDocument: this.DocManagerConfig.DocPassword);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        this.CloseDocument();
+        //        throw e;
+        //    }
+        //}
 
-        public override void CloseDocument()
-        {
-            try
-            {
-                var documents = this.app.Documents;
-                var count = documents.Count;
-                if (this.DocManagerConfig.SaveChanges)
-                {
-                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdSaveChanges);
-                }
-                else
-                {
-                    //this.app.Documents.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
-                    this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdDoNotSaveChanges);
-                }
-            }
+        //public override void CloseDocument()
+        //{
+        //    try
+        //    {
+        //        var documents = this.app.Documents;
+        //        var count = documents.Count;
+        //        if (this.DocManagerConfig.SaveChanges)
+        //        {
+        //            this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdSaveChanges);
+        //        }
+        //        else
+        //        {
+        //            //this.app.Documents.Close(SaveChanges: Word.WdSaveOptions.wdDoNotSaveChanges);
+        //            this.app.Documents[this.fileInfo.Name].Close(SaveChanges:WdSaveOptions.wdDoNotSaveChanges);
+        //        }
+        //    }
 
-            catch (Exception e)
-            {
-                throw e;
+        //    catch (Exception e)
+        //    {
+        //        throw e;
 
-            }
-        }
+        //    }
+        //}
 
         public override void SaveAsPdf()
         {
