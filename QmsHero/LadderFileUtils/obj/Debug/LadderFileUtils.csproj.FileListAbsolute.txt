@@ -1,6 +1,0 @@
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderFileUtils\bin\Debug\LadderFileUtils.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderFileUtils\bin\Debug\LadderFileUtils.pdb
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderFileUtils\obj\Debug\LadderFileUtils.csprojAssemblyReference.cache
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderFileUtils\obj\Debug\LadderFileUtils.csproj.CoreCompileInputs.cache
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderFileUtils\obj\Debug\LadderFileUtils.dll
-C:\Users\raine\Documents\Dev\qmsHero\QmsHero\LadderFileUtils\obj\Debug\LadderFileUtils.pdb
