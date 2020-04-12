@@ -57,6 +57,11 @@ namespace QmsDoc.Docs
         public override string Revision { 
             get => revision;
             set { 
+                if(this.EffectiveDate == null)
+                {
+                    this.EffectiveDate = GetEffectiveDate();
+                }
+
                 foreach(Worksheet wksht in this.doc.Worksheets)
                 {
                     wksht.PageSetup.RightHeader =
@@ -72,11 +77,6 @@ namespace QmsDoc.Docs
 
         public string GetEffectiveDate() {
             string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            //var myArr = new string[] { };
-            //myArr.Append(this.DocConfig.EffectiveDateText);
-            //myArr.Append(this.DocConfig.RevisionText);
-            //var result = rightHeaders.Split(myArr, StringSplitOptions.RemoveEmptyEntries);
-            //return result[2];
             Regex rx = new Regex(@"\d\d\d\d-\d\d-\d\d", RegexOptions.None);
             Match match = rx.Match(rightHeaders);
             return match.ToString();
@@ -84,6 +84,11 @@ namespace QmsDoc.Docs
         public override string EffectiveDate { 
             get => effectiveDate; 
             set {
+                if(this.Revision == null)
+                {
+                    this.Revision = GetRevision();
+                }
+
                 foreach (Worksheet wkst in this.Doc.Worksheets)
                 {
                     wkst.PageSetup.RightHeader =
