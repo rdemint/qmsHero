@@ -15,7 +15,6 @@ namespace QmsDoc.Docs
     public class ExcelDoc : QmsDocBase
     {
         ExcelDocConfig docConfig;
-        DocManagerConfig managerConfig;
         FileInfo fileInfo;
         string logoText;
         string logoPath;
@@ -28,102 +27,99 @@ namespace QmsDoc.Docs
         {
             this.FileInfo = fileInfo;
             this.DocConfig = docConfig;
-            this.ManagerConfig = docManagerConfig;
         }
 
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public DocManagerConfig ManagerConfig { get => managerConfig; set => managerConfig = value; }
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
         
         public string GetRevision()
         {
-            string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            //var myArr = new string[] { };
-            //myArr.Append(this.DocConfig.RevisionText);
-            //var result = rightHeaders.Split(myArr, StringSplitOptions.RemoveEmptyEntries);
-            var match = Regex.Match(rightHeaders, Regex.Escape(this.DocConfig.RevisionText) + @"\d");
-            var result = match.ToString();
-            var match2 = Regex.Match(result, @"\d");
-            return match2.ToString();
+            //string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
+            //var match = Regex.Match(rightHeaders, Regex.Escape(this.DocConfig.RevisionText) + @"\d");
+            //var result = match.ToString();
+            //var match2 = Regex.Match(result, @"\d");
+            //return match2.ToString();
+            return null;
         }
         
         public override string Revision { 
             get => revision;
             set { 
-                if(this.effectiveDate == null)
-                {
-                    this.effectiveDate = GetEffectiveDate();
-                }
+                //if(this.effectiveDate == null)
+                //{
+                //    this.effectiveDate = GetEffectiveDate();
+                //}
 
-                foreach(Worksheet wksht in this.doc.Worksheets)
-                {
-                    wksht.PageSetup.RightHeader =
-                        this.DocConfig.EffectiveDateText +
-                        value +
-                        this.DocConfig.RevisionEffectiveDateSeparator +
-                        this.revision;
-                }
+                //foreach(Worksheet wksht in this.doc.Worksheets)
+                //{
+                //    wksht.PageSetup.RightHeader =
+                //        this.DocConfig.EffectiveDateText +
+                //        value +
+                //        this.DocConfig.RevisionEffectiveDateSeparator +
+                //        this.revision;
+                //}
                 this.revision = value;
             }
      
         }
 
         public string GetEffectiveDate() {
-            string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            Regex rx = new Regex(@"\d\d\d\d-\d\d-\d\d", RegexOptions.None);
-            Match match = rx.Match(rightHeaders);
-            return match.ToString();
+            //string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
+            //Regex rx = new Regex(@"\d\d\d\d-\d\d-\d\d", RegexOptions.None);
+            //Match match = rx.Match(rightHeaders);
+            //return match.ToString();
+            return null;
         }
         public override string EffectiveDate { 
             get => effectiveDate; 
             set {
-                if(this.revision == null)
-                {
-                    this.revision = GetRevision();
-                }
+                //if(this.revision == null)
+                //{
+                //    this.revision = GetRevision();
+                //}
 
-                foreach (Worksheet wkst in this.Doc.Worksheets)
-                {
-                    wkst.PageSetup.RightHeader =
-                        this.DocConfig.EffectiveDateText +
-                        value +
-                        this.DocConfig.RevisionEffectiveDateSeparator +
-                        this.Revision;
-                }
+                //foreach (Worksheet wkst in this.Doc.Worksheets)
+                //{
+                //    wkst.PageSetup.RightHeader =
+                //        this.DocConfig.EffectiveDateText +
+                //        value +
+                //        this.DocConfig.RevisionEffectiveDateSeparator +
+                //        this.Revision;
+                //}
                 this.effectiveDate = value;
             }
         }
         public string GetLogoPath()
         {
-            return this.Doc.Worksheets[1].PageSetup.LeftHeaderPicture.Filename;
+            throw new NotImplementedException();
         }
         public override string LogoPath { 
             get => logoPath;
             set { 
-                foreach(Worksheet wkst in this.Doc.Worksheets)
-                {
-                    var picture = wkst.PageSetup.LeftHeaderPicture;
-                    picture.Filename = value;
-                    picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
-                    picture.Height = 28;
-                    wkst.PageSetup.LeftHeader = "&G";
-                 }
+                //foreach(Worksheet wkst in this.Doc.Worksheets)
+                //{
+                //    var picture = wkst.PageSetup.LeftHeaderPicture;
+                //    picture.Filename = value;
+                //    picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
+                //    picture.Height = 28;
+                //    wkst.PageSetup.LeftHeader = "&G";
+                // }
                 this.logoPath = value;
             } }
 
         
         public string GetLogoText()
         {
-            return this.Doc.Worksheets[1].PageSetup.LeftHeader;
+            return null;
         }
         public override string LogoText { 
             get => logoText;
             set {
-                foreach (Worksheet wkst in this.Doc.Worksheets)
-                {
-                    wkst.PageSetup.LeftHeader = value;
-                }
+                //foreach (Worksheet wkst in this.Doc.Worksheets)
+                //{
+                //    wkst.PageSetup.LeftHeader = value;
+                //}
                 this.logoText = value;
             } }
 
@@ -135,15 +131,15 @@ namespace QmsDoc.Docs
         public void Process(DocState docState)
         {
 
-            using (ExcelprocessingDocument doc = ExcelprocessingDocument.Open(this.FileInfo.FullName, true))
-            {
-                var docProps = docState.ToCollection();
-                foreach (DocProperty docProp in docProps)
-                {
-                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
-                    propertyInfo?.SetValue(this, docProp.Value);
-                }
-            }
+            //using (ExcelprocessingDocument doc = ExcelprocessingDocument.Open(this.FileInfo.FullName, true))
+            //{
+            //    var docProps = docState.ToCollection();
+            //    foreach (DocProperty docProp in docProps)
+            //    {
+            //        var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+            //        propertyInfo?.SetValue(this, docProp.Value);
+            //    }
+            //}
             throw new NotImplementedException();
         }
         

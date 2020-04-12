@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc.Test", "QmsDoc.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadderControls", "LadderControls\LadderControls.csproj", "{D949B936-F294-4F84-B4F2-6E1F86A932C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadderFileUtils", "LadderFileUtils\LadderFileUtils.csproj", "{41D7B217-AB9D-4C02-8E2F-83187B5BAA8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFileUtil", "LadderFileUtils\QFileUtil.csproj", "{41D7B217-AB9D-4C02-8E2F-83187B5BAA8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

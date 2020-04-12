@@ -24,7 +24,6 @@ namespace QmsHero
         {
             var exception = e.Exception;
             var manager = SimpleIoc.Default.GetInstance<DocManager>();
-            manager.CloseApps();
             System.Windows.Forms.MessageBox.Show(exception.ToString());
             e.Handled = true;
             Shutdown();

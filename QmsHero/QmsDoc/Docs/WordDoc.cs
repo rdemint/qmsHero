@@ -13,18 +13,18 @@ using QmsDoc.Exceptions;
 using GalaSoft.MvvmLight.Ioc;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using LadderFileUtils;
 
 namespace QmsDoc.Docs
 {
     public class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
     {
         WordDocConfig docConfig;
-        DocManagerConfig docManagerConfig;
         WordprocessingDocument doc;
         MainDocumentPart mainDocumentPart;
-        FileInfo fileInfo;
-        object headerFooter;
-        bool headerFootersChecked;
+        FileInfo file;
+        FileInfo targetFile;
+        DirectoryInfo targetDir;
         string logoText;
         string logoPath;
         string effectiveDate;
@@ -36,20 +36,29 @@ namespace QmsDoc.Docs
 
         }
 
-        public WordDoc(System.IO.FileInfo file_info, WordDocConfig docConfig, DocManagerConfig docManagerConfig) : base()
+        public WordDoc(System.IO.FileInfo fileInfo) : base()
         {
-            this.FileInfo = file_info;
-            this.DocConfig = docConfig;
-            this.DocManagerConfig = docManagerConfig;
+            this.FileInfo = fileInfo;
+            this.DocConfig = new WordDocConfig();
+        }
+
+        public WordDoc(FileInfo file, DirectoryInfo targetDir): base()
+        {
+            //copy original file to a target dir
         }
 
         #region Config
         public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
-        public FileInfo FileInfo { get => fileInfo;
-            set { this.headerFootersChecked = false; this.fileInfo = value; } }
+        public FileInfo FileInfo { get => targetFile;
+            set { this.headerFootersChecked = false; this.targetFile = value; } }
         #endregion  
-
+        public FileInfo CopyToTarget(FileInfo file)
+        {
+            QFileUtil
+        }
+        
+        
         #region Header
 
         public Table HeaderFooterTable
@@ -137,16 +146,16 @@ namespace QmsDoc.Docs
         {
             get => this.logoPath;
             set { 
-                this.logoPath = value;
-                var cell = this.HeaderFooterTable
-                    .Cell(
-                    this.DocConfig.LogoRow,
-                    this.DocConfig.LogoCol
-                    );
-                cell.Range.Delete();
-                var picture = cell.Range.InlineShapes.AddPicture(value, false, true);
-                picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
-                picture.Height = 28;
+                //this.logoPath = value;
+                //var cell = this.HeaderFooterTable
+                //    .Cell(
+                //    this.DocConfig.LogoRow,
+                //    this.DocConfig.LogoCol
+                //    );
+                //cell.Range.Delete();
+                //var picture = cell.Range.InlineShapes.AddPicture(value, false, true);
+                //picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
+                //picture.Height = 28;
                 this.logoPath = value;
                 this.OnPropertyChanged(); }
         }
@@ -155,14 +164,13 @@ namespace QmsDoc.Docs
             get => this.logoText;
             set
             {
-                this.logoText = value;
-                var cell = this.HeaderFooterTable
-                    .Cell(
-                    this.DocConfig.LogoRow,
-                    this.DocConfig.LogoCol
-                    );
-                cell.Range.Delete();
-                cell.Range.Text = "Effective Date: " + value;
+                //var cell = this.HeaderFooterTable
+                //    .Cell(
+                //    this.DocConfig.LogoRow,
+                //    this.DocConfig.LogoCol
+                //    );
+                //cell.Range.Delete();
+                //cell.Range.Text = "Effective Date: " + value;
                 this.logoText = value;
                 OnPropertyChanged();
             }

@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace LadderFileUtils
 {
-    static class LadderFileUtil
+    public static class QFileUtil
     {
+        
+        public static FileInfo FileCopy(FileInfo file, DirectoryInfo targetDir)
+        {
+            string temppath = Path.Combine(targetDir.FullName, file.Name);
+            file.CopyTo(temppath, true);
+            return new FileInfo(temppath);
+        }
         public static DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
         {
             // Get the subdirectories for the specified directory.
@@ -53,6 +60,19 @@ namespace LadderFileUtils
             }
 
             return new DirectoryInfo(destDirPath);
+        }
+
+        public static DirectoryInfo CreateOrCleanSubDirectory(DirectoryInfo dir, string subDirName) 
+        {
+            var targetDir = new DirectoryInfo(Path.Combine(dir.FullName, subDirName));
+            if (targetDir.Exists)
+            {
+                targetDir.Delete(true);
+            }
+            
+            var cleanDir = dir.CreateSubdirectory(subDirName);
+            return cleanDir;
+
         }
     }
 }

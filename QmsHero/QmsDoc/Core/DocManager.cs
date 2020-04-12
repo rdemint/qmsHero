@@ -158,129 +158,39 @@ namespace QmsDoc.Core
             return new DirectoryInfo(destDirPath);
         }
 
+        public void ProcessDoc(FileInfo file, DocState docEdit)
+        {
+            try
+            {
+                if (DocManagerConfig.WordDocExtensions.Contains(file.Extension))
+                {
+                    WordDoc doc = new WordDoc(file, this.wordConfig, this.DocManagerConfig);
+                    doc.Process(docEdit);
+                }
+
+                else if (DocManagerConfig.ExcelDocExtensions.Contains(file.Extension))
+                {
+                    ExcelDoc doc = new ExcelDoc(file, this.excelConfig, this.DocManagerConfig);
+                    doc.Process(docEdit);
+                }
+
+            }
+
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("An Error occured while processing a document");
+            }
+        }
+
         public Boolean ProcessFiles(DocState docEdit) 
         {
             Contract.Requires(this.CanProcessFiles() == true);
 
             foreach (FileInfo file in this.ProcessingDirFiles)
             {
-                try
-                {
-                    if(DocManagerConfig.WordDocExtensions.Contains(file.Extension))
-                    {
-                        WordDoc doc = new WordDoc(file, this.wordConfig, this.DocManagerConfig);
-                        doc.Process(docEdit);
-                    }
-
-                    else if(DocManagerConfig.ExcelDocExtensions.Contains(file.Extension))
-                    {
-                        ExcelDoc doc = new ExcelDoc(file, this.excelConfig, this.DocManagerConfig);
-                        doc.Process(docEdit);
-                    }
-
-                }
-
-                catch (Exception e)
-                {
-                    System.Windows.Forms.MessageBox.Show("An Error occured while processing a document");
-                }
+                ProcessDoc(file, docEdit);   
             }
             return true;
-        }
-
-        public void ProcessingFilesCleanup()
-        {
-            System.Windows.Forms.MessageBox.Show("Finished Processing Files");
-            this.CloseApps();
-            this.dirFilesUnsafe = new List<FileInfo>();
-
-        }
-
-
-        //public QmsDocBase CreateDoc(FileInfo file_info)
-        //{
-        //    if (this.DocManagerConfig.WordDocExtensions.Contains(file_info.Extension))
-        //    {
-        //            QmsDocBase doc = new WordDoc(this.WordApp, file_info, this.wordConfig, this.docManagerConfig);
-        //            return doc;
-        //    }
- 
-        //        // create word doc and process
-        //    else if (this.DocManagerConfig.ExcelDocExtensions.Contains(file_info.Extension))
-        //    {
-        //        // create excel doc and process
-        //            QmsDocBase doc = new ExcelDoc(
-        //                this.ExcelApp, 
-        //                file_info,
-        //                this.excelConfig,
-        //                this.docManagerConfig);
-        //            return doc;
-
-        //    }
-        //    else
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
-
-        public void CreateApps()
-        {
-            if (this.wordApp == null)
-            {
-                this.wordApp = new Word.Application();
-            }
-
-            if (this.excelApp == null)
-            {
-                this.excelApp = new Excel.Application();
-            }
-        }
-
-        public void CloseApps()
-        {
-            if (this.wordApp != null)
-            {
-                try
-                {
-                    this.wordApp.DisplayAlerts = Microsoft.Office.Interop.Word.WdAlertLevel.wdAlertsNone;
-                    if (this.wordApp.Documents.Count > 0 )
-                    {
-                        this.wordApp.Documents.Close(
-                            Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges,
-                            Microsoft.Office.Interop.Word.WdOriginalFormat.wdOriginalDocumentFormat
-                        );
-                    }
-                    this.wordApp.Quit();
-                }
-                catch (Exception e)
-                {
-                    //Do something
-                    throw e;
-                }
-            }
-            
-            
-            if (this.excelApp != null)
-            {
-                try
-                {
-                    this.excelApp.DisplayAlerts = false;
-                    this.excelApp.Workbooks?.Close();
-                    this.excelApp.Quit();
-                }
-
-                catch (Exception e)
-                {
-                    //Do something
-                    throw e;
-                }
-            }
-            
-        }
-
-        public Boolean HasOpenFilePath(System.IO.FileInfo file_info)
-        {
-            return this.HasOpenFilePath(file_info.Name);
         }
 
         public Boolean HasOpenFilePath(string file_name)
@@ -306,7 +216,6 @@ namespace QmsDoc.Core
             {
                 if(disposing)
                 {
-                    CloseApps();
                     DeleteProcessingDir();
                 }
             }

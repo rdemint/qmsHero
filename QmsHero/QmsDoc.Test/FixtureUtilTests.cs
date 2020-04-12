@@ -17,7 +17,7 @@ namespace QmsDoc.Test
         public void FixtureDirTest()
         {
             var fixture = new FixtureUtil();
-            Assert.AreEqual(fixture.FixtureDir.Name, "Fixtures");
+            Assert.AreEqual(fixture.Dir.Name, "Fixtures");
         }
 
         [TestMethod]
@@ -50,6 +50,13 @@ namespace QmsDoc.Test
             var fixture = new FixtureUtil();
             var ext = fixture.ExcelSample.Extension;
             Assert.AreEqual(".xlsx", ext);
+        }
+
+        [TestMethod]
+        public void ProcessingDirTest()
+        {
+            var fixture = new FixtureUtil();
+            Assert.AreEqual("Processing", fixture.ProcessingDir.Name);
         }
     }
 }

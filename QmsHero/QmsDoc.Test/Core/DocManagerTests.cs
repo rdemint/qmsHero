@@ -25,7 +25,7 @@ namespace QmsDoc.Core.Tests
             manager.ConfigDir(fixture.ActiveQMSDocuments.FullName);
             Assert.AreEqual(fixture.ActiveQMSDocuments.FullName, manager.Dir.FullName);
             Assert.AreEqual(
-                Path.Combine(fixture.FixtureDir.FullName, "Processing"),
+                Path.Combine(fixture.Dir.FullName, "Processing"),
                 manager.ProcessingDir.FullName
                 );
             Assert.AreEqual(

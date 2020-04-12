@@ -36,12 +36,7 @@ namespace QmsDoc.Docs
         }
 
         public DocState Inspect() {
-            var state = new DocState();
-            state.DocHeader.Revision.Value = this.GetRevision();
-            state.DocHeader.EffectiveDate.Value = this.FetchEffectiveDate();
-            return state;
-
-
+            throw new NotImplementedException();
         }
 
 
