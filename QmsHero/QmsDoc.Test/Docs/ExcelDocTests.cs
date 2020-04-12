@@ -34,7 +34,7 @@ namespace QmsDoc.Docs.Tests
             var fixture = new FixtureUtil();
             var manager = new DocManager();
             manager.ConfigDir(fixture.Sop1Documents.FullName);
-            ExcelDoc doc = (ExcelDoc)manager.CreateDoc(manager.ProcessingDir.GetFiles(fixture.ExcelSampleName).ToList()[0]);
+            ExcelDoc doc = (ExcelDoc)manager.CreateDoc(fixture.ExcelSample);
             Assert.AreEqual(
                 "2018-11-26",
                 doc.GetEffectiveDate()

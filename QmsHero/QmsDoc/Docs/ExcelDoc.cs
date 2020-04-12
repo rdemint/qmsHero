@@ -57,9 +57,9 @@ namespace QmsDoc.Docs
         public override string Revision { 
             get => revision;
             set { 
-                if(this.EffectiveDate == null)
+                if(this.effectiveDate == null)
                 {
-                    this.EffectiveDate = GetEffectiveDate();
+                    this.effectiveDate = GetEffectiveDate();
                 }
 
                 foreach(Worksheet wksht in this.doc.Worksheets)
@@ -68,7 +68,7 @@ namespace QmsDoc.Docs
                         this.DocConfig.EffectiveDateText +
                         value +
                         this.DocConfig.RevisionEffectiveDateSeparator +
-                        this.Revision;
+                        this.revision;
                 }
                 this.revision = value;
             }
@@ -84,9 +84,9 @@ namespace QmsDoc.Docs
         public override string EffectiveDate { 
             get => effectiveDate; 
             set {
-                if(this.Revision == null)
+                if(this.revision == null)
                 {
-                    this.Revision = GetRevision();
+                    this.revision = GetRevision();
                 }
 
                 foreach (Worksheet wkst in this.Doc.Worksheets)
