@@ -8,6 +8,9 @@ using FileInfo = System.IO.FileInfo;
 using QmsDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
 using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.IO;
 
 namespace QmsDoc.Docs
 
@@ -16,6 +19,10 @@ namespace QmsDoc.Docs
     {
         ExcelDocConfig docConfig;
         FileInfo fileInfo;
+        FileInfo targetFile;
+        SpreadsheetDocument doc;
+        WorkbookPart workbookPart;
+
         string logoText;
         string logoPath;
         string effectiveDate;
@@ -122,31 +129,62 @@ namespace QmsDoc.Docs
                 this.logoText = value;
             } }
 
+        public WorkbookPart WorkBookPart { get => workbookPart; set => workbookPart = value; }
+
         #endregion
 
 
-
+        public void Process(DocState docState, DirectoryInfo targetDir)
+        {
+            targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            {
+                this.doc = doc;
+                this.workbookPart = doc.WorkbookPart;
+                var docProps = docState.ToCollection();
+                foreach (DocProperty docProp in docProps)
+                {
+                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
+                    propertyInfo?.SetValue(this, docProp.Value);
+                }
+            }
+        }
 
         public void Process(DocState docState)
         {
 
-            //using (ExcelprocessingDocument doc = ExcelprocessingDocument.Open(this.FileInfo.FullName, true))
-            //{
-            //    var docProps = docState.ToCollection();
-            //    foreach (DocProperty docProp in docProps)
-            //    {
-            //        var propertyInfo = doc.GetType().GetProperty(docProp.Name);
-            //        propertyInfo?.SetValue(this, docProp.Value);
-            //    }
-            //}
-            throw new NotImplementedException();
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            {
+                this.doc = doc;
+                this.workbookPart = doc.WorkbookPart;
+                var docProps = docState.ToCollection();
+                foreach (DocProperty docProp in docProps)
+                {
+                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    propertyInfo?.SetValue(this, docProp.Value);
+                }
+            }
         }
 
         public override DocState Inspect()
         {
             DocState state = new DocState();
-            state.EffectiveDate.Value = this.FetchEffectiveDate();
-            state.Revision.Value = this.FetchRevision();
+            var docProps = state.ToCollection(filter: false);
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            {
+                this.doc = doc;
+                this.workbookPart = doc.WorkbookPart;
+                //
+                foreach (DocProperty docProp in docProps)
+                {
+                    var methodInfo = this.GetType().GetMethod("Fetch" + docProp.Name);
+                    string result = (string)methodInfo?.Invoke(this, null);
+                    var propertyInfo = state.GetType().GetProperty(docProp.Name);
+                    DocProperty dp = (DocProperty)propertyInfo.GetValue(state);
+                    var propertyInfoValue = dp.GetType().GetProperty("Value");
+                    propertyInfoValue.SetValue(dp, result);
+                }
+            }
             return state;
         }
         public override void SaveAsPdf()
