@@ -14,56 +14,42 @@ namespace QmsDoc.Docs.Tests
     public class WordDocTests
     {
         [TestMethod()]
-        public void GetEffectiveDateTest()
+        public void EffectiveDateTest()
         {
+            string effDate = "2020-04-12";
             var fixture = new FixtureUtil();
-            WordDoc doc = new WordDoc(fixture.WordSample, fixture.ProcessingDir);
-            var initial = doc.FetchEffectiveDate();
-            doc.EffectiveDate = "2020-04-12";
-            var result = doc.FetchEffectiveDate();
+            WordDoc doc = new WordDoc(fixture.WordSample);
+            var state = doc.Inspect();
+            var initial = state.DocHeader.EffectiveDate.Value;
             Assert.AreEqual("2019-11-05", initial);
-            Assert.AreEqual("2020-04-12", result);
+
+            state.DocHeader.EffectiveDate.Value = effDate;
+            doc.Process(state, fixture.ProcessingDir);
+            var result = doc.Inspect();
+            Assert.AreEqual(effDate, result);
         }
 
         [TestMethod()]
-        public void GetRevisionTest()
+        public void RevisionTest()
         {
+            string rev = "20";
             var fixture = new FixtureUtil();
+            WordDoc doc = new WordDoc(fixture.WordSample);
+            var initial = doc.FetchEffectiveDate();
+            DocState docEdit = new DocState();
 
-            var initial = doc.FetchRevision();
-            doc.Revision = "3";
-            var changeResult = doc.FetchRevision();
-            manager.Dispose();
-            Assert.AreEqual("4", initial);
-            Assert.AreEqual("3", changeResult);
+            docEdit.DocHeader.Revision.Value = rev;
+
+            doc.Process(docEdit, fixture.ProcessingDir);
+            var result = doc.FetchRevision();
+            Assert.AreEqual("2", initial);
+            Assert.AreEqual(rev, result);
         }
 
         [TestMethod()]
-        public void OpenDocumentTest()
+        public void InspectTest()
         {
-            var fixture = new FixtureUtil();
-            var manager = new DocManager();
-            int preCount = manager.WordApp.Documents.Count;
-            manager.CreateDoc(fixture.WordSample);
-            int postCount = manager.WordApp.Documents.Count;
-            manager.Dispose();
-            Assert.AreEqual(0, preCount);
-            Assert.AreEqual(1, postCount);
-        }
-
-        [TestMethod()]
-        public void CloseDocumentTest()
-        {
-            var fixture = new FixtureUtil();
-            var manager = new DocManager();
-            
-            var doc = manager.CreateDoc(fixture.WordSample);
-            int preCount = manager.WordApp.Documents.Count;
-            doc.CloseDocument();
-            int postCount = manager.WordApp.Documents.Count;
-            manager.Dispose();
-            Assert.AreEqual(1, preCount);
-            Assert.AreEqual(0, postCount);
+            Assert.Fail();
         }
 
         //[TestMethod()]

@@ -23,17 +23,16 @@ namespace QmsDoc.Docs
 
         public ExcelDoc() { }
 
-        public ExcelDoc(System.IO.FileInfo fileInfo, ExcelDocConfig docConfig, DocManagerConfig docManagerConfig): base()
+        public ExcelDoc(System.IO.FileInfo fileInfo): base()
         {
             this.FileInfo = fileInfo;
-            this.DocConfig = docConfig;
         }
 
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
         
-        public string GetRevision()
+        public string FetchRevision()
         {
             //string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
             //var match = Regex.Match(rightHeaders, Regex.Escape(this.DocConfig.RevisionText) + @"\d");
@@ -64,7 +63,7 @@ namespace QmsDoc.Docs
      
         }
 
-        public string GetEffectiveDate() {
+        public string FetchEffectiveDate() {
             //string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
             //Regex rx = new Regex(@"\d\d\d\d-\d\d-\d\d", RegexOptions.None);
             //Match match = rx.Match(rightHeaders);
@@ -142,7 +141,14 @@ namespace QmsDoc.Docs
             //}
             throw new NotImplementedException();
         }
-        
+
+        public override DocState Inspect()
+        {
+            DocState state = new DocState();
+            state.DocHeader.EffectiveDate.Value = this.FetchEffectiveDate();
+            state.DocHeader.Revision.Value = this.FetchRevision();
+            return state;
+        }
         public override void SaveAsPdf()
         {
             base.SaveAsPdf();

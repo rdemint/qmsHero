@@ -164,13 +164,13 @@ namespace QmsDoc.Core
             {
                 if (DocManagerConfig.WordDocExtensions.Contains(file.Extension))
                 {
-                    WordDoc doc = new WordDoc(file, this.wordConfig, this.DocManagerConfig);
+                    WordDoc doc = new WordDoc(file);
                     doc.Process(docEdit);
                 }
 
                 else if (DocManagerConfig.ExcelDocExtensions.Contains(file.Extension))
                 {
-                    ExcelDoc doc = new ExcelDoc(file, this.excelConfig, this.DocManagerConfig);
+                    ExcelDoc doc = new ExcelDoc(file);
                     doc.Process(docEdit);
                 }
 

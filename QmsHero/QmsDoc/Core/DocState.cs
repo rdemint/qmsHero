@@ -16,6 +16,8 @@ namespace QmsDoc.Core
         DocHeader docHeader;
         DocBody docBody;
         string editPathName;
+        string revision;
+        string effectiveDate;
 
         public DocState()
         {
@@ -40,9 +42,25 @@ namespace QmsDoc.Core
                 NotifyPropertyChanged();
             } }
         public DocBody DocBody { get => docBody; set => docBody = value; }
-        public string EditPathName { get => editPathName; set => editPathName = value; }
 
-        
+        public string EffectiveDate
+        {
+            get => effectiveDate;
+            set
+            {
+                effectiveDate = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string Revision { 
+            get => revision;
+            set
+            {
+                revision = value;
+                NotifyPropertyChanged();
+            }
+            }
+
         public ObservableCollection<DocProperty> ToCollection()
         {
             var col = new ObservableCollection<DocProperty>();

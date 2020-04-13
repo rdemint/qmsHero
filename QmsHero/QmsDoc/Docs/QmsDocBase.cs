@@ -1,6 +1,7 @@
 ﻿using QmsDoc.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -35,10 +36,21 @@ namespace QmsDoc.Docs
             throw new NotImplementedException();
         }
 
-        public DocState Inspect() {
+        public virtual FileInfo Process(DocState docEdit, DirectoryInfo targetDir) {
             throw new NotImplementedException();
         }
 
+        public virtual DocState Inspect() {
+            throw new NotImplementedException();
+        }
+
+        public FileInfo CopyDocToTargetDir(FileInfo file, DirectoryInfo targetDir)
+        {
+            string temppath = Path.Combine(targetDir.FullName, file.Name);
+            file.CopyTo(temppath, true);
+            return new FileInfo(temppath);
+
+        }
 
         public virtual void SaveAsPdf()
         { throw new NotImplementedException(); }

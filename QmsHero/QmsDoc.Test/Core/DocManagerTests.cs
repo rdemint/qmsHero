@@ -42,25 +42,11 @@ namespace QmsDoc.Test.Core
     [TestClass()]
     public class DocManagerTests
     {
-        [TestMethod()]
-        public void ProcessDocTest()
-        {
-            var docEdit = new DocState();
-            var fixture = new FixtureUtil();
-            var manager = new DocManager();
+        //[TestMethod()]
+        //public void ProcessDocTest()
+        //{
 
-            docEdit.DocHeader.Revision.Value = "1";
-            docEdit.DocHeader.EffectiveDate.Value = "2020-03-30";
-            manager.ConfigDir(fixture.Sop1Documents.FullName);
-            manager.ProcessFiles(docEdit);
-            var wordDoc = (WordDoc)manager.CreateDoc(manager.ProcessingDirFiles[0]);
-            var rev = wordDoc.FetchRevision();
-            var date = wordDoc.FetchEffectiveDate();
-            Assert.AreEqual(rev, "1");
-            Assert.AreEqual(date, "2020-03-30");
-            manager.Dispose();
-
-        }
+        //}
 
     }
 }

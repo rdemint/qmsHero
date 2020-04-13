@@ -1,5 +1,6 @@
 ﻿
 using LadderFileUtils;
+using QmsDoc.Core;
 using QmsDoc.Docs;
 using System;
 using System.Collections.Generic;
@@ -65,16 +66,16 @@ namespace QmsDoc.Test
             return result;
         }
 
-        public WordDoc WordProcessingSample()
+        public DocState WordProcessingSampleState()
         {
-            var doc = new WordDoc(this.WordSample, this.ProcessingDir);
-            return doc;
+            var doc = new WordDoc(this.WordSample);
+            return doc.Inspect();
         }
 
-        public ExcelDoc ExcelProcessingSample()
+        public DocState ExcelProcessingSampleState()
         {
-            var doc = new ExcelDoc(this.ExcelSample, this.ProcessingDir);
-            return doc;
+            var doc = new ExcelDoc(this.ExcelSample);
+            return doc.Inspect();
         }
     }
 }

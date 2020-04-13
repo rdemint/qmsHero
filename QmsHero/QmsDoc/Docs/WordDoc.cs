@@ -36,28 +36,18 @@ namespace QmsDoc.Docs
 
         }
 
-        public WordDoc(System.IO.FileInfo fileInfo) : base()
+        public WordDoc(System.IO.FileInfo fileInfo):base()
         {
             this.FileInfo = fileInfo;
             this.DocConfig = new WordDocConfig();
         }
 
-        public WordDoc(FileInfo file, DirectoryInfo targetDir): base()
-        {
-            //copy original file to a target dir
-        }
 
         #region Config
         public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
         public FileInfo FileInfo { get => targetFile;
-            set { this.headerFootersChecked = false; this.targetFile = value; } }
+            set { this.targetFile = value; } }
         #endregion  
-        public FileInfo CopyToTarget(FileInfo file)
-        {
-            QFileUtil
-        }
-        
         
         #region Header
 
@@ -176,11 +166,29 @@ namespace QmsDoc.Docs
             }
         }
 
+        public MainDocumentPart MainDocumentPart { get => mainDocumentPart; set => mainDocumentPart = value; }
+
 
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void Process(DocState docState, DirectoryInfo targetDir)
+        {
+            targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(targetFile.FullName, true))
+            {
+                this.doc = doc;
+                this.mainDocumentPart = doc.MainDocumentPart;
+                var docProps = docState.ToCollection();
+                foreach (DocProperty docProp in docProps)
+                {
+                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    propertyInfo?.SetValue(this, docProp.Value);
+                }
+            }
+        }
+        
         public void Process(DocState docState)
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
@@ -194,6 +202,27 @@ namespace QmsDoc.Docs
                     propertyInfo?.SetValue(this, docProp.Value);
                 }
             }
+        }
+
+        public override DocState Inspect()
+        {
+            DocState state = new DocState();
+            var docProps = state.ToCollection();
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            {
+                this.doc = doc;
+                this.mainDocumentPart = doc.MainDocumentPart;
+                foreach(DocProperty docProp in docProps)
+                {
+                    var methodInfo = doc.GetType().GetMethod("Fetch" + docProp.Name);
+                    string result = (string)methodInfo.Invoke(this, null);
+                    var propertyInfo = state.GetType().GetProperty(docProp.Name);
+                    propertyInfo.SetValue(state, result);
+                }
+                
+
+            }
+            return state;
         }
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
