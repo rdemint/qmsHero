@@ -108,7 +108,7 @@ namespace QmsDoc.Docs
         public string FetchRevision()
         {
             Paragraph par = FetchRevisionPart();
-            Match match = Regex.Match(par.InnerText, @"\d");
+            Match match = Regex.Match(par.InnerText, @"[0-9][0-9]|[0-9]");
             return match.ToString();
         }
 
@@ -204,7 +204,7 @@ namespace QmsDoc.Docs
         {
             DocState state = new DocState();
             var docProps = state.ToCollection(filter:false);
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
                 this.doc = doc;
                 this.mainDocumentPart = doc.MainDocumentPart;

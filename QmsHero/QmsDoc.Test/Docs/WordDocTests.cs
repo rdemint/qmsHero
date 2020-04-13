@@ -32,7 +32,7 @@ namespace QmsDoc.Docs.Tests
         [TestMethod()]
         public void RevisionTest()
         {
-            string rev = "20";
+            string rev = "60";
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
             var state = doc.Inspect();
