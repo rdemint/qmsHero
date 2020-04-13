@@ -20,12 +20,12 @@ namespace QmsDoc.Docs.Tests
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
             var state = doc.Inspect();
-            var initial = state.DocHeader.EffectiveDate.Value;
+            string initial = (string)state.EffectiveDate.Value;
             Assert.AreEqual("2019-11-05", initial);
 
-            state.DocHeader.EffectiveDate.Value = effDate;
+            state.EffectiveDate.Value = effDate;
             doc.Process(state, fixture.ProcessingDir);
-            var result = doc.Inspect();
+            string result = (string)doc.Inspect().EffectiveDate.Value;
             Assert.AreEqual(effDate, result);
         }
 
@@ -35,22 +35,21 @@ namespace QmsDoc.Docs.Tests
             string rev = "20";
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
-            var initial = doc.FetchEffectiveDate();
-            DocState docEdit = new DocState();
-
-            docEdit.DocHeader.Revision.Value = rev;
-
-            doc.Process(docEdit, fixture.ProcessingDir);
-            var result = doc.FetchRevision();
+            var state = doc.Inspect();
+            string initial = (string)state.Revision.Value;
             Assert.AreEqual("2", initial);
+
+            state.Revision.Value = rev;
+            doc.Process(state, fixture.ProcessingDir);
+            string result = (string)doc.Inspect().Revision.Value;
             Assert.AreEqual(rev, result);
         }
 
-        [TestMethod()]
-        public void InspectTest()
-        {
-            Assert.Fail();
-        }
+        //[TestMethod()]
+        //public void InspectTest()
+        //{
+        //    Assert.Fail();
+        //}
 
         //[TestMethod()]
         //public void SaveAsPdfTest()

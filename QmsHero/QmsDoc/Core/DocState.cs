@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,18 +17,15 @@ namespace QmsDoc.Core
         DocHeader docHeader;
         DocBody docBody;
         string editPathName;
-        string revision;
-        string effectiveDate;
+        DocProperty revision;
+        DocProperty effectiveDate;
 
         public DocState()
         {
-            this.DocHeader = new DocHeader();
+            this.Revision = new DocProperty() { Name = "Revision", Value = null };
+            this.EffectiveDate = new DocProperty() { Name = "EffectiveDate", Value = null };
         }
 
-        public DocState(DocHeader docHeader)
-        {
-            this.DocHeader = docHeader;
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -35,15 +33,8 @@ namespace QmsDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public DocHeader DocHeader { 
-            get => docHeader;
-            set {
-                this.docHeader = value;
-                NotifyPropertyChanged();
-            } }
-        public DocBody DocBody { get => docBody; set => docBody = value; }
 
-        public string EffectiveDate
+        public DocProperty EffectiveDate
         {
             get => effectiveDate;
             set
@@ -52,7 +43,7 @@ namespace QmsDoc.Core
                 NotifyPropertyChanged();
             }
         }
-        public string Revision { 
+        public DocProperty Revision { 
             get => revision;
             set
             {
@@ -64,8 +55,11 @@ namespace QmsDoc.Core
         public ObservableCollection<DocProperty> ToCollection()
         {
             var col = new ObservableCollection<DocProperty>();
-            AddCollectionRange(col, this.DocHeader.ToCollection());
-            //AddCollectionRange(col, this.Docbody.ToCollection());
+            var docProps = this.GetType().GetProperties();
+            foreach (PropertyInfo docProp in docProps)
+            {
+                col.Add((DocProperty)docProp.GetValue(this));
+            }
             col = FilterCollection(col);
             return col;
         }
@@ -89,15 +83,5 @@ namespace QmsDoc.Core
                 baseCollection.Add(prop);
             }
         }
-        //Dictionary<string, object> ToDict()
-        //{
-        //    var propDict = new Dictionary<string, object>();
-        //    foreach (DocProperty docProperty in this.DocPropertiesCollection)
-        //    {
-                
-        //        propDict.Add(docProperty.Name, docProperty.Value);
-        //    }
-        //    return propDict;
-        //}
     }
 }
