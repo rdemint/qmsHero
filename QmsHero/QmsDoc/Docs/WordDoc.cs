@@ -51,35 +51,30 @@ namespace QmsDoc.Docs
         
         #region Header
 
-        public Table HeaderFooterTable
+        public Table FetchHeaderFooterTable()
         {
-            get
-            {
-                return this.mainDocumentPart.HeaderParts.FirstOrDefault().RootElement.Elements<Table>().FirstOrDefault();
-            }
+            return this.mainDocumentPart?.HeaderParts.FirstOrDefault().RootElement.Elements<Table>().FirstOrDefault();
         }
 
         public TableCell FetchHeaderFooterTableCell(int row, int col)
         {
-            var table = this.HeaderFooterTable;
+            var table = FetchHeaderFooterTable();
             TableRow r = table.Elements<TableRow>().ElementAt(row);
             TableCell cell = r.Elements<TableCell>().ElementAt(col);
             return cell;
         }
-        public Text FetchEffectiveDatePart()
+        public Paragraph FetchEffectiveDatePart()
         {
-            var table = this.HeaderFooterTable;
-            TableRow row = table.Elements<TableRow>().ElementAt(DocConfig.EffectiveDateRow);
-            TableCell cell = row.Elements<TableCell>().ElementAt(DocConfig.EffectiveDateCol);
+ 
+            TableCell cell = FetchHeaderFooterTableCell(DocConfig.EffectiveDateRow, DocConfig.EffectiveDateCol);
             Paragraph p = cell.Elements<Paragraph>().First();
-            Run r = p.Elements<Run>().First();
-            Text text = r.Elements<Text>().First();
-            return text;
+            return p;
         }
         public string FetchEffectiveDate()
         {
-            Text text = FetchEffectiveDatePart();
-            Match match = Regex.Match(text.ToString(), @"\d\d\d\d-\d\d-\d\d");
+            Paragraph p = FetchEffectiveDatePart();
+            //
+            Match match = Regex.Match(p.InnerText, @"\d\d\d\d-\d\d-\d\d");
             this.effectiveDate = match.ToString();
             return match.ToString();
         }
@@ -91,27 +86,29 @@ namespace QmsDoc.Docs
             
             set
             {
-                var part = FetchEffectiveDatePart();
-                part.Text = value;
+                //https://stackoverflow.com/questions/32075170/how-to-replace-the-innertext-of-a-comment
+                var par = FetchEffectiveDatePart();
+                par.RemoveAllChildren();
+                Run run = new Run();
+                Text text = new Text();
+                text.Text = DocConfig.EffectiveDateText + value;
+                run.Append(text);
+                par.Append(run);
                 this.effectiveDate = value;
                 this.OnPropertyChanged();
 
             }
         }
 
-        public Text FetchRevisionPart()
+        public Paragraph FetchRevisionPart()
         {
             TableCell cell = this.FetchHeaderFooterTableCell(this.DocConfig.RevisionRow, DocConfig.RevisionCol);
-            Paragraph p = cell.Elements<Paragraph>().First();
-            Run r = p.Elements<Run>().First();
-            Text text = r.Elements<Text>().First();
-            return text;
-
+            return cell.Elements<Paragraph>().First();
         }
         public string FetchRevision()
         {
-            Text text = FetchRevisionPart();
-            Match match = Regex.Match(text.ToString(), @"\d");
+            Paragraph par = FetchRevisionPart();
+            Match match = Regex.Match(par.InnerText, @"\d");
             return match.ToString();
         }
 
@@ -124,11 +121,13 @@ namespace QmsDoc.Docs
 
             set
             {
-                TableCell cell = FetchHeaderFooterTableCell(DocConfig.RevisionRow, DocConfig.RevisionCol);
-                Paragraph p = cell.Elements<Paragraph>().First();
-                Run r = p.Elements<Run>().First();
-                Text text = r.Elements<Text>().First();
-                text.Text = value;
+                Paragraph par = FetchRevisionPart();
+                par.RemoveAllChildren();
+                Run run = new Run();
+                Text text = new Text();
+                text.Text = DocConfig.RevisionText + value;
+                run.Append(text);
+                par.Append(run);
                 this.revision = value;
             }
         }
@@ -166,9 +165,6 @@ namespace QmsDoc.Docs
             }
         }
 
-        public MainDocumentPart MainDocumentPart { get => mainDocumentPart; set => mainDocumentPart = value; }
-
-
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -183,7 +179,7 @@ namespace QmsDoc.Docs
                 var docProps = docState.ToCollection();
                 foreach (DocProperty docProp in docProps)
                 {
-                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
                     propertyInfo?.SetValue(this, docProp.Value);
                 }
             }
@@ -198,7 +194,7 @@ namespace QmsDoc.Docs
                 var docProps = docState.ToCollection();
                 foreach (DocProperty docProp in docProps)
                 {
-                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
                     propertyInfo?.SetValue(this, docProp.Value);
                 }
             }
@@ -207,20 +203,20 @@ namespace QmsDoc.Docs
         public override DocState Inspect()
         {
             DocState state = new DocState();
-            var docProps = state.ToCollection();
+            var docProps = state.ToCollection(filter:false);
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
                 this.doc = doc;
                 this.mainDocumentPart = doc.MainDocumentPart;
                 foreach(DocProperty docProp in docProps)
                 {
-                    var methodInfo = doc.GetType().GetMethod("Fetch" + docProp.Name);
-                    string result = (string)methodInfo.Invoke(this, null);
+                    var methodInfo = this.GetType().GetMethod("Fetch" + docProp.Name);
+                    string result = (string)methodInfo?.Invoke(this, null);
                     var propertyInfo = state.GetType().GetProperty(docProp.Name);
-                    propertyInfo.SetValue(state, result);
+                    DocProperty dp = (DocProperty)propertyInfo.GetValue(state);
+                    var propertyInfoValue = dp.GetType().GetProperty("Value");
+                    propertyInfoValue.SetValue(dp, result);
                 }
-                
-
             }
             return state;
         }

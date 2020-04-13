@@ -10,6 +10,6 @@ namespace QmsDoc.Interfaces
 {
     interface IToDocPropertyCollection
     {
-        ObservableCollection<DocProperty> ToCollection();
+        ObservableCollection<DocProperty> ToCollection(bool filter);
     }
 }

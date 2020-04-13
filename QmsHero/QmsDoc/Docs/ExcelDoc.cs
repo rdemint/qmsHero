@@ -145,8 +145,8 @@ namespace QmsDoc.Docs
         public override DocState Inspect()
         {
             DocState state = new DocState();
-            state.DocHeader.EffectiveDate.Value = this.FetchEffectiveDate();
-            state.DocHeader.Revision.Value = this.FetchRevision();
+            state.EffectiveDate.Value = this.FetchEffectiveDate();
+            state.Revision.Value = this.FetchRevision();
             return state;
         }
         public override void SaveAsPdf()

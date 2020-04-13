@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,11 +41,11 @@ namespace QmsDoc.Docs
             //Header
             this.HeaderFooterSection = 1;
             this.EffectiveDateText = "Effective Date: ";
-            this.EffectiveDateRow = 2;
-            this.EffectiveDateCol = 2;
+            this.EffectiveDateRow = 1;
+            this.EffectiveDateCol = 1;
             this.RevisionText = "Rev. ";
-            this.RevisionRow = 2;
-            this.RevisionCol = 3;
+            this.RevisionRow = 1;
+            this.RevisionCol = 2;
         }
     }
 }

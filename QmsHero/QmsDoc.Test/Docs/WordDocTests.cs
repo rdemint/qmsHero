@@ -37,7 +37,7 @@ namespace QmsDoc.Docs.Tests
             WordDoc doc = new WordDoc(fixture.WordSample);
             var state = doc.Inspect();
             string initial = (string)state.Revision.Value;
-            Assert.AreEqual("2", initial);
+            Assert.AreEqual("4", initial);
 
             state.Revision.Value = rev;
             doc.Process(state, fixture.ProcessingDir);

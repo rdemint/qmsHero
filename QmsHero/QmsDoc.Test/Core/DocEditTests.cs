@@ -18,15 +18,15 @@ namespace QmsDoc.Core.Tests
             var props = docEdit.ToCollection();
             Assert.IsTrue(props.Any() == false);
 
-            docEdit.DocHeader.Revision.Value = "2";
+            docEdit.Revision.Value = "2";
             props = docEdit.ToCollection();
             Assert.IsTrue(props.Count == 1);
 
-            docEdit.DocHeader.EffectiveDate.Value = "2020-03-12";
+            docEdit.EffectiveDate.Value = "2020-03-12";
             props = docEdit.ToCollection();
             Assert.IsTrue(props.Count == 2);
 
-            docEdit.DocHeader.EffectiveDate.Value = null;
+            docEdit.EffectiveDate.Value = null;
             props = docEdit.ToCollection();
             Assert.IsTrue(props.Count == 1);
         }

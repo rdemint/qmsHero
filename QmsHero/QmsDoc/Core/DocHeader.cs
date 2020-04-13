@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace QmsDoc.Core
 {
-    public class DocHeader : INotifyPropertyChanged, IDocHeader, IToDocPropertyCollection
+    public class DocHeader : INotifyPropertyChanged, IDocHeader
     {
         DocProperty revision;
         DocProperty effectiveDate;

@@ -52,7 +52,7 @@ namespace QmsDoc.Core
             }
             }
 
-        public ObservableCollection<DocProperty> ToCollection()
+        public ObservableCollection<DocProperty> ToCollection(bool filter=true)
         {
             var col = new ObservableCollection<DocProperty>();
             var docProps = this.GetType().GetProperties();
@@ -60,7 +60,10 @@ namespace QmsDoc.Core
             {
                 col.Add((DocProperty)docProp.GetValue(this));
             }
+            if(filter)
+            {
             col = FilterCollection(col);
+            }
             return col;
         }
 
