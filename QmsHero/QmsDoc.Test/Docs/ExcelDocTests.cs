@@ -26,11 +26,7 @@ namespace QmsDoc.Docs.Tests
                 var xl = new ExcelDoc(fixture.ExcelSample);
                 var first = ws.Elements<HeaderFooter>().First().DifferentFirst;
                 var odd = ws.Elements<HeaderFooter>().First().DifferentOddEven;
-                var innerxml = ws.Descendants<HeaderFooter>().First().OddHeader.InnerXml;
                 var innertext = ws.Descendants<HeaderFooter>().First().OddHeader.InnerText;
-                Match match = Regex.Match(innerxml, xl.DocConfig.RevisionText + @"\d{0,2}");
-                Match matchEff = Regex.Match(innerxml, @"\d\d\d\d-\d\d-\d\d");
-                var result = match.ToString();
                 Assert.IsTrue(innertext != null);
             }
 
@@ -62,19 +58,21 @@ namespace QmsDoc.Docs.Tests
             Assert.AreEqual(effDate, result);
         }
 
-        //[TestMethod()]
-        //public void EffectiveDateTest()
-        //{
-        //    var fixture = new FixtureUtil();
-        //    var manager = new DocManager();
-        //    manager.ConfigDir(fixture.Sop1Documents.FullName);
+        [TestMethod()]
+        public void RevisionTest()
+        {
+            string rev = "20";
+            var fixture = new FixtureUtil();
+            ExcelDoc doc = new ExcelDoc(fixture.ExcelSample);
+            var state = doc.Inspect();
+            var initial = state.Revision.Value;
+            Assert.AreEqual("2", initial);
 
-        //    Assert.AreEqual(
-        //        "2018-11-26",
-        //        doc.FetchEffectiveDate()
-        //        );
-        //    manager.Dispose();
-        //}
+            state.Revision.Value = rev;
+            var targetDoc = doc.Process(state, fixture.ProcessingDir);
+            var result = (string)targetDoc.Inspect().Revision.Value;
+            Assert.AreEqual(rev, result);
+        }
 
     }
 }

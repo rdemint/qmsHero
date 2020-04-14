@@ -6,6 +6,7 @@ using QmsDoc.Core;
 using QmsDoc.Docs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,7 @@ namespace QmsDoc.Test
             this.qmsHero_dir = parent;
             this.Dir = new DirectoryInfo(Path.Combine(this.qmsHero_dir.FullName, "Fixtures"));
             this.ProcessingDir = QFileUtil.CreateOrCleanSubDirectory(Dir, "Processing");
+            Contract.Requires(ProcessingDir.Exists);
             this.ActiveQMSDocuments = this.Dir.GetDirectories("Active QMS Documents").ToList()[0];
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
             this.Files = this.ActiveQMSDocuments.GetFiles("*", SearchOption.AllDirectories).ToList();

@@ -64,7 +64,7 @@ namespace QmsDoc.Docs
             var xml = this.FetchHeaderParts().InnerXml;
             Match match = Regex.Match(xml, DocConfig.RevisionText + @"\d{0,2}");
             var result = match.ToString().Replace(DocConfig.RevisionText, "");
-            return match.ToString();
+            return result.ToString();
 
         }
 
@@ -78,11 +78,7 @@ namespace QmsDoc.Docs
                 var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First();
                 var odd = header.Elements<OddHeader>().First();
                 var text = odd.Text;
-                text.Replace(temp, changed);
-                //FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
-                //var newHeader = new HeaderFooter();
-                //var x = new OpenXmlLeafTextElement(result);
-                //FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
+                odd.Text = text.Replace(temp, changed);
                 this.revision = value;
                 OnPropertyChanged();
             }
@@ -168,7 +164,7 @@ namespace QmsDoc.Docs
                 var docProps = docState.ToCollection();
                 foreach (DocProperty docProp in docProps)
                 {
-                    var propertyInfo = doc.GetType().GetProperty(docProp.Name);
+                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
                     propertyInfo?.SetValue(this, docProp.Value);
                 }
             }
