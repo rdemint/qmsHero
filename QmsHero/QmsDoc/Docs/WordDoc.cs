@@ -85,13 +85,19 @@ namespace QmsDoc.Docs
             set
             {
                 //https://stackoverflow.com/questions/32075170/how-to-replace-the-innertext-of-a-comment
-                var par = FetchEffectiveDatePart();
-                par.RemoveAllChildren();
-                Run run = new Run();
-                Text text = new Text();
+                Paragraph par = FetchEffectiveDatePart();
+                Run myRun = (Run)par.Elements<Run>().First().Clone();
+                par.RemoveAllChildren<Run>();
+                Text text = myRun.Elements<Text>().First();
                 text.Text = DocConfig.EffectiveDateText + value;
-                run.Append(text);
-                par.Append(run);
+                par.Append(myRun);
+                var x = 4;
+                //par.RemoveAllChildren();
+                //Run run = new Run();
+                //Text text = new Text();
+                //text.Text = DocConfig.EffectiveDateText + value;
+                //run.Append(text);
+                //par.Append(run);
                 this.effectiveDate = value;
                 this.OnPropertyChanged();
 
@@ -196,7 +202,7 @@ namespace QmsDoc.Docs
         {
             DocState state = new DocState();
             var docProps = state.ToCollection(filter:false);
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
                 this.doc = doc;
                 this.mainDocumentPart = doc.MainDocumentPart;

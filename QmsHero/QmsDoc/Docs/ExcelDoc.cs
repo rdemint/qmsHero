@@ -94,6 +94,8 @@ namespace QmsDoc.Docs
         public override string EffectiveDate { 
             get => effectiveDate; 
             set {
+                //For excel docs, FetchEffective() must be called, because header text must be replaced
+                // rather than set like it can be in word documents.
                 var temp = DocConfig.EffectiveDateText + FetchEffectiveDate();
                 var xml = FetchHeaderParts().InnerXml;
                 var changed = DocConfig.EffectiveDateText + value;
@@ -106,6 +108,7 @@ namespace QmsDoc.Docs
                 //var newHeader = new HeaderFooter(result);
                 //FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
                 this.effectiveDate = value;
+                OnPropertyChanged();
             }
         }
         public string GetLogoPath()
