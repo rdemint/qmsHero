@@ -74,9 +74,11 @@ namespace QmsDoc.Docs
                 var temp = DocConfig.RevisionText + FetchRevision();
                 var xml = FetchHeaderParts().OuterXml;
                 var changed = DocConfig.RevisionText + value;
-                var result = xml.Replace(temp, changed);
-                var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First().Elements<OddHeader>().First();
-                header.Text = "Some different effective date";
+
+                var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First();
+                var odd = header.Elements<OddHeader>().First();
+                var text = odd.Text;
+                text.Replace(temp, changed);
                 //FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
                 //var newHeader = new HeaderFooter();
                 //var x = new OpenXmlLeafTextElement(result);
@@ -99,11 +101,14 @@ namespace QmsDoc.Docs
                 var temp = DocConfig.EffectiveDateText + FetchEffectiveDate();
                 var xml = FetchHeaderParts().InnerXml;
                 var changed = DocConfig.EffectiveDateText + value;
-                var result = xml.Replace(temp, changed);
+
                 var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First();
-                FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
-                var newHeader = new HeaderFooter(result);
-                FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
+                var odd = header.Elements<OddHeader>().First();
+                var text = odd.Text;
+                text.Replace(temp, changed);
+                //FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
+                //var newHeader = new HeaderFooter(result);
+                //FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
                 this.effectiveDate = value;
             }
         }
