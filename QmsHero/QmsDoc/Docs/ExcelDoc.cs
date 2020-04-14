@@ -33,66 +33,51 @@ namespace QmsDoc.Docs
         public ExcelDoc(System.IO.FileInfo fileInfo): base()
         {
             this.FileInfo = fileInfo;
+            this.DocConfig = new ExcelDocConfig();
         }
 
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
         
+        public string FetchHeaderParts()
+        {
+            var ws = this.workbookPart.WorksheetParts.First().Worksheet;
+            var xml = ws.Elements<HeaderFooter>().First().OddHeader.InnerXml;
+            return xml;
+        }
         public string FetchRevision()
         {
-            //string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            //var match = Regex.Match(rightHeaders, Regex.Escape(this.DocConfig.RevisionText) + @"\d");
-            //var result = match.ToString();
-            //var match2 = Regex.Match(result, @"\d");
-            //return match2.ToString();
-            return null;
+            var xml = this.FetchHeaderParts();
+            Match match = Regex.Match(xml, DocConfig.RevisionText + @"\d{0,2}");
+            return match.ToString();
+
         }
-        
+
         public override string Revision { 
             get => revision;
-            set { 
-                //if(this.effectiveDate == null)
-                //{
-                //    this.effectiveDate = GetEffectiveDate();
-                //}
-
-                //foreach(Worksheet wksht in this.doc.Worksheets)
-                //{
-                //    wksht.PageSetup.RightHeader =
-                //        this.DocConfig.EffectiveDateText +
-                //        value +
-                //        this.DocConfig.RevisionEffectiveDateSeparator +
-                //        this.revision;
-                //}
+            set {
+                var temp = DocConfig.RevisionText + FetchRevision();
+                var xml = FetchHeaderParts();
+                var changed = DocConfig.RevisionText + value;
+                xml.Replace(temp, changed);
                 this.revision = value;
             }
      
         }
 
         public string FetchEffectiveDate() {
-            //string rightHeaders = this.Doc.Worksheets[1].PageSetup.RightHeader;
-            //Regex rx = new Regex(@"\d\d\d\d-\d\d-\d\d", RegexOptions.None);
-            //Match match = rx.Match(rightHeaders);
-            //return match.ToString();
-            return null;
+            var xml = this.FetchHeaderParts();
+            Match match = Regex.Match(xml, DocConfig.EffectiveDateText + @"\d\d\d\d-\d\d-\d\d");
+            return match.ToString();
         }
         public override string EffectiveDate { 
             get => effectiveDate; 
             set {
-                //if(this.revision == null)
-                //{
-                //    this.revision = GetRevision();
-                //}
-
-                //foreach (Worksheet wkst in this.Doc.Worksheets)
-                //{
-                //    wkst.PageSetup.RightHeader =
-                //        this.DocConfig.EffectiveDateText +
-                //        value +
-                //        this.DocConfig.RevisionEffectiveDateSeparator +
-                //        this.Revision;
-                //}
+                var temp = DocConfig.EffectiveDateText + FetchEffectiveDate();
+                var xml = FetchHeaderParts();
+                var changed = DocConfig.EffectiveDateText + value;
+                xml.Replace(temp, changed);
                 this.effectiveDate = value;
             }
         }
@@ -166,10 +151,10 @@ namespace QmsDoc.Docs
             }
         }
 
-        public override DocState Inspect()
+        public override DocState Inspect(bool filter=false)
         {
             DocState state = new DocState();
-            var docProps = state.ToCollection(filter: false);
+            var docProps = state.ToCollection(filter);
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
             {
                 this.doc = doc;

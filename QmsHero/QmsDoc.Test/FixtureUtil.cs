@@ -1,4 +1,6 @@
 ﻿
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using LadderFileUtils;
 using QmsDoc.Core;
 using QmsDoc.Docs;
@@ -76,6 +78,23 @@ namespace QmsDoc.Test
         {
             var doc = new ExcelDoc(this.ExcelSample);
             return doc.Inspect();
+        }
+
+        public object TestExcelDocMethod(FileInfo file, string methodName)
+        {
+            using(SpreadsheetDocument doc = SpreadsheetDocument.Open(file.FullName, true))
+            {
+                WorkbookPart wbPart = doc.WorkbookPart;
+                WorksheetPart wsPart = wbPart.WorksheetParts.First();
+                Worksheet ws = wsPart.Worksheet;
+                HeaderFooter hf = ws.Descendants<HeaderFooter>().FirstOrDefault();
+                if (hf!=null)
+                {
+                    var x = hf.InnerText;
+                }
+                return null;
+
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace QmsDoc.Docs
             throw new NotImplementedException();
         }
 
-        public virtual DocState Inspect() {
+        public virtual DocState Inspect(bool filter=false) {
             throw new NotImplementedException();
         }
 

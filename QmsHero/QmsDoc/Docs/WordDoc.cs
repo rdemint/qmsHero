@@ -200,7 +200,7 @@ namespace QmsDoc.Docs
             }
         }
 
-        public override DocState Inspect()
+        public override DocState Inspect(bool filter=false)
         {
             DocState state = new DocState();
             var docProps = state.ToCollection(filter:false);
