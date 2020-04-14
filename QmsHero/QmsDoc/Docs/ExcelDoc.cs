@@ -13,6 +13,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO;
 using System.ComponentModel;
 using DocumentFormat.OpenXml;
+using LadderFileUtils;
 
 namespace QmsDoc.Docs
 
@@ -151,19 +152,8 @@ namespace QmsDoc.Docs
 
         public ExcelDoc Process(DocState docState, DirectoryInfo targetDir)
         {
-            var targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
+            var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new ExcelDoc(targetFile);
-            //using (SpreadsheetDocument doc = SpreadsheetDocument.Open(targetFile.FullName, true))
-            //{
-            //    this.doc = doc;
-            //    this.workbookPart = doc.WorkbookPart;
-            //    var docProps = docState.ToCollection();
-            //    foreach (DocProperty docProp in docProps)
-            //    {
-            //        var propertyInfo = this.GetType().GetProperty(docProp.Name);
-            //        propertyInfo?.SetValue(this, docProp.Value);
-            //    }
-            //}
             targetDoc.Process(docState);
             return targetDoc;
         }

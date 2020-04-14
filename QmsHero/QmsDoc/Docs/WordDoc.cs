@@ -168,22 +168,11 @@ namespace QmsDoc.Docs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ExcelDoc Process(DocState docState, DirectoryInfo targetDir)
+        public WordDoc Process(DocState docState, DirectoryInfo targetDir)
         {
             var targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
-            var targetDoc = new ExcelDoc(targetFile);
+            var targetDoc = new WordDoc(targetFile);
             targetDoc.Process(docState);
-            //using (WordprocessingDocument doc = WordprocessingDocument.Open(targetDoc.FileInfo.FullName, true))
-            //{
-            //    this.doc = doc;
-            //    this.mainDocumentPart = doc.MainDocumentPart;
-            //    var docProps = docState.ToCollection();
-            //    foreach (DocProperty docProp in docProps)
-            //    {
-            //        var propertyInfo = this.GetType().GetProperty(docProp.Name);
-            //        propertyInfo?.SetValue(this, docProp.Value);
-            //    }
-            //}
             return targetDoc;
         }
         

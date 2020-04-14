@@ -10,10 +10,14 @@ namespace LadderFileUtils
     public static class QFileUtil
     {
         
-        public static FileInfo FileCopy(FileInfo file, DirectoryInfo targetDir)
+        public static FileInfo FileCopy(FileInfo file, DirectoryInfo targetDir, bool allowOverWrite=true)
         {
+            if(!targetDir.Exists)
+            {
+                throw new DirectoryNotFoundException();
+            }
             string temppath = Path.Combine(targetDir.FullName, file.Name);
-            file.CopyTo(temppath, true);
+            file.CopyTo(temppath, allowOverWrite);
             return new FileInfo(temppath);
         }
         public static DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
