@@ -105,7 +105,7 @@ namespace QmsDoc.Docs
                 var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First();
                 var odd = header.Elements<OddHeader>().First();
                 var text = odd.Text;
-                text.Replace(temp, changed);
+                odd.Text = text.Replace(temp, changed);
                 //FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
                 //var newHeader = new HeaderFooter(result);
                 //FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
@@ -153,7 +153,7 @@ namespace QmsDoc.Docs
         public void Process(DocState docState, DirectoryInfo targetDir)
         {
             targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(targetFile.FullName, true))
             {
                 this.doc = doc;
                 this.workbookPart = doc.WorkbookPart;

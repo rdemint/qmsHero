@@ -56,7 +56,8 @@ namespace QmsDoc.Test
         public void ProcessingDirTest()
         {
             var fixture = new FixtureUtil();
-            Assert.AreEqual("Processing", fixture.ProcessingDir.Name);
+            Assert.AreEqual(fixture.ProcessingDir.Exists, true);
+            Assert.AreEqual(fixture.ProcessingDir.Name, "Processing");
         }
     }
 }

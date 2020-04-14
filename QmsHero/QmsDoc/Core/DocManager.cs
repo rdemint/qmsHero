@@ -171,7 +171,7 @@ namespace QmsDoc.Core
                 else if (DocManagerConfig.ExcelDocExtensions.Contains(file.Extension))
                 {
                     ExcelDoc doc = new ExcelDoc(file);
-                    doc.Process(docEdit);
+                    doc.Process(docEdit, processingDir);
                 }
 
             }
