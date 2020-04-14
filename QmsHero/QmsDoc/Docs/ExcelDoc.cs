@@ -11,11 +11,12 @@ using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO;
+using System.ComponentModel;
 
 namespace QmsDoc.Docs
 
 {
-    public class ExcelDoc : QmsDocBase
+    public class ExcelDoc : QmsDocBase, INotifyPropertyChanged
     {
         ExcelDocConfig docConfig;
         FileInfo fileInfo;
@@ -36,19 +37,31 @@ namespace QmsDoc.Docs
             this.DocConfig = new ExcelDocConfig();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
         
-        public string FetchHeaderParts()
+        public Worksheet FetchFirstHeaderWorkSheet()
         {
-            var ws = this.workbookPart.WorksheetParts.First().Worksheet;
+            return this.workbookPart.WorksheetParts.First().Worksheet;
+        }
+
+        public OddHeader FetchHeaderParts()
+        {
+            var ws = FetchFirstHeaderWorkSheet();
             var xml = ws.Elements<HeaderFooter>().First().OddHeader.InnerXml;
-            return xml;
+            var h = new OddHeader(xml);
+            return h;
         }
         public string FetchRevision()
         {
-            var xml = this.FetchHeaderParts();
+            var xml = this.FetchHeaderParts().InnerXml;
             Match match = Regex.Match(xml, DocConfig.RevisionText + @"\d{0,2}");
             return match.ToString();
 
@@ -58,26 +71,31 @@ namespace QmsDoc.Docs
             get => revision;
             set {
                 var temp = DocConfig.RevisionText + FetchRevision();
-                var xml = FetchHeaderParts();
+                var xml = FetchHeaderParts().InnerXml;
                 var changed = DocConfig.RevisionText + value;
-                xml.Replace(temp, changed);
+                var result = xml.Replace(temp, changed);
+                var header = FetchFirstHeaderWorkSheet().Elements<OddHeader>().First();
+                FetchFirstHeaderWorkSheet().RemoveChild<OddHeader>(header);
+                var newHeader = new OddHeader(result);
+                FetchFirstHeaderWorkSheet().AppendChild<OddHeader>(newHeader);
                 this.revision = value;
+                OnPropertyChanged();
             }
      
         }
 
         public string FetchEffectiveDate() {
-            var xml = this.FetchHeaderParts();
+            var xml = this.FetchHeaderParts().InnerXml;
             Match match = Regex.Match(xml, DocConfig.EffectiveDateText + @"\d\d\d\d-\d\d-\d\d");
-            return match.ToString();
+            return match.ToString().Replace(DocConfig.EffectiveDateText, "");
         }
         public override string EffectiveDate { 
             get => effectiveDate; 
             set {
                 var temp = DocConfig.EffectiveDateText + FetchEffectiveDate();
-                var xml = FetchHeaderParts();
+                var xml = FetchHeaderParts().InnerXml;
                 var changed = DocConfig.EffectiveDateText + value;
-                xml.Replace(temp, changed);
+                var result = xml.Replace(temp, changed);
                 this.effectiveDate = value;
             }
         }

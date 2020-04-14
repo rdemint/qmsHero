@@ -54,11 +54,11 @@ namespace QmsDoc.Docs.Tests
             ExcelDoc doc = new ExcelDoc(fixture.ExcelSample);
             var state = doc.Inspect();
             var initial = state.EffectiveDate.Value;
+            Assert.AreEqual("2018-11-26", initial);
+            
             state.EffectiveDate.Value = effDate;
-
             doc.Process(state, fixture.ProcessingDir);
-            var result = doc.Inspect().EffectiveDate.Value;
-            Assert.AreEqual("2019-11-05", initial);
+            var result = (string)doc.Inspect().EffectiveDate.Value;
             Assert.AreEqual(effDate, result);
         }
 
