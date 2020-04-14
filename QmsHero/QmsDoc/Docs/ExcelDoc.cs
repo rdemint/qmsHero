@@ -62,7 +62,7 @@ namespace QmsDoc.Docs
         public string FetchRevision()
         {
             var xml = this.FetchHeaderParts().InnerXml;
-            Match match = Regex.Match(xml, DocConfig.RevisionText + @"\d{0,2}");
+            Match match = Regex.Match(xml, DocConfig.RevisionText + @"\d{1,2}");
             var result = match.ToString().Replace(DocConfig.RevisionText, "");
             return result.ToString();
 

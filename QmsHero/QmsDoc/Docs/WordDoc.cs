@@ -106,9 +106,9 @@ namespace QmsDoc.Docs
         public string FetchRevision()
         {
             Paragraph par = FetchRevisionPart();
-            //Match match = Regex.Match(par.InnerText, @"[0-9][0-9]|[0-9]");
-            Match match = Regex.Match(par.InnerText, @"\d{0,2}");
-            return match.ToString();
+            Match match = Regex.Match(par.InnerText, @"\d{1,2}");
+            var result = match.ToString().Replace(DocConfig.RevisionText, "");
+            return result;
         }
 
         public override string Revision
@@ -121,6 +121,7 @@ namespace QmsDoc.Docs
             set
             {
                 Paragraph par = FetchRevisionPart();
+                //par.Elements<Run>().Elements<Text>().First()
                 par.RemoveAllChildren();
                 Run run = new Run();
                 Text text = new Text();
