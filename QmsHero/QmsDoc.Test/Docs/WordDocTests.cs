@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Test;
 using QmsDoc.Core;
+using LadderFileUtils;
 
 namespace QmsDoc.Docs.Tests
 {
@@ -24,8 +25,8 @@ namespace QmsDoc.Docs.Tests
             Assert.AreEqual("2019-11-05", initial);
 
             state.EffectiveDate.Value = effDate;
-            doc.Process(state, fixture.ProcessingDir);
-            string result = (string)doc.Inspect().EffectiveDate.Value;
+            var targetDoc = doc.Process(state, fixture.ProcessingDir);
+            string result = (string)targetDoc.Inspect().EffectiveDate.Value;
             Assert.AreEqual(effDate, result);
         }
 
@@ -40,8 +41,8 @@ namespace QmsDoc.Docs.Tests
             Assert.AreEqual("4", initial);
 
             state.Revision.Value = rev;
-            doc.Process(state, fixture.ProcessingDir);
-            string result = (string)doc.Inspect().Revision.Value;
+            var targetDoc = doc.Process(state, fixture.ProcessingDir);
+            string result = (string)targetDoc.Inspect().Revision.Value;
             Assert.AreEqual(rev, result);
         }
 

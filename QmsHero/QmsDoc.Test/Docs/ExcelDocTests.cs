@@ -57,8 +57,8 @@ namespace QmsDoc.Docs.Tests
             Assert.AreEqual("2018-11-26", initial);
             
             state.EffectiveDate.Value = effDate;
-            doc.Process(state, fixture.ProcessingDir);
-            var result = (string)doc.Inspect().EffectiveDate.Value;
+            var targetDoc = doc.Process(state, fixture.ProcessingDir);
+            var result = (string)targetDoc.Inspect().EffectiveDate.Value;
             Assert.AreEqual(effDate, result);
         }
 

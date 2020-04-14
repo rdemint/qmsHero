@@ -69,7 +69,7 @@ namespace LadderFileUtils
             {
                 targetDir.Delete(true);
             }
-            
+                        
             var cleanDir = dir.CreateSubdirectory(subDirName);
             return cleanDir;
 
