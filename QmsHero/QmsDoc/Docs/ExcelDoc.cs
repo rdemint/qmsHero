@@ -12,6 +12,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO;
 using System.ComponentModel;
+using DocumentFormat.OpenXml;
 
 namespace QmsDoc.Docs
 
@@ -52,17 +53,17 @@ namespace QmsDoc.Docs
             return this.workbookPart.WorksheetParts.First().Worksheet;
         }
 
-        public OddHeader FetchHeaderParts()
+        public HeaderFooter FetchHeaderParts()
         {
             var ws = FetchFirstHeaderWorkSheet();
-            var xml = ws.Elements<HeaderFooter>().First().OddHeader.InnerXml;
-            var h = new OddHeader(xml);
+            var h = ws.Descendants<HeaderFooter>().First();
             return h;
         }
         public string FetchRevision()
         {
             var xml = this.FetchHeaderParts().InnerXml;
             Match match = Regex.Match(xml, DocConfig.RevisionText + @"\d{0,2}");
+            var result = match.ToString().Replace(DocConfig.RevisionText, "");
             return match.ToString();
 
         }
@@ -71,13 +72,15 @@ namespace QmsDoc.Docs
             get => revision;
             set {
                 var temp = DocConfig.RevisionText + FetchRevision();
-                var xml = FetchHeaderParts().InnerXml;
+                var xml = FetchHeaderParts().OuterXml;
                 var changed = DocConfig.RevisionText + value;
                 var result = xml.Replace(temp, changed);
-                var header = FetchFirstHeaderWorkSheet().Elements<OddHeader>().First();
-                FetchFirstHeaderWorkSheet().RemoveChild<OddHeader>(header);
-                var newHeader = new OddHeader(result);
-                FetchFirstHeaderWorkSheet().AppendChild<OddHeader>(newHeader);
+                var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First().Elements<OddHeader>().First();
+                header.Text = "Some different effective date";
+                //FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
+                //var newHeader = new HeaderFooter();
+                //var x = new OpenXmlLeafTextElement(result);
+                //FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
                 this.revision = value;
                 OnPropertyChanged();
             }
@@ -87,7 +90,8 @@ namespace QmsDoc.Docs
         public string FetchEffectiveDate() {
             var xml = this.FetchHeaderParts().InnerXml;
             Match match = Regex.Match(xml, DocConfig.EffectiveDateText + @"\d\d\d\d-\d\d-\d\d");
-            return match.ToString().Replace(DocConfig.EffectiveDateText, "");
+            var result = match.ToString().Replace(DocConfig.EffectiveDateText, "");
+            return result;
         }
         public override string EffectiveDate { 
             get => effectiveDate; 
@@ -96,6 +100,10 @@ namespace QmsDoc.Docs
                 var xml = FetchHeaderParts().InnerXml;
                 var changed = DocConfig.EffectiveDateText + value;
                 var result = xml.Replace(temp, changed);
+                var header = FetchFirstHeaderWorkSheet().Elements<HeaderFooter>().First();
+                FetchFirstHeaderWorkSheet().RemoveChild<HeaderFooter>(header);
+                var newHeader = new HeaderFooter(result);
+                FetchFirstHeaderWorkSheet().AppendChild<HeaderFooter>(newHeader);
                 this.effectiveDate = value;
             }
         }
