@@ -22,9 +22,7 @@ namespace QmsDoc.Docs
         WordDocConfig docConfig;
         WordprocessingDocument doc;
         MainDocumentPart mainDocumentPart;
-        FileInfo file;
-        FileInfo targetFile;
-        DirectoryInfo targetDir;
+        FileInfo fileInfo;
         string logoText;
         string logoPath;
         string effectiveDate;
@@ -45,8 +43,8 @@ namespace QmsDoc.Docs
 
         #region Config
         public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public FileInfo FileInfo { get => targetFile;
-            set { this.targetFile = value; } }
+        public FileInfo FileInfo { get => fileInfo;
+            set { fileInfo = value; } }
         #endregion  
         
         #region Header
@@ -170,23 +168,26 @@ namespace QmsDoc.Docs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Process(DocState docState, DirectoryInfo targetDir)
+        public ExcelDoc Process(DocState docState, DirectoryInfo targetDir)
         {
-            targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(targetFile.FullName, true))
-            {
-                this.doc = doc;
-                this.mainDocumentPart = doc.MainDocumentPart;
-                var docProps = docState.ToCollection();
-                foreach (DocProperty docProp in docProps)
-                {
-                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
-                    propertyInfo?.SetValue(this, docProp.Value);
-                }
-            }
+            var targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
+            var targetDoc = new ExcelDoc(targetFile);
+            targetDoc.Process(docState);
+            //using (WordprocessingDocument doc = WordprocessingDocument.Open(targetDoc.FileInfo.FullName, true))
+            //{
+            //    this.doc = doc;
+            //    this.mainDocumentPart = doc.MainDocumentPart;
+            //    var docProps = docState.ToCollection();
+            //    foreach (DocProperty docProp in docProps)
+            //    {
+            //        var propertyInfo = this.GetType().GetProperty(docProp.Name);
+            //        propertyInfo?.SetValue(this, docProp.Value);
+            //    }
+            //}
+            return targetDoc;
         }
         
-        public void Process(DocState docState)
+        public override void Process(DocState docState)
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {

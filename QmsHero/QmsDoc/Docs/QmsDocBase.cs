@@ -36,7 +36,7 @@ namespace QmsDoc.Docs
             throw new NotImplementedException();
         }
 
-        public virtual FileInfo Process(DocState docEdit, DirectoryInfo targetDir) {
+        public virtual QmsDocBase Process(DocState docEdit, DirectoryInfo targetDir) {
             throw new NotImplementedException();
         }
 

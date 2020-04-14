@@ -21,7 +21,6 @@ namespace QmsDoc.Docs
     {
         ExcelDocConfig docConfig;
         FileInfo fileInfo;
-        FileInfo targetFile;
         SpreadsheetDocument doc;
         WorkbookPart workbookPart;
 
@@ -150,23 +149,26 @@ namespace QmsDoc.Docs
         #endregion
 
 
-        public void Process(DocState docState, DirectoryInfo targetDir)
+        public ExcelDoc Process(DocState docState, DirectoryInfo targetDir)
         {
-            targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(targetFile.FullName, true))
-            {
-                this.doc = doc;
-                this.workbookPart = doc.WorkbookPart;
-                var docProps = docState.ToCollection();
-                foreach (DocProperty docProp in docProps)
-                {
-                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
-                    propertyInfo?.SetValue(this, docProp.Value);
-                }
-            }
+            var targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
+            var targetDoc = new ExcelDoc(targetFile);
+            //using (SpreadsheetDocument doc = SpreadsheetDocument.Open(targetFile.FullName, true))
+            //{
+            //    this.doc = doc;
+            //    this.workbookPart = doc.WorkbookPart;
+            //    var docProps = docState.ToCollection();
+            //    foreach (DocProperty docProp in docProps)
+            //    {
+            //        var propertyInfo = this.GetType().GetProperty(docProp.Name);
+            //        propertyInfo?.SetValue(this, docProp.Value);
+            //    }
+            //}
+            targetDoc.Process(docState);
+            return targetDoc;
         }
 
-        public void Process(DocState docState)
+        public override void Process(DocState docState)
         {
 
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
