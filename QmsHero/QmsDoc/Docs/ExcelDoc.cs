@@ -14,11 +14,12 @@ using System.IO;
 using System.ComponentModel;
 using DocumentFormat.OpenXml;
 using LadderFileUtils;
+using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs
 
 {
-    public class ExcelDoc : QmsDocBase, INotifyPropertyChanged
+    public class ExcelDoc : IQmsDoc, INotifyPropertyChanged
     {
         ExcelDocConfig docConfig;
         FileInfo fileInfo;
@@ -68,7 +69,7 @@ namespace QmsDoc.Docs
 
         }
 
-        public override string Revision { 
+        public string Revision { 
             get => revision;
             set {
                 var temp = DocConfig.RevisionText + FetchRevision();
@@ -91,7 +92,7 @@ namespace QmsDoc.Docs
             var result = match.ToString().Replace(DocConfig.EffectiveDateText, "");
             return result;
         }
-        public override string EffectiveDate { 
+        public string EffectiveDate { 
             get => effectiveDate; 
             set {
                 //For excel docs, FetchEffective() must be called, because header text must be replaced
@@ -115,7 +116,7 @@ namespace QmsDoc.Docs
         {
             throw new NotImplementedException();
         }
-        public override string LogoPath { 
+        public string LogoPath { 
             get => logoPath;
             set { 
                 //foreach(Worksheet wkst in this.Doc.Worksheets)
@@ -134,7 +135,7 @@ namespace QmsDoc.Docs
         {
             return null;
         }
-        public override string LogoText { 
+        public string LogoText { 
             get => logoText;
             set {
                 //foreach (Worksheet wkst in this.Doc.Worksheets)
@@ -149,7 +150,7 @@ namespace QmsDoc.Docs
         #endregion
 
 
-        public ExcelDoc Process(DocState docState, DirectoryInfo targetDir)
+        public IQmsDoc Process(DocState docState, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new ExcelDoc(targetFile);
@@ -157,7 +158,7 @@ namespace QmsDoc.Docs
             return targetDoc;
         }
 
-        public override void Process(DocState docState)
+        public void Process(DocState docState)
         {
 
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
@@ -173,7 +174,7 @@ namespace QmsDoc.Docs
             }
         }
 
-        public override DocState Inspect(bool filter=false)
+        public DocState Inspect(bool filter=false)
         {
             DocState state = new DocState();
             var docProps = state.ToCollection(filter);
@@ -194,9 +195,9 @@ namespace QmsDoc.Docs
             }
             return state;
         }
-        public override void SaveAsPdf()
+        public void SaveAsPdf()
         {
-            base.SaveAsPdf();
+            
         }
     }
 }

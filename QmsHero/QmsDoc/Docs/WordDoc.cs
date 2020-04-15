@@ -10,14 +10,13 @@ using QmsDoc.Interfaces;
 using System.IO;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
-using GalaSoft.MvvmLight.Ioc;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using LadderFileUtils;
 
 namespace QmsDoc.Docs
 {
-    public class WordDoc : QmsDocBase, IDocActions, INotifyPropertyChanged
+    public class WordDoc : IQmsDoc, INotifyPropertyChanged
     {
         WordDocConfig docConfig;
         WordprocessingDocument doc;
@@ -34,7 +33,7 @@ namespace QmsDoc.Docs
 
         }
 
-        public WordDoc(System.IO.FileInfo fileInfo):base()
+        public WordDoc(System.IO.FileInfo fileInfo) : base()
         {
             this.FileInfo = fileInfo;
             this.DocConfig = new WordDocConfig();
@@ -45,8 +44,8 @@ namespace QmsDoc.Docs
         public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public FileInfo FileInfo { get => fileInfo;
             set { fileInfo = value; } }
-        #endregion  
-        
+        #endregion
+
         #region Header
 
         public Table FetchHeaderFooterTable()
@@ -63,7 +62,7 @@ namespace QmsDoc.Docs
         }
         public Paragraph FetchEffectiveDatePart()
         {
- 
+
             TableCell cell = FetchHeaderFooterTableCell(DocConfig.EffectiveDateRow, DocConfig.EffectiveDateCol);
             Paragraph p = cell.Elements<Paragraph>().First();
             return p;
@@ -76,12 +75,12 @@ namespace QmsDoc.Docs
             this.effectiveDate = match.ToString();
             return match.ToString();
         }
-        public override string EffectiveDate
+        public string EffectiveDate
         {
             get {
                 return this.effectiveDate;
-               }
-            
+            }
+
             set
             {
                 //https://stackoverflow.com/questions/32075170/how-to-replace-the-innertext-of-a-comment
@@ -117,7 +116,7 @@ namespace QmsDoc.Docs
             return result;
         }
 
-        public override string Revision
+        public string Revision
         {
             get
             {
@@ -138,10 +137,10 @@ namespace QmsDoc.Docs
                 OnPropertyChanged();
             }
         }
-        public override string LogoPath
+        public string LogoPath
         {
             get => this.logoPath;
-            set { 
+            set {
                 //this.logoPath = value;
                 //var cell = this.HeaderFooterTable
                 //    .Cell(
@@ -155,7 +154,7 @@ namespace QmsDoc.Docs
                 this.logoPath = value;
                 this.OnPropertyChanged(); }
         }
-        public override string LogoText
+        public string LogoText
         {
             get => this.logoText;
             set
@@ -176,43 +175,48 @@ namespace QmsDoc.Docs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WordDoc Process(DocState docState, DirectoryInfo targetDir)
+        public IQmsDoc Process(DocState docState, DirectoryInfo targetDir)
         {
             var targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
             var targetDoc = new WordDoc(targetFile);
             targetDoc.Process(docState);
             return targetDoc;
         }
-        
-        public override void Process(DocState docState)
+
+        public void Process(DocState docState)
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
-                this.doc = doc;
-                this.mainDocumentPart = doc.MainDocumentPart;
                 var docProps = docState.ToCollection();
+                object[] methodParams = new object[1];
+                methodParams[0] = doc;
+                methodParams[1] = DocConfig;
                 foreach (DocProperty docProp in docProps)
                 {
-                    var propertyInfo = this.GetType().GetProperty(docProp.Name);
-                    propertyInfo?.SetValue(this, docProp.Value);
+                    var setMethod = docProp.GetType().GetMethod("Set");
+                    setMethod?.Invoke(docProp, methodParams);
                 }
             }
         }
 
-        public override DocState Inspect(bool filter=false)
+        public DocState Inspect(bool filter=false)
         {
+            //Return a new DocState based on inspection of the WordProcessingDocument
             DocState state = new DocState();
             var docProps = state.ToCollection(filter:false);
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                this.doc = doc;
-                this.mainDocumentPart = doc.MainDocumentPart;
-                foreach(DocProperty docProp in docProps)
+                object[] methodParams = new object[1];
+                methodParams[0] = doc;
+                methodParams[1] = DocConfig;
+
+                foreach (DocProperty docProp in docProps)
                 {
-                    var methodInfo = this.GetType().GetMethod("Fetch" + docProp.Name);
-                    string result = (string)methodInfo?.Invoke(this, null);
-                    var propertyInfo = state.GetType().GetProperty(docProp.Name);
-                    DocProperty dp = (DocProperty)propertyInfo.GetValue(state);
+
+                    var getMethod = docProp.GetType().GetMethod("Get");
+                    string result = (string)getMethod?.Invoke(docProp, methodParams);
+                    var stateProperty = state.GetType().GetProperty(docProp.Name);
+                    DocProperty dp = (DocProperty)stateProperty.GetValue(state);
                     var propertyInfoValue = dp.GetType().GetProperty("Value");
                     propertyInfoValue.SetValue(dp, result);
                 }
@@ -220,14 +224,24 @@ namespace QmsDoc.Docs
             return state;
         }
 
+        public DocProperty Inspect(DocProperty prop)
+        {
+
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            {
+                prop.Get(doc, DocConfig);
+            }
+            return prop;
+
+        }
+
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-        public override void SaveAsPdf()
+        public void SaveAsPdf()
         {
-            base.SaveAsPdf();
         }
 
         public int MultipleRunCheck(Paragraph par) {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using QmsDoc.Test;
 using QmsDoc.Core;
 using LadderFileUtils;
+using QmsDoc.Word;
 
 namespace QmsDoc.Docs.Tests
 {
@@ -36,11 +37,10 @@ namespace QmsDoc.Docs.Tests
             string rev = "60";
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
-            var state = doc.Inspect();
-            string initial = (string)state.Revision.Value;
-            Assert.AreEqual("4", initial);
+            string initialRev = doc.Inspect(new Revision()).Value;
+            Assert.AreEqual("4", initialRev);
 
-            state.Revision.Value = rev;
+            newRev = new Revision("4");
             var targetDoc = doc.Process(state, fixture.ProcessingDir);
             string result = (string)targetDoc.Inspect().Revision.Value;
             Assert.AreEqual(rev, result);

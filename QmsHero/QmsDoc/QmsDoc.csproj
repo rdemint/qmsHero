@@ -70,7 +70,9 @@
     <Compile Include="Core\DocState.cs" />
     <Compile Include="Core\DocHeader.cs" />
     <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Exceptions\DocPropertyGetException.cs" />
     <Compile Include="Exceptions\ProjectDirNotSetException.cs" />
+    <Compile Include="Interfaces\IDocConfig.cs" />
     <Compile Include="Interfaces\IDocHeader.cs" />
     <Compile Include="Docs\DCN.cs" />
     <Compile Include="Core\DocManager.cs" />
@@ -83,9 +85,12 @@
     <Compile Include="Docs\ExcelDoc.cs" />
     <Compile Include="Docs\QmsDocBase.cs" />
     <Compile Include="Docs\WordDoc.cs" />
-    <Compile Include="Interfaces\IDocActions.cs" />
+    <Compile Include="Interfaces\IDocAction.cs" />
     <Compile Include="Interfaces\IDocManager.cs" />
+    <Compile Include="Interfaces\IDocProperty.cs" />
     <Compile Include="Interfaces\IDocSection.cs" />
+    <Compile Include="Interfaces\IDocCheck.cs" />
+    <Compile Include="Interfaces\IQmsDoc.cs" />
     <Compile Include="Interfaces\IToDocPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ErrorMessenger.cs" />

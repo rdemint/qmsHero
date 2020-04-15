@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Exceptions
 {
-    class MultipleDocHeadersException: Exception
+    public class MultipleDocHeadersException: Exception
     {
         public MultipleDocHeadersException():base()
         {

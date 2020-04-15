@@ -1,4 +1,5 @@
-﻿using QmsDoc.Interfaces;
+﻿
+using QmsDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,16 +15,12 @@ namespace QmsDoc.Core
     public class DocState: INotifyPropertyChanged, IToDocPropertyCollection
 
     {
-        DocHeader docHeader;
-        DocBody docBody;
-        string editPathName;
         DocProperty revision;
         DocProperty effectiveDate;
 
         public DocState()
         {
-            this.Revision = new DocProperty() { Name = "Revision", Value = null };
-            this.EffectiveDate = new DocProperty() { Name = "EffectiveDate", Value = null };
+            this.Revision = new Revision();
         }
 
 

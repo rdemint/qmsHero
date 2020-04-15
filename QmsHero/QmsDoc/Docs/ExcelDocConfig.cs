@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QmsDoc.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs
 {
-    public class ExcelDocConfig: QmsDocBaseConfig
+    public class ExcelDocConfig: IDocConfig
     {
         string effectiveDateText;
         string revisionText;
         string revisionEffectiveDateSeparator;
 
-        public ExcelDocConfig():base()
+        public ExcelDocConfig()
         {
             this.Initialize();
         }
@@ -21,12 +22,11 @@ namespace QmsDoc.Docs
         public string RevisionText { get => revisionText; set => revisionText = value; }
         public string RevisionEffectiveDateSeparator { get => revisionEffectiveDateSeparator; set => revisionEffectiveDateSeparator = value; }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            base.Initialize();
             this.EffectiveDateText = "Effective Date: ";
             this.RevisionText = "Revision: ";
-            this.revisionEffectiveDateSeparator = "\r\n";
+            this.RevisionEffectiveDateSeparator = "\r\n";
 
         }
         #region HeaderFooter
