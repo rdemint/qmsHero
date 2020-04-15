@@ -135,6 +135,7 @@ namespace QmsDoc.Docs
                 run.Append(text);
                 par.Append(run);
                 this.revision = value;
+                OnPropertyChanged();
             }
         }
         public override string LogoPath
@@ -227,6 +228,10 @@ namespace QmsDoc.Docs
         public override void SaveAsPdf()
         {
             base.SaveAsPdf();
+        }
+
+        public int MultipleRunCheck(Paragraph par) {
+            return par.Elements<Run>().Count();
         }
 
     }

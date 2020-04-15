@@ -177,7 +177,7 @@ namespace QmsDoc.Docs
         {
             DocState state = new DocState();
             var docProps = state.ToCollection(filter);
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
             {
                 this.doc = doc;
                 this.workbookPart = doc.WorkbookPart;
