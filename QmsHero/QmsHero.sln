@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsHero.Test", "QmsHero.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QDoc.Test", "QDoc.Test\QDoc.Test.csproj", "{60F3F5BD-76B9-4524-9946-B315CB80C91D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadderControls", "LadderControls\LadderControls.csproj", "{D949B936-F294-4F84-B4F2-6E1F86A932C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QControls", "QControls\QControls.csproj", "{D949B936-F294-4F84-B4F2-6E1F86A932C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFileUtil", "LadderFileUtils\QFileUtil.csproj", "{41D7B217-AB9D-4C02-8E2F-83187B5BAA8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFileUtils", "QFileUtils\QFileUtil.csproj", "{41D7B217-AB9D-4C02-8E2F-83187B5BAA8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc", "QmsDoc\QmsDoc.csproj", "{A387F634-3E43-4045-BA55-52D05D6D3BDD}"
 EndProject

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("QWordDoc")]
+[assembly: AssemblyTitle("QFileUtil")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("QmsWordDoc")]
-[assembly: AssemblyCopyright("Copyright © QALADDER LLC 2020")]
+[assembly: AssemblyCompany("QA LADDER LLC")]
+[assembly: AssemblyProduct("QFileUtil")]
+[assembly: AssemblyCopyright("Copyright © QA LADDER LLC 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("160322b0-ab94-4299-be65-442f94eb3ca2")]
+[assembly: Guid("41d7b217-ab9d-4c02-8e2f-83187b5baa8a")]
 
 // Version information for an assembly consists of the following four values:
 //

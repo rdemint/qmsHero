@@ -42,13 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\QmsDocManager.cs" />
-    <Compile Include="Core\QmsDocManagerConfig.cs" />
-    <Compile Include="Core\QmsDocProperty.cs" />
-    <Compile Include="Docs\Excel\QmsExcelDoc.cs" />
-    <Compile Include="Docs\Excel\QmsExcelDocConfig.cs" />
-    <Compile Include="Docs\Word\QmsWordDocConfig.cs" />
-    <Compile Include="Docs\Word\QmsWordDoc.cs" />
+    <Compile Include="Core\DocManager.cs" />
+    <Compile Include="Core\DocManagerConfig.cs" />
+    <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Docs\Excel\ExcelDoc.cs" />
+    <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
+    <Compile Include="Docs\Word\WordDocConfig.cs" />
+    <Compile Include="Docs\Word\WordDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

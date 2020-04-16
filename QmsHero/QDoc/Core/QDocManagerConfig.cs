@@ -9,9 +9,6 @@ namespace QDoc.Core
 {
     public class QDocManagerConfig
     {
-        bool saveChanges;
-        bool closeDocs;
-        int logoHeight;
         int safeProcessingLength;
         List<string> wordDocExtensions;
         List<string> excelDocExtensions;

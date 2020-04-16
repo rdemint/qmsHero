@@ -7,7 +7,7 @@ using QDoc.Docs.Word;
 
 namespace QmsDoc.Docs.Word
 {
-    public class QmsWordDoc: QWordDoc
+    public class WordDoc: QWordDoc
     {
     }
 }

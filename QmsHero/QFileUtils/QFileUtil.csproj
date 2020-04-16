@@ -7,8 +7,8 @@
     <ProjectGuid>{41D7B217-AB9D-4C02-8E2F-83187B5BAA8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LadderFileUtils</RootNamespace>
-    <AssemblyName>LadderFileUtils</AssemblyName>
+    <RootNamespace>QFileUtil</RootNamespace>
+    <AssemblyName>QFileUtil</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

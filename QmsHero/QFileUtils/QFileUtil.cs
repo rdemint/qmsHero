@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LadderFileUtils
+namespace QFileUtil
 {
     public static class QFileUtil
     {

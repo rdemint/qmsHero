@@ -156,9 +156,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LadderControls\LadderControls.csproj">
+    <ProjectReference Include="..\LadderControls\QControls.csproj">
       <Project>{d949b936-f294-4f84-b4f2-6e1f86a932c1}</Project>
-      <Name>LadderControls</Name>
+      <Name>QControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -90,11 +90,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LadderFileUtils\QFileUtil.csproj">
+    <ProjectReference Include="..\QFileUtils\QFileUtil.csproj">
       <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
       <Name>QFileUtil</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

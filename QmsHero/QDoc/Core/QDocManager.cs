@@ -12,6 +12,7 @@ using QDoc.Interfaces;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using QFileUtil.QFileUtil;
 
 namespace QDoc.Core
 {
@@ -30,8 +31,6 @@ namespace QDoc.Core
         {
            
             this.docManagerConfig = new QDocManagerConfig();
-            this.dirFilesUnsafe = new List<FileInfo>();
-
             this.DirFiles = new List<FileInfo>();
             this.ProcessingDirFiles = new List<FileInfo>();
         }
@@ -88,16 +87,11 @@ namespace QDoc.Core
             }
 
         }
-        private List<FileInfo> GetSafeFiles(List<FileInfo> files)
-        {
-            var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();
-            return result;
-        }
 
         public void ConfigDir(string dirPath, string processingDirName="Processing")
         {
             this.Dir = new DirectoryInfo(dirPath);
-            this.ProcessingDir = DirectoryCopy(this.Dir, processingDirName, true);
+            this.ProcessingDir = QFileUtil(this.Dir, processingDirName, true);
             this.DirFiles = this.Dir.GetFiles("*", SearchOption.AllDirectories).ToList();
             this.ProcessingDirFiles = this.ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
         }

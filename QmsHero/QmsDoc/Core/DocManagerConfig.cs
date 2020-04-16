@@ -7,7 +7,7 @@ using QDoc.Core;
 
 namespace QmsDoc.Core
 {
-    public class QmsDocManagerConfig: QDocManagerConfig
+    public class DocManagerConfig: QDocManagerConfig
     {
     }
 }

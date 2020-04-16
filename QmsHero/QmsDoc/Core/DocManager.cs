@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    public class QmsDocManager : QDocManager
+    public class DocManager : QDocManager
     {
-        public QmsDocManager(): base()
+        public DocManager(): base()
         {
         }
     }
