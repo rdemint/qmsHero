@@ -20,8 +20,10 @@ namespace QmsDoc.Docs.Tests
             string expected = "2019-11-05";
             string setValue = "2020-20-20";
             var fixture = new FixtureUtil();
+            Assert.AreEqual(true, fixture.ProcessingDir.Exists);
             WordDoc doc = new WordDoc(fixture.WordSample);
             //Get
+            Assert.AreEqual(true, fixture.ProcessingDir.Exists);
             string initial = doc.Inspect(new EffectiveDate()).Value;
             Assert.AreEqual(expected, initial);
             //Set

@@ -40,16 +40,11 @@ namespace QWordDoc
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;
             Paragraph par = FetchEffectiveDatePart(wdoc, wdocConfig.EffectiveDateRow, wdocConfig.EffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
-            if(!match.Success) {
-                throw new DocPropertyGetException(); 
-            }
             return new EffectiveDate(match.ToString());
         }
 
         public override void Set(object wdoc, IDocConfig wdocConfig, string value)
         {
-            if(Accepts(value, wdocConfig))
-            {
                 WordprocessingDocument doc = (WordprocessingDocument)wdoc;
                 WordDocConfig docConfig = (WordDocConfig)wdocConfig;
                 Paragraph par = FetchEffectiveDatePart(doc, docConfig.EffectiveDateRow, docConfig.EffectiveDateCol);
@@ -60,27 +55,18 @@ namespace QWordDoc
                 par.Append(myRun);
                 this.Value = value;
                 this.OnPropertyChanged();
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
         }
 
-        public override bool Accepts(string value, IDocConfig config)
+        public override bool IsValid()
         {
-            Match match = config.EffectiveDateRegex.Match(value);
-
-            if(
-                match.Success
-                )
-            {
+            Match match = Regex.Match(this.Value, @"\d\d\d\d-\d\d-\d\d");
+            if (
+                match.Success &&
+                base.IsValid()
+                ) {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            else { return false; }
         }
     }
 }

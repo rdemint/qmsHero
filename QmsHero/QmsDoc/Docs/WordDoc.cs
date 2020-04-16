@@ -25,7 +25,6 @@ namespace QmsDoc.Docs
         FileInfo fileInfo;
         string logoText;
         string logoPath;
-        string effectiveDate;
         string revision;
 
 
@@ -167,7 +166,7 @@ namespace QmsDoc.Docs
             Type myPropType = Type.GetType(propRef);
             DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
             DocProperty result = null;
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
                 instance.Set(doc, DocConfig, prop.Value);
             }
