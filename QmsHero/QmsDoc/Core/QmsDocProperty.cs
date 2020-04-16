@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 using QDoc.Core;
 namespace QmsDoc.Core
 {
-    public class DocProperty : QDocProperty
+    public class QmsDocProperty : QDocProperty
     {
-        public DocProperty()
+        public QmsDocProperty()
         {
         }
 
-        public DocProperty(string value) : base(value)
+        public QmsDocProperty(string value) : base(value)
         {
         }
 
-        public DocProperty(string name, string value) : base(name, value)
+        public QmsDocProperty(string name, string value) : base(name, value)
         {
         }
     }

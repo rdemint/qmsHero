@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A387F634-3E43-4045-BA55-52D05D6D3BDD}</ProjectGuid>
+    <ProjectGuid>{93261315-9128-4BF7-8097-73454C74CFC7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QmsDoc</RootNamespace>
-    <AssemblyName>QmsDoc</AssemblyName>
+    <RootNamespace>QmsDocXml</RootNamespace>
+    <AssemblyName>QmsDocXml</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,23 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\QmsDocManager.cs" />
-    <Compile Include="Core\QmsDocManagerConfig.cs" />
-    <Compile Include="Core\QmsDocProperty.cs" />
-    <Compile Include="Docs\Excel\QmsExcelDoc.cs" />
-    <Compile Include="Docs\Excel\QmsExcelDocConfig.cs" />
-    <Compile Include="Docs\Word\QmsWordDocConfig.cs" />
-    <Compile Include="Docs\Word\QmsWordDoc.cs" />
+    <Compile Include="Core\DocManager.cs" />
+    <Compile Include="Docs\Excel\ExcelDoc.cs" />
+    <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
+    <Compile Include="Docs\Word\Properties\EffectiveDate.cs" />
+    <Compile Include="Docs\Word\Properties\HeaderTableCell.cs" />
+    <Compile Include="Docs\Word\WordDoc.cs" />
+    <Compile Include="Docs\Word\WordDocConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Docs\Excel\Properties\" />
-    <Folder Include="Docs\Word\Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QDoc\QDoc.csproj">
-      <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
-      <Name>QDoc</Name>
+    <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
+      <Project>{a387f634-3e43-4045-ba55-52d05d6d3bdd}</Project>
+      <Name>QmsDoc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,4 @@
-﻿using QDoc.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +9,7 @@ using System.Text.RegularExpressions;
 using QmsDoc.Docs.Word;
 using QmsDoc.Core;
 
-namespace QmsDoc.Docs.Word.Properties
+namespace QmsDocXml.Docs.Word.Properties
 {
     public class EffectiveDate: DocProperty
     {
@@ -33,7 +32,7 @@ namespace QmsDoc.Docs.Word.Properties
             return p;
         }
 
-        public override DocProperty Read(object doc, object docConfig)
+        public override QmsDocProperty Read(object doc, object docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;

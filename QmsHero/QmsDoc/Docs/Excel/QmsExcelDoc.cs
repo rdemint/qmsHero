@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using QDoc.Docs.Excel;
 namespace QmsDoc.Docs.Excel
 {
-    class ExcelDoc : QExcelDoc
+    public class QmsExcelDoc : QExcelDoc
     {
-        public ExcelDoc(FileInfo fileInfo) : base(fileInfo)
+        public QmsExcelDoc(FileInfo fileInfo) : base(fileInfo)
         {
         }
     }
