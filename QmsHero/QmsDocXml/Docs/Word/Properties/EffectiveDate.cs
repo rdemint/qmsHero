@@ -32,7 +32,7 @@ namespace QmsDocXml.Docs.Word.Properties
             return p;
         }
 
-        public override QmsDocProperty Read(object doc, object docConfig)
+        public override DocProperty Read(object doc, object docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;
