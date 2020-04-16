@@ -21,13 +21,14 @@ namespace QmsDoc.Docs.Tests
             string setValue = "2020-20-20";
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
+            //Get
             string initial = doc.Inspect(new EffectiveDate()).Value;
             Assert.AreEqual(expected, initial);
-            
+            //Set
             EffectiveDate newDate = new EffectiveDate(setValue);
             WordDoc newDoc = (WordDoc)doc.Process(newDate, fixture.ProcessingDir);
             string result = newDoc.Inspect(new EffectiveDate()).Value;
-            Assert.AreEqual()
+            Assert.AreEqual(setValue, result);
 
             //var targetDoc = doc.Process(state, fixture.ProcessingDir);
             //string result = (string)targetDoc.Inspect().Revision.Value;

@@ -43,14 +43,12 @@ namespace QWordDoc
             if(!match.Success) {
                 throw new DocPropertyGetException(); 
             }
-            //this.Value = match.ToString();
-            //return this.Value;
             return new EffectiveDate(match.ToString());
         }
 
         public override void Set(object wdoc, IDocConfig wdocConfig, string value)
         {
-            if(IsValid(value, wdocConfig))
+            if(Accepts(value, wdocConfig))
             {
                 WordprocessingDocument doc = (WordprocessingDocument)wdoc;
                 WordDocConfig docConfig = (WordDocConfig)wdocConfig;
@@ -69,13 +67,12 @@ namespace QWordDoc
             }
         }
 
-        public override bool IsValid(string value, IDocConfig config)
+        public override bool Accepts(string value, IDocConfig config)
         {
             Match match = config.EffectiveDateRegex.Match(value);
 
             if(
-                match.Success &&
-                base.IsValid(value, config)
+                match.Success
                 )
             {
                 return true;

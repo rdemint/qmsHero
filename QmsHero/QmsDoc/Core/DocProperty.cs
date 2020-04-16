@@ -55,7 +55,12 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual bool IsValid(string value, IDocConfig config)
+        public virtual bool Accepts(string value, IDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool IsValid()
         {
             if (value != null)
             {

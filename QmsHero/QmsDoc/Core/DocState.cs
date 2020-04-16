@@ -66,7 +66,7 @@ namespace QmsDoc.Core
 
         public ObservableCollection<DocProperty> FilterCollection(ObservableCollection<DocProperty> docProps)
         {
-            var query = docProps.Where(prop => prop.IsValid());
+            var query = docProps.Where(prop => prop.Value!=null);
             if(query.Any())
             {
                 return new ObservableCollection<DocProperty>(query);
