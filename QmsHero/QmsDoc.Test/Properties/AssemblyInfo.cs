@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("QmsDoc.Test")]
+[assembly: AssemblyTitle("QDoc.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("QmsDoc.Test")]
+[assembly: AssemblyProduct("QDoc.Test")]
 [assembly: AssemblyCopyright("Copyright © HP Inc. 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

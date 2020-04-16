@@ -70,8 +70,8 @@
     <Compile Include="Core\DocEditTests.cs" />
     <Compile Include="Core\DocManagerTests.cs" />
     <Compile Include="Core\DocPropertyTests.cs" />
-    <Compile Include="Docs\ExcelDocTests.cs" />
-    <Compile Include="Docs\WordDocTests.cs" />
+    <Compile Include="Excel\ExcelDocTests.cs" />
+    <Compile Include="Word\WordDocTests.cs" />
     <Compile Include="FixtureUtil.cs" />
     <Compile Include="FixtureUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,14 +113,17 @@
       <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
       <Name>QFileUtil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
+    <ProjectReference Include="..\QmsDoc\QDoc.csproj">
       <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
-      <Name>QmsDoc</Name>
+      <Name>QDoc</Name>
     </ProjectReference>
     <ProjectReference Include="..\WordDocAction\QWordDoc.csproj">
       <Project>{160322b0-ab94-4299-be65-442f94eb3ca2}</Project>
       <Name>QWordDoc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Docs\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

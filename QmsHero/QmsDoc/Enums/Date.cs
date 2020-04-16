@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Enums
+namespace QDoc.Enums
 {
     class DateEnum
     {

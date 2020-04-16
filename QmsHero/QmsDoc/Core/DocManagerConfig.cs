@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Core
+namespace QDoc.Core
 {
     public class DocManagerConfig
     {

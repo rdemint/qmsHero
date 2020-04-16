@@ -16,9 +16,10 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
 using System.ComponentModel;
-using QmsDoc.Interfaces;
-using QmsDoc.Core;
-using QmsDoc.Docs;
+using QDoc.Interfaces;
+using QDoc.Core;
+using QDoc.Word;
+using QDoc.Excel;
 
 
 namespace QmsHero.ViewModel

@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QmsDoc.Core;
-using QmsDoc.Docs;
-using QmsDoc.Test;
+using QDoc.Core;
+using QDoc.Excel;
+using QDoc.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text.RegularExpressions;
 
-namespace QmsDoc.Docs.Tests
+namespace QDoc.Docs.Tests
 {
     [TestClass()]
     public class ExcelDocTests

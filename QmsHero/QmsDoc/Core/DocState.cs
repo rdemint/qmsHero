@@ -1,5 +1,5 @@
 ﻿
-using QmsDoc.Interfaces;
+using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,44 +10,21 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Core
+namespace QDoc.Core
 {
     public class DocState: INotifyPropertyChanged, IToDocPropertyCollection
 
     {
-        DocProperty revision;
-        DocProperty effectiveDate;
 
         public DocState()
         {
-            //this.Revision = new Revision();
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-        public DocProperty EffectiveDate
-        {
-            get => effectiveDate;
-            set
-            {
-                effectiveDate = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public DocProperty Revision { 
-            get => revision;
-            set
-            {
-                revision = value;
-                NotifyPropertyChanged();
-            }
-            }
 
         public ObservableCollection<DocProperty> ToCollection(bool filter=true)
         {

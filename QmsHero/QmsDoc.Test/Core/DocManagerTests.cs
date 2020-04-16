@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Core;
-using QmsDoc.Interfaces;
-using QmsDoc.Docs;
+using QDoc.Core;
+using QDoc.Interfaces;
+using QDoc.Docs;
 using System.Collections.ObjectModel;
-using QmsDoc.Test;
+using QDoc.Test;
 using System.IO;
 
-namespace QmsDoc.Core.Tests
+namespace QDoc.Core.Tests
 {
     [TestClass()]
     public class DocManagerTests
@@ -37,7 +37,7 @@ namespace QmsDoc.Core.Tests
     }
 }
 
-namespace QmsDoc.Test.Core
+namespace QDoc.Test.Core
 {
     [TestClass()]
     public class DocManagerTests

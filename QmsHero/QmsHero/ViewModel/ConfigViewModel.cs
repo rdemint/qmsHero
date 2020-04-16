@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Interfaces;
-using QmsDoc.Core;
+using QDoc.Interfaces;
+using QDoc.Core;
 
 namespace QmsHero.ViewModel
 {

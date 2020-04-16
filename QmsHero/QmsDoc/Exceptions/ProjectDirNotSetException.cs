@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace QmsDoc.Core
+namespace QDoc.Core
 {
     [Serializable]
     internal class ProjectDirNotSetException : Exception

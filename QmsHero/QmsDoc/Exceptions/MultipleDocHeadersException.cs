@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Exceptions
+namespace QDoc.Exceptions
 {
     public class MultipleDocHeadersException: Exception
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("QmsDoc")]
+[assembly: AssemblyTitle("QDoc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("QA Ladder LLC")]
-[assembly: AssemblyProduct("QmsDoc")]
+[assembly: AssemblyProduct("QDoc")]
 [assembly: AssemblyCopyright("Copyright © QA LADDER LLC 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

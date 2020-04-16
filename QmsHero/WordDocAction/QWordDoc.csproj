@@ -47,9 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
+    <ProjectReference Include="..\QmsDoc\QDoc.csproj">
       <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
-      <Name>QmsDoc</Name>
+      <Name>QDoc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

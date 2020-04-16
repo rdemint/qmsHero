@@ -1,4 +1,4 @@
-﻿using QmsDoc.Interfaces;
+﻿using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Docs
+namespace QDoc.Docs.Excel
 {
     public class ExcelDocConfig: IDocConfig
     {

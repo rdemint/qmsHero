@@ -2,8 +2,8 @@
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using LadderFileUtils;
-using QmsDoc.Core;
-using QmsDoc.Docs;
+using QDoc.Core;
+using QDoc.Docs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -15,7 +15,7 @@ using Directory = System.IO.Directory;
 using DirectoryInfo = System.IO.DirectoryInfo;
 using FileInfo = System.IO.FileInfo;
 
-namespace QmsDoc.Test
+namespace QDoc.Test
 {
     public class FixtureUtil
     {

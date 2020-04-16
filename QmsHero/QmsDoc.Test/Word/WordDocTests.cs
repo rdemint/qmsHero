@@ -1,15 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QmsDoc.Docs;
+using QDoc.Word;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Test;
-using QmsDoc.Core;
+using QDoc.Test;
+using QDoc.Core;
 using QWordDoc;
 
-namespace QmsDoc.Docs.Tests
+namespace QDoc.Word.Tests
 {
     [TestClass()]
     public class WordDocTests

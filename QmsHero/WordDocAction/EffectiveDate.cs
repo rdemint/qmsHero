@@ -1,4 +1,4 @@
-﻿using QmsDoc.Interfaces;
+﻿using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using QmsDoc.Docs;
-using QmsDoc.Exceptions;
+using QDoc.Word;
+using QDoc.Exceptions;
 using System.Text.RegularExpressions;
-using QmsDoc.Core;
+using QDoc.Core;
 
 namespace QWordDoc
 {

@@ -1,8 +1,8 @@
-﻿using QmsDoc.Interfaces;
+﻿using QDoc.Interfaces;
 using System;
 using System.ComponentModel;
 
-namespace QmsDoc.Core
+namespace QDoc.Core
 {
     public class DocProperty: INotifyPropertyChanged
     {

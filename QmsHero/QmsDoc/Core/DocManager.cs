@@ -7,13 +7,13 @@ using Contract = System.Diagnostics.Contracts.Contract;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Docs;
-using QmsDoc.Interfaces;
+using QDoc.Docs;
+using QDoc.Interfaces;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace QmsDoc.Core
+namespace QDoc.Core
 {
     public class DocManager : IDocManager, IDisposable
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FileInfo = System.IO.FileInfo;
-using QmsDoc.Core;
+using QDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Packaging;
@@ -14,12 +14,12 @@ using System.IO;
 using System.ComponentModel;
 using DocumentFormat.OpenXml;
 using LadderFileUtils;
-using QmsDoc.Interfaces;
+using QDoc.Interfaces;
 
-namespace QmsDoc.Docs
+namespace QDoc.Docs.Excel
 
 {
-    public class ExcelDoc : IQmsDoc, INotifyPropertyChanged
+    public class ExcelDoc : IQDoc, INotifyPropertyChanged
     {
         ExcelDocConfig docConfig;
         FileInfo fileInfo;
@@ -150,7 +150,7 @@ namespace QmsDoc.Docs
         #endregion
 
 
-        public IQmsDoc Process(DocState docState, DirectoryInfo targetDir)
+        public IQDoc Process(DocState docState, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new ExcelDoc(targetFile);

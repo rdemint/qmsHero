@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QmsDoc.Core;
+using QDoc.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Core.Tests
+namespace QDoc.Core.Tests
 {
     [TestClass()]
     public class DocPropertyTests

@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsHero", "QmsHero\QmsHero.csproj", "{B0A26B50-200D-4BDE-A7C7-858CB9A453A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc", "QmsDoc\QmsDoc.csproj", "{18E880A8-81A4-42CC-8563-7066AC8D278B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QDoc", "QmsDoc\QDoc.csproj", "{18E880A8-81A4-42CC-8563-7066AC8D278B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsHero.Test", "QmsHero.Test\QmsHero.Test.csproj", "{D1D8E37D-0680-49A1-8BA0-79A307786BAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc.Test", "QmsDoc.Test\QmsDoc.Test.csproj", "{60F3F5BD-76B9-4524-9946-B315CB80C91D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QDoc.Test", "QmsDoc.Test\QDoc.Test.csproj", "{60F3F5BD-76B9-4524-9946-B315CB80C91D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadderControls", "LadderControls\LadderControls.csproj", "{D949B936-F294-4F84-B4F2-6E1F86A932C1}"
 EndProject

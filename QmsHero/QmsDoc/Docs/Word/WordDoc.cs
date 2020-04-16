@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
-using QmsDoc.Interfaces;
+using QDoc.Interfaces;
 using System.IO;
-using QmsDoc.Core;
-using QmsDoc.Exceptions;
+using QDoc.Core;
+using QDoc.Exceptions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using LadderFileUtils;
 using System.Reflection;
 
-namespace QmsDoc.Docs
+namespace QDoc.Word
 {
-    public class WordDoc : IQmsDoc, INotifyPropertyChanged
+    public class WordDoc : IQDoc, INotifyPropertyChanged
     {
         WordDocConfig docConfig;
         WordprocessingDocument doc;
@@ -133,7 +133,7 @@ namespace QmsDoc.Docs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IQmsDoc Process(DocState docState, DirectoryInfo targetDir)
+        public IQDoc Process(DocState docState, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new WordDoc(targetFile);
@@ -153,7 +153,7 @@ namespace QmsDoc.Docs
             }
         }
 
-        public IQmsDoc Process(DocProperty prop, DirectoryInfo targetDir)
+        public IQDoc Process(DocProperty prop, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new WordDoc(targetFile);
