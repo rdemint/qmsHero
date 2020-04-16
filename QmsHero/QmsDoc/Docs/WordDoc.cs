@@ -168,7 +168,7 @@ namespace QmsDoc.Docs
             DocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
-                instance.Set(doc, DocConfig, prop.Value);
+                instance.Write(doc, DocConfig, prop.Value);
             }
         }
 
@@ -182,7 +182,7 @@ namespace QmsDoc.Docs
             DocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                result = (DocProperty)instance.Get(doc, DocConfig);
+                result = (DocProperty)instance.Read(doc, DocConfig);
             }
             return result;
 

@@ -45,12 +45,12 @@ namespace QmsDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual DocProperty Get(object doc, object docConfig)
+        public virtual DocProperty Read(object doc, object docConfig)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Set(object doc, IDocConfig docConfig, string value)
+        public virtual void Write(object doc, IDocConfig docConfig, string value)
         {
             throw new NotImplementedException();
         }

@@ -34,7 +34,7 @@ namespace QWordDoc
             return p;
         }
 
-        public override DocProperty Get(object doc, object docConfig)
+        public override DocProperty Read(object doc, object docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;
@@ -43,7 +43,7 @@ namespace QWordDoc
             return new EffectiveDate(match.ToString());
         }
 
-        public override void Set(object wdoc, IDocConfig wdocConfig, string value)
+        public override void Write(object wdoc, IDocConfig wdocConfig, string value)
         {
                 WordprocessingDocument doc = (WordprocessingDocument)wdoc;
                 WordDocConfig docConfig = (WordDocConfig)wdocConfig;
