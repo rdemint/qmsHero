@@ -67,21 +67,20 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\DocState.cs" />
-    <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Core\QDocState.cs" />
+    <Compile Include="Core\QDocProperty.cs" />
     <Compile Include="Enums\Date.cs" />
     <Compile Include="Exceptions\DocPropertyGetException.cs" />
     <Compile Include="Exceptions\ProjectDirNotSetException.cs" />
-    <Compile Include="Interfaces\IDocConfig.cs" />
-    <Compile Include="Core\DocManager.cs" />
-    <Compile Include="Core\DocManagerConfig.cs" />
-    <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
-    <Compile Include="Docs\Word\WordDocConfig.cs" />
+    <Compile Include="Interfaces\IQDocConfig.cs" />
+    <Compile Include="Core\QDocManager.cs" />
+    <Compile Include="Core\QDocManagerConfig.cs" />
+    <Compile Include="Docs\Excel\QExcelDocConfig.cs" />
+    <Compile Include="Docs\Word\QWordDocConfig.cs" />
     <Compile Include="Exceptions\MultipleDocHeadersException.cs" />
-    <Compile Include="Docs\Excel\ExcelDoc.cs" />
-    <Compile Include="Docs\Word\WordDoc.cs" />
-    <Compile Include="Interfaces\IDocAction.cs" />
-    <Compile Include="Interfaces\IDocManager.cs" />
+    <Compile Include="Docs\Excel\QExcelDoc.cs" />
+    <Compile Include="Docs\Word\QWordDoc.cs" />
+    <Compile Include="Interfaces\IQDocManager.cs" />
     <Compile Include="Interfaces\IQDoc.cs" />
     <Compile Include="Interfaces\IToDocPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

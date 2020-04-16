@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace QDoc.Interfaces
 {
-    public interface IDocConfig
+    public interface IQDocConfig
     {
-        string EffectiveDateText { get; set; }
-        Regex EffectiveDateRegex { get; set; }
-        string RevisionText { get; set; }
+        
         
     }
 }

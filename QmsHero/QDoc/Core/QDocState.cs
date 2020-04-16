@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public class DocState: INotifyPropertyChanged, IToDocPropertyCollection
+    public class QDocState: INotifyPropertyChanged, IToDocPropertyCollection
 
     {
 
-        public DocState()
+        public QDocState()
         {
         }
 
@@ -26,13 +26,13 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ObservableCollection<DocProperty> ToCollection(bool filter=true)
+        public ObservableCollection<QDocProperty> ToCollection(bool filter=true)
         {
-            var col = new ObservableCollection<DocProperty>();
+            var col = new ObservableCollection<QDocProperty>();
             var docProps = this.GetType().GetProperties();
             foreach (PropertyInfo docProp in docProps)
             {
-                col.Add((DocProperty)docProp.GetValue(this));
+                col.Add((QDocProperty)docProp.GetValue(this));
             }
             if(filter)
             {
@@ -41,21 +41,21 @@ namespace QDoc.Core
             return col;
         }
 
-        public ObservableCollection<DocProperty> FilterCollection(ObservableCollection<DocProperty> docProps)
+        public ObservableCollection<QDocProperty> FilterCollection(ObservableCollection<QDocProperty> docProps)
         {
             var query = docProps.Where(prop => prop.Value!=null);
             if(query.Any())
             {
-                return new ObservableCollection<DocProperty>(query);
+                return new ObservableCollection<QDocProperty>(query);
             }
             else
             {
-                return new ObservableCollection<DocProperty>();
+                return new ObservableCollection<QDocProperty>();
             }
         }
-        private void AddCollectionRange(ObservableCollection<DocProperty> baseCollection, ObservableCollection<DocProperty> props)
+        private void AddCollectionRange(ObservableCollection<QDocProperty> baseCollection, ObservableCollection<QDocProperty> props)
         {
-            foreach(DocProperty prop in props)
+            foreach(QDocProperty prop in props)
             {
                 baseCollection.Add(prop);
             }

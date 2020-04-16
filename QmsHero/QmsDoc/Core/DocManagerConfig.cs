@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QDoc.Docs.Word;
+using QDoc.Core;
 
-namespace QmsDoc.Docs.Word
+namespace QmsDoc.Core
 {
-    class WordDoc: QWordDoc
+    class DocManagerConfig: QDocManagerConfig
     {
     }
 }

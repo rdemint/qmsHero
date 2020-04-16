@@ -4,22 +4,22 @@ using System.ComponentModel;
 
 namespace QDoc.Core
 {
-    public class DocProperty: INotifyPropertyChanged
+    public class QDocProperty: INotifyPropertyChanged
     {
         string name;
         string value;
         bool isSet;
 
-        public DocProperty()
+        public QDocProperty()
         {
 
         }
 
-        public DocProperty(string value) 
+        public QDocProperty(string value) 
         {
             this.Value = value;
         }
-        public DocProperty(string name, string value)
+        public QDocProperty(string name, string value)
         {
             this.name = name;
             this.Value = value;
@@ -45,12 +45,12 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual DocProperty Read(object doc, object docConfig)
+        public virtual QDocProperty Read(object doc, object docConfig)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Write(object doc, IDocConfig docConfig, string value)
+        public virtual void Write(object doc, IQDocConfig docConfig, string value)
         {
             throw new NotImplementedException();
         }

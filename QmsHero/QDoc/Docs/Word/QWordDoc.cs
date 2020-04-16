@@ -17,9 +17,9 @@ using System.Reflection;
 
 namespace QDoc.Docs.Word
 {
-    public class WordDoc : IQDoc, INotifyPropertyChanged
+    public class QWordDoc : IQDoc, INotifyPropertyChanged
     {
-        WordDocConfig docConfig;
+        QWordDocConfig docConfig;
         WordprocessingDocument doc;
         MainDocumentPart mainDocumentPart;
         FileInfo fileInfo;
@@ -28,20 +28,20 @@ namespace QDoc.Docs.Word
         string revision;
 
 
-        public WordDoc()
+        public QWordDoc()
         {
 
         }
 
-        public WordDoc(System.IO.FileInfo fileInfo) : base()
+        public QWordDoc(System.IO.FileInfo fileInfo) : base()
         {
             this.FileInfo = fileInfo;
-            this.DocConfig = new WordDocConfig();
+            this.DocConfig = new QWordDocConfig();
         }
 
 
         #region Config
-        public WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public QWordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public FileInfo FileInfo { get => fileInfo;
             set { fileInfo = value; } }
         #endregion
@@ -133,39 +133,39 @@ namespace QDoc.Docs.Word
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IQDoc Process(DocState docState, DirectoryInfo targetDir)
+        public IQDoc Process(QDocState docState, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
-            var targetDoc = new WordDoc(targetFile);
+            var targetDoc = new QWordDoc(targetFile);
             targetDoc.Process(docState);
             return targetDoc;
         }
 
-        public void Process(DocState docState)
+        public void Process(QDocState docState)
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
                 var docProps = docState.ToCollection();
-                foreach (DocProperty docProp in docProps)
+                foreach (QDocProperty docProp in docProps)
                 {
                     Process(docProp);
                 }
             }
         }
 
-        public IQDoc Process(DocProperty prop, DirectoryInfo targetDir)
+        public IQDoc Process(QDocProperty prop, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
-            var targetDoc = new WordDoc(targetFile);
+            var targetDoc = new QWordDoc(targetFile);
             targetDoc.Process(prop);
             return targetDoc;
         }
-        public void Process(DocProperty prop)
+        public void Process(QDocProperty prop)
         {
             string propRef = DocConfig.PropertyReferenceName(prop.Name);
             Type myPropType = Type.GetType(propRef);
-            DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
-            DocProperty result = null;
+            QDocProperty instance = (QDocProperty)Activator.CreateInstance(myPropType);
+            QDocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
                 instance.Write(doc, DocConfig, prop.Value);
@@ -174,24 +174,24 @@ namespace QDoc.Docs.Word
 
         
 
-        public DocProperty Inspect(DocProperty prop)
+        public QDocProperty Inspect(QDocProperty prop)
         {
             string propRef = DocConfig.PropertyReferenceName(prop.Name);
             Type myPropType = Type.GetType(propRef);
-            DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
-            DocProperty result = null;
+            QDocProperty instance = (QDocProperty)Activator.CreateInstance(myPropType);
+            QDocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                result = (DocProperty)instance.Read(doc, DocConfig);
+                result = (QDocProperty)instance.Read(doc, DocConfig);
             }
             return result;
 
         }
 
-        public DocState Inspect(bool filter = false)
+        public QDocState Inspect(bool filter = false)
         {
             //Return a new DocState based on inspection of the WordProcessingDocument
-            DocState state = new DocState();
+            QDocState state = new QDocState();
             var docProps = state.ToCollection(filter: false);
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {

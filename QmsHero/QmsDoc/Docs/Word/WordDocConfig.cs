@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QDoc.Docs.Word
+namespace QmsDoc.Docs.Word
 {
     public class QWordDocConfig: IQDocConfig
     {
@@ -21,8 +21,7 @@ namespace QDoc.Docs.Word
         int revisionCol;
         int logoRow;
         int logoCol;
-        string qWordDocAssembly = "QWordDoc";
-        string qWordDocNamespace = "QWordDoc";
+        int logoHeight;
 
         public QWordDocConfig():base()
         {
@@ -42,6 +41,7 @@ namespace QDoc.Docs.Word
         public Regex EffectiveDateRegex { 
             get => effectiveDateRegex; 
             set => effectiveDateRegex = value; }
+        public int LogoHeight { get => logoHeight; set => logoHeight = value; }
 
         #endregion
         public void Initialize()
@@ -55,11 +55,8 @@ namespace QDoc.Docs.Word
             this.RevisionText = "Rev. ";
             this.RevisionRow = 1;
             this.RevisionCol = 2;
+            this.LogoHeight = 28;
         }
 
-        public string PropertyReferenceName(string docPropertyName)
-        {
-            return qWordDocAssembly + "." + docPropertyName + ", " + qWordDocNamespace;
-        }
     }
 }

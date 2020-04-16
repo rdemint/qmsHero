@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Interfaces
 {
-    public interface IDocManager
+    public interface IQDocManager
     {
         bool ProcessFiles(QDocState docEdit);
     }

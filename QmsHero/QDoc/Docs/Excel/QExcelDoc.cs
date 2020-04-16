@@ -19,9 +19,9 @@ using QDoc.Interfaces;
 namespace QDoc.Docs.Excel
 
 {
-    public class ExcelDoc : IQDoc, INotifyPropertyChanged
+    public class QExcelDoc : IQDoc, INotifyPropertyChanged
     {
-        ExcelDocConfig docConfig;
+        QExcelDocConfig docConfig;
         FileInfo fileInfo;
         SpreadsheetDocument doc;
         WorkbookPart workbookPart;
@@ -31,12 +31,12 @@ namespace QDoc.Docs.Excel
         string effectiveDate;
         string revision;
 
-        public ExcelDoc() { }
+        public QExcelDoc() { }
 
-        public ExcelDoc(System.IO.FileInfo fileInfo): base()
+        public QExcelDoc(System.IO.FileInfo fileInfo): base()
         {
             this.FileInfo = fileInfo;
-            this.DocConfig = new ExcelDocConfig();
+            this.DocConfig = new QExcelDocConfig();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -45,7 +45,7 @@ namespace QDoc.Docs.Excel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public QExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public FileInfo FileInfo { get => fileInfo; set => fileInfo = value; }
         #region Header
         
@@ -150,15 +150,15 @@ namespace QDoc.Docs.Excel
         #endregion
 
 
-        public IQDoc Process(DocState docState, DirectoryInfo targetDir)
+        public IQDoc Process(QDocState docState, DirectoryInfo targetDir)
         {
             var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
-            var targetDoc = new ExcelDoc(targetFile);
+            var targetDoc = new QExcelDoc(targetFile);
             targetDoc.Process(docState);
             return targetDoc;
         }
 
-        public void Process(DocState docState)
+        public void Process(QDocState docState)
         {
 
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
@@ -166,7 +166,7 @@ namespace QDoc.Docs.Excel
                 this.doc = doc;
                 this.workbookPart = doc.WorkbookPart;
                 var docProps = docState.ToCollection();
-                foreach (DocProperty docProp in docProps)
+                foreach (QDocProperty docProp in docProps)
                 {
                     var propertyInfo = this.GetType().GetProperty(docProp.Name);
                     propertyInfo?.SetValue(this, docProp.Value);
@@ -174,21 +174,21 @@ namespace QDoc.Docs.Excel
             }
         }
 
-        public DocState Inspect(bool filter=false)
+        public QDocState Inspect(bool filter=false)
         {
-            DocState state = new DocState();
+            QDocState state = new QDocState();
             var docProps = state.ToCollection(filter);
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
             {
                 this.doc = doc;
                 this.workbookPart = doc.WorkbookPart;
                 //
-                foreach (DocProperty docProp in docProps)
+                foreach (QDocProperty docProp in docProps)
                 {
                     var methodInfo = this.GetType().GetMethod("Fetch" + docProp.Name);
                     string result = (string)methodInfo?.Invoke(this, null);
                     var propertyInfo = state.GetType().GetProperty(docProp.Name);
-                    DocProperty dp = (DocProperty)propertyInfo.GetValue(state);
+                    QDocProperty dp = (QDocProperty)propertyInfo.GetValue(state);
                     var propertyInfoValue = dp.GetType().GetProperty("Value");
                     propertyInfoValue.SetValue(dp, result);
                 }

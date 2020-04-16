@@ -15,7 +15,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace QDoc.Core
 {
-    public class DocManager : IDocManager, IDisposable
+    public class QDocManager : IQDocManager, IDisposable
     {
         DirectoryInfo dir;
         DirectoryInfo processingDir;
@@ -24,16 +24,12 @@ namespace QDoc.Core
         List<FileInfo> processingDirFiles;
         bool disposed = false;
 
-        DocManagerConfig docManagerConfig;
-        ExcelDocConfig excelConfig;
-        WordDocConfig wordConfig;
+        QDocManagerConfig docManagerConfig;
 
-        public DocManager()
+        public QDocManager()
         {
            
-            this.excelConfig = new ExcelDocConfig();
-            this.wordConfig = new WordDocConfig();
-            this.docManagerConfig = new DocManagerConfig();
+            this.docManagerConfig = new QDocManagerConfig();
             this.dirFilesUnsafe = new List<FileInfo>();
 
             this.DirFiles = new List<FileInfo>();
@@ -41,7 +37,7 @@ namespace QDoc.Core
         }
         
         #region Properties
-        public DocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
+        public QDocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
         public List<FileInfo> DirFiles {
             get => this.dirFiles;
             set => this.dirFiles = value;
@@ -158,7 +154,7 @@ namespace QDoc.Core
             return new DirectoryInfo(destDirPath);
         }
 
-        public void ProcessDoc(FileInfo file, DocState docEdit)
+        public void ProcessDoc(FileInfo file, QDocState docEdit)
         {
             try
             {
@@ -182,7 +178,7 @@ namespace QDoc.Core
             }
         }
 
-        public Boolean ProcessFiles(DocState docEdit) 
+        public Boolean ProcessFiles(QDocState docEdit) 
         {
             Contract.Requires(this.CanProcessFiles() == true);
 
