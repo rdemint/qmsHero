@@ -46,6 +46,7 @@
       <HintPath>..\packages\MSTest.TestFramework.2.0.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -63,10 +64,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QmsDoc.Test\QmsDoc.Test.csproj">
-      <Project>{60f3f5bd-76b9-4524-9946-b315cb80c91d}</Project>
-      <Name>QmsDoc.Test</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WordDocAction\QWordDoc.csproj">
       <Project>{160322B0-AB94-4299-BE65-442F94EB3CA2}</Project>
       <Name>QWordDoc</Name>

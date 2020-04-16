@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Test;
+//using QmsDoc.Test;
 
 namespace QWordDoc.Tests
 {
@@ -15,7 +15,7 @@ namespace QWordDoc.Tests
         [TestMethod()]
         public void GetTest()
         {
-            var fixture = new FixtureUtil();
+            //var fixture = new FixtureUtil();
             Assert.Fail();
         }
     }
