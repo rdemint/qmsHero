@@ -19,6 +19,8 @@ namespace QmsDoc.Docs
         int revisionCol;
         int logoRow;
         int logoCol;
+        string qWordDocAssembly = "QWordDoc";
+        string qWordDocNamespace = "QWordDoc";
 
         public WordDocConfig():base()
         {
@@ -47,6 +49,11 @@ namespace QmsDoc.Docs
             this.RevisionText = "Rev. ";
             this.RevisionRow = 1;
             this.RevisionCol = 2;
+        }
+
+        public string PropertyReferenceName(string docPropertyName)
+        {
+            return qWordDocAssembly + "." + docPropertyName + ", " + qWordDocNamespace;
         }
     }
 }

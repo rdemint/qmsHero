@@ -227,7 +227,7 @@ namespace QmsDoc.Docs
 
         public DocProperty Inspect(DocProperty prop)
         {
-            string propRef = "QWordDoc." + prop.Name + ", QWordDoc";
+            string propRef = DocConfig.PropertyReferenceName(prop.Name);
             Type myPropType = Type.GetType(propRef);
             //object[] instanceParams = new object[1] { prop.Value };
             DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
@@ -243,14 +243,6 @@ namespace QmsDoc.Docs
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        
-        public void SaveAsPdf()
-        {
-        }
-
-        public int MultipleRunCheck(Paragraph par) {
-            return par.Elements<Run>().Count();
         }
 
     }

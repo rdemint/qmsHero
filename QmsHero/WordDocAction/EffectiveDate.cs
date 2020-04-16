@@ -11,19 +11,19 @@ using QmsDoc.Exceptions;
 using System.Text.RegularExpressions;
 using QmsDoc.Core;
 
-namespace QmsDoc.Word
+namespace QWordDoc
 {
-    public class Revision: DocProperty
+    public class EffectiveDate: DocProperty
     {
  
-        public Revision(): base()
+        public EffectiveDate(): base()
         {
-            this.Name = "Revision";
+            this.Name = "EffectiveDate";
         }
 
-        public Revision(string value) : base(value)
+        public EffectiveDate(string value) : base(value)
         {
-            this.Name = "Revision";
+            this.Name = "EffectiveDate";
         }
 
         public Paragraph FetchEffectiveDatePart(WordprocessingDocument doc, int row, int col)
@@ -38,14 +38,14 @@ namespace QmsDoc.Word
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;
-            Paragraph par = FetchEffectiveDatePart(wdoc, wdocConfig.RevisionRow, wdocConfig.RevisionCol);
+            Paragraph par = FetchEffectiveDatePart(wdoc, wdocConfig.EffectiveDateRow, wdocConfig.EffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
             if(!match.Success) {
                 throw new DocPropertyGetException(); 
             }
             //this.Value = match.ToString();
             //return this.Value;
-            return new Revision(match.ToString());
+            return new EffectiveDate(match.ToString());
         }
 
         public override void Set(object wdoc, object wdocConfig)

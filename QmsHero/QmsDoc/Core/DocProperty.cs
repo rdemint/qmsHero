@@ -14,8 +14,13 @@ namespace QmsDoc.Core
 
         }
 
-        public DocProperty(string value)
+        public DocProperty(string value) 
         {
+            this.Value = value;
+        }
+        public DocProperty(string name, string value)
+        {
+            this.name = name;
             this.Value = value;
         }
 

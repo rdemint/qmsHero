@@ -16,7 +16,6 @@ namespace QmsHero.ViewModel
         string revision;
         string logoText;
         DocManager manager;
-        DocHeader docHeader;
         RelayCommand processFiles;
 
         public DCNViewModel()
@@ -34,17 +33,6 @@ namespace QmsHero.ViewModel
 
         public string Revision { get => revision; set => revision = value; }
         public string LogoText { get => logoText; set => logoText = value; }
-
-        public DocHeader DocHeader
-        {
-            get => docHeader;
-            set
-            {
-                Set<DocHeader>(
-                    () => this.DocHeader, ref this.docHeader, value
-                    );
-            }
-        }
 
         public RelayCommand ProcessFiles {
             get {

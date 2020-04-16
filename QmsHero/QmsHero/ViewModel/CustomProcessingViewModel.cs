@@ -19,7 +19,6 @@ namespace QmsHero.ViewModel
         DocManager manager;
         RelayCommand processFilesCommand;
         DocState docState;
-        DocHeader docHeader;
         ObservableCollection<DocProperty> docProps;
         string originalDirPath;
 

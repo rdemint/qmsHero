@@ -82,14 +82,11 @@
     <Compile Include="Docs\WordDoc.cs" />
     <Compile Include="Interfaces\IDocAction.cs" />
     <Compile Include="Interfaces\IDocManager.cs" />
-    <Compile Include="Interfaces\IDocSection.cs" />
     <Compile Include="Interfaces\IDocCheck.cs" />
     <Compile Include="Interfaces\IQmsDoc.cs" />
     <Compile Include="Interfaces\IToDocPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ErrorMessenger.cs" />
-    <Compile Include="Word\HeaderTableCell.cs" />
-    <Compile Include="Word\Revision.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

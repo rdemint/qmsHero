@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeaderTableCell.cs" />
-    <Compile Include="Revision.cs" />
+    <Compile Include="EffectiveDate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

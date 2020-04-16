@@ -26,7 +26,7 @@ namespace QmsDoc.Core.Tests
         public void IsSetTest()
         {
             var prop = new DocProperty();
-            Assert.AreEqual(null, prop.IsSet);
+            Assert.AreEqual(false, prop.IsSet);
             prop.Value = "4";
             Assert.AreEqual(false, prop.IsSet);
         }

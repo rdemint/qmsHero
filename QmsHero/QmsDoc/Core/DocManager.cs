@@ -46,6 +46,7 @@ namespace QmsDoc.Core
             get => this.dirFiles;
             set => this.dirFiles = value;
         }
+        public DirectoryInfo Dir { get => dir; set => dir = value; }
 
         public List<FileInfo> ProcessingDirFiles { 
             get => this.processingDirFiles;
@@ -55,7 +56,6 @@ namespace QmsDoc.Core
         public DirectoryInfo ProcessingDir { 
             get => processingDir; 
             set => processingDir = value; }
-        public DirectoryInfo Dir { get => dir; set => dir = value; }
         
 
         #endregion
@@ -191,18 +191,6 @@ namespace QmsDoc.Core
                 ProcessDoc(file, docEdit);   
             }
             return true;
-        }
-
-        public Boolean HasOpenFilePath(string file_name)
-        {
-            if (file_name.StartsWith("~"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public void Dispose()

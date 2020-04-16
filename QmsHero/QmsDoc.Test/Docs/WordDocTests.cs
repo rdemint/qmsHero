@@ -38,10 +38,10 @@ namespace QmsDoc.Docs.Tests
             string rev = "60";
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
-            string initialRev = doc.Inspect(new Revision()).Value;
+            string initialRev = doc.Inspect(new EffectiveDate()).Value;
             Assert.AreEqual("4", initialRev);
 
-            Revision newRev = new Revision("4");
+            EffectiveDate newRev = new EffectiveDate("4");
             //var targetDoc = doc.Process(state, fixture.ProcessingDir);
             //string result = (string)targetDoc.Inspect().Revision.Value;
             //Assert.AreEqual(rev, result);
@@ -52,17 +52,19 @@ namespace QmsDoc.Docs.Tests
         {
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
-            Revision rev = new Revision();
-            var result = (Revision)doc.Inspect(rev);
-            Assert.AreEqual(typeof(Revision), result.GetType());
+            EffectiveDate rev = new EffectiveDate();
+            var result = (EffectiveDate)doc.Inspect(rev);
+            Assert.AreEqual(typeof(EffectiveDate), result.GetType());
         }
 
         [TestMethod()]
         public void QmsWordDocPropertiesTest()
         {
-            string propRef = "QWordDoc.Revision, QWordDoc";
+            WordDocConfig config = new WordDocConfig();
+
+            string propRef = config.PropertyReferenceName("EffectiveDate");
             Type myType = Type.GetType(propRef);
-            Revision rev = new Revision();
+            EffectiveDate rev = new EffectiveDate();
             Assert.AreEqual(rev.GetType(), myType); 
         }
 
