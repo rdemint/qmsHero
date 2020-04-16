@@ -177,7 +177,7 @@ namespace QmsDoc.Docs
 
         public IQmsDoc Process(DocState docState, DirectoryInfo targetDir)
         {
-            var targetFile = this.CopyDocToTargetDir(this.FileInfo, targetDir);
+            var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new WordDoc(targetFile);
             targetDoc.Process(docState);
             return targetDoc;
@@ -226,12 +226,16 @@ namespace QmsDoc.Docs
 
         public DocProperty Inspect(DocProperty prop)
         {
-
+            string propRef = "QmsDoc.Word." + prop.Name;
+            var myPropType = Type.GetType(propRef);
+            //object[] instanceParams = new object[1] { prop.Value };
+            var instance = Activator.CreateInstance(myPropType,
+            WordDocProperty wordProp = ;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                prop.Get(doc, DocConfig);
+                wordProp.Get(doc);
             }
-            return prop;
+            return wordProp;
 
         }
 

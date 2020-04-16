@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace QmsDoc.Core
 {
-    public abstract class DocProperty: INotifyPropertyChanged
+    public class DocProperty: INotifyPropertyChanged
     {
         string name;
         string value;
@@ -38,17 +38,17 @@ namespace QmsDoc.Core
             this.isSet = false;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
-        //public virtual DocProperty Get(object doc, object docConfig)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
-        //public virtual void Set(object doc, object docConfig)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        
+        public virtual DocProperty Get(object doc, object docConfig)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Set(object doc, object docConfig)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual bool IsValid()
         {
             if (this.Value != null)

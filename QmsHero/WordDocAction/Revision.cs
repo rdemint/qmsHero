@@ -14,7 +14,7 @@ using QmsDoc.Core;
 
 namespace QmsDoc.Word
 {
-    public class Revision: DocProperty, IWordProperty
+    public class Revision: DocProperty
     {
  
         public Revision(): base()
@@ -35,9 +35,11 @@ namespace QmsDoc.Word
             return p;
         }
 
-        public DocProperty Get(WordprocessingDocument doc, WordDocConfig config)
+        public override DocProperty Get(object doc, object docConfig)
         {
-            Paragraph par = FetchEffectiveDatePart(doc, config.RevisionRow, config.RevisionCol);
+            WordprocessingDocument wdoc = (WordprocessingDocument)doc;
+            WordDocConfig wdocConfig = (WordDocConfig)docConfig;
+            Paragraph par = FetchEffectiveDatePart(wdoc, wdocConfig.RevisionRow, wdocConfig.RevisionCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
             if(!match.Success) {
                 throw new DocPropertyGetException(); 
@@ -47,7 +49,7 @@ namespace QmsDoc.Word
             return new Revision(match.ToString());
         }
 
-        public void Set(WordprocessingDocument doc, WordDocConfig config)
+        public override void Set(WordprocessingDocument)
         {
             throw new NotImplementedException();
         }

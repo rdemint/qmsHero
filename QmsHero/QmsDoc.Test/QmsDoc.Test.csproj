@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Core\DocEditTests.cs" />
     <Compile Include="Core\DocManagerTests.cs" />
+    <Compile Include="Core\DocPropertyTests.cs" />
     <Compile Include="Docs\ExcelDocTests.cs" />
     <Compile Include="Docs\WordDocTests.cs" />
     <Compile Include="FixtureUtil.cs" />

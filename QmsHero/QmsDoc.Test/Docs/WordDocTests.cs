@@ -40,7 +40,7 @@ namespace QmsDoc.Docs.Tests
             string initialRev = doc.Inspect(new Revision()).Value;
             Assert.AreEqual("4", initialRev);
 
-            newRev = new Revision("4");
+            Revision newRev = new Revision("4");
             var targetDoc = doc.Process(state, fixture.ProcessingDir);
             string result = (string)targetDoc.Inspect().Revision.Value;
             Assert.AreEqual(rev, result);

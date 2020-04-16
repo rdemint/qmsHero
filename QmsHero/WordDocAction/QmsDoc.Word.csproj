@@ -43,11 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeaderTableCell.cs" />
-    <Compile Include="Interfaces\IWordProperty.cs" />
     <Compile Include="Revision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordDocActionManager.cs" />
-    <Compile Include="WordDocProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
