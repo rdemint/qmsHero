@@ -70,13 +70,13 @@ namespace QDoc.Test
             return result;
         }
 
-        public DocState WordProcessingSampleState()
+        public QDocState WordProcessingSampleState()
         {
             var doc = new WordDoc(this.WordSample);
             return doc.Inspect();
         }
 
-        public DocState ExcelProcessingSampleState()
+        public QDocState ExcelProcessingSampleState()
         {
             var doc = new ExcelDoc(this.ExcelSample);
             return doc.Inspect();

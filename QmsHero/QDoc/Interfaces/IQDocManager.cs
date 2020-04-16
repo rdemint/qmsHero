@@ -9,6 +9,6 @@ namespace QDoc.Interfaces
 {
     public interface IDocManager
     {
-        bool ProcessFiles(DocState docEdit);
+        bool ProcessFiles(QDocState docEdit);
     }
 }

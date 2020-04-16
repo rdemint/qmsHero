@@ -10,8 +10,8 @@ namespace QDoc.Interfaces
 {
     public interface IQDoc
     {
-        void Process(DocState state);
-        IQDoc Process(DocState state, DirectoryInfo targetDir);
-        DocState Inspect(bool filter = false);
+        void Process(QDocState state);
+        IQDoc Process(QDocState state, DirectoryInfo targetDir);
+        QDocState Inspect(bool filter = false);
     }
 }

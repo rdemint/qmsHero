@@ -21,7 +21,7 @@ namespace QDoc.Core.Tests
         [TestMethod()]
         public void ConfigDirTest()
         {
-            var manager = new DocManager();
+            var manager = new QDocManager();
             manager.ConfigDir(fixture.ActiveQMSDocuments.FullName);
             Assert.AreEqual(fixture.ActiveQMSDocuments.FullName, manager.Dir.FullName);
             Assert.AreEqual(

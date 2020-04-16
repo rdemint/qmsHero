@@ -113,7 +113,7 @@
       <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
       <Name>QFileUtil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QmsDoc\QDoc.csproj">
+    <ProjectReference Include="..\QDoc\QDoc.csproj">
       <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
       <Name>QDoc</Name>
     </ProjectReference>

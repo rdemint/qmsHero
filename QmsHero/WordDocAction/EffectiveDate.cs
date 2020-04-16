@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using QDoc.Word;
+using QDoc.Docs.Word;
 using QDoc.Exceptions;
 using System.Text.RegularExpressions;
 using QDoc.Core;

@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QDoc.Word
+namespace QDoc.Docs.Word
 {
     public class WordDocConfig: IDocConfig
     {

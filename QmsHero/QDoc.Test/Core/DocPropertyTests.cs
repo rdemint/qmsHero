@@ -15,17 +15,17 @@ namespace QDoc.Core.Tests
         [TestMethod()]
         public void DocPropertyTest()
         {
-            var prop = new DocProperty();
+            var prop = new QDocProperty();
             Assert.AreEqual(null, prop.Value);
 
-            var prop2 = new DocProperty("hello");
+            var prop2 = new QDocProperty("hello");
             Assert.AreEqual("hello", prop2.Value);
         }
 
         [TestMethod()]
         public void IsSetTest()
         {
-            var prop = new DocProperty();
+            var prop = new QDocProperty();
             Assert.AreEqual(false, prop.IsSet);
             prop.Value = "4";
             Assert.AreEqual(false, prop.IsSet);

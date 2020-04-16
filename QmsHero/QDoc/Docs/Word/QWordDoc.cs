@@ -15,7 +15,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using LadderFileUtils;
 using System.Reflection;
 
-namespace QDoc.Word
+namespace QDoc.Docs.Word
 {
     public class WordDoc : IQDoc, INotifyPropertyChanged
     {
