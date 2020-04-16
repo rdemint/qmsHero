@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace QWordDoc
+namespace QmsDoc.Word
 {
     public static class HeaderTableCell
     {

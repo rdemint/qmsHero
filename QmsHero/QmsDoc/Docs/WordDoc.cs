@@ -13,6 +13,7 @@ using QmsDoc.Exceptions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using LadderFileUtils;
+using System.Reflection;
 
 namespace QmsDoc.Docs
 {
@@ -226,16 +227,16 @@ namespace QmsDoc.Docs
 
         public DocProperty Inspect(DocProperty prop)
         {
-            string propRef = "QmsDoc.Word." + prop.Name;
-            var myPropType = Type.GetType(propRef);
+            string propRef = "QWordDoc." + prop.Name + ", QWordDoc";
+            Type myPropType = Type.GetType(propRef);
             //object[] instanceParams = new object[1] { prop.Value };
-            var instance = Activator.CreateInstance(myPropType,
-            WordDocProperty wordProp = ;
+            DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
+            DocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                wordProp.Get(doc);
+                result = (DocProperty)instance.Get(doc, DocConfig);
             }
-            return wordProp;
+            return result;
 
         }
 

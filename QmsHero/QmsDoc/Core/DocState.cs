@@ -20,7 +20,7 @@ namespace QmsDoc.Core
 
         public DocState()
         {
-            this.Revision = new Revision();
+            //this.Revision = new Revision();
         }
 
 

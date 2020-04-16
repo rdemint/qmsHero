@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LadderControls", "LadderCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QFileUtil", "LadderFileUtils\QFileUtil.csproj", "{41D7B217-AB9D-4C02-8E2F-83187B5BAA8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QmsDoc.Word", "WordDocAction\QmsDoc.Word.csproj", "{160322B0-AB94-4299-BE65-442F94EB3CA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QWordDoc", "WordDocAction\QWordDoc.csproj", "{160322B0-AB94-4299-BE65-442F94EB3CA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

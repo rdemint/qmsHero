@@ -88,6 +88,8 @@
     <Compile Include="Interfaces\IToDocPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ErrorMessenger.cs" />
+    <Compile Include="Word\HeaderTableCell.cs" />
+    <Compile Include="Word\Revision.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

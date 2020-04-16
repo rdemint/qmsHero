@@ -11,7 +11,7 @@ using QmsDoc.Exceptions;
 using System.Text.RegularExpressions;
 using QmsDoc.Core;
 
-namespace QWordDoc
+namespace QmsDoc.Word
 {
     public class Revision: DocProperty
     {

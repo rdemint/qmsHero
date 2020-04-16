@@ -117,9 +117,9 @@
       <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
       <Name>QmsDoc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WordDocAction\QmsDoc.Word.csproj">
-      <Project>{160322B0-AB94-4299-BE65-442F94EB3CA2}</Project>
-      <Name>QmsDoc.Word</Name>
+    <ProjectReference Include="..\WordDocAction\QWordDoc.csproj">
+      <Project>{160322b0-ab94-4299-be65-442f94eb3ca2}</Project>
+      <Name>QWordDoc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
