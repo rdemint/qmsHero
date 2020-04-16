@@ -61,48 +61,6 @@ namespace QmsDoc.Docs
             TableCell cell = r.Elements<TableCell>().ElementAt(col);
             return cell;
         }
-        public Paragraph FetchEffectiveDatePart()
-        {
-
-            TableCell cell = FetchHeaderFooterTableCell(DocConfig.EffectiveDateRow, DocConfig.EffectiveDateCol);
-            Paragraph p = cell.Elements<Paragraph>().First();
-            return p;
-        }
-        public string FetchEffectiveDate()
-        {
-            Paragraph p = FetchEffectiveDatePart();
-            //
-            Match match = Regex.Match(p.InnerText, @"\d\d\d\d-\d\d-\d\d");
-            this.effectiveDate = match.ToString();
-            return match.ToString();
-        }
-        public string EffectiveDate
-        {
-            get {
-                return this.effectiveDate;
-            }
-
-            set
-            {
-                //https://stackoverflow.com/questions/32075170/how-to-replace-the-innertext-of-a-comment
-                Paragraph par = FetchEffectiveDatePart();
-                Run myRun = (Run)par.Elements<Run>().First().Clone();
-                par.RemoveAllChildren<Run>();
-                Text text = myRun.Elements<Text>().First();
-                text.Text = DocConfig.EffectiveDateText + value;
-                par.Append(myRun);
-                var x = 4;
-                //par.RemoveAllChildren();
-                //Run run = new Run();
-                //Text text = new Text();
-                //text.Text = DocConfig.EffectiveDateText + value;
-                //run.Append(text);
-                //par.Append(run);
-                this.effectiveDate = value;
-                this.OnPropertyChanged();
-
-            }
-        }
 
         public Paragraph FetchRevisionPart()
         {
@@ -189,47 +147,38 @@ namespace QmsDoc.Docs
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
                 var docProps = docState.ToCollection();
-                object[] methodParams = new object[1];
-                methodParams[0] = doc;
-                methodParams[1] = DocConfig;
                 foreach (DocProperty docProp in docProps)
                 {
-                    var setMethod = docProp.GetType().GetMethod("Set");
-                    setMethod?.Invoke(docProp, methodParams);
+                    Process(docProp);
                 }
             }
         }
 
-        public DocState Inspect(bool filter=false)
+        public IQmsDoc Process(DocProperty prop, DirectoryInfo targetDir)
         {
-            //Return a new DocState based on inspection of the WordProcessingDocument
-            DocState state = new DocState();
-            var docProps = state.ToCollection(filter:false);
+            var targetFile = QFileUtil.FileCopy(this.FileInfo, targetDir);
+            var targetDoc = new WordDoc(targetFile);
+            targetDoc.Process(prop);
+            return targetDoc;
+        }
+        public void Process(DocProperty prop)
+        {
+            string propRef = DocConfig.PropertyReferenceName(prop.Name);
+            Type myPropType = Type.GetType(propRef);
+            DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
+            DocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                object[] methodParams = new object[1];
-                methodParams[0] = doc;
-                methodParams[1] = DocConfig;
-
-                foreach (DocProperty docProp in docProps)
-                {
-
-                    var getMethod = docProp.GetType().GetMethod("Get");
-                    string result = (string)getMethod?.Invoke(docProp, methodParams);
-                    var stateProperty = state.GetType().GetProperty(docProp.Name);
-                    DocProperty dp = (DocProperty)stateProperty.GetValue(state);
-                    var propertyInfoValue = dp.GetType().GetProperty("Value");
-                    propertyInfoValue.SetValue(dp, result);
-                }
+                instance.Set(doc, DocConfig, prop.Value);
             }
-            return state;
         }
+
+        
 
         public DocProperty Inspect(DocProperty prop)
         {
             string propRef = DocConfig.PropertyReferenceName(prop.Name);
             Type myPropType = Type.GetType(propRef);
-            //object[] instanceParams = new object[1] { prop.Value };
             DocProperty instance = (DocProperty)Activator.CreateInstance(myPropType);
             DocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
@@ -238,6 +187,31 @@ namespace QmsDoc.Docs
             }
             return result;
 
+        }
+
+        public DocState Inspect(bool filter = false)
+        {
+            //Return a new DocState based on inspection of the WordProcessingDocument
+            DocState state = new DocState();
+            var docProps = state.ToCollection(filter: false);
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            {
+                object[] methodParams = new object[1];
+                methodParams[0] = doc;
+                methodParams[1] = DocConfig;
+                throw new NotImplementedException();
+                //foreach (DocProperty docProp in docProps)
+                //{
+
+                //    var getMethod = docProp.GetType().GetMethod("Get");
+                //    string result = (string)getMethod?.Invoke(docProp, methodParams);
+                //    var stateProperty = state.GetType().GetProperty(docProp.Name);
+                //    DocProperty dp = (DocProperty)stateProperty.GetValue(state);
+                //    var propertyInfoValue = dp.GetType().GetProperty("Value");
+                //    propertyInfoValue.SetValue(dp, result);
+                //}
+            }
+            return state;
         }
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")

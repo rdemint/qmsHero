@@ -31,12 +31,6 @@ namespace QmsDoc.Core.Tests
             Assert.AreEqual(false, prop.IsSet);
         }
 
-        [TestMethod()]
-        public void IsValidTest()
-        {
-            var prop = new DocProperty();
-            Assert.IsFalse(prop.IsValid());
-        }
 
         
     }

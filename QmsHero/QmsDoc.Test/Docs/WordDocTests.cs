@@ -18,13 +18,17 @@ namespace QmsDoc.Docs.Tests
         public void EffectiveDateTest()
         {
             string expected = "2019-11-05";
-            string setValue = "2020-04-12";
+            string setValue = "2020-20-20";
             var fixture = new FixtureUtil();
             WordDoc doc = new WordDoc(fixture.WordSample);
             string initial = doc.Inspect(new EffectiveDate()).Value;
             Assert.AreEqual(expected, initial);
             
-            EffectiveDate newRev = new EffectiveDate("4");
+            EffectiveDate newDate = new EffectiveDate(setValue);
+            WordDoc newDoc = (WordDoc)doc.Process(newDate, fixture.ProcessingDir);
+            string result = newDoc.Inspect(new EffectiveDate()).Value;
+            Assert.AreEqual()
+
             //var targetDoc = doc.Process(state, fixture.ProcessingDir);
             //string result = (string)targetDoc.Inspect().Revision.Value;
             //Assert.AreEqual(rev, result);

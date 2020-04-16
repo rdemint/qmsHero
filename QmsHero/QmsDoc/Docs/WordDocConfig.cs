@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QmsDoc.Docs
@@ -14,6 +15,7 @@ namespace QmsDoc.Docs
         string effectiveDateText;
         int effectiveDateRow;
         int effectiveDateCol;
+        Regex effectiveDateRegex;
         string revisionText;
         int revisionRow;
         int revisionCol;
@@ -37,6 +39,9 @@ namespace QmsDoc.Docs
         public int LogoCol { get => logoCol; set => logoCol = value; }
         public string EffectiveDateText { get => effectiveDateText; set => effectiveDateText = value; }
         public string RevisionText { get => revisionText; set => revisionText = value; }
+        public Regex EffectiveDateRegex { 
+            get => effectiveDateRegex; 
+            set => effectiveDateRegex = value; }
 
         #endregion
         public void Initialize()
@@ -46,6 +51,7 @@ namespace QmsDoc.Docs
             this.EffectiveDateText = "Effective Date: ";
             this.EffectiveDateRow = 1;
             this.EffectiveDateCol = 1;
+            this.EffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.RevisionText = "Rev. ";
             this.RevisionRow = 1;
             this.RevisionCol = 2;

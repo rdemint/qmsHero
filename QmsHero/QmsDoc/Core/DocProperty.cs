@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QmsDoc.Interfaces;
+using System;
 using System.ComponentModel;
 
 namespace QmsDoc.Core
@@ -49,18 +50,21 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Set(object doc, object docConfig)
+        public virtual void Set(object doc, IDocConfig docConfig, string value)
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool IsValid()
+        public virtual bool IsValid(string value, IDocConfig config)
         {
-            if (this.Value != null)
+            if (value != null)
             {
                 return true;
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }
