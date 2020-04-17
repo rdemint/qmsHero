@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using QDoc.Core;
+using System.Collections.Generic;
 using System.IO;
 
 namespace QDoc.Interfaces

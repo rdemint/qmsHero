@@ -1,9 +1,9 @@
 ﻿
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using LadderFileUtils;
 using QDoc.Core;
 using QDoc.Docs;
+using QFileUtil;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -54,49 +54,14 @@ namespace QDoc.Test
             var parent = parent1.Parent;
             this.qmsHero_dir = parent;
             this.Dir = new DirectoryInfo(Path.Combine(this.qmsHero_dir.FullName, "Fixtures"));
-            this.ProcessingDir = QFileUtil.CreateOrCleanSubDirectory(Dir, "Processing");
+            this.ProcessingDir = FileUtil.CreateOrCleanSubDirectory(Dir, "Processing");
             Contract.Requires(ProcessingDir.Exists);
             this.ActiveQMSDocuments = this.Dir.GetDirectories("Active QMS Documents").ToList()[0];
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
             this.Files = this.ActiveQMSDocuments.GetFiles("*", SearchOption.AllDirectories).ToList();
-            this.SafeFiles = this.GetSafeFiles(this.files);
             this.WordSample = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
             this.ExcelSample = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
         }
         
-        public List<FileInfo> GetSafeFiles(List<FileInfo> files)
-        {
-            var result = files.Where((file) => file.Name.StartsWith("~") == false).ToList();
-            return result;
-        }
-
-        public QDocState WordProcessingSampleState()
-        {
-            var doc = new WordDoc(this.WordSample);
-            return doc.Inspect();
-        }
-
-        public QDocState ExcelProcessingSampleState()
-        {
-            var doc = new ExcelDoc(this.ExcelSample);
-            return doc.Inspect();
-        }
-
-        public object TestExcelDocMethod(FileInfo file, string methodName)
-        {
-            using(SpreadsheetDocument doc = SpreadsheetDocument.Open(file.FullName, true))
-            {
-                WorkbookPart wbPart = doc.WorkbookPart;
-                WorksheetPart wsPart = wbPart.WorksheetParts.First();
-                Worksheet ws = wsPart.Worksheet;
-                HeaderFooter hf = ws.Descendants<HeaderFooter>().FirstOrDefault();
-                if (hf!=null)
-                {
-                    var x = hf.InnerText;
-                }
-                return null;
-
-            }
-        }
     }
 }

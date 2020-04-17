@@ -45,8 +45,9 @@ namespace QmsDocXml
             return new Revision(match.ToString());
         }
 
-        public override void Write(object doc, IDocConfig docConfig, string value)
+        public override void Write(object doc, IDocConfig docConfig, object state)
         {
+            string value = (string)state;
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig config = (WordDocConfig)docConfig;
             Paragraph par = FetchRevisionPart(wdoc, config);
@@ -62,8 +63,7 @@ namespace QmsDocXml
         public override bool IsValid(IDocConfig config)
         {
             var rx = ((WordDocConfig)config).EffectiveDateRegex;
-            var match = rx.Match(this.State);
-            //Match match = Regex.Match(this.Value, @"d{1,2}");
+            var match = rx.Match(this.State.ToString());
             if (
                 match.Success &&
                 base.IsValid(config)

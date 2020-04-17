@@ -32,7 +32,6 @@ namespace QDoc.Test.Core
                 manager.Dir.FullName,
                 fixture.ActiveQMSDocuments.FullName
                 );
-            manager.Dispose();
         }
     }
 }

@@ -7,23 +7,17 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Text.RegularExpressions;
 using QmsDoc.Docs.Word;
-using QDoc.Core;
+using QmsDoc.Core;
 using QDoc.Interfaces;
 
 namespace QmsDocXml
 {
     public class EffectiveDate: DocProperty
     {
- 
-        public EffectiveDate(): base()
-        {
-            this.Name = "EffectiveDate";
-        }
 
-        public EffectiveDate(object value) : base(value)
-        {
-            this.Name = "EffectiveDate";
-        }
+        public EffectiveDate() : base() { }
+
+        public EffectiveDate(object value) : base(value) { }
 
 
         #region word
@@ -36,7 +30,7 @@ namespace QmsDocXml
             return p;
         }
 
-        public override QDocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override DocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;
@@ -45,7 +39,7 @@ namespace QmsDocXml
             return new EffectiveDate(match.ToString());
         }
 
-        public override void Write(object wdoc, IDocConfig wdocConfig, string value)
+        public override void Write(object wdoc, IDocConfig wdocConfig, object value)
         {
                 WordprocessingDocument doc = (WordprocessingDocument)wdoc;
                 WordDocConfig docConfig = (WordDocConfig)wdocConfig;
@@ -62,7 +56,7 @@ namespace QmsDocXml
         {
             //Match match = Regex.Match(this.Value, @"\d\d\d\d-\d\d-\d\d");
             var rx = ((WordDocConfig)config).RevisionRegex;
-            var match = rx.Match(this.State);
+            var match = rx.Match(this.State.ToString());
                 if (
                     match.Success &&
                     base.IsValid(config)
@@ -75,7 +69,8 @@ namespace QmsDocXml
         #endregion
 
         #region excel
+        //not implemented
+        #endregion
 
-#endre
     }
 }
