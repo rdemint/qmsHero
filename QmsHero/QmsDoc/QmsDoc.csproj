@@ -54,6 +54,8 @@
   <ItemGroup>
     <Folder Include="Docs\Excel\Properties\" />
     <Folder Include="Docs\Word\Properties\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QDoc\QDoc.csproj">

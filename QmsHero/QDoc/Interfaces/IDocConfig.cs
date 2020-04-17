@@ -9,7 +9,6 @@ namespace QDoc.Interfaces
 {
     public interface IQDocConfig
     {
-        
-        
+        void Initialize();
     }
 }

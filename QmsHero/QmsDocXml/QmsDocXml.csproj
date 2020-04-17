@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="Docs\Word\Properties\EffectiveDate.cs" />
     <Compile Include="Docs\Word\Properties\HeaderTableCell.cs" />
+    <Compile Include="Docs\Word\Properties\Logo.cs" />
+    <Compile Include="Docs\Word\Properties\LogoText.cs" />
+    <Compile Include="Docs\Word\Properties\Revision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

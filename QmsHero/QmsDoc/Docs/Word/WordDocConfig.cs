@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Word
 {
-    public class QWordDocConfig: IQDocConfig
+    public class WordDocConfig: IDocConfig
     {
         int headerFooterSection;
         string effectiveDateText;
@@ -23,7 +23,7 @@ namespace QmsDoc.Docs.Word
         int logoCol;
         int logoHeight;
 
-        public QWordDocConfig():base()
+        public WordDocConfig():base()
         {
             this.Initialize();
         }

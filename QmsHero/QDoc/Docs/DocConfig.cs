@@ -7,24 +7,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QDoc.Docs.Word
+namespace QDoc.Docs
 {
-    public class QWordDocConfig: IQDocConfig
+    public class QDocConfig: IDocConfig
     {
-        int headerFooterSection;
-        string effectiveDateText;
-        int effectiveDateRow;
-        int effectiveDateCol;
-        Regex effectiveDateRegex;
-        string revisionText;
-        int revisionRow;
-        int revisionCol;
-        int logoRow;
-        int logoCol;
-        string qWordDocAssembly = "QWordDoc";
-        string qWordDocNamespace = "QWordDoc";
-
-        public QWordDocConfig():base()
+        public QDocConfig():base()
         {
             this.Initialize();
         }
@@ -44,22 +31,10 @@ namespace QDoc.Docs.Word
             set => effectiveDateRegex = value; }
 
         #endregion
-        public void Initialize()
+        public virtual void Initialize()
         {
-            //Header
-            this.HeaderFooterSection = 1;
-            this.EffectiveDateText = "Effective Date: ";
-            this.EffectiveDateRow = 1;
-            this.EffectiveDateCol = 1;
-            this.EffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
-            this.RevisionText = "Rev. ";
-            this.RevisionRow = 1;
-            this.RevisionCol = 2;
+            throw new NotImplementedException();
         }
 
-        public string PropertyReferenceName(string docPropertyName)
-        {
-            return qWordDocAssembly + "." + docPropertyName + ", " + qWordDocNamespace;
-        }
     }
 }

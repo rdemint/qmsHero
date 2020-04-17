@@ -1,7 +1,6 @@
 ﻿using System;
 using Directory = System.IO.Directory;
 using FileInfo = System.IO.FileInfo;
-
 using System.Collections.Generic;
 using Contract = System.Diagnostics.Contracts.Contract;
 using System.Linq;
@@ -12,7 +11,7 @@ using QDoc.Interfaces;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using QFileUtil.QFileUtil;
+using QFileUtil;
 
 namespace QDoc.Core
 {
@@ -20,7 +19,6 @@ namespace QDoc.Core
     {
         DirectoryInfo dir;
         DirectoryInfo processingDir;
-        List<FileInfo> dirFilesUnsafe;
         List<FileInfo> dirFiles;
         List<FileInfo> processingDirFiles;
         bool disposed = false;
@@ -91,7 +89,7 @@ namespace QDoc.Core
         public void ConfigDir(string dirPath, string processingDirName="Processing")
         {
             this.Dir = new DirectoryInfo(dirPath);
-            this.ProcessingDir = QFileUtil(this.Dir, processingDirName, true);
+            this.ProcessingDir = FileUtil.DirectoryCopy(this.Dir, processingDirName, true);
             this.DirFiles = this.Dir.GetFiles("*", SearchOption.AllDirectories).ToList();
             this.ProcessingDirFiles = this.ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
         }
@@ -148,31 +146,7 @@ namespace QDoc.Core
             return new DirectoryInfo(destDirPath);
         }
 
-        public void ProcessDoc(FileInfo file, QDocState docEdit)
-        {
-            try
-            {
-                if (DocManagerConfig.WordDocExtensions.Contains(file.Extension))
-                {
-                    WordDoc doc = new WordDoc(file);
-                    doc.Process(docEdit);
-                }
-
-                else if (DocManagerConfig.ExcelDocExtensions.Contains(file.Extension))
-                {
-                    ExcelDoc doc = new ExcelDoc(file);
-                    doc.Process(docEdit, processingDir);
-                }
-
-            }
-
-            catch (Exception e)
-            {
-                System.Windows.Forms.MessageBox.Show("An Error occured while processing a document");
-            }
-        }
-
-        public Boolean ProcessFiles(QDocState docEdit) 
+        public void ProcessFiles(QDocState docEdit) 
         {
             Contract.Requires(this.CanProcessFiles() == true);
 
@@ -180,24 +154,8 @@ namespace QDoc.Core
             {
                 ProcessDoc(file, docEdit);   
             }
-            return true;
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        public virtual void Dispose(bool disposing)
-        {
-            if(!this.disposed)
-            {
-                if(disposing)
-                {
-                    DeleteProcessingDir();
-                }
-            }
-        }
         #endregion
     }
 

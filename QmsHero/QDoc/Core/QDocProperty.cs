@@ -50,7 +50,7 @@ namespace QDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Write(object doc, IQDocConfig docConfig, string value)
+        public virtual void Write(object doc, IDocConfig docConfig, string value)
         {
             throw new NotImplementedException();
         }

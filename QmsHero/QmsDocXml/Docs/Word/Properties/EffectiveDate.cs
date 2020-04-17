@@ -11,7 +11,7 @@ using QmsDoc.Core;
 
 namespace QmsDocXml.Docs.Word.Properties
 {
-    public class EffectiveDate: DocProperty
+    public class EffectiveDate: QDocProperty
     {
  
         public EffectiveDate(): base()

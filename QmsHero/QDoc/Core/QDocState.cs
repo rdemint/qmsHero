@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public class QDocState: INotifyPropertyChanged, IToDocPropertyCollection
-
+    public class QDocState : INotifyPropertyChanged, IToDocPropertyCollection, IQDocState
     {
 
         public QDocState()
@@ -26,7 +25,7 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ObservableCollection<QDocProperty> ToCollection(bool filter=true)
+        public ObservableCollection<QDocProperty> ToCollection(bool filter = true)
         {
             var col = new ObservableCollection<QDocProperty>();
             var docProps = this.GetType().GetProperties();
@@ -34,30 +33,23 @@ namespace QDoc.Core
             {
                 col.Add((QDocProperty)docProp.GetValue(this));
             }
-            if(filter)
+            if (filter)
             {
-            col = FilterCollection(col);
+                col = FilterCollection(col);
             }
             return col;
         }
 
         public ObservableCollection<QDocProperty> FilterCollection(ObservableCollection<QDocProperty> docProps)
         {
-            var query = docProps.Where(prop => prop.Value!=null);
-            if(query.Any())
+            var query = docProps.Where(prop => prop.Value != null);
+            if (query.Any())
             {
                 return new ObservableCollection<QDocProperty>(query);
             }
             else
             {
                 return new ObservableCollection<QDocProperty>();
-            }
-        }
-        private void AddCollectionRange(ObservableCollection<QDocProperty> baseCollection, ObservableCollection<QDocProperty> props)
-        {
-            foreach(QDocProperty prop in props)
-            {
-                baseCollection.Add(prop);
             }
         }
     }

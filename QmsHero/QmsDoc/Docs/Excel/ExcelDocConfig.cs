@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Excel
 {
-    public class QExcelDocConfig: IQDocConfig
+    public class QExcelDocConfig: IDocConfig
     {
         string effectiveDateText;
         Regex effectiveDateRegex;

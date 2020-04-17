@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QFileUtil
 {
-    public static class QFileUtil
+    public static class FileUtil
     {
         
         public static FileInfo FileCopy(FileInfo file, DirectoryInfo targetDir, bool allowOverWrite=true)
