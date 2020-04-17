@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
-    <Compile Include="Core\DocProperty.cs" />
     <Compile Include="Docs\Excel\ExcelDoc.cs" />
     <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
     <Compile Include="Docs\Word\WordDocConfig.cs" />
