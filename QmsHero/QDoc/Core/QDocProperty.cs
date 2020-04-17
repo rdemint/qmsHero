@@ -7,38 +7,35 @@ namespace QDoc.Core
     public class QDocProperty: INotifyPropertyChanged
     {
         string name;
-        string state;
-        bool isSet;
+        object state;
 
         public QDocProperty()
         {
 
         }
 
-        public QDocProperty(string value) 
+        public QDocProperty(object value) 
         {
             this.state = value;
         }
-        public QDocProperty(string name, string value)
+        public QDocProperty(string name, object state)
         {
             this.name = name;
-            this.state = value;
+            this.state = state;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string State
+        public object State
         {
             get => state;
             set => this.state = value;
 
         }
         public string Name { get => name; set => name = value; }
-        public bool IsSet { get => isSet; }
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
-            this.isSet = false;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -47,7 +44,7 @@ namespace QDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Write(object doc, IDocConfig docConfig, string value)
+        public virtual void Write(object doc, IDocConfig docConfig, object state)
         {
             throw new NotImplementedException();
         }

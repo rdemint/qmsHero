@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
+    <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Exceptions\ReadDocumentNotValidException.cs" />
     <Compile Include="Docs\Excel\ExcelDoc.cs" />
     <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
     <Compile Include="Docs\Word\WordDocConfig.cs" />
@@ -56,7 +58,6 @@
   <ItemGroup>
     <Folder Include="Docs\Excel\Properties\" />
     <Folder Include="Docs\Word\Properties\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>

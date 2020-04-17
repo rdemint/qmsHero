@@ -42,17 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Docs\Word\Properties\DocReadException.cs" />
-    <Compile Include="Docs\Word\Properties\EffectiveDate.cs" />
-    <Compile Include="Docs\Word\Properties\HeaderTableCell.cs" />
-    <Compile Include="Docs\Word\Properties\Logo.cs" />
-    <Compile Include="Docs\Word\Properties\LogoText.cs" />
-    <Compile Include="Docs\Word\Properties\Revision.cs" />
+    <Compile Include="EffectiveDate.cs" />
+    <Compile Include="PartHeaderTableCell.cs" />
+    <Compile Include="Logo.cs" />
+    <Compile Include="LogoText.cs" />
+    <Compile Include="Revision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Docs\Excel\Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\QDoc\QDoc.csproj">
       <Project>{18E880A8-81A4-42CC-8563-7066AC8D278B}</Project>

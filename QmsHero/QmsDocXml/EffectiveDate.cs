@@ -25,10 +25,13 @@ namespace QmsDocXml.Docs.Word.Properties
             this.Name = "EffectiveDate";
         }
 
+
+        #region word
+
         public Paragraph FetchEffectiveDatePart(WordprocessingDocument doc, int row, int col)
         {
 
-            TableCell cell = HeaderTableCell.Get(doc, row, col);
+            TableCell cell = WordPartHeaderTableCell.Get(doc, row, col);
             Paragraph p = cell.Elements<Paragraph>().First();
             return p;
         }
@@ -69,6 +72,10 @@ namespace QmsDocXml.Docs.Word.Properties
                 }
                 else { return false; }
         }
+        #endregion
 
+        #region excel
+
+#endre
     }
 }

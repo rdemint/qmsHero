@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Excel
 {
-    public class QExcelDocConfig: IDocConfig
+    public class ExcelDocConfig: IDocConfig
     {
         string effectiveDateText;
         Regex effectiveDateRegex;
@@ -16,7 +16,7 @@ namespace QmsDoc.Docs.Excel
         string revisionEffectiveDateSeparator;
         int logoHeight;
 
-        public QExcelDocConfig()
+        public ExcelDocConfig()
         {
             this.Initialize();
         }

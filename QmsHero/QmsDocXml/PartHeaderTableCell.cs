@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace QmsDocXml.Docs.Word.Properties
 {
-    public static class HeaderTableCell
+    public static class WordPartHeaderTableCell
     {
         public static TableCell Get(WordprocessingDocument doc, int row, int col)
         {

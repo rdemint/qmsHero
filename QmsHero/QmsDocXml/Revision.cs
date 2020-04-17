@@ -24,7 +24,7 @@ namespace QmsDocXml.Docs.Word.Properties
 
         public Paragraph FetchRevisionPart(WordprocessingDocument doc, WordDocConfig config)
         {
-            TableCell cell = HeaderTableCell.Get(doc, config.RevisionRow, config.RevisionCol);
+            TableCell cell = WordPartHeaderTableCell.Get(doc, config.RevisionRow, config.RevisionCol);
             return cell.Elements<Paragraph>().First();
         }
         public string FetchRevision(WordprocessingDocument doc, WordDocConfig config)
