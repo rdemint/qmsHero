@@ -56,6 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\DocPropertyTestClass.cs" />
     <Compile Include="Core\DocPropertyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QDoc\QDoc.csproj">
+      <Project>{18E880A8-81A4-42CC-8563-7066AC8D278B}</Project>
+      <Name>QDoc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
       <Project>{A387F634-3E43-4045-BA55-52D05D6D3BDD}</Project>
       <Name>QmsDoc</Name>

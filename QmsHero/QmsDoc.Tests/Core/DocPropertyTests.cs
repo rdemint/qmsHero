@@ -12,9 +12,18 @@ namespace QmsDoc.Core.Tests
     public class DocPropertyTests
     {
         [TestMethod()]
-        public void ReadTest()
+        public void DocPropertyTest()
         {
-            Assert.Fail();
+            DocProperty prop = new DocPropertyTestClass();
+            Assert.AreEqual("DocPropertyTestClass", prop.Name);
+            Assert.AreEqual(null, prop.State);
+
+            DocProperty prop2 = new DocPropertyTestClass("4");
+            Assert.AreEqual("4", prop2.State.ToString());
+
+            DocProperty prop3 = new DocPropertyTestClass(true);
+            Assert.AreEqual(true, (bool)prop3.State);
+
         }
     }
 }
