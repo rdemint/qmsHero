@@ -7,7 +7,8 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Text.RegularExpressions;
 using QmsDoc.Docs.Word;
-using QmsDoc.Core;
+using QDoc.Core;
+using QDoc.Interfaces;
 
 namespace QmsDocXml.Docs.Word.Properties
 {
@@ -32,7 +33,7 @@ namespace QmsDocXml.Docs.Word.Properties
             return p;
         }
 
-        public override DocProperty Read(object doc, object docConfig)
+        public override QDocProperty Read(object doc, object docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;

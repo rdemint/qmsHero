@@ -53,6 +53,10 @@
     <Folder Include="Docs\Excel\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QDoc\QDoc.csproj">
+      <Project>{18E880A8-81A4-42CC-8563-7066AC8D278B}</Project>
+      <Name>QDoc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
       <Project>{a387f634-3e43-4045-ba55-52d05d6d3bdd}</Project>
       <Name>QmsDoc</Name>

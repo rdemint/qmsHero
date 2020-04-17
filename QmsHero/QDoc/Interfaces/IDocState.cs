@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace QDoc.Core
 {
-    public interface IQDocState
+    public interface IDocState
     {
         event PropertyChangedEventHandler PropertyChanged;
         ObservableCollection<QDocProperty> FilterCollection(ObservableCollection<QDocProperty> docProps);

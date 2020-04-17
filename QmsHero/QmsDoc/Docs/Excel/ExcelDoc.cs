@@ -4,13 +4,34 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QDoc.Docs.Excel;
+using QDoc.Core;
+using QDoc.Docs;
+using QDoc.Interfaces;
+
 namespace QmsDoc.Docs.Excel
 {
-    public class ExcelDoc : QExcelDoc
+    public class ExcelDoc : Doc
     {
-        public ExcelDoc(FileInfo fileInfo) : base(fileInfo)
+        public ExcelDoc() { }
+
+        public ExcelDoc(FileInfo fileInfo) : base(fileInfo) { }
+
+        public ExcelDoc(FileInfo fileInfo, IDocConfig docConfig) : base(fileInfo, docConfig) { }
+
+        public override void Process(QDocProperty prop)
         {
+            throw new NotImplementedException();
         }
+        public override QDocProperty Inspect(QDocProperty prop)
+        {
+            return base.Inspect(prop);
+        }
+
+        public override IDocState Inspect(IDocState docState)
+        {
+            return base.Inspect(docState);
+        }
+
+
     }
 }

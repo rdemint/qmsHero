@@ -12,5 +12,14 @@ namespace QmsDoc.Core
         public DocManager(): base()
         {
         }
+
+        public override void ProcessFiles(IDocState docEdit)
+        {
+            throw new NotImplementedException();
+        }
+        public override void ProcessFiles(QDocProperty docProp)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

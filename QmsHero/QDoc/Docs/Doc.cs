@@ -19,7 +19,7 @@ namespace QDoc.Docs
     public class Doc : IDoc
     {
         FileInfo fileInfo;
-        IQDocConfig docConfig;
+        IDocConfig docConfig;
 
 
         public Doc()
@@ -27,22 +27,26 @@ namespace QDoc.Docs
 
         }
 
-        public Doc(System.IO.FileInfo fileInfo) : base()
+        public Doc(System.IO.FileInfo fileInfo)
         {
             this.FileInfo = fileInfo;
         }
 
-        public Doc(FileInfo fileInfo, )
+        public Doc(FileInfo fileInfo, IDocConfig docConfig)
+        {
+            this.FileInfo = fileInfo;
+            this.DocConfig = docConfig;
+        }
 
         #region Config
         public FileInfo FileInfo { 
             get => fileInfo;
             set { fileInfo = value; } }
 
-        public IQDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         #endregion
 
-        public virtual IDoc Process(IQDocState docState, DirectoryInfo targetDir)
+        public virtual IDoc Process(IDocState docState, DirectoryInfo targetDir)
         {
             var targetFile = FileUtil.FileCopy(this.FileInfo, targetDir);
             var targetDoc = new Doc(targetFile);
@@ -50,7 +54,7 @@ namespace QDoc.Docs
             return targetDoc;
         }
 
-        public virtual void Process(IQDocState docState)
+        public virtual void Process(IDocState docState)
         {
            var docProps = docState.ToCollection();
            foreach (QDocProperty docProp in docProps)
@@ -72,7 +76,7 @@ namespace QDoc.Docs
         }
 
 
-        public virtual IQDocState Inspect(IQDocState docState)
+        public virtual IDocState Inspect(IDocState docState)
         {
             throw new NotImplementedException();
         }

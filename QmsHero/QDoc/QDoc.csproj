@@ -67,19 +67,19 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IQDocState.cs" />
+    <Compile Include="Interfaces\IDocManager.cs" />
+    <Compile Include="Interfaces\IDocState.cs" />
     <Compile Include="Core\QDocState.cs" />
     <Compile Include="Core\QDocProperty.cs" />
     <Compile Include="Enums\Date.cs" />
     <Compile Include="Exceptions\DocPropertyGetException.cs" />
     <Compile Include="Exceptions\ProjectDirNotSetException.cs" />
-    <Compile Include="Interfaces\IQDocConfig.cs" />
+    <Compile Include="Interfaces\IDocConfig.cs" />
     <Compile Include="Core\QDocManager.cs" />
     <Compile Include="Core\QDocManagerConfig.cs" />
-    <Compile Include="Docs\QDocConfig.cs" />
+    <Compile Include="Docs\DocConfig.cs" />
     <Compile Include="Exceptions\MultipleDocHeadersException.cs" />
     <Compile Include="Docs\Doc.cs" />
-    <Compile Include="Interfaces\IQDocManager.cs" />
     <Compile Include="Interfaces\IDoc.cs" />
     <Compile Include="Interfaces\IToDocPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

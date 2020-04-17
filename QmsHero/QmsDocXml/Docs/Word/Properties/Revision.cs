@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace QmsDocXml.Docs.Word.Properties
     {
         public Paragraph FetchRevisionPart()
         {
-            TableCell cell = this.FetchHeaderFooterTableCell(this.DocConfig.RevisionRow, DocConfig.RevisionCol);
+            TableCell cell = HeaderTableCell.Get(this.DocConfig.RevisionRow, DocConfig.RevisionCol);
             return cell.Elements<Paragraph>().First();
         }
         public string FetchRevision()

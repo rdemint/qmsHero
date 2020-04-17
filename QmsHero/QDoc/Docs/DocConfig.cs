@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace QDoc.Docs
 {
-    public class QDocConfig: IDocConfig
+    public class DocConfig: IDocConfig
     {
-        public QDocConfig():base()
+        public DocConfig():base()
         {
             this.Initialize();
         }

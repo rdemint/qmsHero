@@ -1,14 +1,21 @@
-﻿using QDoc.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.IO;
 
-namespace QDoc.Interfaces
+namespace QDoc.Core
 {
-    public interface IQDocManager
+    public interface IDocManager
     {
-        bool ProcessFiles(QDocState docEdit);
+        DirectoryInfo Dir { get; set; }
+        List<FileInfo> DirFiles { get; set; }
+        QDocManagerConfig DocManagerConfig { get; set; }
+        DirectoryInfo ProcessingDir { get; set; }
+        List<FileInfo> ProcessingDirFiles { get; set; }
+
+        bool CanProcessFiles();
+        void ConfigDir(string dirPath, string processingDirName = "Processing");
+        void DeleteProcessingDir();
+        bool DirIsValid(string path);
+        void ProcessFiles(IDocState docEdit);
+        void ProcessFiles(QDocProperty docProp);
     }
 }

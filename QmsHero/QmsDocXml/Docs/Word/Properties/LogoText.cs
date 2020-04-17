@@ -8,21 +8,21 @@ namespace QmsDocXml.Docs.Word.Properties
 {
     class LogoText
     {
-        public string LogoText
-        {
-            get => this.logoText;
-            set
-            {
-                //var cell = this.HeaderFooterTable
-                //    .Cell(
-                //    this.DocConfig.LogoRow,
-                //    this.DocConfig.LogoCol
-                //    );
-                //cell.Range.Delete();
-                //cell.Range.Text = "Effective Date: " + value;
-                this.logoText = value;
-                OnPropertyChanged();
-            }
-        }
+        //public string LogoText
+        //{
+        //    get => this.logoText;
+        //    set
+        //    {
+        //        //var cell = this.HeaderFooterTable
+        //        //    .Cell(
+        //        //    this.DocConfig.LogoRow,
+        //        //    this.DocConfig.LogoCol
+        //        //    );
+        //        //cell.Range.Delete();
+        //        //cell.Range.Text = "Effective Date: " + value;
+        //        this.logoText = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
     }
 }

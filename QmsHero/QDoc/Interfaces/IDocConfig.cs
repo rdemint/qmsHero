@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Interfaces
 {
-    public interface IQDocConfig
+    public interface IDocConfig
     {
         void Initialize();
     }

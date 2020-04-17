@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public class QDocState : INotifyPropertyChanged, IToDocPropertyCollection, IQDocState
+    public class QDocState : INotifyPropertyChanged, IToDocPropertyCollection, IDocState
     {
 
         public QDocState()
