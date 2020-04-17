@@ -10,9 +10,9 @@ using QmsDoc.Docs.Word;
 using QDoc.Core;
 using QDoc.Interfaces;
 
-namespace QmsDocXml.Docs.Word.Properties
+namespace QmsDocXml
 {
-    public class EffectiveDate: QDocProperty
+    public class EffectiveDate: DocProperty
     {
  
         public EffectiveDate(): base()
@@ -20,7 +20,7 @@ namespace QmsDocXml.Docs.Word.Properties
             this.Name = "EffectiveDate";
         }
 
-        public EffectiveDate(string value) : base(value)
+        public EffectiveDate(object value) : base(value)
         {
             this.Name = "EffectiveDate";
         }
@@ -36,7 +36,7 @@ namespace QmsDocXml.Docs.Word.Properties
             return p;
         }
 
-        public override QDocProperty Read(object doc, object docConfig)
+        public override QDocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig wdocConfig = (WordDocConfig)docConfig;

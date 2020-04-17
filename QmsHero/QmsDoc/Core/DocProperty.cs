@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    class DocProperty : QDocProperty
+    public class DocProperty : QDocProperty
     {
         public DocProperty()
         {

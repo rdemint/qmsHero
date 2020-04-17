@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EffectiveDate.cs" />
-    <Compile Include="PartHeaderTableCell.cs" />
+    <Compile Include="WordPartHeaderTableCell.cs" />
     <Compile Include="Logo.cs" />
     <Compile Include="LogoText.cs" />
     <Compile Include="Revision.cs" />

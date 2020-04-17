@@ -68,14 +68,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DocEditTests.cs" />
-    <Compile Include="Core\DocManagerTests.cs" />
-    <Compile Include="Core\DocPropertyTests.cs" />
+    <Compile Include="Core\QDocManagerTests.cs" />
+    <Compile Include="Core\QDocPropertyTests.cs" />
     <Compile Include="Docs\Excel\QExcelDocConfig.cs" />
     <Compile Include="Docs\Excel\QExcelDocTests.cs" />
     <Compile Include="Docs\Word\QWordDocTests.cs" />
     <Compile Include="FixtureUtil.cs" />
     <Compile Include="FixtureUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QDocPropertyTestClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001A Document Change Notice Rev1.docx" />

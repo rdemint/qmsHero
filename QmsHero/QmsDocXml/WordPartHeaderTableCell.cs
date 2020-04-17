@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace QmsDocXml.Docs.Word.Properties
+namespace QmsDocXml
 {
     public static class WordPartHeaderTableCell
     {

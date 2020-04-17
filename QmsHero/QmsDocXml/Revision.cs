@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using QDoc.Core;
 using QDoc.Interfaces;
 using QmsDoc.Docs.Word;
+using QmsDoc.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QmsDocXml.Docs.Word.Properties
+namespace QmsDocXml
 {
-    class Revision: QDocProperty
+    class Revision: DocProperty
     {
         public Revision()
         {
         }
 
-        public Revision(string state) : base(state)
+        public Revision(object state) : base(state)
         {
         }
 

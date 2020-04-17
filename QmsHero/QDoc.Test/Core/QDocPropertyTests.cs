@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace QDoc.Core.Tests
 {
     [TestClass()]
-    public class DocPropertyTests
+    public class QDocPropertyTests
     {
 
         [TestMethod()]
@@ -17,19 +17,12 @@ namespace QDoc.Core.Tests
         {
             var prop = new QDocProperty();
             Assert.AreEqual(null, prop.State);
+            //Assert.AreEqual("QDocProperty")
 
             var prop2 = new QDocProperty("hello");
             Assert.AreEqual("hello", prop2.State);
         }
 
-        [TestMethod()]
-        public void IsSetTest()
-        {
-            var prop = new QDocProperty();
-            Assert.AreEqual(false, prop.IsSet);
-            prop.State = "4";
-            Assert.AreEqual(false, prop.IsSet);
-        }
 
 
         

@@ -14,7 +14,7 @@ using System.IO;
 namespace QDoc.Core.Tests
 {
     [TestClass()]
-    public class DocManagerTests
+    public class QDocManagerTests
     {
         FixtureUtil fixture = new FixtureUtil();
 

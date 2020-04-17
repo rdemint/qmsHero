@@ -4,23 +4,24 @@ using System.ComponentModel;
 
 namespace QDoc.Core
 {
-    public class QDocProperty: INotifyPropertyChanged
+    public abstract class QDocProperty: INotifyPropertyChanged
     {
         string name;
         object state;
 
         public QDocProperty()
         {
-
+            this.name = this.GetType().Name;
         }
 
         public QDocProperty(object value) 
         {
+            this.name = this.GetType().Name;
             this.state = value;
         }
         public QDocProperty(string name, object state)
         {
-            this.name = name;
+            this.name = this.GetType().Name;
             this.state = state;
         }
 
@@ -32,7 +33,7 @@ namespace QDoc.Core
             set => this.state = value;
 
         }
-        public string Name { get => name; set => name = value; }
+        public string Name { get => name; }
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
