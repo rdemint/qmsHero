@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace QmsDocXml.Docs.Word.Properties
+namespace QDoc.Exceptions
 {
     [Serializable]
     internal class DocReadException : Exception

@@ -12,17 +12,13 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    public class DocProperty : QDocProperty
+    public abstract class DocProperty : QDocProperty
     {
         public DocProperty()
         {
         }
 
         public DocProperty(object state) : base(state)
-        {
-        }
-
-        public DocProperty(string name, object state) : base(name, state)
         {
         }
 

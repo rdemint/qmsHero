@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using QDoc.Test;
 using System.IO;
 
-namespace QDoc.Core.Tests
+namespace QDoc.Test.Core
 {
     [TestClass()]
     public class QDocManagerTests

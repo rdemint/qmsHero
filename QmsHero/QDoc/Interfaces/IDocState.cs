@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using QDoc.Core;
 
-namespace QDoc.Core
+namespace QDoc.Interfaces
 {
     public interface IDocState
     {

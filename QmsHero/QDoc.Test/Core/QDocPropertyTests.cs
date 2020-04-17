@@ -1,12 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QDoc.Core;
+using QDoc.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QDoc.Core.Tests
+namespace QDoc.Test.Core
 {
     [TestClass()]
     public class QDocPropertyTests
@@ -15,12 +17,15 @@ namespace QDoc.Core.Tests
         [TestMethod()]
         public void DocPropertyTest()
         {
-            var prop = new QDocProperty();
+            var prop = new QDocPropertyTestClass();
             Assert.AreEqual(null, prop.State);
-            //Assert.AreEqual("QDocProperty")
 
-            var prop2 = new QDocProperty("hello");
+            Assert.AreEqual("QDocPropertyTestClass", prop.Name);
+
+            var prop2 = new QDocPropertyTestClass("hello");
             Assert.AreEqual("hello", prop2.State);
+
+
         }
 
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace QDoc.Core
+namespace QDoc.Interfaces
 {
     public interface IDocManager
     {

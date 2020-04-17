@@ -73,7 +73,6 @@
     <Compile Include="Interfaces\IDocState.cs" />
     <Compile Include="Core\QDocState.cs" />
     <Compile Include="Core\QDocProperty.cs" />
-    <Compile Include="Enums\Date.cs" />
     <Compile Include="Exceptions\DocPropertyGetException.cs" />
     <Compile Include="Exceptions\ProjectDirNotSetException.cs" />
     <Compile Include="Interfaces\IDocConfig.cs" />

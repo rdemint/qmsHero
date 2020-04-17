@@ -5,9 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Test
+namespace QDoc.Test
 {
-    class QDocPropertyTestClass: QDocProperty
+    class QDocPropertyTestClass : QDocProperty
     {
+        public QDocPropertyTestClass()
+        {
+        }
+
+        public QDocPropertyTestClass(object value) : base(value)
+        {
+        }
+
+        public QDocPropertyTestClass(string name, object state) : base(name, state)
+        {
+        }
     }
 }
