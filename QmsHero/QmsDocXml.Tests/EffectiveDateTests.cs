@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QDoc.Test;
 using QmsDoc.Docs.Word;
-using QmsDocXml.Docs.Word.Properties;
+using QmsDocXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDocXml.Docs.Word.Properties.Tests
+namespace QmsDocXml.Tests
 {
     [TestClass()]
     public class EffectiveDateTests
@@ -21,7 +21,7 @@ namespace QmsDocXml.Docs.Word.Properties.Tests
             var fixture = new FixtureUtil();
             var doc = new WordDoc(fixture.WordSample);
             var prop = new EffectiveDate();
-            string result = doc.Inspect(prop).State;
+            string result = (string)doc.Inspect(prop).State;
             Assert.AreEqual(result, actual);
         }
     }
