@@ -19,6 +19,7 @@ namespace QmsDoc.Docs.Word
         string revisionText;
         int revisionRow;
         int revisionCol;
+        Regex revisionRegex;
         int logoRow;
         int logoCol;
         int logoHeight;
@@ -42,6 +43,7 @@ namespace QmsDoc.Docs.Word
             get => effectiveDateRegex; 
             set => effectiveDateRegex = value; }
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
+        public Regex RevisionRegex { get => revisionRegex; set => revisionRegex = value; }
 
         #endregion
         public void Initialize()
@@ -54,6 +56,7 @@ namespace QmsDoc.Docs.Word
             this.EffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.RevisionText = "Rev. ";
             this.RevisionRow = 1;
+            this.RevisionRegex = new Regex(@"d{1,2}");
             this.RevisionCol = 2;
             this.LogoHeight = 28;
         }

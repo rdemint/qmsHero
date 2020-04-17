@@ -42,7 +42,7 @@ namespace QDoc.Core
 
         public ObservableCollection<QDocProperty> FilterCollection(ObservableCollection<QDocProperty> docProps)
         {
-            var query = docProps.Where(prop => prop.Value != null);
+            var query = docProps.Where(prop => prop.State != null);
             if (query.Any())
             {
                 return new ObservableCollection<QDocProperty>(query);

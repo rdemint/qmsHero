@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Docs\Word\Properties\DocReadException.cs" />
     <Compile Include="Docs\Word\Properties\EffectiveDate.cs" />
     <Compile Include="Docs\Word\Properties\HeaderTableCell.cs" />
     <Compile Include="Docs\Word\Properties\Logo.cs" />

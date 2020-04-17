@@ -52,20 +52,23 @@ namespace QmsDocXml.Docs.Word.Properties
                 Text text = myRun.Elements<Text>().First();
                 text.Text = docConfig.EffectiveDateText + value;
                 par.Append(myRun);
-                this.Value = value;
                 this.OnPropertyChanged();
         }
 
-        public override bool IsValid()
+        public override bool IsValid(IDocConfig config)
         {
-            Match match = Regex.Match(this.Value, @"\d\d\d\d-\d\d-\d\d");
-            if (
-                match.Success &&
-                base.IsValid()
-                ) {
-                return true;
-            }
-            else { return false; }
+            //Match match = Regex.Match(this.Value, @"\d\d\d\d-\d\d-\d\d");
+            var rx = ((WordDocConfig)config).RevisionRegex;
+            var match = rx.Match(this.State);
+                if (
+                    match.Success &&
+                    base.IsValid(config)
+                    )
+                {
+                    return true;
+                }
+                else { return false; }
         }
+
     }
 }

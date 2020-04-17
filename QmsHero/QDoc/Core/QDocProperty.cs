@@ -7,7 +7,7 @@ namespace QDoc.Core
     public class QDocProperty: INotifyPropertyChanged
     {
         string name;
-        string value;
+        string state;
         bool isSet;
 
         public QDocProperty()
@@ -17,24 +17,21 @@ namespace QDoc.Core
 
         public QDocProperty(string value) 
         {
-            this.Value = value;
+            this.state = value;
         }
         public QDocProperty(string name, string value)
         {
             this.name = name;
-            this.Value = value;
+            this.state = value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Value
+        public string State
         {
-            get => value;
-            set
-            {
-                this.value = value;
-                OnPropertyChanged();
-            }
+            get => state;
+            set => this.state = value;
+
         }
         public string Name { get => name; set => name = value; }
         public bool IsSet { get => isSet; }
@@ -55,9 +52,9 @@ namespace QDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual bool IsValid()
+        public virtual bool IsValid(IDocConfig config)
         {
-            if (value != null)
+            if (state != null)
             {
                 return true;
             }

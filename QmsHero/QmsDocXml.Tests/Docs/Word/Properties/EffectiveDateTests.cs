@@ -21,7 +21,7 @@ namespace QmsDocXml.Docs.Word.Properties.Tests
             var fixture = new FixtureUtil();
             var doc = new WordDoc(fixture.WordSample);
             var prop = new EffectiveDate();
-            string result = doc.Inspect(prop).Value;
+            string result = doc.Inspect(prop).State;
             Assert.AreEqual(result, actual);
         }
     }

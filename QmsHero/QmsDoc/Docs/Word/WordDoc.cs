@@ -30,13 +30,14 @@ namespace QmsDoc.Docs.Word
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
-                prop.Write(doc, DocConfig, prop.Value);
+                prop.Write(doc, DocConfig, prop.State);
             }
         }
 
         public override QDocProperty Inspect (QDocProperty prop)
         {
             QDocProperty result = null;
+
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
                 result = (QDocProperty)prop.Read(doc, DocConfig);
