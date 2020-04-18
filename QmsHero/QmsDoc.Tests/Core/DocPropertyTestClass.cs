@@ -1,6 +1,6 @@
 ﻿using QmsDoc.Core;
 
-namespace QmsDoc.Core.Tests
+namespace QmsDoc.Tests.Core
 {
     public class DocPropertyTestClass : DocProperty
     {

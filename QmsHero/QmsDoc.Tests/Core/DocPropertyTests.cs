@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QmsDoc.Tests.Core;
 using QmsDoc.Core;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Core.Tests
+namespace QmsDoc.Tests.Core
 {
     [TestClass()]
     public class DocPropertyTests
