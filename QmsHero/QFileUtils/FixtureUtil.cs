@@ -86,6 +86,12 @@ namespace QFileUtil
                 return false;
             }
         }
+
+        public virtual int CleanProcessingDir()
+        {
+            var count = FileUtil.CleanDirectoryAndChildren(ProcessingDir);
+            return count;
+        }
         
     }
 }

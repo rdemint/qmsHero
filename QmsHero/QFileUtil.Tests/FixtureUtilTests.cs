@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QFileUtil;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QFileUtil.Tests
 {
@@ -24,7 +19,7 @@ namespace QFileUtil.Tests
         public void IsValidTest()
         {
             var fixture = new FixtureUtil();
-            Assert.AreEqual(true, fixture.IsValid());
+            Assert.AreEqual(false, fixture.IsValid());
         }
 
         [TestMethod]
