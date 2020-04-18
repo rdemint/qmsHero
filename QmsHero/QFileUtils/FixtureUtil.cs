@@ -18,6 +18,9 @@ namespace QFileUtil
         DirectoryInfo processingDir;
         DirectoryInfo referenceDir;
         DirectoryInfo fixtureDir;
+        string defaultFixtureDirName = "Fixtures";
+        string defaultProcessingDirName = "Processing";
+        string defaultReferenceDirName = "Reference";
 
         public FixtureUtil()
         {
@@ -41,16 +44,15 @@ namespace QFileUtil
         public List<FileInfo> ProcessingFiles { get { return ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
 
         public DirectoryInfo FixtureDir { get => fixtureDir; set => fixtureDir = value; }
+        public string DefaultFixtureDirName { get => defaultFixtureDirName; }
+        public string DefaultProcessingDirName { get => defaultProcessingDirName; }
+        public string DefaultReferenceDirName { get => defaultReferenceDirName; }
 
-        public void Initialize(DirectoryInfo fixtureDir, string referenceDirName = "Reference", string processingDirName = "Processing")
-        {
-            processingDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, processingDirName);
-            Contract.Requires(ProcessingDir.Exists);
-            referenceDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, referenceDirName);
-            Contract.Requires(ReferenceDir.Exists);
+        public virtual void Initialize() {
+            Initialize(defaultFixtureDirName, defaultReferenceDirName, defaultProcessingDirName);
         }
-        
-        public void Initialize(string fixtureDirName="Fixtures", string referenceDirName="Reference", string processingDirName="Processing")
+
+        public virtual void Initialize(string fixtureDirName, string referenceDirName, string processingDirName)
         {
             var unittestDir = new DirectoryInfo(Directory.GetCurrentDirectory());
             FixtureDir = new DirectoryInfo(Path.Combine(unittestDir.Parent.Parent.FullName, fixtureDirName));
@@ -58,6 +60,14 @@ namespace QFileUtil
             Initialize(FixtureDir, referenceDirName, processingDirName);
         }
 
+        public void Initialize(DirectoryInfo fixtureDir, string referenceDirName, string processingDirName)
+        {
+            this.fixtureDir = fixtureDir;
+            processingDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, processingDirName);
+            Contract.Requires(ProcessingDir.Exists);
+            referenceDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, referenceDirName);
+            Contract.Requires(ReferenceDir.Exists);
+        }
         public virtual bool IsValid()
         {
             if(

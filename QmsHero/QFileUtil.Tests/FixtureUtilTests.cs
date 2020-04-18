@@ -10,9 +10,9 @@ namespace QFileUtil.Tests
         public void FixtureUtilTest()
         {
             var fixture = new FixtureUtil();
-            Assert.AreEqual("Fixtures", fixture.FixtureDir.Name);
-            Assert.AreEqual("Reference", fixture.ReferenceDir.Name);
-            Assert.AreEqual("Processing", fixture.ProcessingDir.Name);
+            Assert.AreEqual(fixture.DefaultFixtureDirName, fixture.FixtureDir.Name);
+            Assert.AreEqual(fixture.DefaultReferenceDirName, fixture.ReferenceDir.Name);
+            Assert.AreEqual(fixture.DefaultProcessingDirName, fixture.ProcessingDir.Name);
         }
 
         [TestMethod]

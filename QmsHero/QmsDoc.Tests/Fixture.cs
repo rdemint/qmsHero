@@ -24,7 +24,7 @@ namespace QmsDoc.Tests
         public DirectoryInfo ActiveQMSDocuments { get => activeQMSDocuments; set => activeQMSDocuments = value; }
         public DirectoryInfo Sop1Documents { get => sop1Documents; set => sop1Documents = value; }
 
-        public override void Initialize(string fixtureDirName="Fixtures", string processingDirName="Processing")
+        public override void Initialize()
         {
             base.Initialize();
             this.ActiveQMSDocuments = this.ReferenceDir.GetDirectories("Active QMS Documents").ToList()[0];
