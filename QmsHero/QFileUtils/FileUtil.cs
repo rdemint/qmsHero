@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -68,6 +69,7 @@ namespace QFileUtil
 
         public static DirectoryInfo CreateOrCleanSubDirectory(DirectoryInfo dir, string subDirName) 
         {
+            Contract.Requires(dir.Exists);
             var targetDir = new DirectoryInfo(Path.Combine(dir.FullName, subDirName));
             if (targetDir.Exists)
             {

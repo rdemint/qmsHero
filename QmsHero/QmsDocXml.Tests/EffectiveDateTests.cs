@@ -18,7 +18,7 @@ namespace QmsDocXml.Tests
         {
             string actual = "2019-11-05";
             string effDate = "2020-20-20";
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             var doc = new WordDoc(fixture.WordSample);
             var prop = new EffectiveDate();
             string result = (string)doc.Inspect(prop).State;

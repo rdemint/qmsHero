@@ -58,15 +58,47 @@
   <ItemGroup>
     <Compile Include="Core\DocPropertyTestClass.cs" />
     <Compile Include="Core\DocPropertyTests.cs" />
+    <Compile Include="Fixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001A Document Change Notice Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001C Audit Response Form Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001D Audit Response Log Rev1.xlsx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001E Training Sign-In Sheet Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001F Design and Development Plan Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001G Device Master Record Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\F-001H Design and Regulatory Change Assessment Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-001 Quality Manual Documents\SOP-001 Quality Manual Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002A Supplier Qualification Checklist Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002B Supplier Audit Checklist Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002C Consultant Supplier Survey Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002D Approved Supplier List %28ASL%29 Rev1.xlsx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002E Supplier Corrective Action Request %28SCAR%29 Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002F SCAR Log Rev1.xlsx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\F-002G Supplier Quality Performance Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-002 Purchasing and Supplier Controls Documents\SOP-002 Purchasing and Supplier Controls Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-003 Complaint Handling, Reporting, and Recall Documents\F-003A Complaint Handling Form Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-003 Complaint Handling, Reporting, and Recall Documents\F-003B Complaint Feedback Log Rev1.xlsx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-003 Complaint Handling, Reporting, and Recall Documents\SOP-003 Complaint Handling, Reporting, and Recall Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-004 Labeling and Unique Device Identification %28UDI%29 Documents\F-004A Labeling Checklist Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-004 Labeling and Unique Device Identification %28UDI%29 Documents\F-004B Device Identifier %28DI%29 Record Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-004 Labeling and Unique Device Identification %28UDI%29 Documents\SOP-004 Labeling and Unique Device Identification %28UDI%29 Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-005 Electronic Tools Procedure\F-005A Electronic Tool Permissions Log Rev1.xlsx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-005 Electronic Tools Procedure\SOP-005 Electronic Tools Procedure Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-006 Order Entry Process\SOP-006 Order Entry Process Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-007 Software Validation Procedure\SOP-007 Software Validation Procedure Rev1.docx" />
+    <None Include="Fixtures\Active QMS Documents\SOP-008 Storage, Handling and Distribution\SOP-008 Storage, Handling, and Distribution Rev1.docx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QDoc\QDoc.csproj">
-      <Project>{18E880A8-81A4-42CC-8563-7066AC8D278B}</Project>
+      <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
       <Name>QDoc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QFileUtils\QFileUtil.csproj">
+      <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
+      <Name>QFileUtil</Name>
     </ProjectReference>
     <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
       <Project>{A387F634-3E43-4045-BA55-52D05D6D3BDD}</Project>

@@ -9,21 +9,21 @@ namespace QDoc.Test
         [TestMethod]
         public void GetSafeFilesTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             Assert.AreEqual(fixture.SafeFiles.Count, 28);
         }
 
         [TestMethod]
         public void FixtureDirTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             Assert.AreEqual(fixture.Dir.Name, "Fixtures");
         }
 
         [TestMethod]
         public void ActiveQMSDocumentsTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             var name = fixture.ActiveQMSDocuments.Name;
             Assert.AreEqual("Active QMS Documents", name);
         }
@@ -31,7 +31,7 @@ namespace QDoc.Test
         [TestMethod]
         public void Sop1DocumentsTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             var name = fixture.Sop1Documents.Name;
             Assert.AreEqual("SOP-001 Quality Manual Documents", name);
         }
@@ -39,7 +39,7 @@ namespace QDoc.Test
         [TestMethod]
         public void WordSampleTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             var ext = fixture.WordSample.Extension;
             Assert.AreEqual(".docx", ext);
         }
@@ -47,7 +47,7 @@ namespace QDoc.Test
         [TestMethod]
         public void ExcelSampleTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             var ext = fixture.ExcelSample.Extension;
             Assert.AreEqual(".xlsx", ext);
         }
@@ -55,7 +55,7 @@ namespace QDoc.Test
         [TestMethod]
         public void ProcessingDirTest()
         {
-            var fixture = new FixtureUtil();
+            var fixture = new QFixtureUtil();
             Assert.AreEqual(fixture.ProcessingDir.Exists, true);
             Assert.AreEqual(fixture.ProcessingDir.Name, "Processing");
         }

@@ -69,7 +69,6 @@
   <ItemGroup>
     <Compile Include="Core\QDocManagerTests.cs" />
     <Compile Include="Core\QDocPropertyTests.cs" />
-    <Compile Include="FixtureUtil.cs" />
     <Compile Include="FixtureUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QDocPropertyTestClass.cs" />

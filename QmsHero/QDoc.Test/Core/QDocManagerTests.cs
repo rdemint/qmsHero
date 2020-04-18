@@ -16,7 +16,7 @@ namespace QDoc.Test.Core
     [TestClass()]
     public class QDocManagerTests
     {
-        FixtureUtil fixture = new FixtureUtil();
+        QFixtureUtil fixture = new QFixtureUtil();
 
         [TestMethod()]
         public void ConfigDirTest()
