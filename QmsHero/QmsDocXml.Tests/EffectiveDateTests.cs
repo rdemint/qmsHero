@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QDoc.Test;
 using QmsDoc.Docs.Word;
 using QmsDocXml;
 using System;

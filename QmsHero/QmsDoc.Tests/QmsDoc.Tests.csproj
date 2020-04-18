@@ -58,8 +58,6 @@
   <ItemGroup>
     <Compile Include="Core\DocPropertyTestClass.cs" />
     <Compile Include="Core\DocPropertyTests.cs" />
-    <Compile Include="Fixture.cs" />
-    <Compile Include="FixtureTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

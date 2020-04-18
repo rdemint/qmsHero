@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Tests
+namespace QmsDocXml.Tests
 {
     class Fixture: FixtureUtil
     {
-        string wordSampleName;
-        string excelSampleName;
         public FileInfo WordSample;
         public FileInfo ExcelSample;
         DirectoryInfo activeQMSDocuments;
@@ -29,6 +27,7 @@ namespace QmsDoc.Tests
             base.Initialize();
             this.ActiveQMSDocuments = this.ReferenceDir.GetDirectories("Active QMS Documents").ToList()[0];
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
+            var files = Sop1Documents.GetFiles().ToList();
             this.WordSample = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
             this.ExcelSample = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
         }

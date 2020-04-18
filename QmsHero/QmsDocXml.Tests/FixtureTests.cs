@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace QmsDoc.Tests
+namespace QmsDocXml.Tests
 {
     [TestClass]
     public class FixtureTests

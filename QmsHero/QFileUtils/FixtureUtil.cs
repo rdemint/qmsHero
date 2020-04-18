@@ -60,12 +60,14 @@ namespace QFileUtil
             Initialize(FixtureDir, referenceDirName, processingDirName);
         }
 
-        public void Initialize(DirectoryInfo fixtureDir, string referenceDirName, string processingDirName)
+        public virtual void Initialize(DirectoryInfo fixtureDir, string referenceDirName, string processingDirName)
         {
             this.fixtureDir = fixtureDir;
             processingDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, processingDirName);
             Contract.Requires(ProcessingDir.Exists);
-            referenceDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, referenceDirName);
+            var temppath = Path.Combine(FixtureDir.FullName, referenceDirName);
+            referenceDir = new DirectoryInfo(temppath);
+            if(!referenceDir.Exists) { Directory.CreateDirectory(temppath); }
             Contract.Requires(ReferenceDir.Exists);
         }
         public virtual bool IsValid()
