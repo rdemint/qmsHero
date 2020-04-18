@@ -16,36 +16,20 @@ namespace QDoc.Test.Core
     [TestClass()]
     public class QDocManagerTests
     {
-        QFixtureUtil fixture = new QFixtureUtil();
+        Fixture fixture = new Fixture();
 
         [TestMethod()]
         public void ConfigDirTest()
         {
+            var fixture = new Fixture();
             var manager = new QDocManager();
-            manager.ConfigDir(fixture.ActiveQMSDocuments.FullName);
-            Assert.AreEqual(fixture.ActiveQMSDocuments.FullName, manager.Dir.FullName);
+            manager.ConfigDir(fixture.Dir.FullName);
+            Assert.AreEqual(fixture.Dir.FullName, manager.Dir.FullName);
             Assert.AreEqual(
-                Path.Combine(fixture.Dir.FullName, "Processing"),
+                fixture.ProcessingDir.FullName,
                 manager.ProcessingDir.FullName
-                );
-            Assert.AreEqual(
-                manager.Dir.FullName,
-                fixture.ActiveQMSDocuments.FullName
                 );
         }
     }
 }
 
-namespace QDoc.Test.Core
-{
-    [TestClass()]
-    public class DocManagerTests
-    {
-        //[TestMethod()]
-        //public void ProcessDocTest()
-        //{
-
-        //}
-
-    }
-}

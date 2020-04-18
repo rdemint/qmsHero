@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using QDoc.Docs;
 using QDoc.Interfaces;
 using System.IO;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
 using QFileUtil;
 
 namespace QDoc.Core
