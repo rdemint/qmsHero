@@ -55,7 +55,7 @@ namespace QFileUtil
         public virtual void Initialize(string fixtureDirName, string referenceDirName, string processingDirName)
         {
             var unittestDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-            FixtureDir = new DirectoryInfo(Path.Combine(unittestDir.Parent.Parent.FullName, fixtureDirName));
+            fixtureDir = new DirectoryInfo(Path.Combine(unittestDir.Parent.Parent.FullName, fixtureDirName));
             Contract.Requires(FixtureDir.Exists);
             Initialize(FixtureDir, referenceDirName, processingDirName);
         }

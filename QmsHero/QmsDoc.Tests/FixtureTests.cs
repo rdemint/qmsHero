@@ -56,12 +56,5 @@ namespace QmsDoc.Tests
             Assert.AreEqual(".xlsx", fixture.ExcelSample.Extension);
         }
 
-        [TestMethod]
-        public void ProcessingDirTest()
-        {
-            var fixture = new Fixture();
-            Assert.AreEqual(fixture.ProcessingDir.Exists, true);
-            Assert.AreEqual(fixture.ProcessingDir.Name, "Processing");
-        }
     }
 }
