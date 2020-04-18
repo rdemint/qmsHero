@@ -10,7 +10,7 @@ using FileInfo = System.IO.FileInfo;
 
 namespace QFileUtil
 {
-    public abstract class FixtureUtil
+    public class FixtureUtil
     {
         //Provids blueprint functionality to create and clean a Fixture directory
         //within the current or specified directory.
@@ -38,7 +38,7 @@ namespace QFileUtil
         public DirectoryInfo ReferenceDir { get => referenceDir; }
         public List<FileInfo> ReferenceFiles { get { return ReferenceDir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
         public DirectoryInfo ProcessingDir { get => processingDir; }
-        public List<FileInfo> ProcessingFiles { get { return ReferenceDir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
+        public List<FileInfo> ProcessingFiles { get { return ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
 
         public DirectoryInfo FixtureDir { get => fixtureDir; set => fixtureDir = value; }
 

@@ -13,12 +13,12 @@ using System.IO;
 
 namespace QDoc.Test.Core
 {
-    [TestClass()]
+    [TestClass]
     public class QDocManagerTests
     {
         Fixture fixture = new Fixture();
 
-        [TestMethod()]
+        [TestMethod]
         public void ConfigDirTest()
         {
             var fixture = new Fixture();
@@ -30,6 +30,8 @@ namespace QDoc.Test.Core
                 manager.ProcessingDir.FullName
                 );
         }
+
+        
     }
 }
 
