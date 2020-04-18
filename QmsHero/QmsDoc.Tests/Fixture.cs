@@ -27,7 +27,7 @@ namespace QmsDoc.Tests
         public override void Initialize(string fixtureDirName="Fixtures", string processingDirName="Processing")
         {
             base.Initialize();
-            this.ActiveQMSDocuments = this.Dir.GetDirectories("Active QMS Documents").ToList()[0];
+            this.ActiveQMSDocuments = this.ReferenceDir.GetDirectories("Active QMS Documents").ToList()[0];
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
             this.WordSample = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
             this.ExcelSample = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];

@@ -23,8 +23,8 @@ namespace QDoc.Test.Core
         {
             var fixture = new Fixture();
             var manager = new QDocManager();
-            manager.ConfigDir(fixture.Dir.FullName);
-            Assert.AreEqual(fixture.Dir.FullName, manager.Dir.FullName);
+            manager.ConfigDir(fixture.ReferenceDir.FullName);
+            Assert.AreEqual(fixture.ReferenceDir.FullName, manager.Dir.FullName);
             Assert.AreEqual(
                 fixture.ProcessingDir.FullName,
                 manager.ProcessingDir.FullName

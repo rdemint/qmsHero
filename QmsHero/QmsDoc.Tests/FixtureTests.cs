@@ -11,7 +11,7 @@ namespace QmsDoc.Tests
         public void FixtureDirTest()
         {
             var fixture = new Fixture();
-            Assert.AreEqual(fixture.Dir.Name, "Fixtures");
+            Assert.AreEqual(fixture.ReferenceDir.Name, "Fixtures");
         }
 
         [TestMethod]

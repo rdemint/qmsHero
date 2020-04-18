@@ -12,52 +12,59 @@ namespace QFileUtil
 {
     public abstract class FixtureUtil
     {
-        //Provids blueprint functionality to create and clean a "Processing" directory
+        //Provids blueprint functionality to create and clean a Fixture directory
         //within the current or specified directory.
         //Use in conjunction with Types that have functionality to copy and edit files
         DirectoryInfo processingDir;
-        DirectoryInfo dir;
-        DirectoryInfo projectDir;
-        List<FileInfo> files;
-        List<FileInfo> processingFiles;
+        DirectoryInfo referenceDir;
+        DirectoryInfo fixtureDir;
 
         public FixtureUtil()
         {
             Initialize();
         }
         
-        public FixtureUtil(string fixtureDirName, string processingDirName)
+        public FixtureUtil(string fixtureDirName, string referenceDirName, string processingDirName)
         {
-            Initialize(fixtureDirName, processingDirName);
+            Initialize(fixtureDirName, referenceDirName, processingDirName);
         }
 
-        public FixtureUtil(DirectoryInfo fixtureDir, DirectoryInfo processingDir)
+        public FixtureUtil(DirectoryInfo fixtureDir, string referenceDirName, string processingDirName)
         {
             Contract.Requires(fixtureDir.Exists);
-            this.Dir = fixtureDir;
-            this.ProcessingDir = processingDir;
+            FixtureDir = fixtureDir;
+            Initialize(FixtureDir.Name, referenceDirName, processingDirName);
         }
-        public DirectoryInfo Dir { get => dir; set => dir = value; }
-        public List<FileInfo> Files { get { return Dir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
-        public DirectoryInfo ProcessingDir { get => processingDir; set => processingDir = value; }
-        public List<FileInfo> ProcessingFiles { get { return Dir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
+        public DirectoryInfo ReferenceDir { get => referenceDir; }
+        public List<FileInfo> ReferenceFiles { get { return ReferenceDir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
+        public DirectoryInfo ProcessingDir { get => processingDir; }
+        public List<FileInfo> ProcessingFiles { get { return ReferenceDir.GetFiles("*", SearchOption.AllDirectories).ToList(); } }
 
-        
-        public virtual void Initialize(string fixtureDirName="Fixtures", string processingDirName="Processing")
-        { 
-            var unittestDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-            this.Dir = new DirectoryInfo(Path.Combine(unittestDir.Parent.Parent.FullName, fixtureDirName));
-            Contract.Requires(this.Dir.Exists);
-            this.ProcessingDir = FileUtil.CreateOrCleanSubDirectory(Dir, processingDirName);
+        public DirectoryInfo FixtureDir { get => fixtureDir; set => fixtureDir = value; }
+
+        public void Initialize(DirectoryInfo fixtureDir, string referenceDirName = "Reference", string processingDirName = "Processing")
+        {
+            processingDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, processingDirName);
             Contract.Requires(ProcessingDir.Exists);
+            referenceDir = FileUtil.CreateOrCleanSubDirectory(FixtureDir, referenceDirName);
+            Contract.Requires(ReferenceDir.Exists);
+        }
+        
+        public void Initialize(string fixtureDirName="Fixtures", string referenceDirName="Reference", string processingDirName="Processing")
+        {
+            var unittestDir = new DirectoryInfo(Directory.GetCurrentDirectory());
+            FixtureDir = new DirectoryInfo(Path.Combine(unittestDir.Parent.Parent.FullName, fixtureDirName));
+            Contract.Requires(FixtureDir.Exists);
+            Initialize(FixtureDir, referenceDirName, processingDirName);
         }
 
         public virtual bool IsValid()
         {
             if(
-                Dir.Exists && 
+                FixtureDir.Exists &&
+                ReferenceDir.Exists && 
                 ProcessingDir.Exists &&
-                Files.Count >=1
+                ReferenceFiles.Count >=1
                 )
             {
                 return true;
