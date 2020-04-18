@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
 using QDoc.Interfaces;
 using System.IO;
 using QDoc.Core;
-using QDoc.Exceptions;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
 using QFileUtil;
 
 namespace QDoc.Docs
