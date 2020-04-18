@@ -8,46 +8,48 @@ using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
+using QmsDoc.Core;
 
 namespace QmsDoc.Docs.Word
 {
-    public class WordDoc: Doc
+    public class WordDoc: QmsDocBase
     {
         WordprocessingDocument doc;
         MainDocumentPart mainDocumentPart;
         WordDocConfig docConfig;
 
-        public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-
         public WordDoc() { }
 
-        public WordDoc(FileInfo fileInfo) : base(fileInfo) { }
+        public WordDoc(FileInfo fileInfo) : base(fileInfo) 
+        {
+            DocConfig = new WordDocConfig();
+        }
 
-        public WordDoc(FileInfo fileInfo, IDocConfig docConfig) : base(fileInfo, docConfig) { }
-        
+        public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : base(fileInfo, docConfig) { }
 
-        public override void Process(QDocProperty prop)
+        public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public override void Process(DocProperty qprop)
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
+                var prop = qprop as DocProperty;
                 prop.Write(doc, DocConfig, prop.State);
             }
         }
 
-        public override QDocProperty Inspect (QDocProperty prop)
+        public override DocProperty Inspect (DocProperty prop)
         {
-            QDocProperty result = null;
-
+            DocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                result = (QDocProperty)prop.Read(doc, DocConfig);
+                result = prop.Read(doc, DocConfig);
             }
             return result;
         }
-        public override IDocState Inspect (IDocState docState)
-        {
+        //public override IDocState Inspect (IDocState docState)
+        //{
 
-            throw new NotImplementedException();
+        //    return base.Inspect(docState);
             // Create a new instance of IQDocState and set the property values on it. 
 
             //var docProps = docState.ToCollection();
@@ -68,11 +70,5 @@ namespace QmsDoc.Docs.Word
             //    }
             //return result;
             //}
-
-            
-            
-            
-            
-        }
     }
 }
