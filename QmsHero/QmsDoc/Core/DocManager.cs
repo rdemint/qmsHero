@@ -39,7 +39,7 @@ namespace QmsDoc.Core
 
         public override void Process(FileInfo file, QDocProperty docProp)
         {
-            var fileCopy = FileManager.Copy(file);
+            var fileCopy = FileManager.CopyToProcessingDir(file);
             var doc = DocFactory.CreateDoc(file);
             doc.Process(docProp);
         }

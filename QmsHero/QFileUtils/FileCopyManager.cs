@@ -61,7 +61,7 @@ namespace QFileUtil
                 FileUtil.DirectoryCopy(ReferenceDir, ProcessingDir, true);
             }
         }
-        public virtual FileInfo Copy(FileInfo file)
+        public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {
             FileInfo fileCopy = FileUtil.FileCopy(file, ProcessingDir, true);
             UpdateFiles();

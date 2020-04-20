@@ -47,7 +47,16 @@ namespace QmsDocXml.Tests
         {
             var fixture = new Fixture();
             Assert.AreEqual(".xlsx", fixture.ExcelSample.Extension);
+        
         }
+
+        [TestMethod]
+        public void LogoSampleJpgTest()
+        {
+            var fixture = new Fixture();
+            Assert.AreEqual(".jpg", fixture.LogoSampleJpg.Extension);
+        }
+
 
     }
 }

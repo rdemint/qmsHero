@@ -10,7 +10,7 @@ namespace QFileUtil
         List<FileInfo> ProcessingFiles { get; }
         List<FileInfo> ReferenceFiles { get; }
 
-        FileInfo Copy(FileInfo file);
+        FileInfo CopyToProcessingDir(FileInfo file);
         int CleanProcessingDir();
         bool ProcessingDirIsClean();
         bool IsReadyToCopy();

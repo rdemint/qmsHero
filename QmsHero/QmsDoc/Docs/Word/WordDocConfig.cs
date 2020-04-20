@@ -59,6 +59,8 @@ namespace QmsDoc.Docs.Word
             this.RevisionRegex = new Regex(@"\d{1,2}");
             this.RevisionCol = 2;
             this.LogoHeight = 28;
+            this.LogoCol = 0;
+            this.LogoRow = 0;
         }
 
     }

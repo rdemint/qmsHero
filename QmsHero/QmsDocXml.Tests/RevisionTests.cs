@@ -23,7 +23,7 @@ namespace QmsDocXml.Tests
         public void WriteTest()
         {
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.Copy(fixture.WordSample));
+            var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSample));
 
             string actual = "3";
             string rev = "20";
