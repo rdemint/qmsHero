@@ -10,7 +10,7 @@ using FileInfo = System.IO.FileInfo;
 
 namespace QFileUtil
 {
-    public abstract class FileCopyManager : IFileCopyManager
+    public class FileCopyManager : IFileCopyManager
     {
         //Provids blueprint functionality to create and clean a Fixture directory
         //within the current or specified directory.

@@ -13,53 +13,23 @@ using QFileUtil;
 
 namespace QDoc.Core
 {
-    public class QDocManager : IDocManager
+    public class QDocManager
     {
-        DirectoryInfo dir;
-        DirectoryInfo processingDir;
-        List<FileInfo> dirFiles;
-        List<FileInfo> processingDirFiles;
-        bool disposed = false;
-
-        QDocManagerConfig docManagerConfig;
-
+        IQDocManagerConfig docManagerConfig;
+        IFileCopyManager fileManager;
         public QDocManager()
         {
-            this.DirFiles = new List<FileInfo>();
-            this.ProcessingDirFiles = new List<FileInfo>();
+            docManagerConfig = new QDocManagerConfig();
+            fileManager = new FileCopyManager();
         }
 
         #region Properties
-        public QDocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
-        public List<FileInfo> DirFiles
-        {
-            get => this.dirFiles;
-            set => this.dirFiles = value;
-        }
-        public DirectoryInfo Dir { get => dir; set => dir = value; }
-
-        public List<FileInfo> ProcessingDirFiles
-        {
-            get => this.processingDirFiles;
-            set => this.processingDirFiles = value;
-        }
-
-        public DirectoryInfo ProcessingDir
-        {
-            get => processingDir;
-            set => processingDir = value;
-        }
-
-
+        public IQDocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
+        
         #endregion
 
 
         #region Methods
-
-        public void DeleteProcessingDir()
-        {
-            this.ProcessingDir?.Delete(true);
-        }
 
         public bool DirIsValid(string path)
         {
@@ -75,26 +45,10 @@ namespace QDoc.Core
 
         public bool CanProcessFiles()
         {
-            if (this.DirIsValid(this.Dir.FullName))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
+            return this.fileManager.IsReadyToCopy();
         }
 
-        public void ConfigDir(string dirPath, string processingDirName = "Processing")
-        {
-            this.Dir = new DirectoryInfo(dirPath);
-            this.ProcessingDir = FileUtil.DirectoryCopy(this.Dir, processingDirName, true);
-            this.DirFiles = this.Dir.GetFiles("*", SearchOption.AllDirectories).ToList();
-            this.ProcessingDirFiles = this.ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-        }
-
-        public virtual void ProcessFiles(IDocState docEdit)
+        public virtual void ProcessFiles(IDocState docState)
         {
             Contract.Requires(this.CanProcessFiles() == true);
 

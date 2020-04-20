@@ -60,7 +60,7 @@
     <Compile Include="Interfaces\IQDocManagerConfig.cs" />
     <Compile Include="Exceptions\DocConfigNotValidException.cs" />
     <Compile Include="Exceptions\DocReadException.cs" />
-    <Compile Include="Interfaces\IDocManager.cs" />
+    <Compile Include="Interfaces\IQDocManager.cs" />
     <Compile Include="Interfaces\IDocState.cs" />
     <Compile Include="Core\QDocState.cs" />
     <Compile Include="Core\QDocProperty.cs" />
