@@ -24,7 +24,7 @@ namespace QmsDoc.Docs.Excel
         }
         public override QDocProperty Inspect(QDocProperty prop)
         {
-            return base.Inspect(prop);
+            throw new NotImplementedException();
         }
 
         public override IDocState Inspect(IDocState docState)

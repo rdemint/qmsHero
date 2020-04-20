@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml
 {
-    class Revision: DocProperty
+    public class Revision: DocProperty
     {
         public Revision()
         {
@@ -28,14 +28,7 @@ namespace QmsDocXml
             TableCell cell = WordPartHeaderTableCell.Get(doc, config.RevisionRow, config.RevisionCol);
             return cell.Elements<Paragraph>().First();
         }
-        public string FetchRevision(WordprocessingDocument doc, WordDocConfig config)
-        {
-            Paragraph par = FetchRevisionPart(doc, config);
-            Match match = Regex.Match(par.InnerText, @"\d{1,2}");
-            var result = match.ToString().Replace(config.RevisionText, "");
-            return result;
-        }
-
+        
         public override QDocProperty Read(object doc, object docConfig)
         {
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
