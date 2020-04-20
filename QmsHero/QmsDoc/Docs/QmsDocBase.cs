@@ -27,9 +27,9 @@ namespace QmsDoc.Docs
         public new void Process(IDocState docState, DirectoryInfo targetDir)
         {
             var docProps = docState.ToCollection();
-            foreach(prop in docProps)
+            foreach(DocProperty prop in docProps)
             {
-
+                throw new NotImplementedException();
             }
         }
         

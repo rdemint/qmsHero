@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QmsDoc.Core;
 using QmsDoc.Docs.Word;
 using QmsDocXml;
 using System;
@@ -26,6 +27,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void WriteTest()
         {
+            var manager = new DocManager();
             string actual = "2018-11-26";
             string effDate = "2020-20-20";
             var fixture = new Fixture();

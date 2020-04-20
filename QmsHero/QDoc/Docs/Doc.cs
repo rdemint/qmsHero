@@ -6,7 +6,7 @@ using QFileUtil;
 
 namespace QDoc.Docs
 {
-    public class Doc : IDoc
+    public abstract class Doc : IDoc
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
@@ -36,14 +36,6 @@ namespace QDoc.Docs
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         #endregion
 
-        public virtual IDoc Process(IDocState docState, DirectoryInfo targetDir)
-        {
-            var targetFile = FileUtil.FileCopy(this.FileInfo, targetDir);
-            var targetDoc = new Doc(targetFile);
-            targetDoc.Process(docState);
-            return targetDoc;
-        }
-
         public virtual void Process(IDocState docState)
         {
            var docProps = docState.ToCollection();
@@ -53,27 +45,22 @@ namespace QDoc.Docs
                 }
         }
 
-        public IDoc Process(QDocProperty prop, DirectoryInfo targetDir)
-        {
-            var targetFile = FileUtil.FileCopy(this.FileInfo, targetDir);
-            var targetDoc = new Doc(targetFile);
-            targetDoc.Process(prop);
-            return targetDoc;
-        }
-        public virtual void Process(QDocProperty prop)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Process(QDocProperty prop);
+
 
 
         public virtual IDocState Inspect(IDocState docState)
         {
             throw new NotImplementedException();
+            //var docProps = docState.ToCollection();
+            //foreach (QDocProperty docProp in docProps)
+            //{
+            //    Inspect(docProp);
+            //}
         }
-            
-        public virtual QDocProperty Inspect(QDocProperty prop)
-        {
-            throw new NotImplementedException();
-        }
+
+
+        public abstract QDocProperty Inspect(QDocProperty prop);
+        
     }
 }

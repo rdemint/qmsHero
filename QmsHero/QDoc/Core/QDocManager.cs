@@ -51,17 +51,13 @@ namespace QDoc.Core
             return this.fileManager.IsReadyToCopy();
         }
 
-        public virtual void ProcessFiles(IDocState docState)
-        {
-            Contract.Requires(this.CanProcessFiles() == true);
+        public abstract void Process(FileInfo file, QDocProperty docProp);
 
-            throw new NotImplementedException();
-        }
+        public abstract void Process(IDocState docState);
 
-        public virtual void ProcessFiles(QDocProperty docProp)
-        {
-            throw new NotImplementedException();
-        }
+
+        public abstract void Process(QDocProperty docProp);
+        
 
         #endregion
     }

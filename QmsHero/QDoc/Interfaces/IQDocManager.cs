@@ -12,7 +12,9 @@ namespace QDoc.Interfaces
         IQDocFactory DocFactory { get; set; }
 
         bool CanProcessFiles();
-        void ProcessFiles(IDocState docEdit);
-        void ProcessFiles(QDocProperty docProp);
+
+        void Process(FileInfo file, QDocProperty docProp);
+        void Process(IDocState docEdit);
+        void Process(QDocProperty docProp);
     }
 }

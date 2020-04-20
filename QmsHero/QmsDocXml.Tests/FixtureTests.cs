@@ -8,13 +8,6 @@ namespace QmsDocXml.Tests
     {
 
         [TestMethod]
-        public void FixtureDirTest()
-        {
-            var fixture = new Fixture();
-            Assert.AreEqual(fixture.DefaultFixtureDirName, fixture.ParentDir.Name);
-        }
-
-        [TestMethod]
         public void ProcessingDirTest()
         {
             var fixture = new Fixture();
