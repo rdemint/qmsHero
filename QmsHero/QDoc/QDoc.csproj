@@ -57,6 +57,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IQDocFactory.cs" />
+    <Compile Include="Core\QDocFactory.cs" />
     <Compile Include="Interfaces\IQDocManagerConfig.cs" />
     <Compile Include="Exceptions\DocConfigNotValidException.cs" />
     <Compile Include="Exceptions\DocReadException.cs" />

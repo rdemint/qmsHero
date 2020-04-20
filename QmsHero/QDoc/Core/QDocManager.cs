@@ -13,10 +13,11 @@ using QFileUtil;
 
 namespace QDoc.Core
 {
-    public class QDocManager
+    public abstract class QDocManager: IQDocManager
     {
         IQDocManagerConfig docManagerConfig;
         IFileCopyManager fileManager;
+        IQDocFactory docFactory;
         public QDocManager()
         {
             docManagerConfig = new QDocManagerConfig();
@@ -25,7 +26,9 @@ namespace QDoc.Core
 
         #region Properties
         public IQDocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
-        
+        public IQDocFactory DocFactory { get => docFactory; set => docFactory = value; }
+        public IFileCopyManager FileManager { get => fileManager; set => fileManager = value; }
+
         #endregion
 
 
