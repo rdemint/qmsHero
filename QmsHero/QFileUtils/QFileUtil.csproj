@@ -42,8 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileUtil.cs" />
+    <Compile Include="IFileCopyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FixtureUtil.cs" />
+    <Compile Include="FileCopyManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

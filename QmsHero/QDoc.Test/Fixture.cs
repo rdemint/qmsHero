@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Test
 {
-    class Fixture: FixtureUtil
+    class Fixture: FileCopyManager
     {
     }
 }

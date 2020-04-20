@@ -21,6 +21,46 @@ namespace QFileUtil
             file.CopyTo(temppath, allowOverWrite);
             return new FileInfo(temppath);
         }
+
+
+        public static DirectoryInfo SearchSubDirectory(DirectoryInfo directory, string dirName)
+        {
+            var searchDirs = directory.GetDirectories(dirName, SearchOption.AllDirectories).ToList();
+            if (searchDirs.Any())
+            {
+                return searchDirs[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static void DirectoryCopy(DirectoryInfo dir, DirectoryInfo dirTarget, bool copySubDirs)
+        {
+            if (!dir.Exists || !dirTarget.Exists)
+            {
+                throw new DirectoryNotFoundException();
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(dirTarget.FullName, file.Name);
+                file.CopyTo(temppath, true);
+            }
+
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(subdir.FullName, subdir.Name);
+                    DirectoryCopy(subdir, temppath, copySubDirs);
+                }
+            }
+        }
+        
         public static DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
         {
             var destDirPath = Path.Combine(dir.Parent.FullName, destDirName);

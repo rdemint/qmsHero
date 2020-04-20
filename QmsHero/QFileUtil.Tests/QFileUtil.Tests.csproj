@@ -56,8 +56,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="FixtureUtilTests.cs" />
+    <Compile Include="FileCopyManagerTests.cs" />
+    <Compile Include="Fixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -71,6 +77,12 @@
   <ItemGroup>
     <Folder Include="Fixtures\Processing\" />
     <Folder Include="Fixtures\Reference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

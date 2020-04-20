@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml.Tests
 {
-    class Fixture: FixtureUtil
+    class Fixture: FileCopyManager
     {
         public FileInfo WordSample;
         public FileInfo ExcelSample;
