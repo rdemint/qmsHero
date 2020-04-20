@@ -60,7 +60,7 @@ namespace QmsDoc.Core
 
             if (wdoc != null && wdocConfig != null)
             {
-                this.Write(wdoc, wdocConfig);
+                this.Write(wdoc, wdocConfig, state);
             }
 
             else if (sdoc != null && sdocConfig != null)
@@ -83,7 +83,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Write(WordprocessingDocument doc, WordDocConfig config)
+        public virtual void Write(WordprocessingDocument doc, WordDocConfig config, object state)
         {
             throw new NotImplementedException();
         }

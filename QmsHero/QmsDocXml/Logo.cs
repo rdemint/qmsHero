@@ -78,7 +78,14 @@ namespace QmsDocXml
             var picture = cell.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.Picture>().First();
             var imageId = picture.BlipFill.Blip.Embed.Value;
 
-            ImagePart imagePart = (ImagePart)doc.MainDocumentPart.GetPartById(imageId);
+            var imagePartResult = doc.MainDocumentPart.GetPartById(imageId);
+            var imagePart = imagePartResult as ImagePart;
+            doc.DeletePart(imagePart);
+
+            FileInfo logoFile = new FileInfo((string)state);
+            if(logoFile.Extension == ".jpg")
+            newImagePart = doc.MainDocumentPart.AddImagePart(ImagePartType.Jpeg)
+
             byte[] imageBytes = File.ReadAllBytes((string)state);
             BinaryWriter writer = new BinaryWriter(imagePart.GetStream());
             writer.Write(imageBytes);
