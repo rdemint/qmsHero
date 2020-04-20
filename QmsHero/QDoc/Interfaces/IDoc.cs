@@ -12,10 +12,8 @@ namespace QDoc.Interfaces
     {
         FileInfo FileInfo { get; set; }
         void Process(IDocState state);
-        IDoc Process(IDocState state, DirectoryInfo targetDir);
 
         void Process(QDocProperty prop);
-        IDoc Process(QDocProperty prop, DirectoryInfo targetDir);
         QDocProperty Inspect(QDocProperty prop);
     }
 }

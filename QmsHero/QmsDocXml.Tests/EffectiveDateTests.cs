@@ -27,16 +27,16 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void WriteTest()
         {
-            var manager = new DocManager();
+            var fixture = new Fixture();
+            var doc = new WordDoc(fixture.Copy(fixture.WordSample));
+
             string actual = "2018-11-26";
             string effDate = "2020-20-20";
-            var fixture = new Fixture();
-            var doc = new WordDoc(fixture.WordSample);
             Assert.AreEqual(actual, (string)doc.Inspect(new EffectiveDate()).State);
             var prop = new EffectiveDate(effDate);
-            var newDoc = (WordDoc)doc.Process(prop, fixture.ProcessingDir);
-            string result = newDoc.Inspect(new EffectiveDate()).State.ToString(); 
-            Assert.AreEqual(result, actual);
+            doc.Process(prop);
+            string result = (string)doc.Inspect(new EffectiveDate()).State; 
+            Assert.AreEqual(result, effDate);
         }
 
     }

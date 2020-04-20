@@ -51,7 +51,11 @@ namespace QDoc.Core
             return this.fileManager.IsReadyToCopy();
         }
 
-        public abstract void Process(FileInfo file, QDocProperty docProp);
+        public virtual void Process(FileInfo file, QDocProperty docProp)
+        {
+            var doc = DocFactory.CreateDoc(file);
+            doc.Process(docProp);
+        }
 
         public abstract void Process(IDocState docState);
 

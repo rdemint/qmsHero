@@ -19,6 +19,15 @@ namespace QmsDoc.Core
             this.DocFactory = new DocFactory();
         }
 
+        public DocManager(IFileCopyManager fManager)
+        {
+            //This Constructor useful in unit tests where concrete fixture can be passed
+            this.FileManager = fManager;
+            this.DocManagerConfig = new DocManagerConfig();
+            this.DocFactory = new DocFactory();
+
+        }
+
         public override void Process(IDocState docEdit)
         {
             throw new NotImplementedException();
@@ -30,7 +39,9 @@ namespace QmsDoc.Core
 
         public override void Process(FileInfo file, QDocProperty docProp)
         {
-            throw new NotImplementedException();
+            var fileCopy = FileManager.Copy(file);
+            var doc = DocFactory.CreateDoc(file);
+            doc.Process(docProp);
         }
     }
 }
