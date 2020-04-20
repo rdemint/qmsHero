@@ -12,7 +12,7 @@ using QmsDoc.Core;
 
 namespace QmsDoc.Docs.Word
 {
-    public class WordDoc: QmsDocBase
+    public class WordDoc: Doc
     {
         WordprocessingDocument doc;
         MainDocumentPart mainDocumentPart;
@@ -28,7 +28,7 @@ namespace QmsDoc.Docs.Word
         public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : base(fileInfo, docConfig) { }
 
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public override void Process(DocProperty qprop)
+        public override void Process(QDocProperty qprop)
         {
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
@@ -37,9 +37,9 @@ namespace QmsDoc.Docs.Word
             }
         }
 
-        public override DocProperty Inspect (DocProperty prop)
+        public override QDocProperty Inspect (QDocProperty prop)
         {
-            DocProperty result = null;
+            QDocProperty result = null;
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
                 result = prop.Read(doc, DocConfig);
