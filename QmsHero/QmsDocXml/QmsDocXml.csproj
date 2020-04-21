@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AddImage.cs" />
     <Compile Include="EffectiveDate.cs" />
     <Compile Include="MultipleElementsExistException.cs" />
     <Compile Include="WordPartHeaderTableCell.cs" />

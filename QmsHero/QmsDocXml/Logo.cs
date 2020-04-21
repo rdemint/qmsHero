@@ -1,10 +1,11 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using DocumentFormat.OpenXml.Drawing;
+using DRAWING = DocumentFormat.OpenXml.Drawing;
 using DrawingPictures = DocumentFormat.OpenXml.Drawing.Pictures;
 using QmsDoc.Core;
 using QmsDoc.Docs.Word;
 using QmsDocXml.Exceptions;
+using QmsDocXml.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,19 +67,11 @@ namespace QmsDocXml
             if(drawings.Any())
             {
                 Drawing drawing = cell.Descendants<Drawing>().First();
-                GraphicData graphicData = drawing.Descendants<GraphicData>().First();
+                DRAWING.GraphicData graphicData = drawing.Descendants<DRAWING.GraphicData>().First();
                 var els = graphicData.Elements().ToList();
                 var picture = graphicData.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.Picture>().First();
 
-                //var pictures = cell.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.Picture>();
-                //if(!pictures.Any())
-                //{
-                //    throw new ElementNotFoundException();
-                //}
-                //else if(pictures.Count() > 1)
-                //{
-                //    throw new MultipleElementsExistException();
-                //}
+                
                 var pictureProperties = picture.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.NonVisualDrawingProperties>().First();
                 return new Logo(pictureProperties.Name.ToString());
             }
@@ -97,7 +90,7 @@ namespace QmsDocXml
             FileInfo imageFile = new FileInfo((string)state);
 
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.LogoRow, docConfig.LogoCol);
-
+            Paragraph cellPar = cell.Descendants<Paragraph>().First();
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
 
             IEnumerable<Drawing> drawings = cell.Descendants<Drawing>()
@@ -108,21 +101,48 @@ namespace QmsDocXml
 
             if(drawings.Any())
             {
-                var drawing = drawings.First();
-                var nvDprop = drawing.Descendants<DrawingPictures.NonVisualDrawingProperties>()
-                    .Where(nvDp => nvDp.Name != null).First();
+                //var drawing = drawings.First();
+                //OpenXmlPart imagePart = doc.MainDocumentPart.GetPartById(
+                //    drawing.Descendants<DrawingPictures.Picture>().First().BlipFill.Blip.Embed);
+                //using (var writer = new BinaryWriter(imagePart.GetStream()))
+                //{
+                //    writer.Write(File.ReadAllBytes(imageFile.FullName));
+                //}
+
+                //var nvDprop = drawing.Descendants<DrawingPictures.NonVisualDrawingProperties>()
+                //    .Where(nvDp => nvDp.Name != null).First();
+
+
+                //new picture
+                var newUri = new Uri(System.IO.Path.Combine("/word/media/", imageFile.Name), UriKind.Relative);
+                var imagePackagePart = doc.Package.CreatePart(newUri, "Image/jpeg");
+                byte[] imageBytes = File.ReadAllBytes(imageFile.FullName);
+                imagePackagePart.GetStream().Write(imageBytes, 0, imageBytes.Length);
+                
+                var documentPackagePart = doc.Package.GetPart(
+                    new Uri("/word/document.xml", UriKind.Relative));
+                var imageRelationshipPart = documentPackagePart.Package.CreateRelationship(
+                        newUri,
+                        System.IO.Packaging.TargetMode.Internal,
+                        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+                    );
+
+                AddImage.Add(doc, imageRelationshipPart.Id, cellPar);
+
+                
+                //current picture
+
                 var currentImageUri = new Uri("/word/media/image1.jpg", UriKind.Relative);
+                var currentImagePackagePart = doc.Package.GetPart(currentImageUri);
 
-                var currentImagePart = doc.Package.GetPart(currentImageUri);
-                doc.Package.DeletePart(currentImageUri);
-                var newUri = new Uri(System.IO.Path.Combine("/word/media", imageFile.Name, imageFile.Extension), UriKind.Relative);
-                var packagePart = doc.Package.CreatePart(newUri, "Image/jpeg");
+               
+                //doc.Package.DeletePart(currentImageUri);
             }
 
-            foreach(var drawing in drawings)
-            {
-                drawing.Remove();
-            }
+            //foreach(var drawing in drawings)
+            //{
+            //    drawing.Remove();
+            //}
 
         }
     }
