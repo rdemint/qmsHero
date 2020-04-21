@@ -40,16 +40,22 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsBase.4.6.1055.0\lib\WindowsBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EffectiveDate.cs" />
+    <Compile Include="MultipleElementsExistException.cs" />
     <Compile Include="WordPartHeaderTableCell.cs" />
     <Compile Include="Logo.cs" />
     <Compile Include="LogoText.cs" />
     <Compile Include="Revision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QDoc\QDoc.csproj">
       <Project>{18E880A8-81A4-42CC-8563-7066AC8D278B}</Project>
