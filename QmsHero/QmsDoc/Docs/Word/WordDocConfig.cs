@@ -1,4 +1,5 @@
 ﻿
+
 using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace QmsDoc.Docs.Word
         int logoRow;
         int logoCol;
         int logoHeight;
+        Regex isSopRegex;
+        Regex isFormRegex;
 
         public WordDocConfig():base()
         {
@@ -44,6 +47,8 @@ namespace QmsDoc.Docs.Word
             set => effectiveDateRegex = value; }
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
         public Regex RevisionRegex { get => revisionRegex; set => revisionRegex = value; }
+        public Regex IsSopRegex { get => isSopRegex; set => isSopRegex = value; }
+        public Regex IsFormRegex { get => isFormRegex; set => isFormRegex = value; }
 
         #endregion
         public void Initialize()
@@ -61,6 +66,9 @@ namespace QmsDoc.Docs.Word
             this.LogoHeight = 28;
             this.LogoCol = 0;
             this.LogoRow = 0;
+            this.IsSopRegex = new Regex(@"SOP-");
+            this.IsFormRegex = new Regex(@"F-");
+
         }
 
     }

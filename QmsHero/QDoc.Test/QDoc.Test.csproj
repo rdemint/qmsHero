@@ -69,8 +69,10 @@
   <ItemGroup>
     <Compile Include="Core\QDocManagerTests.cs" />
     <Compile Include="Core\QDocPropertyTests.cs" />
+    <Compile Include="Docs\Common\Properties\IsSopTests.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QDocManagerTestClass.cs" />
     <Compile Include="QDocPropertyTestClass.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,9 +87,12 @@
       <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
       <Name>QFileUtil</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QmsDoc\QmsDoc.csproj">
+      <Project>{A387F634-3E43-4045-BA55-52D05D6D3BDD}</Project>
+      <Name>QmsDoc</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Docs\" />
     <Folder Include="Fixtures\Processing\" />
     <Folder Include="Fixtures\Reference\" />
   </ItemGroup>

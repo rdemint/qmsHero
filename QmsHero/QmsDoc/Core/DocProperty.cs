@@ -6,6 +6,7 @@ using QmsDoc.Docs.Word;
 using QmsDoc.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,9 @@ namespace QmsDoc.Core
 
             SpreadsheetDocument sdoc = doc as SpreadsheetDocument;
             ExcelDocConfig sdocConfig = docConfig as ExcelDocConfig;
-            
+
+            FileInfo file = doc as FileInfo;
+
             if(wdoc!=null && wdocConfig!=null)
             {
                 return this.Read(wdoc, wdocConfig);
@@ -40,6 +43,11 @@ namespace QmsDoc.Core
             else if(sdoc!=null && sdocConfig!=null)
             {
                 return this.Read(sdoc, sdocConfig);
+            }
+
+            else if(file!=null)
+            {
+                return this.Read(file, docConfig);
             }
 
             else
@@ -83,6 +91,11 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
+        public virtual DocProperty Read(FileInfo file, WordDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual void Write(WordprocessingDocument doc, WordDocConfig config, object state)
         {
             throw new NotImplementedException();
@@ -91,6 +104,11 @@ namespace QmsDoc.Core
 
         #region excel
         public virtual DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual DocProperty Read(FileInfo file, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }
