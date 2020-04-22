@@ -23,7 +23,7 @@ namespace QmsDoc.Docs.Excel
         {
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
             {
-                prop.Write(doc, DocConfig, prop.State);
+                prop.Write(doc, DocConfig);
             }
         }
         public override QDocProperty Inspect(QDocProperty prop)

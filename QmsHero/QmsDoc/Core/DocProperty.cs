@@ -62,7 +62,7 @@ namespace QmsDoc.Core
 
         }
 
-        public override void Write(object doc, IDocConfig docConfig, object state)
+        public override void Write(object doc, IDocConfig docConfig)
         {
             //Visitor Pattern
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
@@ -73,12 +73,12 @@ namespace QmsDoc.Core
 
             if (wdoc != null && wdocConfig != null)
             {
-                this.Write(wdoc, wdocConfig, state);
+                this.Write(wdoc, wdocConfig);
             }
 
             else if (sdoc != null && sdocConfig != null)
             {
-                this.Write(sdoc, sdocConfig, state);
+                this.Write(sdoc, sdocConfig);
             }
 
             else

@@ -38,16 +38,15 @@ namespace QmsDocXml
             return new Revision(match.ToString());
         }
 
-        public override void Write(object doc, IDocConfig docConfig, object state)
+        public override void Write(object doc, IDocConfig docConfig)
         {
-            string value = (string)state;
             WordprocessingDocument wdoc = (WordprocessingDocument)doc;
             WordDocConfig config = (WordDocConfig)docConfig;
             Paragraph par = FetchRevisionPart(wdoc, config);
             par.RemoveAllChildren();
             Run run = new Run();
             Text text = new Text();
-            text.Text = config.RevisionText + value;
+            text.Text = config.RevisionText + (string)this.State;
             run.Append(text);
             par.Append(run);
             OnPropertyChanged(); ;

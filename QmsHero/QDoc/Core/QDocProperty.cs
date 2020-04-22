@@ -45,7 +45,7 @@ namespace QDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Write(object doc, IDocConfig docConfig, object state)
+        public virtual void Write(object doc, IDocConfig docConfig)
         {
             throw new NotImplementedException();
         }
