@@ -15,7 +15,7 @@ namespace QmsDocXml.Common
 {
     static class AddImage
     {
-        public static void Add(WordprocessingDocument wordDoc, string relationshipId, Paragraph par)
+        public static void Add(WordprocessingDocument wordDoc, string relationshipId, Paragraph par=null)
         {
             {
                 var element =
@@ -80,9 +80,17 @@ namespace QmsDocXml.Common
                              DistanceFromRight = (UInt32Value)0U,
                              EditId = "50D07946"
                          });
-                Run firstRun = par.Elements<Run>().First();
-                Run newRun = new Run(element);
-                par.ReplaceChild<Run>(newRun, firstRun);
+                if (par != null)
+                {
+                    Run firstRun = par.Elements<Run>().First();
+                    Run newRun = new Run(element);
+                    par.ReplaceChild<Run>(newRun, firstRun);
+                }
+                else
+                {
+                    wordDoc.MainDocumentPart.Document.Append(new Paragraph(new Run(element)));
+
+                }
             }
         }
     }

@@ -114,36 +114,17 @@ namespace QmsDocXml
 
 
                 //new picture
-                var newUri = new Uri(System.IO.Path.Combine("/word/media/", imageFile.Name), UriKind.Relative);
-                var imagePackagePart = doc.Package.CreatePart(newUri, "Image/jpeg");
-                byte[] imageBytes = File.ReadAllBytes(imageFile.FullName);
-                imagePackagePart.GetStream().Write(imageBytes, 0, imageBytes.Length);
-                
-                var documentPackagePart = doc.Package.GetPart(
-                    new Uri("/word/document.xml", UriKind.Relative));
-                var imageRelationshipPart = documentPackagePart.Package.CreateRelationship(
-                        newUri,
-                        System.IO.Packaging.TargetMode.Internal,
-                        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
-                    );
+                MainDocumentPart mainPart = doc.MainDocumentPart;
+                ImagePart imagePart = mainPart.HeaderParts.First().AddImagePart(ImagePartType.Jpeg);
+                //ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
+                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+                {
+                    imagePart.FeedData(stream);
+                }
 
-                AddImage.Add(doc, imageRelationshipPart.Id, cellPar);
-
-                
-                //current picture
-
-                var currentImageUri = new Uri("/word/media/image1.jpg", UriKind.Relative);
-                var currentImagePackagePart = doc.Package.GetPart(currentImageUri);
-
-               
-                //doc.Package.DeletePart(currentImageUri);
+                string imageId = mainPart.HeaderParts.First().GetIdOfPart(imagePart);
+                AddImage.Add(doc, imageId, cellPar);
             }
-
-            //foreach(var drawing in drawings)
-            //{
-            //    drawing.Remove();
-            //}
-
         }
     }
 }
