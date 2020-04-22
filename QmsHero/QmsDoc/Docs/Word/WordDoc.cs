@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Docs;
 using QmsDoc.Core;
+using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Word
 {
@@ -36,19 +37,23 @@ namespace QmsDoc.Docs.Word
             }
         }
 
-        public override QDocProperty Inspect (QDocProperty prop)
+        public override QDocProperty Inspect(QDocProperty prop) 
         {
+
             QDocProperty result = null;
+
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
             {
-                result = prop.Read(doc, DocConfig);
+                if(prop as IReadFileInfo != null)
+                 {
+                    result = prop.Read(FileInfo, DocConfig);
+                 }
+                else
+                  {
+                    result = prop.Read(doc, DocConfig);
+                  }
             }
             return result;
-        }
-
-        public override QDocProperty Inspect(QDocProperty prop, FileInfo file) 
-        {
-            return prop.Read(file, DocConfig);
         }
         //public override IDocState Inspect (IDocState docState)
         //{

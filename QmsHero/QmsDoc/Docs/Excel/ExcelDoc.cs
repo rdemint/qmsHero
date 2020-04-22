@@ -8,6 +8,7 @@ using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
+using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Excel
 {
@@ -31,14 +32,17 @@ namespace QmsDoc.Docs.Excel
             QDocProperty result = null;
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
             {
-                result = prop.Read(doc, DocConfig);
+                
+                if(prop as IReadFileInfo != null)
+                {
+                    result = prop.Read(FileInfo, DocConfig);
+                }
+                else
+                {
+                    result = prop.Read(doc, DocConfig);
+                }
             }
             return result;
-        }
-
-        public override QDocProperty Inspect(QDocProperty prop, FileInfo file)
-        {
-            return prop.Read(file, DocConfig);
         }
 
         public override IDocState Inspect(IDocState docState)

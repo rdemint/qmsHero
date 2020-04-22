@@ -58,12 +58,12 @@
     <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
     <Compile Include="Docs\Word\WordDocConfig.cs" />
     <Compile Include="Docs\Word\WordDoc.cs" />
+    <Compile Include="Interfaces\IReadFileInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Docs\Excel\Properties\" />
     <Folder Include="Docs\Word\Properties\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QDoc\QDoc.csproj">

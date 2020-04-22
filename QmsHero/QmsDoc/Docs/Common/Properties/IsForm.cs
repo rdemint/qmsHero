@@ -1,5 +1,8 @@
-﻿using QmsDoc.Core;
+﻿using QDoc.Interfaces;
+using QmsDoc.Core;
+using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
+using QmsDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
 {
-    public class IsForm : DocProperty
+    public class IsForm : DocProperty, IReadFileInfo
     {
         public IsForm()
         {
@@ -29,6 +32,12 @@ namespace QmsDoc.Docs.Common.Properties
         }
 
         public override DocProperty Read(FileInfo file, WordDocConfig config)
+        {
+            Match match = config.IsFormRegex.Match(file.Name);
+            return new IsForm(match.Success);
+        }
+
+        public override DocProperty Read(FileInfo file, ExcelDocConfig config)
         {
             Match match = config.IsFormRegex.Match(file.Name);
             return new IsForm(match.Success);

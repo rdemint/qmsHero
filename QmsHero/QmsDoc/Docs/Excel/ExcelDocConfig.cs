@@ -15,6 +15,8 @@ namespace QmsDoc.Docs.Excel
         string revisionText;
         string revisionEffectiveDateSeparator;
         int logoHeight;
+        Regex isSopRegex;
+        Regex isFormRegex;
 
         public ExcelDocConfig()
         {
@@ -26,6 +28,8 @@ namespace QmsDoc.Docs.Excel
         public string RevisionEffectiveDateSeparator { get => revisionEffectiveDateSeparator; set => revisionEffectiveDateSeparator = value; }
         public Regex EffectiveDateRegex { get => effectiveDateRegex; set => effectiveDateRegex = value; }
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
+        public Regex IsFormRegex { get => isFormRegex; set => isFormRegex = value; }
+        public Regex IsSopRegex { get => isSopRegex; set => isSopRegex = value; }
 
         public void Initialize()
         {
@@ -33,6 +37,9 @@ namespace QmsDoc.Docs.Excel
             this.RevisionText = "Revision: ";
             this.RevisionEffectiveDateSeparator = "\r\n";
             this.LogoHeight = 28;
+            this.IsFormRegex = new Regex(@"F-");
+            this.IsSopRegex = new Regex(@"SOP-");
+
 
         }
         #region HeaderFooter
