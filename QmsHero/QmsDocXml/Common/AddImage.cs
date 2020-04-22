@@ -15,13 +15,13 @@ namespace QmsDocXml.Common
 {
     static class AddImage
     {
-        public static void Add(WordprocessingDocument wordDoc, string relationshipId, Paragraph par=null)
+        public static void Add(WordprocessingDocument wordDoc, string relationshipId, Paragraph par)
         {
             {
                 var element =
                      new Drawing(
                          new DW.Inline(
-                             new DW.Extent() { Cx = 990000L, Cy = 792000L },
+                             new DW.Extent() { Cx = 990000L, Cy = 365760L },
                              new DW.EffectExtent()
                              {
                                  LeftEdge = 0L,
@@ -65,7 +65,8 @@ namespace QmsDocXml.Common
                                          new PIC.ShapeProperties(
                                              new A.Transform2D(
                                                  new A.Offset() { X = 0L, Y = 0L },
-                                                 new A.Extents() { Cx = 990000L, Cy = 792000L }),
+                                                 new A.Extents() { Cx = 990000L, Cy = 365760L }),
+
                                              new A.PresetGeometry(
                                                  new A.AdjustValueList()
                                              )
@@ -80,17 +81,11 @@ namespace QmsDocXml.Common
                              DistanceFromRight = (UInt32Value)0U,
                              EditId = "50D07946"
                          });
-                if (par != null)
-                {
+
                     Run firstRun = par.Elements<Run>().First();
                     Run newRun = new Run(element);
                     par.ReplaceChild<Run>(newRun, firstRun);
-                }
-                else
-                {
-                    wordDoc.MainDocumentPart.Document.Append(new Paragraph(new Run(element)));
 
-                }
             }
         }
     }
