@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QmsDocXml.Docs.Common.Properties
+namespace QmsDoc.Docs.Common.Properties
 {
     public class IsSop : DocProperty
     {

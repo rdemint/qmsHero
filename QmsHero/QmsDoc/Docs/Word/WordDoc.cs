@@ -46,29 +46,34 @@ namespace QmsDoc.Docs.Word
             }
             return result;
         }
+
+        public override QDocProperty Inspect(QDocProperty prop, FileInfo file) 
+        {
+            
+        }
         //public override IDocState Inspect (IDocState docState)
         //{
 
         //    return base.Inspect(docState);
-            // Create a new instance of IQDocState and set the property values on it. 
+        // Create a new instance of IQDocState and set the property values on it. 
 
-            //var docProps = docState.ToCollection();
-            //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-            //{
-            //    object[] methodParams = new object[1];
-            //    methodParams[0] = doc;
-            //    methodParams[1] = DocConfig;
-            //    foreach (QDocProperty docProp in docProps)
-            //    {
+        //var docProps = docState.ToCollection();
+        //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+        //{
+        //    object[] methodParams = new object[1];
+        //    methodParams[0] = doc;
+        //    methodParams[1] = DocConfig;
+        //    foreach (QDocProperty docProp in docProps)
+        //    {
 
-            //        var getMethod = docProp.GetType().GetMethod("Read");
-            //        string result = (string)getMethod?.Invoke(docProp, methodParams);
-            //        var stateProperty = docState.GetType().GetProperty(docProp.Name);
-            //        QDocProperty dp = (QDocProperty)stateProperty.GetValue(docState);
-            //        var propertyInfoValue = dp.GetType().GetProperty("Value");
-            //        propertyInfoValue.SetValue(dp, result);
-            //    }
-            //return result;
-            //}
+        //        var getMethod = docProp.GetType().GetMethod("Read");
+        //        string result = (string)getMethod?.Invoke(docProp, methodParams);
+        //        var stateProperty = docState.GetType().GetProperty(docProp.Name);
+        //        QDocProperty dp = (QDocProperty)stateProperty.GetValue(docState);
+        //        var propertyInfoValue = dp.GetType().GetProperty("Value");
+        //        propertyInfoValue.SetValue(dp, result);
+        //    }
+        //return result;
+        //}
     }
 }

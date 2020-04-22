@@ -52,11 +52,11 @@ namespace QDoc.Docs
         public virtual IDocState Inspect(IDocState docState)
         {
             throw new NotImplementedException();
-            //var docProps = docState.ToCollection();
-            //foreach (QDocProperty docProp in docProps)
-            //{
-            //    Inspect(docProp);
-            //}
+        }
+
+        public virtual QDocProperty Inspect(QDocProperty prop, FileInfo file)
+        {
+            throw new NotImplementedException();
         }
 
 
