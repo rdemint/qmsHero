@@ -123,7 +123,7 @@ namespace QmsDocXml
                 }
 
                 string imageId = mainPart.HeaderParts.First().GetIdOfPart(imagePart);
-                AddImage.Add(doc, imageId, cellPar);
+                AddImage.Add(doc, imageId, cellPar, imageFile);
             }
         }
     }

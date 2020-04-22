@@ -10,18 +10,20 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using A = DocumentFormat.OpenXml.Drawing;
 using DW = DocumentFormat.OpenXml.Drawing.Wordprocessing;
 using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
+using System.Windows.Media.Imaging;
 
 namespace QmsDocXml.Common
 {
     static class AddImage
     {
-        public static void Add(WordprocessingDocument wordDoc, string relationshipId, Paragraph par)
+        public static void Add(WordprocessingDocument wordDoc, string relationshipId, Paragraph par, FileInfo newImageFile)
         {
+            long[] imageSizeXY = ScaleImageSizeToTarget(newImageFile);
             {
                 var element =
                      new Drawing(
                          new DW.Inline(
-                             new DW.Extent() { Cx = 990000L, Cy = 365760L },
+                             new DW.Extent() { Cx = imageSizeXY[0], Cy = 365760L },
                              new DW.EffectExtent()
                              {
                                  LeftEdge = 0L,
@@ -32,7 +34,7 @@ namespace QmsDocXml.Common
                              new DW.DocProperties()
                              {
                                  Id = (UInt32Value)1U,
-                                 Name = "Picture 1"
+                                 Name = newImageFile.Name
                              },
                              new DW.NonVisualGraphicFrameDrawingProperties(
                                  new A.GraphicFrameLocks() { NoChangeAspect = true }),
@@ -43,7 +45,7 @@ namespace QmsDocXml.Common
                                              new PIC.NonVisualDrawingProperties()
                                              {
                                                  Id = (UInt32Value)0U,
-                                                 Name = "New Bitmap Image.jpg"
+                                                 Name = newImageFile.Name
                                              },
                                              new PIC.NonVisualPictureDrawingProperties()),
                                          new PIC.BlipFill(
@@ -65,7 +67,7 @@ namespace QmsDocXml.Common
                                          new PIC.ShapeProperties(
                                              new A.Transform2D(
                                                  new A.Offset() { X = 0L, Y = 0L },
-                                                 new A.Extents() { Cx = 990000L, Cy = 365760L }),
+                                                 new A.Extents() { Cx = imageSizeXY[0], Cy = 365760L }),
 
                                              new A.PresetGeometry(
                                                  new A.AdjustValueList()
@@ -87,6 +89,27 @@ namespace QmsDocXml.Common
                     par.ReplaceChild<Run>(newRun, firstRun);
 
             }
+        }
+
+        public static long[] ScaleImageSizeToTarget(FileInfo filename, long targetHeightEmus=365760)
+        {
+            var img = new BitmapImage(new Uri(filename.FullName, UriKind.RelativeOrAbsolute));
+            var widthPx = img.PixelWidth;
+            var heightPx = img.PixelHeight;
+            //var ratio = widthPx / heightPx;
+            var horzRezDpi = img.DpiX;
+            var vertRezDpi = img.DpiY;
+
+            const float emusPerInch = (float)914400;
+            const float emusPerCm = 360000;
+
+
+            var widthEmus = (long)(widthPx * 9525);
+            var heightEmus = (long)(heightPx * 9525);
+
+            var newWidthEmus = widthEmus * targetHeightEmus/heightEmus;
+            long[] result = new long[] { newWidthEmus, targetHeightEmus };
+            return result;
         }
     }
 }
