@@ -1,24 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QmsDoc.Docs.Common.Properties;
+using QmsDoc.Docs.Word;
+using QmsDoc.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Docs.Common.Properties;
-using QmsDoc.Docs.Word;
-using QmsDoc.Docs.Excel;
 
-namespace QmsDoc.Tests.Docs.Common.Properties
+namespace QmsDoc.Docs.Common.Properties.Tests
 {
     [TestClass()]
-    public class IsSopTests
+    public class IsFormTests
     {
         [TestMethod()]
-        public void IsSopTest()
+        public void IsFormTest()
         {
-            var sop = new IsSop(true);
-            Assert.AreEqual(sop.State, true);
-            Assert.ThrowsException<ArgumentException>(()=> new IsSop("true"));
+            var isForm = new IsForm(true);
+            Assert.AreEqual(isForm.State, true);
+            Assert.ThrowsException<ArgumentException>(() => new IsForm("false"));
         }
 
         [TestMethod]
@@ -26,10 +26,10 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         {
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSample));
-            bool result = (bool)doc.Inspect(new IsSop(), doc.FileInfo).State;
-            Assert.AreEqual(true, result);
+            bool result = (bool)doc.Inspect(new IsForm(), doc.FileInfo).State;
+            Assert.AreEqual(false, result);
             //var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
-            //bool xlResult = (bool)xl.Inspect(new IsSop(), xl.FileInfo).State;
+            //bool xlResult = (bool)xl.Inspect(new IsForm(), xl.FileInfo).State;
             //Assert.AreEqual(false, xlResult);
         }
     }

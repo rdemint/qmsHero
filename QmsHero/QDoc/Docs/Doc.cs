@@ -11,7 +11,6 @@ namespace QDoc.Docs
         FileInfo fileInfo;
         IDocConfig docConfig;
 
-
         public Doc()
         {
 

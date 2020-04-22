@@ -45,9 +45,14 @@ namespace QmsDoc.Core
                 return this.Read(sdoc, sdocConfig);
             }
 
-            else if(file!=null)
+            else if(file!=null && wdocConfig !=null)
             {
-                return this.Read(file, docConfig);
+                return this.Read(file, wdocConfig);
+            }
+
+            else if(file!=null && sdocConfig !=null)
+            {
+                return this.Read(file, sdocConfig);
             }
 
             else

@@ -49,7 +49,7 @@ namespace QmsDoc.Docs.Word
 
         public override QDocProperty Inspect(QDocProperty prop, FileInfo file) 
         {
-            
+            return prop.Read(file, DocConfig);
         }
         //public override IDocState Inspect (IDocState docState)
         //{
