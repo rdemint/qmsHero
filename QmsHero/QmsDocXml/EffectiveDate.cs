@@ -38,13 +38,13 @@ namespace QmsDocXml
             return new EffectiveDate(match.ToString());
         }
 
-        public override void Write(WordprocessingDocument doc, WordDocConfig docConfig, object value)
+        public override void Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
                 Paragraph par = FetchEffectiveDatePart(doc, docConfig.EffectiveDateRow, docConfig.EffectiveDateCol);
                 Run myRun = (Run)par.Elements<Run>().First().Clone();
                 par.RemoveAllChildren<Run>();
                 Text text = myRun.Elements<Text>().First();
-                text.Text = docConfig.EffectiveDateText + value;
+                text.Text = docConfig.EffectiveDateText + (string)this.State;
                 par.Append(myRun);
                 this.OnPropertyChanged();
         }

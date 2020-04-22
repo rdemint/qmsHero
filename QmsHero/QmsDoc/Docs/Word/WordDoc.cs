@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Docs;
-using QDoc.Interfaces;
 using QmsDoc.Core;
 
 namespace QmsDoc.Docs.Word
@@ -33,7 +32,7 @@ namespace QmsDoc.Docs.Word
             using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
             {
                 var prop = qprop as DocProperty;
-                prop.Write(doc, DocConfig, prop.State);
+                prop.Write(doc, DocConfig);
             }
         }
 

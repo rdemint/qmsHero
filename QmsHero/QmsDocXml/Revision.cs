@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using QmsDoc.Docs.Excel;
 
 namespace QmsDocXml
 {
@@ -29,20 +30,16 @@ namespace QmsDocXml
             return cell.Elements<Paragraph>().First();
         }
         
-        public override QDocProperty Read(object doc, object docConfig)
+        public override DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            WordprocessingDocument wdoc = (WordprocessingDocument)doc;
-            WordDocConfig config = (WordDocConfig)docConfig;
-            Paragraph par = FetchRevisionPart(wdoc, config);
+            Paragraph par = FetchRevisionPart(doc, config);
             Match match = config.RevisionRegex.Match(par.InnerText);
             return new Revision(match.ToString());
         }
 
-        public override void Write(object doc, IDocConfig docConfig)
+        public override void Write(WordprocessingDocument doc, WordDocConfig config)
         {
-            WordprocessingDocument wdoc = (WordprocessingDocument)doc;
-            WordDocConfig config = (WordDocConfig)docConfig;
-            Paragraph par = FetchRevisionPart(wdoc, config);
+            Paragraph par = FetchRevisionPart(doc, config);
             par.RemoveAllChildren();
             Run run = new Run();
             Text text = new Text();
@@ -54,13 +51,33 @@ namespace QmsDocXml
 
         public override bool IsValid(IDocConfig config)
         {
-            var rx = ((WordDocConfig)config).EffectiveDateRegex;
+            var wConfig = config as WordDocConfig;
+            var xlConfig = config as ExcelDocConfig;
+
+            Regex rx = null;
+
+            if(wConfig!=null)
+            {
+                rx = wConfig.EffectiveDateRegex;
+
+            }
+            else if(xlConfig!=null)
+            {
+                rx = xlConfig.EffectiveDateRegex;
+
+            }
             var match = rx.Match(this.State.ToString());
             if (
                 match.Success &&
                 base.IsValid(config)
-                ) { return true; }
-            else { return false; }
+                ) 
+            { 
+                return true; 
+            }
+            else 
+            { 
+                return false; 
+            }
         }
     }
 }

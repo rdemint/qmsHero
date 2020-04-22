@@ -48,10 +48,8 @@
   <ItemGroup>
     <Compile Include="Common\AddImage.cs" />
     <Compile Include="EffectiveDate.cs" />
-    <Compile Include="MultipleElementsExistException.cs" />
-    <Compile Include="WordPartHeaderTableCell.cs" />
+    <Compile Include="Common\WordPartHeaderTableCell.cs" />
     <Compile Include="Logo.cs" />
-    <Compile Include="LogoText.cs" />
     <Compile Include="Revision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

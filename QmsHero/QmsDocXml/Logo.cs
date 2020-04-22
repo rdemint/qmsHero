@@ -26,34 +26,6 @@ namespace QmsDocXml
         {
         }
 
-        //public string LogoPath
-        //{
-        //    get => this.logoPath;
-        //    set
-        //    {
-        //        //this.logoPath = value;
-        //        //var cell = this.HeaderFooterTable
-        //        //    .Cell(
-        //        //    this.DocConfig.LogoRow,
-        //        //    this.DocConfig.LogoCol
-        //        //    );
-        //        //cell.Range.Delete();
-        //        //var picture = cell.Range.InlineShapes.AddPicture(value, false, true);
-        //        //picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;
-        //        //picture.Height = 28;
-        //        this.logoPath = value;
-        //        this.OnPropertyChanged();
-        //    }
-        //}
-        //public Paragraph FetchLogoPart(WordprocessingDocument doc, WordDocConfig config)
-        //{
-        //    TableCell cell = WordPartHeaderTableCell.Get(doc, config.LogoRow, config.LogoCol);
-        //    var images = doc.MainDocumentPart.ImageParts.ToList();
-        //    ImagePart image1 = images.First();
-        //    doc.MainDocumentPart.GetIdOfPart(image1);
-        //    return 
-        //}
-
         public override DocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.LogoRow, docConfig.LogoCol);
@@ -82,12 +54,12 @@ namespace QmsDocXml
             }
         }
 
-        public override void Write(WordprocessingDocument doc, WordDocConfig docConfig, object state)
+        public override void Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             //https://stackoverflow.com/questions/2810138/replace-image-in-word-doc-using-openxml
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
 
-            FileInfo imageFile = new FileInfo((string)state);
+            FileInfo imageFile = new FileInfo((string)this.State);
 
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.LogoRow, docConfig.LogoCol);
             Paragraph cellPar = cell.Descendants<Paragraph>().First();
@@ -101,21 +73,9 @@ namespace QmsDocXml
 
             if(drawings.Any())
             {
-                //var drawing = drawings.First();
-                //OpenXmlPart imagePart = doc.MainDocumentPart.GetPartById(
-                //    drawing.Descendants<DrawingPictures.Picture>().First().BlipFill.Blip.Embed);
-                //using (var writer = new BinaryWriter(imagePart.GetStream()))
-                //{
-                //    writer.Write(File.ReadAllBytes(imageFile.FullName));
-                //}
-
-                //var nvDprop = drawing.Descendants<DrawingPictures.NonVisualDrawingProperties>()
-                //    .Where(nvDp => nvDp.Name != null).First();
-
-
-                //new picture
                 MainDocumentPart mainPart = doc.MainDocumentPart;
                 ImagePart imagePart = mainPart.HeaderParts.First().AddImagePart(ImagePartType.Jpeg);
+                //Alternative does not work
                 //ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
                 using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
                 {

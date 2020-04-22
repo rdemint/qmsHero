@@ -101,7 +101,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Write(WordprocessingDocument doc, WordDocConfig config, object state)
+        public virtual void Write(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
@@ -118,7 +118,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual void Write(SpreadsheetDocument doc, ExcelDocConfig config, object state)
+        public virtual void Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }
