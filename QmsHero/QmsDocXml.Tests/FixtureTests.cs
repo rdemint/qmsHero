@@ -54,7 +54,7 @@ namespace QmsDocXml.Tests
         public void LogoSampleJpgTest()
         {
             var fixture = new Fixture();
-            Assert.AreEqual(".jpg", fixture.LogoSampleJpg.Extension);
+            Assert.AreEqual(".jpg", fixture.LogoSampleJpgCopy.Extension);
         }
 
 

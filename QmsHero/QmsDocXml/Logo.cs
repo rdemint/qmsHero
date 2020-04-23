@@ -131,58 +131,47 @@ namespace QmsDocXml
             FileInfo imageFile = new FileInfo(this.State.ToString());
             
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
-            var hf = workSheetPart.Worksheet.Elements<Xl.HeaderFooter>().First();
-
-            //legacy drawing
-            var legDrawHF = workSheetPart.Worksheet.Elements<Xl.LegacyDrawingHeaderFooter>().First();
-
             var currentImagePart = workSheetPart.VmlDrawingParts.First().ImageParts.First();
+            var currenImagePartId = workSheetPart.VmlDrawingParts.First().GetIdOfPart(currentImagePart);
 
-            //replace drawing in hf
-            var imagePath = ((FileInfo)this.State).FullName;
+            //1 Replace legacy with new
+            //workSheetPart.AddNewPart<DrawingsPart>();
+            //ImagePart imagePart = workSheetPart.DrawingsPart.AddImagePart(ImagePartType.Jpeg);
 
-            ImagePart imagePart = workSheetPart.AddImagePart(ImagePartType.Jpeg);
-            using (FileStream stream = new FileStream(imagePath, FileMode.Open))
+
+            //ImagePart imagePart = workSheetPart.VmlDrawingParts.(ImagePartType.Jpeg);
+
+            //using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+            //{
+            //    imagePart.FeedData(stream);
+            //}
+
+            //var wkDraw = workSheetPart.DrawingsPart.WorksheetDrawing;
+
+            //string imageId = workSheetPart.DrawingsPart.GetIdOfPart(imagePart);
+            ////var idInt32 = Convert.ToUInt32(imageId);
+
+            //var newDrawHf = new Xl.DrawingHeaderFooter();
+            //var idInt32 = Convert.ToUInt32("0");
+            //newDrawHf.Lho = idInt32;
+
+            //var legDrawHF = workSheetPart.Worksheet.Elements<Xl.LegacyDrawingHeaderFooter>().First();
+            //workSheetPart.Worksheet.ReplaceChild(newDrawHf, legDrawHF);
+
+            //legDrawHF.Remove();
+
+
+
+            //2 Add by legacy
+
+
+            //3 Just overwrite current imagePart
+
+            using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
             {
-                imagePart.FeedData(stream);
+                currentImagePart.FeedData(stream);
             }
-            string imagePartId = workSheetPart.GetIdOfPart(imagePart);
-            Xl.Drawing drawing = new Xl.Drawing() { Id = imagePartId };
 
-            legDrawHF.Id = drawing.Id;
-            workSheetPart.Worksheet.Append(drawing);
-            //var pageSetup = workSheetParts.Worksheet.Elements<Xl.PageSetup>().First();
-            //string relationshipId = pageSetup.Id;
-
-            //var packageRelationship = doc.Package.GetRelationship(relationshipId);
-
-            //var vmlDrawingParts = workSheetPart.VmlDrawingParts;
-
-            //if (vmlDrawingParts.Count() > 1)
-            //{
-            //    throw new MultipleElementsExistException();
-            //}
-
-            //else
-            //{
-            //    var imageParts = vmlDrawingParts.First().ImageParts;
-            //    if (imageParts.Count() > 1)
-            //    {
-            //        throw new MultipleElementsExistException();
-            //    }
-            //    else
-            //    {
-            //        ImagePart currentImagePart = imageParts.First();
-
-            //        var newImagePart = vmlDrawingParts.First().AddImagePart(ImagePartType.Jpeg);
-
-            //        using (FileStream stream = new FileStream((string)this.State, FileMode.Open))
-            //        {
-            //            newImagePart.FeedData(stream);
-            //        }
-            //    }
-
-            //}
         }
     }
 }

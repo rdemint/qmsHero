@@ -40,15 +40,15 @@ namespace QmsDocXml.Tests
             this.ExcelSampleCopy = this.CopyToProcessingDir(tempExcel);
             this.ExcelSampleEffectiveDate = "2018-11-26";
             this.ExcelSampleRevision = "2";
-
-            this.LogoSampleJpg = this.ReferenceDir.GetFiles("*.jpg").ToList()[0];
+            var tempLogo = this.ReferenceDir.GetFiles("*.jpg").ToList()[0];
+            this.LogoSampleJpgCopy = this.CopyToProcessingDir(tempLogo);
         }
 
         public DirectoryInfo ActiveQMSDocuments { get => activeQMSDocuments; set => activeQMSDocuments = value; }
         public DirectoryInfo Sop1Documents { get => sop1Documents; set => sop1Documents = value; }
         public string DefaultProcessingDirName { get => defaultProcessingDirName; set => defaultProcessingDirName = value; }
         public string DefaultReferenceDirName { get => defaultReferenceDirName; set => defaultReferenceDirName = value; }
-        public FileInfo LogoSampleJpg { get => logoSampleJpg; set => logoSampleJpg = value; }
+        public FileInfo LogoSampleJpgCopy { get => logoSampleJpg; set => logoSampleJpg = value; }
         public string WordSampleEffectiveDate { get => wordSampleEffectiveDate; set => wordSampleEffectiveDate = value; }
         public string ExcelSampleEffectiveDate { get => excelSampleEffectiveDate; set => excelSampleEffectiveDate = value; }
         public string ExcelSampleRevision { get => excelSampleRevision; set => excelSampleRevision = value; }

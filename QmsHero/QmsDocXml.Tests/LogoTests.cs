@@ -30,18 +30,18 @@ namespace QmsDocXml.Tests
             var fixture = new Fixture();
             
             //word
-            var doc = new WordDoc(fixture.WordSampleCopy);
-            var initial = (string)doc.Inspect(new Logo()).State;
-            Assert.AreEqual("GT Medical Logo II.jpg", initial);
+            //var doc = new WordDoc(fixture.WordSampleCopy);
+            //var initial = (string)doc.Inspect(new Logo()).State;
+            //Assert.AreEqual("GT Medical Logo II.jpg", initial);
 
-            var logo = new Logo(fixture.LogoSampleJpg.FullName);
-            doc.Process(logo);
-            var result = (string)doc.Inspect(new Logo()).State;
-            Assert.AreEqual(fixture.LogoSampleJpg.Name, result);
+            //var logo = new Logo(fixture.LogoSampleJpgCopy.FullName);
+            //doc.Process(logo);
+            //var result = (string)doc.Inspect(new Logo()).State;
+            //Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, result);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            xl.Process(new Logo(fixture.LogoSampleJpg));
+            xl.Process(new Logo(fixture.LogoSampleJpgCopy));
 
         }
     }
