@@ -25,7 +25,7 @@ namespace QmsDoc.Docs.Excel
 
         public override void Process(QDocProperty prop)
         {
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
             {
                 prop.Write(doc, DocConfig);
             }

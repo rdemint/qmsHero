@@ -38,6 +38,17 @@ namespace QmsDocXml.Tests
             doc.Process(prop);
             string result = (string)doc.Inspect(new Revision()).State;
             Assert.AreEqual(result, rev);
+
+            actual = "2";
+            var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
+            result = (string)xl.Inspect(new Revision()).State;
+            Assert.AreEqual(result, actual);
+
+            rev = "12";
+            xl.Process(new Revision(rev));
+            result = (string)xl.Inspect(new Revision()).State;
+            Assert.AreEqual(rev, result);
+
         }
     }
 }

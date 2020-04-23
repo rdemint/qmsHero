@@ -43,7 +43,6 @@ namespace QmsDocXml
         {
             var workSheet = doc.WorkbookPart.WorksheetParts.First().Worksheet;
             var header = workSheet.Elements<XL.HeaderFooter>().FirstOrDefault();
-            var x = 4;
             if (header.DifferentOddEven != null && header.DifferentOddEven)
             {
                 throw new MultipleHeadersExistException();
@@ -74,6 +73,39 @@ namespace QmsDocXml
             OnPropertyChanged(); ;
         }
 
+        public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
+            foreach(var workSheetPart in workSheetParts)
+            {
+                foreach(var header in workSheetPart.Worksheet.Elements<XL.HeaderFooter>().ToList())
+                {
+                    if (header.DifferentOddEven != null && header.DifferentOddEven)
+                    {
+                        throw new MultipleHeadersExistException();
+                    }
+
+                    Match match = config.RevisionRegex.Match(header.OddHeader.Text);
+                    if (match.Success)
+                    {
+                        string currentRevVerbose = match.ToString();
+                        string currentRev = currentRevVerbose.Replace(config.RevisionText, "");
+                        string replaceRevVerbose = currentRevVerbose.Replace(currentRev, (string)this.State);
+
+                        string newInnerText = header.OddHeader.Text.Replace(currentRevVerbose, replaceRevVerbose);
+                        header.OddHeader.Text = newInnerText;
+                    }
+
+                    else
+                    {
+                        throw new DocReadException();
+                    }
+
+
+                }
+            }
+        }
+
         public override bool IsValid(IDocConfig config)
         {
             var wConfig = config as WordDocConfig;
@@ -89,6 +121,8 @@ namespace QmsDocXml
             else if(xlConfig!=null)
             {
                 rx = xlConfig.EffectiveDateRegex;
+                throw new NotImplementedException();
+                //effectivedateregex works differently in Excel, this wont work
 
             }
             var match = rx.Match(this.State.ToString());
