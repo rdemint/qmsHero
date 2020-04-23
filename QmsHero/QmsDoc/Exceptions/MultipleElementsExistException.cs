@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace QmsDocXml.Exceptions
+namespace QmsDoc.Exceptions
 {
     [Serializable]
-    public class MultipleElementsExistException : Exception
+    public class MultipleElementsExistException : DocProcessingException
     {
         public MultipleElementsExistException()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml;
 
@@ -16,6 +17,11 @@ namespace QmsDocXml.Tests
             var doc = new WordDoc(fixture.WordSample);
             var prop = new Revision();
             string result = (string)doc.Inspect(prop).State;
+            Assert.AreEqual(result, actual);
+
+            actual = "2";
+            var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
+            result = (string)xl.Inspect(new Revision()).State;
             Assert.AreEqual(result, actual);
         }
 

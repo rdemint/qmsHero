@@ -16,7 +16,10 @@ namespace QmsDoc.Docs.Excel
     {
         public ExcelDoc() { }
 
-        public ExcelDoc(FileInfo fileInfo) : base(fileInfo) { }
+        public ExcelDoc(FileInfo fileInfo) : base(fileInfo) 
+        {
+            DocConfig = new ExcelDocConfig();
+        }
 
         public ExcelDoc(FileInfo fileInfo, IDocConfig docConfig) : base(fileInfo, docConfig) { }
 

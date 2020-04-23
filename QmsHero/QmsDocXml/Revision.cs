@@ -1,9 +1,10 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using QDoc.Core;
+using XL = DocumentFormat.OpenXml.Spreadsheet;
 using QDoc.Interfaces;
 using QmsDoc.Docs.Word;
 using QmsDoc.Core;
+using QmsDoc.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using QmsDoc.Docs.Excel;
+using System.Runtime.Serialization;
 
 namespace QmsDocXml
 {
@@ -36,6 +38,29 @@ namespace QmsDocXml
             Match match = config.RevisionRegex.Match(par.InnerText);
             return new Revision(match.ToString());
         }
+
+        public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            var workSheet = doc.WorkbookPart.WorksheetParts.First().Worksheet;
+            var header = workSheet.Elements<XL.HeaderFooter>().FirstOrDefault();
+            var x = 4;
+            if (header.DifferentOddEven != null && header.DifferentOddEven)
+            {
+                throw new MultipleHeadersExistException();
+            }
+            Match match = config.RevisionRegex.Match(header.OddHeader.Text);
+            if(match.Success)
+            {
+                var m = match.ToString();
+                return new Revision(m.Replace(config.RevisionText, ""));
+            }
+
+            else
+            {
+                throw new DocReadException();
+            }
+        }
+
 
         public override void Write(WordprocessingDocument doc, WordDocConfig config)
         {
@@ -80,4 +105,5 @@ namespace QmsDocXml
             }
         }
     }
+
 }
