@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
@@ -12,37 +13,36 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void ReadTest()
         {
-            string actual = "3";
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.WordSample);
+            var doc = new WordDoc(fixture.WordSampleCopy);
             var prop = new Revision();
             string result = (string)doc.Inspect(prop).State;
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, fixture.WordSampleRevision);
 
-            actual = "2";
-            var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
+            var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             result = (string)xl.Inspect(new Revision()).State;
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, fixture.ExcelSampleRevision);
         }
 
         [TestMethod]
         public void WriteTest()
         {
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSample));
+            
+            //word
+            var doc = new WordDoc(fixture.WordSampleCopy);
 
-            string actual = "3";
             string rev = "20";
-            Assert.AreEqual(actual, (string)doc.Inspect(new Revision()).State);
+            Assert.AreEqual(fixture.WordSampleRevision, (string)doc.Inspect(new Revision()).State);
             var prop = new Revision(rev);
             doc.Process(prop);
             string result = (string)doc.Inspect(new Revision()).State;
             Assert.AreEqual(result, rev);
 
-            actual = "2";
-            var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
+            //excel
+            var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             result = (string)xl.Inspect(new Revision()).State;
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, fixture.ExcelSampleRevision);
 
             rev = "12";
             xl.Process(new Revision(rev));

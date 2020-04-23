@@ -37,10 +37,11 @@ namespace QmsDoc.Docs.Excel
         public void Initialize()
         {
             this.EffectiveDateText = "Effective Date: ";
+            this.EffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.RevisionText = "Revision: ";
             this.RevisionRegex = new Regex(Regex.Escape(this.RevisionText) + @"\d{1,2}");
             this.RevisionEffectiveDateSeparator = "\r\n";
-            this.LogoHeight = 28;
+            //this.LogoHeight = 28;
             this.IsFormRegex = new Regex(@"F-");
             this.IsSopRegex = new Regex(@"SOP-");
 

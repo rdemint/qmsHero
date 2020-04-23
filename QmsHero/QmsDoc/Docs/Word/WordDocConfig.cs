@@ -63,7 +63,7 @@ namespace QmsDoc.Docs.Word
             this.RevisionRow = 1;
             this.RevisionRegex = new Regex(@"\d{1,2}");
             this.RevisionCol = 2;
-            this.LogoHeight = 28;
+            //this.LogoHeight = 28;
             this.LogoCol = 0;
             this.LogoRow = 0;
             this.IsSopRegex = new Regex(@"SOP-");

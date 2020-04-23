@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AddImage.cs" />
+    <Compile Include="Common\ExcelXml.cs" />
     <Compile Include="EffectiveDate.cs" />
     <Compile Include="Common\WordPartHeaderTableCell.cs" />
     <Compile Include="Logo.cs" />
@@ -65,6 +66,9 @@
       <Project>{a387f634-3e43-4045-ba55-52d05d6d3bdd}</Project>
       <Name>QmsDoc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audit\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

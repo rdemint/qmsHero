@@ -39,14 +39,14 @@ namespace QmsDocXml.Tests
         public void WordSampleTest()
         {
             var fixture = new Fixture();
-            Assert.AreEqual(".docx", fixture.WordSample.Extension);
+            Assert.AreEqual(".docx", fixture.WordSampleCopy.Extension);
         }
 
         [TestMethod]
         public void ExcelSampleTest()
         {
             var fixture = new Fixture();
-            Assert.AreEqual(".xlsx", fixture.ExcelSample.Extension);
+            Assert.AreEqual(".xlsx", fixture.ExcelSampleCopy.Extension);
         
         }
 

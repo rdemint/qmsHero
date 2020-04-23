@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QmsDoc.Core;
+using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml;
 using System;
@@ -16,27 +17,40 @@ namespace QmsDocXml.Tests
         [TestMethod()]
         public void ReadTest()
         {
-            string actual = "2018-11-26";
+            
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.WordSample);
             var prop = new EffectiveDate();
+            
+            //word
+            var doc = new WordDoc(fixture.WordSampleCopy);
             string result = (string)doc.Inspect(prop).State;
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, fixture.WordSampleEffectiveDate);
+
+            //excel
+            var xl = new ExcelDoc(fixture.ExcelSampleCopy);
+            result = (string)xl.Inspect(new EffectiveDate()).State;
+            Assert.AreEqual(result, fixture.ExcelSampleEffectiveDate);
         }
 
         [TestMethod]
         public void WriteTest()
         {
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSample));
-
-            string actual = "2018-11-26";
             string effDate = "2020-20-20";
-            Assert.AreEqual(actual, (string)doc.Inspect(new EffectiveDate()).State);
             var prop = new EffectiveDate(effDate);
+            string result = null;
+
+            //word
+            var doc = new WordDoc(fixture.WordSampleCopy);
             doc.Process(prop);
-            string result = (string)doc.Inspect(new EffectiveDate()).State; 
+            result = (string)doc.Inspect(new EffectiveDate()).State; 
             Assert.AreEqual(result, effDate);
+
+            //excel
+            var xl = new ExcelDoc(fixture.ExcelSampleCopy);
+            xl.Process(prop);
+            result = (string)xl.Inspect(new EffectiveDate()).State;
+            Assert.AreEqual(effDate, result);
         }
 
     }
