@@ -26,7 +26,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         {
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSample));
-            bool result = (bool)doc.Inspect(new IsSop(), doc.FileInfo).State;
+            bool result = (bool)doc.Inspect(new IsSop()).State;
             Assert.AreEqual(true, result);
             //var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
             //bool xlResult = (bool)xl.Inspect(new IsSop(), xl.FileInfo).State;

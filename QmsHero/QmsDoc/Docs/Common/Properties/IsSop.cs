@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
 {
-    public class IsSop : DocProperty, IReadFileInfo
+    public class IsSop : DocProperty, IReadFileInfoOnly
     {
         public IsSop()
         {

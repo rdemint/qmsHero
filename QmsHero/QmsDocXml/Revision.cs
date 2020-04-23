@@ -29,7 +29,7 @@ namespace QmsDocXml
             TableCell cell = WordPartHeaderTableCell.Get(doc, config.RevisionRow, config.RevisionCol);
             return cell.Elements<Paragraph>().First();
         }
-        
+
         public override DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);

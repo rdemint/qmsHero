@@ -30,18 +30,17 @@ namespace QmsDoc.Docs.Excel
         public override QDocProperty Inspect(QDocProperty prop)
         {
             QDocProperty result = null;
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
-            {
-                
-                if(prop as IReadFileInfo != null)
+             if(prop as IReadFileInfoOnly != null)
                 {
                     result = prop.Read(FileInfo, DocConfig);
                 }
-                else
+             else
                 {
-                    result = prop.Read(doc, DocConfig);
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
+                    {
+                   result = prop.Read(doc, DocConfig);
+                    }
                 }
-            }
             return result;
         }
 

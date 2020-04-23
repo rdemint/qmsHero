@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
 {
-    public class IsForm : DocProperty, IReadFileInfo
+    public class IsForm : DocProperty, IReadFileInfoOnly
     {
         public IsForm()
         {

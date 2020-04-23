@@ -42,17 +42,17 @@ namespace QmsDoc.Docs.Word
 
             QDocProperty result = null;
 
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-            {
-                if(prop as IReadFileInfo != null)
+            if(prop as IReadFileInfoOnly != null)
                  {
                     result = prop.Read(FileInfo, DocConfig);
                  }
-                else
+            else
+              {
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
                   {
                     result = prop.Read(doc, DocConfig);
                   }
-            }
+              }
             return result;
         }
         //public override IDocState Inspect (IDocState docState)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Interfaces
 {
-    interface IReadFileInfo
+    interface IReadFileInfoOnly
     {
         DocProperty Read(FileInfo file, ExcelDocConfig config);
         DocProperty Read(FileInfo file, WordDocConfig config);
