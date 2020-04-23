@@ -46,7 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\AddImage.cs" />
+    <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />
     <Compile Include="EffectiveDate.cs" />
     <Compile Include="Common\WordPartHeaderTableCell.cs" />

@@ -121,56 +121,68 @@ namespace QmsDocXml
                 }
 
                 string imageId = mainPart.HeaderParts.First().GetIdOfPart(imagePart);
-                AddImage.Add(doc, imageId, cellPar, imageFile);
+                ImageXml.Add(doc, imageId, cellPar, imageFile);
             }
         }
 
         public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
+
+            FileInfo imageFile = new FileInfo(this.State.ToString());
             
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
+            var hf = workSheetPart.Worksheet.Elements<Xl.HeaderFooter>().First();
 
             //legacy drawing
             var legDrawHF = workSheetPart.Worksheet.Elements<Xl.LegacyDrawingHeaderFooter>().First();
-            var legId = legDrawHF.First().Id;
-            var vmlDraw = workSheetPart.VmlDrawingParts.First();
 
+            var currentImagePart = workSheetPart.VmlDrawingParts.First().ImageParts.First();
 
+            //replace drawing in hf
+            var imagePath = ((FileInfo)this.State).FullName;
 
-            var draws = workSheetPart.Worksheet.Elements<Xl.DrawingHeaderFooter>();
+            ImagePart imagePart = workSheetPart.AddImagePart(ImagePartType.Jpeg);
+            using (FileStream stream = new FileStream(imagePath, FileMode.Open))
+            {
+                imagePart.FeedData(stream);
+            }
+            string imagePartId = workSheetPart.GetIdOfPart(imagePart);
+            Xl.Drawing drawing = new Xl.Drawing() { Id = imagePartId };
 
+            legDrawHF.Id = drawing.Id;
+            workSheetPart.Worksheet.Append(drawing);
             //var pageSetup = workSheetParts.Worksheet.Elements<Xl.PageSetup>().First();
             //string relationshipId = pageSetup.Id;
 
             //var packageRelationship = doc.Package.GetRelationship(relationshipId);
 
-            var vmlDrawingParts = workSheetPart.VmlDrawingParts;
+            //var vmlDrawingParts = workSheetPart.VmlDrawingParts;
 
-            if (vmlDrawingParts.Count() > 1)
-            {
-                throw new MultipleElementsExistException();
-            }
+            //if (vmlDrawingParts.Count() > 1)
+            //{
+            //    throw new MultipleElementsExistException();
+            //}
 
-            else
-            {
-                var imageParts = vmlDrawingParts.First().ImageParts;
-                if (imageParts.Count() > 1)
-                {
-                    throw new MultipleElementsExistException();
-                }
-                else
-                {
-                    ImagePart currentImagePart = imageParts.First();
+            //else
+            //{
+            //    var imageParts = vmlDrawingParts.First().ImageParts;
+            //    if (imageParts.Count() > 1)
+            //    {
+            //        throw new MultipleElementsExistException();
+            //    }
+            //    else
+            //    {
+            //        ImagePart currentImagePart = imageParts.First();
 
-                    var newImagePart = vmlDrawingParts.First().AddImagePart(ImagePartType.Jpeg);
+            //        var newImagePart = vmlDrawingParts.First().AddImagePart(ImagePartType.Jpeg);
 
-                    using (FileStream stream = new FileStream((string)this.State, FileMode.Open))
-                    {
-                        newImagePart.FeedData(stream);
-                    }
-                }
+            //        using (FileStream stream = new FileStream((string)this.State, FileMode.Open))
+            //        {
+            //            newImagePart.FeedData(stream);
+            //        }
+            //    }
 
-            }
+            //}
         }
     }
 }
