@@ -17,6 +17,7 @@ using System.IO;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Exceptions;
 using System.Text.RegularExpressions;
+using System.IO.Packaging;
 
 namespace QmsDocXml
 {
@@ -131,46 +132,38 @@ namespace QmsDocXml
             FileInfo imageFile = new FileInfo(this.State.ToString());
             
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
-            var currentImagePart = workSheetPart.VmlDrawingParts.First().ImageParts.First();
-            var currenImagePartId = workSheetPart.VmlDrawingParts.First().GetIdOfPart(currentImagePart);
-
-            //1 Replace legacy with new
-            //workSheetPart.AddNewPart<DrawingsPart>();
-            //ImagePart imagePart = workSheetPart.DrawingsPart.AddImagePart(ImagePartType.Jpeg);
-
-
-            //ImagePart imagePart = workSheetPart.VmlDrawingParts.(ImagePartType.Jpeg);
-
+            //3 Just overwrite current imagePart
+            var vmlDrawing = workSheetPart.VmlDrawingParts.First();
+            var myId = workSheetPart.GetIdOfPart(vmlDrawing);
+            //var currenImagePartId = workSheetPart.VmlDrawingParts.First().GetIdOfPart(currentImagePart);
+            var wkshtDraw = vmlDrawing.RootElement.Elements<DRAWING.Spreadsheet.WorksheetDrawing>().First();
             //using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
             //{
-            //    imagePart.FeedData(stream);
+            //    currentImagePart.FeedData(stream);
             //}
 
-            //var wkDraw = workSheetPart.DrawingsPart.WorksheetDrawing;
+            //1 Replace legacy with new
+            //workSheetPart.Worksheet.RemoveAllChildren<Xl.LegacyDrawingHeaderFooter>();
+            //workSheetPart.DeleteParts<VmlDrawingPart>(workSheetPart.VmlDrawingParts);
 
-            //string imageId = workSheetPart.DrawingsPart.GetIdOfPart(imagePart);
-            ////var idInt32 = Convert.ToUInt32(imageId);
+            //workSheetPart.AddNewPart<DrawingsPart>();
+            //ImagePart imagePart = workSheetPart.DrawingsPart.AddImagePart(ImagePartType.Jpeg);
+            //string imagePartId = workSheetPart.DrawingsPart.GetIdOfPart(imagePart);
+
+            ////create new WorksheetDrawing
+            //var el = ImageXml.GetWorksheetDrawing(imagePartId, imageFile);
+            //workSheetPart.DrawingsPart.WorksheetDrawing = el;
 
             //var newDrawHf = new Xl.DrawingHeaderFooter();
-            //var idInt32 = Convert.ToUInt32("0");
-            //newDrawHf.Lho = idInt32;
-
-            //var legDrawHF = workSheetPart.Worksheet.Elements<Xl.LegacyDrawingHeaderFooter>().First();
-            //workSheetPart.Worksheet.ReplaceChild(newDrawHf, legDrawHF);
-
-            //legDrawHF.Remove();
+            ////var idInt32 = Convert.ToUInt32(imagePartId);
+            //workSheetPart.Worksheet.Append(newDrawHf);
 
 
 
             //2 Add by legacy
 
 
-            //3 Just overwrite current imagePart
 
-            using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
-            {
-                currentImagePart.FeedData(stream);
-            }
 
         }
     }
