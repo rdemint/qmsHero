@@ -40,5 +40,10 @@ namespace QmsDocXml.Common
             return newVal;
         }
 
+        public static string XElementAttributeValueSearch(System.Xml.Linq.XElement el, string attrLocalName)
+        {
+            return el.Attributes(attrLocalName).ToString();
+        }
+
     }
 }

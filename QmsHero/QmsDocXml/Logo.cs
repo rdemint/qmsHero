@@ -1,5 +1,6 @@
 ﻿using Oxml = DocumentFormat.OpenXml;
 using System.Xml.Serialization;
+using Xlinq = System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Xl = DocumentFormat.OpenXml.Spreadsheet;
@@ -68,8 +69,6 @@ namespace QmsDocXml
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
 
             var pageSetup = workSheetPart.Worksheet.Elements<Xl.PageSetup>().First();
-            string relationshipId = pageSetup.Id;
-
 
             var vmlDrawingParts = workSheetPart.VmlDrawingParts;
 
@@ -87,8 +86,9 @@ namespace QmsDocXml
                 }
                 else
                 {
+                    
+                    
                     var xmlPartReader = DocumentFormat.OpenXml.OpenXmlPartReader.Create(vmlDrawingParts.First().GetStream());
-                    //List<Oxml.OpenXmlElement> xmlEls = new List<Oxml.OpenXmlElement>();
 
                     Ovml.Shape myShape = null;
 
@@ -183,7 +183,6 @@ namespace QmsDocXml
             var vmlParts = workSheetPart.VmlDrawingParts;
             var vmlPart = workSheetPart.VmlDrawingParts.First();
 
-
             //get the current relationship Id, for resuse in the to-be-created relationship with new ImagePart
             //var myParts = workSheetPart.Parts;
             //var vmlUri = new Uri("/xl/drawings/vmlDrawing1.vml", UriKind.Relative);
@@ -191,11 +190,30 @@ namespace QmsDocXml
 
             //get the content of the vmlPart 
 
+            string vmlContent = null;
             using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
             {
-                var vmlContent = streamReader.ReadToEnd();
+                vmlContent = streamReader.ReadToEnd();
                 
             }
+            var xEl = Xlinq.XElement.Parse(vmlContent);
+            var shapeNode = xEl.Descendants().Where(d => d.Name.LocalName == "shape").First();
+            var styleAttr = shapeNode.Attributes("style").First();
+            //get current image height in points
+            Match widthMatch = Regex.Match(styleAttr.Value, @"width:*pt");
+            Match heightMatch = Regex.Match(styleAttr.Value, @"height:*pt");
+            if(widthMatch.Success)
+            {
+                //
+                double imageWidth;
+                bool r = double.TryParse(widthMatch.ToString(), out imageWidth);
+            }
+            else
+            {
+                throw new DocWriteException("Could not find the height specification of the image");
+            }
+
+
 
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using SysDraw = System.Drawing;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using Wd = DocumentFormat.OpenXml.Wordprocessing;
@@ -121,6 +122,17 @@ namespace QmsDocXml.Common
             var newWidthEmus = widthEmus * targetHeightEmus/heightEmus;
             long[] result = new long[] { newWidthEmus, targetHeightEmus };
             return result;
+        }
+
+        public static double GetImageHeightWidthRatio(FileInfo filename)
+        {
+            double ratio;
+
+            using (var img = SysDraw.Image.FromFile(filename.FullName))
+            {
+                ratio = img.Height / img.Width;
+            }
+            return ratio;
         }
     }
 }
