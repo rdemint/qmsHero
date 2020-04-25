@@ -1,7 +1,11 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+﻿using Oxml = DocumentFormat.OpenXml;
+using System.Xml.Serialization;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Xl = DocumentFormat.OpenXml.Spreadsheet;
+using Ovml = DocumentFormat.OpenXml.Vml;
 using DRAWING = DocumentFormat.OpenXml.Drawing;
+using Xdr = DocumentFormat.OpenXml.Drawing.Spreadsheet;
 using DrawingPictures = DocumentFormat.OpenXml.Drawing.Pictures;
 using QmsDoc.Core;
 using QmsDoc.Docs.Word;
@@ -132,11 +136,103 @@ namespace QmsDocXml
             FileInfo imageFile = new FileInfo(this.State.ToString());
             
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
+            var vmlParts = workSheetPart.VmlDrawingParts;
+            var vmlPart = workSheetPart.VmlDrawingParts.First();
+
+
+            //get the current relationship Id, for resuse in the to-be-created relationship with new ImagePart
+            //var myParts = workSheetPart.Parts;
+            //var vmlUri = new Uri("/xl/drawings/vmlDrawing1.vml", UriKind.Relative);
+            //var myVmlPart = doc.Package.GetPart(vmlUri);
+
+            //get the content of the vmlPart 
+
+            using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
+            {
+                var vmlContent = streamReader.ReadToEnd();
+                
+            }
+
+
+
+            var xmlPartReader = DocumentFormat.OpenXml.OpenXmlPartReader.Create(vmlPart.GetStream());
+            List<Oxml.OpenXmlElement> xmlEls = new List<Oxml.OpenXmlElement>();
+            while (xmlPartReader.Read())
+            {
+                var currentEl = xmlPartReader.LoadCurrentElement();
+                if (currentEl.HasChildren)
+                {
+                    foreach(var child in currentEl.ChildElements)
+                    {
+                        //var asShapeType = child as Ovml.Shapetype;
+                        //var asShape = child as Ovml.Shape;
+                        //var asShapeLayout = child as Ovml.Office.ShapeLayout;
+
+                        try
+                        {
+                            var myShape = new Ovml.Shape(child.OuterXml);
+                        }
+
+                        catch
+                        {
+                            //too bad
+                        }
+
+                        try
+                        {
+                            var myShapeType = new Ovml.Shapetype(child.OuterXml);
+                        }
+                        catch
+                        {
+                            //too bad
+                        }
+
+                        try
+                        {
+                            var myShapeLayout = new Ovml.Office.ShapeLayout(child.OuterXml);
+                        }
+
+                        catch
+                        {
+                            //too bad
+                        }
+                        
+                        //if (asShapeType != null)
+                        //{
+                        //    xmlEls.Add(asShapeType);
+                        //}
+                        //else if(asShape != null)
+                        //{
+                        //    xmlEls.Add(asShape);
+                        //}
+                    }
+                }
+            }
+            xmlPartReader.Close();
+
+            //var myRelPair = workSheetPart.Parts.ToList()[0];
+            //var myRel = vmlParts.First().GetReferenceRelationship(myRelPair.RelationshipId);
+            //string myRelId = myRel.Id;
+
+            //workSheetPart.DeleteReferenceRelationship(myRel.Id);
+
+            //create the new ImagePart.  Create a relationship using the original Reference relationship id
+            //var newImagePart = vmlParts.First().AddImagePart(ImagePartType.Jpeg);
+            //var newRelId = workSheetPart.CreateRelationshipToPart(newImagePart, myRelId);
+
+            //    using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+            //{
+            //    newImagePart.FeedData(stream);
+            //}
+
+
+
             //3 Just overwrite current imagePart
-            var vmlDrawing = workSheetPart.VmlDrawingParts.First();
-            var myId = workSheetPart.GetIdOfPart(vmlDrawing);
-            //var currenImagePartId = workSheetPart.VmlDrawingParts.First().GetIdOfPart(currentImagePart);
-            var wkshtDraw = vmlDrawing.RootElement.Elements<DRAWING.Spreadsheet.WorksheetDrawing>().First();
+            //var vmlDrawing = workSheetPart.VmlDrawingParts.First();
+            //var myId = workSheetPart.GetIdOfPart(vmlDrawing);
+
+
+
             //using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
             //{
             //    currentImagePart.FeedData(stream);
@@ -149,6 +245,11 @@ namespace QmsDocXml
             //workSheetPart.AddNewPart<DrawingsPart>();
             //ImagePart imagePart = workSheetPart.DrawingsPart.AddImagePart(ImagePartType.Jpeg);
             //string imagePartId = workSheetPart.DrawingsPart.GetIdOfPart(imagePart);
+
+            //var xDrawing = new Xdr.WorksheetDrawing();
+            //workSheetPart.DrawingsPart.WorksheetDrawing = xDrawing;
+
+            //var worksheetDrawing = workSheetPart.DrawingsPart.WorksheetDrawing
 
             ////create new WorksheetDrawing
             //var el = ImageXml.GetWorksheetDrawing(imagePartId, imageFile);

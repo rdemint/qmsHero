@@ -11,13 +11,21 @@ namespace QmsDocXml.Common
 {
     static class ExcelXml
     {
-        public static Xdr.WorksheetDrawing GetVmlDrawing(string imageRelationshipId)
+        public static Xdr.WorksheetDrawing GetWorksheetDrawing()
         {
             var imageData = new Vml.ImageData();
-            imageData.RelationshipId = imageRelationshipId;
-            var xDrawing = new Xdr.WorksheetDrawing(imageData);
+            imageData.RelationshipId = "rId1";
+            var xDrawing = new Xdr.WorksheetDrawing();
             return xDrawing;
         }
+
+        //public static VmlDrawingPart NewVmlDrawingPart(WorksheetPart worksheetPart, string imageRelationshipId)
+        //{
+        //    VmlDrawingPart myPart = worksheetPart.AddNewPart<VmlDrawingPart>();
+        //    var imageData = new Vml.ImageData();
+        //    imageData.RelationshipId = imageRelationshipId;
+        //    var myPartDrawing = GetWorksheetDrawing(imageRelationshipId); 
+        //}
 
         public static int GetNewVmlPartDrawingPartId(WorksheetPart worksheetPart, IEnumerable<VmlDrawingPart> vmlDrawingParts)
         {
