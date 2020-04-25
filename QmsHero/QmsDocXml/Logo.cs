@@ -73,7 +73,7 @@ namespace QmsDocXml
 
             var vmlDrawingParts = workSheetPart.VmlDrawingParts;
 
-            if(vmlDrawingParts.Count() > 1)
+            if (vmlDrawingParts.Count() > 1)
             {
                 throw new MultipleElementsExistException();
             }
@@ -81,18 +81,62 @@ namespace QmsDocXml
             else
             {
                 var imageParts = vmlDrawingParts.First().ImageParts;
-                if(imageParts.Count() > 1)
+                if (imageParts.Count() > 1)
                 {
                     throw new MultipleElementsExistException();
                 }
                 else
                 {
-                    
-                    
-                    string imageName = Path.GetFileName(imageParts.First().Uri.ToString());
-                    return new Logo(imageName);
+                    var xmlPartReader = DocumentFormat.OpenXml.OpenXmlPartReader.Create(vmlDrawingParts.First().GetStream());
+                    //List<Oxml.OpenXmlElement> xmlEls = new List<Oxml.OpenXmlElement>();
+
+                    Ovml.Shape myShape = null;
+
+                    while (xmlPartReader.Read())
+                    {
+                        var currentEl = xmlPartReader.LoadCurrentElement();
+                        if (currentEl.HasChildren)
+                        {
+                            foreach (var child in currentEl.ChildElements)
+                            {
+                                //var asShapeType = child as Ovml.Shapetype;
+                                //var asShape = child as Ovml.Shape;
+                                //var asShapeLayout = child as Ovml.Office.ShapeLayout;
+
+                                try
+                                {
+                                    myShape = new Ovml.Shape(child.OuterXml);
+
+                                }
+
+                                catch
+                                {
+                                    //Element not of interest
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            throw new DocProcessingException();
+                        }
+                    }
+
+                    if (myShape != null)
+                    {
+                        var myImageData = myShape.Elements<Ovml.ImageData>().First();
+                        return new Logo(myImageData.Title.Value);
+                    }
+
+                    else
+                    {
+                        throw new DocReadException();
+                    }
+
+
                 }
 
+                
             }
 
         }
@@ -171,6 +215,7 @@ namespace QmsDocXml
                         try
                         {
                             var myShape = new Ovml.Shape(child.OuterXml);
+                            xmlEls.Add(myShape);
                         }
 
                         catch
@@ -181,6 +226,7 @@ namespace QmsDocXml
                         try
                         {
                             var myShapeType = new Ovml.Shapetype(child.OuterXml);
+                            xmlEls.Add(myShapeType);
                         }
                         catch
                         {
@@ -190,6 +236,7 @@ namespace QmsDocXml
                         try
                         {
                             var myShapeLayout = new Ovml.Office.ShapeLayout(child.OuterXml);
+                            xmlEls.Add(myShapeLayout);
                         }
 
                         catch

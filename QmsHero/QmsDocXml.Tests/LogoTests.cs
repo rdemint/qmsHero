@@ -21,7 +21,7 @@ namespace QmsDocXml.Tests
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             result = (string)xl.Inspect(new Logo()).State;
-            Assert.AreEqual("image1.jpeg", result);
+            Assert.AreEqual("GT Medical Logo II", result);
         }
 
         [TestMethod]
@@ -42,7 +42,6 @@ namespace QmsDocXml.Tests
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             xl.Process(new Logo(fixture.LogoSampleJpgCopy));
-
         }
     }
 }
