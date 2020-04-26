@@ -72,7 +72,6 @@
     <Compile Include="Interfaces\IDocConfig.cs" />
     <Compile Include="Core\QDocManager.cs" />
     <Compile Include="Core\QDocManagerConfig.cs" />
-    <Compile Include="Docs\DocConfig.cs" />
     <Compile Include="Exceptions\MultipleDocHeadersException.cs" />
     <Compile Include="Docs\Doc.cs" />
     <Compile Include="Interfaces\IDoc.cs" />

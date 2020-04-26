@@ -31,16 +31,16 @@ namespace QmsDoc.Docs.Common.Properties
             }
         }
 
-        public override DocProperty Read(FileInfo file, WordDocConfig config)
+        public override DocProperty Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileIsFormRegex.Match(file.Name);
             return new IsForm(match.Success);
         }
 
-        public override DocProperty Read(FileInfo file, ExcelDocConfig config)
-        {
-            Match match = config.IsFormRegex.Match(file.Name);
-            return new IsForm(match.Success);
-        }
+        //public override DocProperty Read(FileInfo file, ExcelDocConfig config)
+        //{
+        //    Match match = config.FileIsFormRegex.Match(file.Name);
+        //    return new IsForm(match.Success);
+        //}
     }
 }

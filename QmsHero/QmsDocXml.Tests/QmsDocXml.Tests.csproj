@@ -58,6 +58,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Docs\Common\Properties\FileRevisionTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="FixtureTests.cs" />

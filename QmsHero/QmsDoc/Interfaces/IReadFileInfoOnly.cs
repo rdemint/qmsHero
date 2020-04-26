@@ -1,4 +1,5 @@
 ﻿using QmsDoc.Core;
+using QmsDoc.Docs.Common;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using System;
@@ -12,7 +13,7 @@ namespace QmsDoc.Interfaces
 {
     interface IReadFileInfoOnly
     {
-        DocProperty Read(FileInfo file, ExcelDocConfig config);
-        DocProperty Read(FileInfo file, WordDocConfig config);
+        DocProperty Read(FileInfo file, DocConfig config);
+        //DocProperty Read(FileInfo file, WordDocConfig config);
     }
 }

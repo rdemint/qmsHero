@@ -1,6 +1,7 @@
 ﻿
 
 using QDoc.Interfaces;
+using QmsDoc.Docs.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Excel
 {
-    public class ExcelDocConfig: IDocConfig
+    public class ExcelDocConfig: DocConfig
     {
         string effectiveDateText;
         Regex effectiveDateRegex;
@@ -20,7 +21,7 @@ namespace QmsDoc.Docs.Excel
         string headerNameText;
         Regex headerNameRegex;
 
-        public ExcelDocConfig()
+        public ExcelDocConfig(): base()
         {
             this.Initialize();
         }

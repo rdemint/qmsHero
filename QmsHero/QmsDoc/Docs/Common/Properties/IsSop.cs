@@ -33,16 +33,16 @@ namespace QmsDoc.Docs.Common.Properties
 
         }
 
-        public override DocProperty Read(FileInfo file, WordDocConfig config)
+        public override DocProperty Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileIsSopRegex.Match(file.Name);
             return new IsSop(match.Success);
         }
 
-        public override DocProperty Read(FileInfo file, ExcelDocConfig config)
-        {
-            Match match = config.IsSopRegex.Match(file.Name);
-            return new IsSop(match.Success);
-        }
+        //public override DocProperty Read(FileInfo file, ExcelDocConfig config)
+        //{
+        //    Match match = config.FileIsSopRegex.Match(file.Name);
+        //    return new IsSop(match.Success);
+        //}
     }
 }

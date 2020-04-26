@@ -28,7 +28,7 @@ namespace QmsDoc.Docs.Common
             set { 
                 
                 fileRevisionText = value;
-                this.FileRevisionRegex = new Regex(Regex.Escape(fileRevisionText + @"\d{1,2}"));
+                this.FileRevisionRegex = new Regex(Regex.Escape(fileRevisionText) + @"\d{1,2}");
             }
         }
         public Regex FileRevisionRegex { get => fileRevisionRegex; set => fileRevisionRegex = value; }

@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Interfaces;
+using QmsDoc.Docs.Common;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDoc.Exceptions;
@@ -63,14 +64,16 @@ namespace QmsDoc.Core
 
         }
 
-        public override void Write(object doc, IDocConfig docConfig)
+        public override void Write(object doc, IDocConfig config)
         {
             //Visitor Pattern
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
-            WordDocConfig wdocConfig = docConfig as WordDocConfig;
+            WordDocConfig wdocConfig = config as WordDocConfig;
 
             SpreadsheetDocument sdoc = doc as SpreadsheetDocument;
-            ExcelDocConfig sdocConfig = docConfig as ExcelDocConfig;
+            ExcelDocConfig sdocConfig = config as ExcelDocConfig;
+
+            DocConfig docConfig = config as DocConfig;
 
             if (wdoc != null && wdocConfig != null)
             {
@@ -97,7 +100,12 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual DocProperty Read(FileInfo file, WordDocConfig config)
+        //public virtual DocProperty Read(FileInfo file, WordDocConfig config)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public virtual DocProperty Read(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
@@ -114,10 +122,10 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual DocProperty Read(FileInfo file, ExcelDocConfig config)
-        {
-            throw new NotImplementedException();
-        }
+        //public virtual DocProperty Read(FileInfo file, ExcelDocConfig config)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public virtual void Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
