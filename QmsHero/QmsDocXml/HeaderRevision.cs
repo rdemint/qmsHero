@@ -28,14 +28,14 @@ namespace QmsDocXml
 
         public Paragraph FetchRevisionPart(WordprocessingDocument doc, WordDocConfig config)
         {
-            TableCell cell = WordPartHeaderTableCell.Get(doc, config.RevisionRow, config.RevisionCol);
+            TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);
             return cell.Elements<Paragraph>().First();
         }
 
         public override DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
-            Match match = config.RevisionRegex.Match(par.InnerText);
+            Match match = config.HeaderRevisionRegex.Match(par.InnerText);
             return new HeaderRevision(match.ToString());
         }
 
@@ -47,11 +47,11 @@ namespace QmsDocXml
             {
                 throw new MultipleHeadersExistException();
             }
-            Match match = config.RevisionRegex.Match(header.OddHeader.Text);
+            Match match = config.HeaderRevisionRegex.Match(header.OddHeader.Text);
             if(match.Success)
             {
                 var m = match.ToString();
-                return new HeaderRevision(m.Replace(config.RevisionText, ""));
+                return new HeaderRevision(m.Replace(config.HeaderRevisionText, ""));
             }
 
             else
@@ -67,7 +67,7 @@ namespace QmsDocXml
             par.RemoveAllChildren();
             Run run = new Run();
             Text text = new Text();
-            text.Text = config.RevisionText + (string)this.State;
+            text.Text = config.HeaderRevisionText + (string)this.State;
             run.Append(text);
             par.Append(run);
             OnPropertyChanged(); ;
@@ -85,11 +85,11 @@ namespace QmsDocXml
                         throw new MultipleHeadersExistException();
                     }
 
-                    Match match = config.RevisionRegex.Match(header.OddHeader.Text);
+                    Match match = config.HeaderRevisionRegex.Match(header.OddHeader.Text);
                     if (match.Success)
                     {
                         string currentRevVerbose = match.ToString();
-                        string currentRev = currentRevVerbose.Replace(config.RevisionText, "");
+                        string currentRev = currentRevVerbose.Replace(config.HeaderRevisionText, "");
                         string replaceRevVerbose = currentRevVerbose.Replace(currentRev, (string)this.State);
 
                         string newInnerText = header.OddHeader.Text.Replace(currentRevVerbose, replaceRevVerbose);
@@ -115,12 +115,12 @@ namespace QmsDocXml
 
             if(wConfig!=null)
             {
-                rx = wConfig.EffectiveDateRegex;
+                rx = wConfig.HeaderEffectiveDateRegex;
 
             }
             else if(xlConfig!=null)
             {
-                rx = xlConfig.EffectiveDateRegex;
+                rx = xlConfig.HeaderEffectiveDateRegex;
                 throw new NotImplementedException();
                 //effectivedateregex works differently in Excel, this wont work
 

@@ -94,8 +94,6 @@ namespace QmsDocXml
             par.RemoveAllChildren<Wxml.Run>();
             firstRunClone.Elements<Wxml.Text>().First().Text = config.HeaderNameText + (string)this.State;
             par.Append(firstRunClone);
-
-
         }
 
     }

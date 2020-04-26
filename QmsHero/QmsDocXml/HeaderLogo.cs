@@ -40,7 +40,7 @@ namespace QmsDocXml
 
         public override DocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-            DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.LogoRow, docConfig.LogoCol);
+            DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
 
             IEnumerable<Drawing> drawings = cell.Descendants<Drawing>()
                 .Where(
@@ -150,7 +150,7 @@ namespace QmsDocXml
 
             FileInfo imageFile = new FileInfo((string)this.State);
 
-            DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.LogoRow, docConfig.LogoCol);
+            DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
             Paragraph cellPar = cell.Descendants<Paragraph>().First();
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
 

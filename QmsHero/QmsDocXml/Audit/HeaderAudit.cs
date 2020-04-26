@@ -36,10 +36,10 @@ namespace QmsDocXml.Audit
             this.CheckParsCount(headerCell.Elements<Wxml.Paragraph>().ToList());
             
 
-            Wxml.TableCell revisionCell = WordPartHeaderTableCell.Get(doc, config.RevisionRow, config.RevisionCol);
+            Wxml.TableCell revisionCell = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);
             this.CheckParsCount(revisionCell.Elements<Wxml.Paragraph>().ToList());
 
-            Wxml.TableCell effectiveDateCell = WordPartHeaderTableCell.Get(doc, config.EffectiveDateRow, config.EffectiveDateCol);
+            Wxml.TableCell effectiveDateCell = WordPartHeaderTableCell.Get(doc, config.HeaderEffectiveDateRow, config.HeaderEffectiveDateCol);
             this.CheckParsCount(effectiveDateCell.Elements<Wxml.Paragraph>().ToList());
 
             Wxml.TableCell nameCell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);

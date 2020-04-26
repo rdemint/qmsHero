@@ -50,6 +50,8 @@
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
     <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Docs\Common\DocConfig.cs" />
+    <Compile Include="Docs\Common\Properties\FileRevision.cs" />
     <Compile Include="Docs\Common\Properties\IsForm.cs" />
     <Compile Include="Docs\Common\Properties\IsSop.cs" />
     <Compile Include="Exceptions\DocProcessingException.cs" />

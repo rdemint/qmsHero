@@ -15,42 +15,31 @@ namespace QmsDoc.Docs.Excel
         string effectiveDateText;
         Regex effectiveDateRegex;
         string revisionText;
-        string revisionEffectiveDateSeparator;
         Regex revisionRegex;
         int logoHeight;
         string headerNameText;
         Regex headerNameRegex;
-        Regex isSopRegex;
-        Regex isFormRegex;
 
         public ExcelDocConfig()
         {
             this.Initialize();
         }
 
-        public string EffectiveDateText { get => effectiveDateText; set => effectiveDateText = value; }
-        public string RevisionText { get => revisionText; set => revisionText = value; }
-        public string RevisionEffectiveDateSeparator { get => revisionEffectiveDateSeparator; set => revisionEffectiveDateSeparator = value; }
-        public Regex RevisionRegex { get => revisionRegex; set => revisionRegex = value; }
-        public Regex EffectiveDateRegex { get => effectiveDateRegex; set => effectiveDateRegex = value; }
+        public string HeaderEffectiveDateText { get => effectiveDateText; set => effectiveDateText = value; }
+        public string HeaderRevisionText { get => revisionText; set => revisionText = value; }
+        public Regex HeaderRevisionRegex { get => revisionRegex; set => revisionRegex = value; }
+        public Regex HeaderEffectiveDateRegex { get => effectiveDateRegex; set => effectiveDateRegex = value; }
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
-        public Regex IsFormRegex { get => isFormRegex; set => isFormRegex = value; }
-        public Regex IsSopRegex { get => isSopRegex; set => isSopRegex = value; }
         public Regex HeaderNameRegex { get => headerNameRegex; set => headerNameRegex = value; }
         public string HeaderNameText { get => headerNameText; set => headerNameText = value; }
 
         public void Initialize()
         {
-            this.EffectiveDateText = "Effective Date: ";
-            this.EffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
-            this.RevisionText = "Revision: ";
-            this.RevisionRegex = new Regex(Regex.Escape(this.RevisionText) + @"\d{1,2}");
-            this.RevisionEffectiveDateSeparator = "\r\n";
-            //this.LogoHeight = 28;
-            this.IsFormRegex = new Regex(@"F-");
-            this.IsSopRegex = new Regex(@"SOP-");
+            this.HeaderEffectiveDateText = "Effective Date: ";
+            this.HeaderEffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
+            this.HeaderRevisionText = "Revision: ";
+            this.HeaderRevisionRegex = new Regex(Regex.Escape(this.HeaderRevisionText) + @"\d{1,2}");
             this.HeaderNameText = "DOCUMENT NAME: ";
-            //this.HeaderNameRegex = new Regex(Regex.Escape(this.HeaderNameText) + @"\.\*\)");
             this.HeaderNameRegex = new Regex(Regex.Escape(this.HeaderNameText) + @".*\)");
 
 

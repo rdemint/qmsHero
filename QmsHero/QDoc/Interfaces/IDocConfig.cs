@@ -9,6 +9,5 @@ namespace QDoc.Interfaces
 {
     public interface IDocConfig
     {
-        void Initialize();
     }
 }

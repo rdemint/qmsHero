@@ -36,7 +36,7 @@ namespace QmsDocXml
 
         public override DocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-            WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.EffectiveDateRow, docConfig.EffectiveDateCol);
+            WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
             return new HeaderEffectiveDate(match.ToString());
         }
@@ -49,11 +49,11 @@ namespace QmsDocXml
             {
                 throw new MultipleHeadersExistException();
             }
-            Match match = config.EffectiveDateRegex.Match(header.OddHeader.Text);
+            Match match = config.HeaderEffectiveDateRegex.Match(header.OddHeader.Text);
             if (match.Success)
             {
                 var m = match.ToString();
-                return new HeaderEffectiveDate(m.Replace(config.EffectiveDateText, ""));
+                return new HeaderEffectiveDate(m.Replace(config.HeaderEffectiveDateText, ""));
             }
 
             else
@@ -64,11 +64,11 @@ namespace QmsDocXml
 
         public override void Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-                WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.EffectiveDateRow, docConfig.EffectiveDateCol);
+                WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
                 WD.Run myRun = (WD.Run)par.Elements<WD.Run>().First().Clone();
                 par.RemoveAllChildren<WD.Run>();
                 WD.Text text = myRun.Elements<WD.Text>().First();
-                text.Text = docConfig.EffectiveDateText + (string)this.State;
+                text.Text = docConfig.HeaderEffectiveDateText + (string)this.State;
                 par.Append(myRun);
                 this.OnPropertyChanged();
         }
@@ -85,11 +85,11 @@ namespace QmsDocXml
                         throw new MultipleHeadersExistException();
                     }
 
-                    Match match = config.EffectiveDateRegex.Match(header.OddHeader.Text);
+                    Match match = config.HeaderEffectiveDateRegex.Match(header.OddHeader.Text);
                     if (match.Success)
                     {
                         string currentRevVerbose = match.ToString();
-                        string currentRev = currentRevVerbose.Replace(config.EffectiveDateText, "");
+                        string currentRev = currentRevVerbose.Replace(config.HeaderEffectiveDateText, "");
                         string replaceRevVerbose = currentRevVerbose.Replace(currentRev, (string)this.State);
 
                         string newInnerText = header.OddHeader.Text.Replace(currentRevVerbose, replaceRevVerbose);
@@ -108,7 +108,7 @@ namespace QmsDocXml
 
         public override bool IsValid(IDocConfig config)
         {
-            var rx = ((WordDocConfig)config).EffectiveDateRegex;
+            var rx = ((WordDocConfig)config).HeaderEffectiveDateRegex;
             var match = rx.Match(this.State.ToString());
                 if (
                     match.Success &&
