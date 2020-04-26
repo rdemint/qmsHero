@@ -30,17 +30,18 @@ namespace QmsDocXml.Tests
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = (string)doc.Inspect(new HeaderName()).State;
             Assert.AreEqual(fixture.ExcelSampleHeaderName, result);
-            //var myHeader = "DOCUMENT NAME: Quality Manual (SOP-001)";
-            //var config = new ExcelDocConfig();
-            //Match match = config.HeaderNameRegex.Match(myHeader);
-            //Assert.AreEqual(match.Success, true);
-
         }
 
         [TestMethod()]
         public void WriteWordTest()
         {
-            Assert.Fail();
+            var fixture = new Fixture();
+            var myName = "New procedure (SOP-1)";
+            var doc = new WordDoc(fixture.WordSampleCopy);
+            doc.Process(new HeaderName(myName));
+            var result = (string)doc.Inspect(new HeaderName()).State;
+            Assert.AreEqual(myName, result);
+
         }
 
         [TestMethod()]

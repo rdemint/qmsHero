@@ -39,9 +39,14 @@ namespace QmsDocXml
             {
                 result = match.ToString().Replace(match2.ToString(), "");
             }
-            else
+            else if (match.Success)
             {
                 result = match.ToString().Replace(config.HeaderNameText, "");
+            }
+
+            else
+            {
+                result = header.OddHeader.Text;
             }
 
             result = result.Replace(config.HeaderNameText, "");
@@ -57,6 +62,22 @@ namespace QmsDocXml
             return new HeaderName(result);
         }
 
+        public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(WordprocessingDocument doc, WordDocConfig config)
+        {
+            Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
+            var par = cell.Elements<Wxml.Paragraph>().First();
+            Wxml.Run firstRunClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
+            par.RemoveAllChildren<Wxml.Run>();
+            firstRunClone.Elements<Wxml.Text>().First().Text = config.HeaderNameText + (string)this.State;
+            par.Append(firstRunClone);
+
+
+        }
         public bool ReadAudit(WordprocessingDocument doc, WordDocConfig config) 
         {
             var result = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
