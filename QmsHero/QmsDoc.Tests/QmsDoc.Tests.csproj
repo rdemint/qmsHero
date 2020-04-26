@@ -61,6 +61,8 @@
     <Compile Include="Docs\Common\Properties\FileRevisionTests.cs" />
     <Compile Include="Docs\Common\Properties\IsFormTests.cs" />
     <Compile Include="Docs\Common\Properties\IsSopTests.cs" />
+    <Compile Include="Docs\Common\Properties\FileDocNameTests.cs" />
+    <Compile Include="Docs\Common\Properties\FileDocNumberTests.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="FixtureTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
