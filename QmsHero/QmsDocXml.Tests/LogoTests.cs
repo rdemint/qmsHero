@@ -15,7 +15,7 @@ namespace QmsDocXml.Tests
 
             var fixture = new Fixture();
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = (string)xl.Inspect(new Logo()).State;
+            var result = (string)xl.Inspect(new HeaderLogo()).State;
             Assert.AreEqual("GT Medical Logo II", result);
         }
 
@@ -24,7 +24,7 @@ namespace QmsDocXml.Tests
         {
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = (string)doc.Inspect(new Logo()).State;
+            var result = (string)doc.Inspect(new HeaderLogo()).State;
             Assert.AreEqual("GT Medical Logo II.jpg", result);
         }
 
@@ -33,10 +33,10 @@ namespace QmsDocXml.Tests
         {
             var fixture = new Fixture();
 
-            var logo = new Logo(fixture.LogoSampleJpgCopy.FullName);
+            var logo = new HeaderLogo(fixture.LogoSampleJpgCopy.FullName);
             var doc = new WordDoc(fixture.WordSampleCopy);
             doc.Process(logo);
-            var result = (string)doc.Inspect(new Logo()).State;
+            var result = (string)doc.Inspect(new HeaderLogo()).State;
             Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, result);
         }
 
@@ -45,8 +45,8 @@ namespace QmsDocXml.Tests
         {
             var fixture = new Fixture();
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            xl.Process(new Logo(fixture.LogoSampleJpgCopy.FullName));
-            var xlResult = (string)xl.Inspect(new Logo()).State;
+            xl.Process(new HeaderLogo(fixture.LogoSampleJpgCopy.FullName));
+            var xlResult = (string)xl.Inspect(new HeaderLogo()).State;
             Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, xlResult);
         }
     }

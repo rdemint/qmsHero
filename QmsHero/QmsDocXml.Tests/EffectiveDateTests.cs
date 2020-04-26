@@ -19,7 +19,7 @@ namespace QmsDocXml.Tests
         {
             
             var fixture = new Fixture();
-            var prop = new EffectiveDate();
+            var prop = new HeaderEffectiveDate();
             
             //word
             var doc = new WordDoc(fixture.WordSampleCopy);
@@ -28,7 +28,7 @@ namespace QmsDocXml.Tests
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            result = (string)xl.Inspect(new EffectiveDate()).State;
+            result = (string)xl.Inspect(new HeaderEffectiveDate()).State;
             Assert.AreEqual(result, fixture.ExcelSampleEffectiveDate);
         }
 
@@ -37,19 +37,19 @@ namespace QmsDocXml.Tests
         {
             var fixture = new Fixture();
             string effDate = "2020-20-20";
-            var prop = new EffectiveDate(effDate);
+            var prop = new HeaderEffectiveDate(effDate);
             string result = null;
 
             //word
             var doc = new WordDoc(fixture.WordSampleCopy);
             doc.Process(prop);
-            result = (string)doc.Inspect(new EffectiveDate()).State; 
+            result = (string)doc.Inspect(new HeaderEffectiveDate()).State; 
             Assert.AreEqual(result, effDate);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             xl.Process(prop);
-            result = (string)xl.Inspect(new EffectiveDate()).State;
+            result = (string)xl.Inspect(new HeaderEffectiveDate()).State;
             Assert.AreEqual(effDate, result);
         }
 

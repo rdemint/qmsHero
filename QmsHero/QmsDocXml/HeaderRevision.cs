@@ -16,13 +16,13 @@ using System.Runtime.Serialization;
 
 namespace QmsDocXml
 {
-    public class Revision: DocProperty
+    public class HeaderRevision: DocProperty
     {
-        public Revision()
+        public HeaderRevision()
         {
         }
 
-        public Revision(object state) : base(state)
+        public HeaderRevision(object state) : base(state)
         {
         }
 
@@ -36,7 +36,7 @@ namespace QmsDocXml
         {
             Paragraph par = FetchRevisionPart(doc, config);
             Match match = config.RevisionRegex.Match(par.InnerText);
-            return new Revision(match.ToString());
+            return new HeaderRevision(match.ToString());
         }
 
         public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -51,7 +51,7 @@ namespace QmsDocXml
             if(match.Success)
             {
                 var m = match.ToString();
-                return new Revision(m.Replace(config.RevisionText, ""));
+                return new HeaderRevision(m.Replace(config.RevisionText, ""));
             }
 
             else

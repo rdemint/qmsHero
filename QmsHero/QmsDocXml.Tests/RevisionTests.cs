@@ -15,12 +15,12 @@ namespace QmsDocXml.Tests
         {
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var prop = new Revision();
+            var prop = new HeaderRevision();
             string result = (string)doc.Inspect(prop).State;
             Assert.AreEqual(result, fixture.WordSampleRevision);
 
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            result = (string)xl.Inspect(new Revision()).State;
+            result = (string)xl.Inspect(new HeaderRevision()).State;
             Assert.AreEqual(result, fixture.ExcelSampleRevision);
         }
 
@@ -33,20 +33,20 @@ namespace QmsDocXml.Tests
             var doc = new WordDoc(fixture.WordSampleCopy);
 
             string rev = "20";
-            Assert.AreEqual(fixture.WordSampleRevision, (string)doc.Inspect(new Revision()).State);
-            var prop = new Revision(rev);
+            Assert.AreEqual(fixture.WordSampleRevision, (string)doc.Inspect(new HeaderRevision()).State);
+            var prop = new HeaderRevision(rev);
             doc.Process(prop);
-            string result = (string)doc.Inspect(new Revision()).State;
+            string result = (string)doc.Inspect(new HeaderRevision()).State;
             Assert.AreEqual(result, rev);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            result = (string)xl.Inspect(new Revision()).State;
+            result = (string)xl.Inspect(new HeaderRevision()).State;
             Assert.AreEqual(result, fixture.ExcelSampleRevision);
 
             rev = "12";
-            xl.Process(new Revision(rev));
-            result = (string)xl.Inspect(new Revision()).State;
+            xl.Process(new HeaderRevision(rev));
+            result = (string)xl.Inspect(new HeaderRevision()).State;
             Assert.AreEqual(rev, result);
 
         }

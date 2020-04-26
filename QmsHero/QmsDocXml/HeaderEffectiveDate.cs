@@ -16,12 +16,12 @@ using QmsDoc.Exceptions;
 
 namespace QmsDocXml
 {
-    public class EffectiveDate: DocProperty
+    public class HeaderEffectiveDate: DocProperty
     {
 
-        public EffectiveDate() : base() { }
+        public HeaderEffectiveDate() : base() { }
 
-        public EffectiveDate(object value) : base(value) { }
+        public HeaderEffectiveDate(object value) : base(value) { }
 
 
         #region word
@@ -38,7 +38,7 @@ namespace QmsDocXml
         {
             WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.EffectiveDateRow, docConfig.EffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
-            return new EffectiveDate(match.ToString());
+            return new HeaderEffectiveDate(match.ToString());
         }
 
         public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -53,7 +53,7 @@ namespace QmsDocXml
             if (match.Success)
             {
                 var m = match.ToString();
-                return new EffectiveDate(m.Replace(config.EffectiveDateText, ""));
+                return new HeaderEffectiveDate(m.Replace(config.EffectiveDateText, ""));
             }
 
             else

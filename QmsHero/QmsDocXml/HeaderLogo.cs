@@ -28,13 +28,13 @@ using System.Globalization;
 
 namespace QmsDocXml
 {
-    public class Logo : DocProperty
+    public class HeaderLogo : DocProperty
     {
-         public Logo()
+         public HeaderLogo()
         {
         }
 
-        public Logo(object state) : base(state)
+        public HeaderLogo(object state) : base(state)
         {
         }
 
@@ -57,7 +57,7 @@ namespace QmsDocXml
 
                 
                 var pictureProperties = picture.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.NonVisualDrawingProperties>().First();
-                return new Logo(pictureProperties.Name.ToString());
+                return new HeaderLogo(pictureProperties.Name.ToString());
             }
 
             else
@@ -127,7 +127,7 @@ namespace QmsDocXml
                     if (myShape != null)
                     {
                         var myImageData = myShape.Elements<Ovml.ImageData>().First();
-                        return new Logo(myImageData.Title.Value);
+                        return new HeaderLogo(myImageData.Title.Value);
                     }
 
                     else
