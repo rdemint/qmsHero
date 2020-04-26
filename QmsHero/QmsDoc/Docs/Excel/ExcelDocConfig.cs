@@ -1,4 +1,5 @@
 ﻿
+
 using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace QmsDoc.Docs.Excel
         string revisionEffectiveDateSeparator;
         Regex revisionRegex;
         int logoHeight;
+        string headerNameText;
+        Regex headerNameRegex;
         Regex isSopRegex;
         Regex isFormRegex;
 
@@ -33,6 +36,8 @@ namespace QmsDoc.Docs.Excel
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
         public Regex IsFormRegex { get => isFormRegex; set => isFormRegex = value; }
         public Regex IsSopRegex { get => isSopRegex; set => isSopRegex = value; }
+        public Regex HeaderNameRegex { get => headerNameRegex; set => headerNameRegex = value; }
+        public string HeaderNameText { get => headerNameText; set => headerNameText = value; }
 
         public void Initialize()
         {
@@ -44,6 +49,10 @@ namespace QmsDoc.Docs.Excel
             //this.LogoHeight = 28;
             this.IsFormRegex = new Regex(@"F-");
             this.IsSopRegex = new Regex(@"SOP-");
+            this.HeaderNameText = "DOCUMENT NAME: ";
+            //this.HeaderNameRegex = new Regex(Regex.Escape(this.HeaderNameText) + @"\.\*\)");
+            this.HeaderNameRegex = new Regex(Regex.Escape(this.HeaderNameText) + @".*\)");
+
 
 
         }

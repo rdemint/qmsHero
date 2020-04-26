@@ -14,6 +14,9 @@ namespace QmsDoc.Docs.Excel
 {
     public class ExcelDoc : Doc
     {
+        ExcelDocConfig docConfig;
+
+
         public ExcelDoc() { }
 
         public ExcelDoc(FileInfo fileInfo) : base(fileInfo) 
@@ -21,7 +24,11 @@ namespace QmsDoc.Docs.Excel
             DocConfig = new ExcelDocConfig();
         }
 
-        public ExcelDoc(FileInfo fileInfo, IDocConfig docConfig) : base(fileInfo, docConfig) { }
+        public ExcelDoc(FileInfo fileInfo, ExcelDocConfig docConfig) : base(fileInfo) 
+        {
+            DocConfig = docConfig;
+        }
+        public ExcelDocConfig DocConfig1 { get => docConfig; set => docConfig = value; }
 
         public override void Process(QDocProperty prop)
         {

@@ -1,6 +1,4 @@
-﻿
-
-using QDoc.Interfaces;
+﻿using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -14,8 +14,10 @@ namespace QmsDocXml.Tests
         public FileInfo ExcelSampleCopy;
         string wordSampleEffectiveDate;
         string wordSampleRevision;
+        string wordSampleHeaderName;
         string excelSampleEffectiveDate;
         string excelSampleRevision;
+        string excelSampleHeaderName;
         DirectoryInfo activeQMSDocuments;
         DirectoryInfo sop1Documents;
         string defaultReferenceDirName = "Reference";
@@ -35,13 +37,18 @@ namespace QmsDocXml.Tests
             this.WordSampleCopy = this.CopyToProcessingDir(tempWord);
             this.WordSampleEffectiveDate = "2018-11-26";
             this.WordSampleRevision = "3";
+            this.WordSampleHeaderName = "Quality Manual (SOP-001)";
+            
             
             var tempExcel = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
             this.ExcelSampleCopy = this.CopyToProcessingDir(tempExcel);
             this.ExcelSampleEffectiveDate = "2018-11-26";
             this.ExcelSampleRevision = "2";
             var tempLogo = this.ReferenceDir.GetFiles("*.jpg").ToList()[0];
+            this.ExcelSampleHeaderName = "Document Control Index (F-001B)";
+
             this.LogoSampleJpgCopy = this.CopyToProcessingDir(tempLogo);
+
         }
 
         public DirectoryInfo ActiveQMSDocuments { get => activeQMSDocuments; set => activeQMSDocuments = value; }
@@ -53,5 +60,7 @@ namespace QmsDocXml.Tests
         public string ExcelSampleEffectiveDate { get => excelSampleEffectiveDate; set => excelSampleEffectiveDate = value; }
         public string ExcelSampleRevision { get => excelSampleRevision; set => excelSampleRevision = value; }
         public string WordSampleRevision { get => wordSampleRevision; set => wordSampleRevision = value; }
+        public string ExcelSampleHeaderName { get => excelSampleHeaderName; set => excelSampleHeaderName = value; }
+        public string WordSampleHeaderName { get => wordSampleHeaderName; set => wordSampleHeaderName = value; }
     }
 }

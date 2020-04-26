@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using QmsDoc.Core;
 using Wxml = DocumentFormat.OpenXml.Wordprocessing;
+using Sxml = DocumentFormat.OpenXml.Spreadsheet;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml.Common;
@@ -9,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QmsDoc.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace QmsDocXml
 {
@@ -24,7 +27,25 @@ namespace QmsDocXml
 
         public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            throw new NotImplementedException();
+            string result = null;
+            var header = doc.WorkbookPart.WorksheetParts.First().Worksheet.Elements<Sxml.HeaderFooter>().FirstOrDefault();
+            if (header.DifferentOddEven != null && header.DifferentOddEven)
+            {
+                throw new MultipleHeadersExistException();
+            }
+            Match match = config.HeaderNameRegex.Match(header.OddHeader.Text);
+            Match match2 = Regex.Match(match.Value, "&\\\"(.*?)\\\"");
+            if (match2.Success)
+            {
+                result = match.ToString().Replace(match2.ToString(), "");
+            }
+            else
+            {
+                result = match.ToString().Replace(config.HeaderNameText, "");
+            }
+
+            result = result.Replace(config.HeaderNameText, "");
+            return new HeaderName(result);
         }
 
         public override DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
@@ -36,7 +57,7 @@ namespace QmsDocXml
             return new HeaderName(result);
         }
 
-        public bool Audit(WordprocessingDocument doc, WordDocConfig config) 
+        public bool ReadAudit(WordprocessingDocument doc, WordDocConfig config) 
         {
             var result = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var pars = result.Elements<Wxml.Paragraph>().ToList();
@@ -51,6 +72,13 @@ namespace QmsDocXml
             }
 
         }
+
+        public bool ReadAudit(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
 
     }
