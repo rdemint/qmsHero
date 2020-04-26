@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audit\AuditHeader.cs" />
     <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />
     <Compile Include="HeaderName.cs" />
@@ -69,8 +70,6 @@
       <Name>QmsDoc</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Audit\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

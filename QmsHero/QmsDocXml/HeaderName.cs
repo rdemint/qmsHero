@@ -64,7 +64,34 @@ namespace QmsDocXml
 
         public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            throw new NotImplementedException();
+            var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
+            foreach (var workSheetPart in workSheetParts)
+            {
+                foreach (var header in workSheetPart.Worksheet.Elements<XL.HeaderFooter>().ToList())
+                {
+                    if (header.DifferentOddEven != null && header.DifferentOddEven)
+                    {
+                        throw new MultipleHeadersExistException();
+                    }
+
+                    Match match = config.RevisionRegex.Match(header.OddHeader.Text);
+                    if (match.Success)
+                    {
+                        string currentRevVerbose = match.ToString();
+                        string currentRev = currentRevVerbose.Replace(config.RevisionText, "");
+                        string replaceRevVerbose = currentRevVerbose.Replace(currentRev, (string)this.State);
+
+                        string newInnerText = header.OddHeader.Text.Replace(currentRevVerbose, replaceRevVerbose);
+                        header.OddHeader.Text = newInnerText;
+                    }
+
+                    else
+                    {
+                        throw new DocReadException();
+                    }
+
+                }
+            }
         }
 
         public override void Write(WordprocessingDocument doc, WordDocConfig config)
@@ -78,6 +105,7 @@ namespace QmsDocXml
 
 
         }
+
         public bool ReadAudit(WordprocessingDocument doc, WordDocConfig config) 
         {
             var result = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
@@ -94,13 +122,37 @@ namespace QmsDocXml
 
         }
 
-        public bool ReadAudit(SpreadsheetDocument doc, ExcelDocConfig config)
+        public void ReadAudit(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            throw new NotImplementedException();
-        }
+            var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
+            foreach (var workSheetPart in workSheetParts)
+            {
+                foreach (var header in workSheetPart.Worksheet.Elements<Sxml.HeaderFooter>().ToList())
+                {
+                    if (header.DifferentOddEven != null && header.DifferentOddEven)
+                    {
+                        throw new MultipleHeadersExistException();
+                    }
+                }
+            }
+
+        public void WriteAudit(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
+            foreach (var workSheetPart in workSheetParts)
+            {
+                foreach (var header in workSheetPart.Worksheet.Elements<Sxml.HeaderFooter>().ToList())
+                {
+                    if (header.DifferentOddEven != null && header.DifferentOddEven)
+                    {
+                        throw new MultipleHeadersExistException();
+                    }
+                }
 
 
+        public void CommonAudit(SpreadsheetDocument doc, ExcelDocConfig config)
+                    {
 
-
+                    }
     }
 }
