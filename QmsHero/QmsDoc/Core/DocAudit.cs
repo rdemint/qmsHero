@@ -14,7 +14,7 @@ namespace QmsDoc.Core
 {
     public abstract class DocAudit : QDocAudit
     {
-        public DocAudit(): base()
+        protected DocAudit(): base()
         {
         }
 
@@ -29,38 +29,58 @@ namespace QmsDoc.Core
 
             FileInfo file = doc as FileInfo;
 
-            if (wdoc != null && wdocConfig != null)
+            
+            try
             {
-                this.Audit(wdoc, wdocConfig);
+                if (wdoc != null && wdocConfig != null)
+                {
+                    this.Audit(wdoc, wdocConfig);
+                }
+
+                else if (sdoc != null && sdocConfig != null)
+                {
+                    this.Audit(sdoc, sdocConfig);
+                }
+
+                else if (file != null && wdocConfig != null)
+                {
+                    this.Audit(file, wdocConfig);
+                }
+
+                else if (file != null && sdocConfig != null)
+                {
+                    this.Audit(file, sdocConfig);
+                }
+
+                else
+                {
+                    throw new ReadDocumentNotValidException();
+                }
             }
 
-            else if (sdoc != null && sdocConfig != null)
+            catch (Exception e)
             {
-                this.Audit(sdoc, sdocConfig);
+                this.Add(e);
             }
-
-            else if (file != null && wdocConfig != null)
-            {
-                this.Audit(file, wdocConfig);
-            }
-
-            else if (file != null && sdocConfig != null)
-            {
-                this.Audit(file, sdocConfig);
-            }
-
-            else
-            {
-                throw new ReadDocumentNotValidException();
-            }
+            
         }
 
-        public void Audit(WordprocessingDocument doc, WordDocConfig config)
+        public virtual void Audit(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public void Audit(SpreadsheetDocument doc, ExcelDocConfig config)
+        public virtual void Audit(SpreadsheetDocument doc, ExcelDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Audit(FileInfo doc, WordDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Audit(FileInfo doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }

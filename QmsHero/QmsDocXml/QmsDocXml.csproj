@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audit\AuditHeader.cs" />
+    <Compile Include="Audit\HeaderAudit.cs" />
     <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />
     <Compile Include="HeaderName.cs" />

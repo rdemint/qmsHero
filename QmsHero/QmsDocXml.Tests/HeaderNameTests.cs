@@ -36,18 +36,23 @@ namespace QmsDocXml.Tests
         public void WriteWordTest()
         {
             var fixture = new Fixture();
-            var myName = "New procedure (SOP-1)";
+            var docName = "New procedure (SOP-1)";
             var doc = new WordDoc(fixture.WordSampleCopy);
-            doc.Process(new HeaderName(myName));
+            doc.Process(new HeaderName(docName));
             var result = (string)doc.Inspect(new HeaderName()).State;
-            Assert.AreEqual(myName, result);
+            Assert.AreEqual(docName, result);
 
         }
 
         [TestMethod()]
         public void WriteExcelTest()
         {
-            Assert.Fail();
+            string docName = "New Procedure (F-001B)";
+            var fixture = new Fixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            doc.Process(new HeaderName(docName));
+            var result = (string)doc.Inspect(new HeaderName()).State;
+            Assert.AreEqual(docName, result);
         }
     }
 }

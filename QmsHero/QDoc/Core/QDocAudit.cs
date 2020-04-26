@@ -11,13 +11,30 @@ namespace QDoc.Core
     {
         ObservableCollection<Exception> errors;
 
-        public QDocAudit()
+        protected QDocAudit()
         {
-            this.Errors = new ObservableCollection<Exception>();
+            this.errors = new ObservableCollection<Exception>();
         }
         
-        public ObservableCollection<Exception> Errors { get => errors; set => errors = value; }
+        public ObservableCollection<Exception> Errors { get => errors; }
 
         public abstract void Audit(object doc, object config);
+
+        protected internal void Add(Exception e)
+        {
+            this.errors.Add(e);
+        }
+
+        protected internal bool HasErrors()
+        {
+            if(this.errors.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
