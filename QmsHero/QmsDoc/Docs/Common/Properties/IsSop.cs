@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
 {
-    public class IsSop : DocProperty, IReadFileInfoOnly
+    public class IsSop : DocProperty, IReadFileInfo
     {
         public IsSop()
         {
@@ -39,10 +39,5 @@ namespace QmsDoc.Docs.Common.Properties
             return new IsSop(match.Success);
         }
 
-        //public override DocProperty Read(FileInfo file, ExcelDocConfig config)
-        //{
-        //    Match match = config.FileIsSopRegex.Match(file.Name);
-        //    return new IsSop(match.Success);
-        //}
     }
 }

@@ -32,15 +32,24 @@ namespace QmsDoc.Docs.Excel
 
         public override void Process(QDocProperty prop)
         {
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            if(prop as IWriteFileInfo != null)
             {
-                prop.Write(doc, DocConfig);
+                prop.Write(FileInfo, DocConfig);
             }
+            else
+            {
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+                {
+                    prop.Write(doc, DocConfig);
+                }
+            }
+            
+            
         }
         public override QDocProperty Inspect(QDocProperty prop)
         {
             QDocProperty result = null;
-             if(prop as IReadFileInfoOnly != null)
+             if(prop as IReadFileInfo != null)
                 {
                     result = prop.Read(FileInfo, DocConfig);
                 }

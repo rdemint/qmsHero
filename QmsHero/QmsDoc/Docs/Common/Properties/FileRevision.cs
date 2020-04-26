@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
 {
-    public class FileRevision : DocProperty, IReadFileInfoOnly
+    public class FileRevision : DocProperty, IReadFileInfo, IWriteFileInfo
 
     {
         public FileRevision()
@@ -35,6 +35,12 @@ namespace QmsDoc.Docs.Common.Properties
             Match match = config.FileRevisionRegex.Match(file.Name);
             string result = match.ToString().Replace(config.FileRevisionText, "");
             return new FileRevision(result);
+        }
+
+        public void Write(FileInfo file, DocConfig config)
+        {
+            Match match = config.FileRevisionRegex.Match(file.Name);
+            string result = match.ToString().Replace(config.FileRevisionText, "");
         }
     }
 }

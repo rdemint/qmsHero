@@ -65,7 +65,8 @@
     <Compile Include="Docs\Excel\ExcelDocConfig.cs" />
     <Compile Include="Docs\Word\WordDocConfig.cs" />
     <Compile Include="Docs\Word\WordDoc.cs" />
-    <Compile Include="Interfaces\IReadFileInfoOnly.cs" />
+    <Compile Include="Interfaces\IReadFileInfo.cs" />
+    <Compile Include="Interfaces\IWriteFileInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -30,10 +30,18 @@ namespace QmsDoc.Docs.Word
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public override void Process(QDocProperty qprop)
         {
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
+            if(qprop as IWriteFileInfo != null)
             {
-                var prop = qprop as DocProperty;
-                prop.Write(doc, DocConfig);
+                qprop.Write(FileInfo, DocConfig);
+            }
+
+            else
+            {
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
+                {
+                    var prop = qprop as DocProperty;
+                    prop.Write(doc, DocConfig);
+                }
             }
         }
 
@@ -42,7 +50,7 @@ namespace QmsDoc.Docs.Word
 
             QDocProperty result = null;
 
-            if(prop as IReadFileInfoOnly != null)
+            if(prop as IReadFileInfo != null)
                  {
                     result = prop.Read(FileInfo, DocConfig);
                  }

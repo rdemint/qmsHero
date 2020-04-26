@@ -22,6 +22,13 @@ namespace QFileUtil
             return new FileInfo(temppath);
         }
 
+        public static FileInfo FileRename(FileInfo file, string newNameWithExtension)
+        {
+            FileInfo newFile = new FileInfo(Path.Combine(file.DirectoryName, newNameWithExtension));
+            file.MoveTo(newFile.FullName);
+            return file;
+        }
+
 
         public static DirectoryInfo SearchSubDirectory(DirectoryInfo directory, string dirName)
         {
