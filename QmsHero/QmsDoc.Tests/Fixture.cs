@@ -29,6 +29,8 @@ namespace QmsDoc.Tests
             var topdir = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent;
             ReferenceDir = FileUtil.SearchSubDirectory(topdir, "Reference");
             ProcessingDir = FileUtil.SearchSubDirectory(topdir, "Processing");
+            FileUtil.CleanDirectoryAndChildren(ProcessingDir);
+
             this.ActiveQMSDocuments = this.ReferenceDir.GetDirectories("Active QMS Documents").ToList()[0];
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
             var files = Sop1Documents.GetFiles().ToList();

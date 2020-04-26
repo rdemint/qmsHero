@@ -10,22 +10,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Docs.Common.Properties.Tests
+namespace QmsDoc.Tests.Docs.Common.Properties
 {
     [TestClass()]
     public class FileRevisionTests
     {
-        [TestMethod()]
-        public void ReadWordTest()
-        {
-            var fixture = new Fixture();
-            var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = (string)doc.Inspect(new FileRevision()).State;
-            Assert.AreEqual(fixture.WordSampleRevision, result);
-        }
 
         [TestMethod()]
-        public void ReadExcelTest()
+        public void ReadTest()
         {
             var fixture = new Fixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
@@ -34,23 +26,14 @@ namespace QmsDoc.Docs.Common.Properties.Tests
         }
 
         [TestMethod()]
-        public void WriteWordTest()
+        public void WriteTest()
         {
             string newRev = "12";
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             doc.Process(new FileRevision(newRev));
             var result = (string)doc.Inspect(new FileRevision()).State;
-            Assert.AreEqual(doc.FileInfo.Name, result);
-        }
-
-        [TestMethod()]
-        public void WriteExcelTest()
-        {
-            var fixture = new Fixture();
-            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = (string)doc.Inspect(new FileRevision()).State;
-            Assert.AreEqual(fixture.ExcelSampleRevision, result);
+            Assert.AreEqual(newRev, result);
         }
 
 

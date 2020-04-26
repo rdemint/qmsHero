@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Docs.Common.Properties.Tests
+namespace QmsDoc.Tests.Docs.Common.Properties
 {
     [TestClass()]
     public class IsFormTests
@@ -25,7 +25,7 @@ namespace QmsDoc.Docs.Common.Properties.Tests
         public void ReadTest()
         {
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSample));
+            var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSampleCopy));
             bool result = (bool)doc.Inspect(new IsForm()).State;
             Assert.AreEqual(false, result);
             //var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
