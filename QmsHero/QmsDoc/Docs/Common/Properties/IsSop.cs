@@ -35,7 +35,7 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override DocProperty Read(FileInfo file, WordDocConfig config)
         {
-            Match match = config.IsSopRegex.Match(file.Name);
+            Match match = config.FileIsSopRegex.Match(file.Name);
             return new IsSop(match.Success);
         }
 

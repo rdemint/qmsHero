@@ -14,7 +14,7 @@ namespace QmsDoc.Docs.Excel
     {
         string effectiveDateText;
         Regex effectiveDateRegex;
-        string revisionText;
+        string headerRevisionText;
         Regex revisionRegex;
         int logoHeight;
         string headerNameText;
@@ -26,28 +26,36 @@ namespace QmsDoc.Docs.Excel
         }
 
         public string HeaderEffectiveDateText { get => effectiveDateText; set => effectiveDateText = value; }
-        public string HeaderRevisionText { get => revisionText; set => revisionText = value; }
+        public string HeaderRevisionText { 
+            get => headerRevisionText;
+            set
+            {
+                headerRevisionText = value;
+                this.HeaderRevisionRegex = new Regex(Regex.Escape(headerRevisionText) + @"\d{1,2}");
+            }
+            }
         public Regex HeaderRevisionRegex { get => revisionRegex; set => revisionRegex = value; }
         public Regex HeaderEffectiveDateRegex { get => effectiveDateRegex; set => effectiveDateRegex = value; }
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
         public Regex HeaderNameRegex { get => headerNameRegex; set => headerNameRegex = value; }
-        public string HeaderNameText { get => headerNameText; set => headerNameText = value; }
+        public string HeaderNameText { 
+            get => headerNameText;
+            set
+            {
+                headerNameText = value;
+                this.HeaderNameRegex = new Regex(Regex.Escape(headerNameText) + @".*\)");
+            }
+            }
 
         public void Initialize()
         {
             this.HeaderEffectiveDateText = "Effective Date: ";
             this.HeaderEffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.HeaderRevisionText = "Revision: ";
-            this.HeaderRevisionRegex = new Regex(Regex.Escape(this.HeaderRevisionText) + @"\d{1,2}");
             this.HeaderNameText = "DOCUMENT NAME: ";
-            this.HeaderNameRegex = new Regex(Regex.Escape(this.HeaderNameText) + @".*\)");
 
 
 
         }
-        #region HeaderFooter
-
-
-        #endregion
     }
 }

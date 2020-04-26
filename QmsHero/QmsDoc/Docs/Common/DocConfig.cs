@@ -11,20 +11,26 @@ namespace QmsDoc.Docs.Common
     public class DocConfig: IDocConfig
     {
         string fileRevisionText;
+        Regex fileRevisionRegex;
         Regex isSopRegex;
         Regex isFormRegex;
 
         public DocConfig()
         {
             this.FileRevisionText = "Rev";
-            this.IsSopRegex = new Regex(@"SOP-");
-            this.IsFormRegex = new Regex(@"F-");
+            this.FileIsSopRegex = new Regex(@"SOP-");
+            this.FileIsFormRegex = new Regex(@"F-");
         }
 
-        public Regex IsSopRegex { get => isSopRegex; set => isSopRegex = value; }
-        public Regex IsFormRegex { get => isFormRegex; set => isFormRegex = value; }
-        public string FileRevisionText { get => fileRevisionText; set => fileRevisionText = value; }
-
-
+        public Regex FileIsSopRegex { get => isSopRegex; set => isSopRegex = value; }
+        public Regex FileIsFormRegex { get => isFormRegex; set => isFormRegex = value; }
+        public string FileRevisionText { get => fileRevisionText;
+            set { 
+                
+                fileRevisionText = value;
+                this.FileRevisionRegex = new Regex(Regex.Escape(fileRevisionText + @"\d{1,2}"));
+            }
+        }
+        public Regex FileRevisionRegex { get => fileRevisionRegex; set => fileRevisionRegex = value; }
     }
 }
