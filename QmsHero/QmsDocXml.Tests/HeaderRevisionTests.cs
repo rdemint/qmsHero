@@ -8,7 +8,7 @@ using QmsDocXml;
 namespace QmsDocXml.Tests
 {
     [TestClass]
-    public class RevisionTests
+    public class HeaderRevisionTests
     {
         [TestMethod]
         public void ReadTest()

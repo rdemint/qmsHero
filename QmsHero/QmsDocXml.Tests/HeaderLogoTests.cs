@@ -7,7 +7,7 @@ using QmsDoc.Docs.Word;
 namespace QmsDocXml.Tests
 {
     [TestClass]
-    public class LogoTests
+    public class HeaderLogoTests
     {
         [TestMethod]
         public void ReadExcelTest()

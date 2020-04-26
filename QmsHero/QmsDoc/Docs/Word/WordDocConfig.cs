@@ -24,6 +24,9 @@ namespace QmsDoc.Docs.Word
         int logoRow;
         int logoCol;
         int logoHeight;
+        int headerNameRow;
+        int headerNameCol;
+        string headerNameText;
         Regex isSopRegex;
         Regex isFormRegex;
 
@@ -49,6 +52,9 @@ namespace QmsDoc.Docs.Word
         public Regex RevisionRegex { get => revisionRegex; set => revisionRegex = value; }
         public Regex IsSopRegex { get => isSopRegex; set => isSopRegex = value; }
         public Regex IsFormRegex { get => isFormRegex; set => isFormRegex = value; }
+        public int HeaderNameRow { get => headerNameRow; set => headerNameRow = value; }
+        public int HeaderNameCol { get => headerNameCol; set => headerNameCol = value; }
+        public string HeaderNameText { get => headerNameText; set => headerNameText = value; }
 
         #endregion
         public void Initialize()
@@ -68,7 +74,9 @@ namespace QmsDoc.Docs.Word
             this.LogoRow = 0;
             this.IsSopRegex = new Regex(@"SOP-");
             this.IsFormRegex = new Regex(@"F-");
-
+            this.HeaderNameCol = 1;
+            this.HeaderNameRow = 0;
+            this.HeaderNameText = "DOCUMENT NAME: ";
         }
 
     }

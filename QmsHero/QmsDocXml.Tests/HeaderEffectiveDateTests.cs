@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace QmsDocXml.Tests
 {
     [TestClass()]
-    public class EffectiveDateTests
+    public class HeaderEffectiveDateTests
     {
         [TestMethod()]
         public void ReadTest()

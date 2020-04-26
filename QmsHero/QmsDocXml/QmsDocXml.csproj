@@ -49,10 +49,11 @@
   <ItemGroup>
     <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />
-    <Compile Include="EffectiveDate.cs" />
+    <Compile Include="HeaderName.cs" />
+    <Compile Include="HeaderEffectiveDate.cs" />
     <Compile Include="Common\WordPartHeaderTableCell.cs" />
-    <Compile Include="Logo.cs" />
-    <Compile Include="Revision.cs" />
+    <Compile Include="HeaderLogo.cs" />
+    <Compile Include="HeaderRevision.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
