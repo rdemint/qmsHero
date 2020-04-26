@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using QDoc.Core;
 using System.IO;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Exceptions;
 using System.Text.RegularExpressions;
 using System.IO.Packaging;
+using System.Globalization;
 
 namespace QmsDocXml
 {
@@ -183,13 +185,7 @@ namespace QmsDocXml
             var vmlParts = workSheetPart.VmlDrawingParts;
             var vmlPart = workSheetPart.VmlDrawingParts.First();
 
-            //get the current relationship Id, for resuse in the to-be-created relationship with new ImagePart
-            //var myParts = workSheetPart.Parts;
-            //var vmlUri = new Uri("/xl/drawings/vmlDrawing1.vml", UriKind.Relative);
-            //var myVmlPart = doc.Package.GetPart(vmlUri);
-
             //get the content of the vmlPart 
-
             string vmlContent = null;
             using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
             {
@@ -199,137 +195,109 @@ namespace QmsDocXml
             var xEl = Xlinq.XElement.Parse(vmlContent);
             var shapeNode = xEl.Descendants().Where(d => d.Name.LocalName == "shape").First();
             var styleAttr = shapeNode.Attributes("style").First();
-            //get current image height in points
-            Match widthMatch = Regex.Match(styleAttr.Value, @"width:*pt");
-            Match heightMatch = Regex.Match(styleAttr.Value, @"height:*pt");
-            if(widthMatch.Success)
+
+            var imageNode = xEl.Descendants().Where(d=> d.Name.LocalName == "imagedata").First();
+            var imageNodeAttrs = imageNode.Attributes();
+            var imageAttr = imageNode.Attributes().Where(attr => attr.Name.LocalName == "title").First();
+
+            //get current image height in string
+            Match widthMatch = Regex.Match(styleAttr.Value, @"width:.*?pt");
+            Match heightMatch = Regex.Match(styleAttr.Value, @"height:.*?pt");
+            if(widthMatch.Success && heightMatch.Success)
             {
-                //
-                double imageWidth;
-                bool r = double.TryParse(widthMatch.ToString(), out imageWidth);
+                string hStr = heightMatch.ToString().Replace("height:", "").Replace("pt", "");
+                double imageHeight;
+                bool rH = double.TryParse(hStr, out imageHeight);
+
+                double targetRatio = ImageXml.GetImageHeightWidthRatio(imageFile);
+                double newWidth = Math.Round(imageHeight / targetRatio, 1);
+                string newStyleWidth = "width:" + newWidth.ToString() + "pt";
+                string newStyleAttr = styleAttr.Value.Replace(widthMatch.ToString(), newStyleWidth);
+
+
+                //set new values
+                styleAttr.Value = newStyleAttr;
+                imageAttr.Value = imageFile.Name;
+
+                //generate new content and feed to VmlDrawingPart
+                string newVmlContent = xEl.ToString();
+
+                var vmlStream = new MemoryStream();
+                var writer = new StreamWriter(vmlStream);
+                writer.Write(newVmlContent);
+                writer.Flush();
+                vmlStream.Position = 0;
+                vmlPart.FeedData(vmlStream);
+
+                //overwrite current image with the new image
+                ImagePart imagePart = vmlPart.ImageParts.First();
+                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+                {
+                    imagePart.FeedData(stream);
+                }
             }
             else
             {
-                throw new DocWriteException("Could not find the height specification of the image");
+                throw new DocWriteException("Could not find both the height and width specification of the current document image");
             }
 
 
+            //******************************************************
+            //FileInfo imageFile = new FileInfo(this.State.ToString());
+
+            //var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
+            //var vmlParts = workSheetPart.VmlDrawingParts;
+            //var vmlPart = workSheetPart.VmlDrawingParts.First();
+
+            ////get the content of the vmlPart 
+
+            //string vmlContent = null;
+            //using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
+            //{
+            //    vmlContent = streamReader.ReadToEnd();
+
+            //}
+            //var xEl = Xlinq.XElement.Parse(vmlContent);
+            //var shapeNode = xEl.Descendants().Where(d => d.Name.LocalName == "shape").First();
+            //var styleAttr = shapeNode.Attributes("style").First();
+
+            //var imageNode = shapeNode.Descendants().Where(d => d.Name.LocalName == "imageData").First();
+            //var imageAttr = imageNode.Attributes("title").First();
 
 
+            ////get current image height in string
+            //Match widthMatch = Regex.Match(styleAttr.Value, @"width:.*?pt");
+            //Match heightMatch = Regex.Match(styleAttr.Value, @"height:.*?pt");
+            //if (widthMatch.Success && heightMatch.Success)
+            //{
+            //    string hStr = heightMatch.ToString().Replace("height:", "").Replace("pt", "");
+            //    double imageHeight;
+            //    bool rH = double.TryParse(hStr, out imageHeight);
 
-            var xmlPartReader = DocumentFormat.OpenXml.OpenXmlPartReader.Create(vmlPart.GetStream());
-            List<Oxml.OpenXmlElement> xmlEls = new List<Oxml.OpenXmlElement>();
-            while (xmlPartReader.Read())
-            {
-                var currentEl = xmlPartReader.LoadCurrentElement();
-                if (currentEl.HasChildren)
-                {
-                    foreach(var child in currentEl.ChildElements)
-                    {
-                        //var asShapeType = child as Ovml.Shapetype;
-                        //var asShape = child as Ovml.Shape;
-                        //var asShapeLayout = child as Ovml.Office.ShapeLayout;
+            //    double targetRatio = ImageXml.GetImageHeightWidthRatio(imageFile);
+            //    double newWidth = Math.Round(imageHeight / targetRatio, 1);
+            //    string newStyleWidth = "width:" + newWidth.ToString() + "pt";
 
-                        try
-                        {
-                            var myShape = new Ovml.Shape(child.OuterXml);
-                            xmlEls.Add(myShape);
-                        }
+            //    //generate new content to feed to part
+            //    string newVmlContent = vmlContent.Replace(widthMatch.ToString(), newStyleWidth);
 
-                        catch
-                        {
-                            //too bad
-                        }
+            //    var vmlStream = new MemoryStream();
+            //    var writer = new StreamWriter(vmlStream);
+            //    writer.Write(newVmlContent);
+            //    writer.Flush();
+            //    vmlStream.Position = 0;
+            //    vmlPart.FeedData(vmlStream);
 
-                        try
-                        {
-                            var myShapeType = new Ovml.Shapetype(child.OuterXml);
-                            xmlEls.Add(myShapeType);
-                        }
-                        catch
-                        {
-                            //too bad
-                        }
-
-                        try
-                        {
-                            var myShapeLayout = new Ovml.Office.ShapeLayout(child.OuterXml);
-                            xmlEls.Add(myShapeLayout);
-                        }
-
-                        catch
-                        {
-                            //too bad
-                        }
-                        
-                        //if (asShapeType != null)
-                        //{
-                        //    xmlEls.Add(asShapeType);
-                        //}
-                        //else if(asShape != null)
-                        //{
-                        //    xmlEls.Add(asShape);
-                        //}
-                    }
-                }
-            }
-            xmlPartReader.Close();
-
-            //var myRelPair = workSheetPart.Parts.ToList()[0];
-            //var myRel = vmlParts.First().GetReferenceRelationship(myRelPair.RelationshipId);
-            //string myRelId = myRel.Id;
-
-            //workSheetPart.DeleteReferenceRelationship(myRel.Id);
-
-            //create the new ImagePart.  Create a relationship using the original Reference relationship id
-            //var newImagePart = vmlParts.First().AddImagePart(ImagePartType.Jpeg);
-            //var newRelId = workSheetPart.CreateRelationshipToPart(newImagePart, myRelId);
-
+            //    ImagePart imagePart = vmlPart.ImageParts.First();
             //    using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
-            //{
-            //    newImagePart.FeedData(stream);
+            //    {
+            //        imagePart.FeedData(stream);
+            //    }
             //}
-
-
-
-            //3 Just overwrite current imagePart
-            //var vmlDrawing = workSheetPart.VmlDrawingParts.First();
-            //var myId = workSheetPart.GetIdOfPart(vmlDrawing);
-
-
-
-            //using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+            //else
             //{
-            //    currentImagePart.FeedData(stream);
+            //    throw new DocWriteException("Could not find both the height and width specification of the current document image");
             //}
-
-            //1 Replace legacy with new
-            //workSheetPart.Worksheet.RemoveAllChildren<Xl.LegacyDrawingHeaderFooter>();
-            //workSheetPart.DeleteParts<VmlDrawingPart>(workSheetPart.VmlDrawingParts);
-
-            //workSheetPart.AddNewPart<DrawingsPart>();
-            //ImagePart imagePart = workSheetPart.DrawingsPart.AddImagePart(ImagePartType.Jpeg);
-            //string imagePartId = workSheetPart.DrawingsPart.GetIdOfPart(imagePart);
-
-            //var xDrawing = new Xdr.WorksheetDrawing();
-            //workSheetPart.DrawingsPart.WorksheetDrawing = xDrawing;
-
-            //var worksheetDrawing = workSheetPart.DrawingsPart.WorksheetDrawing
-
-            ////create new WorksheetDrawing
-            //var el = ImageXml.GetWorksheetDrawing(imagePartId, imageFile);
-            //workSheetPart.DrawingsPart.WorksheetDrawing = el;
-
-            //var newDrawHf = new Xl.DrawingHeaderFooter();
-            ////var idInt32 = Convert.ToUInt32(imagePartId);
-            //workSheetPart.Worksheet.Append(newDrawHf);
-
-
-
-            //2 Add by legacy
-
-
-
 
         }
     }

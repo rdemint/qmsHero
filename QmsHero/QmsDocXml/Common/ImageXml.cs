@@ -127,12 +127,18 @@ namespace QmsDocXml.Common
         public static double GetImageHeightWidthRatio(FileInfo filename)
         {
             double ratio;
-
+            int height;
+            int width;
             using (var img = SysDraw.Image.FromFile(filename.FullName))
             {
-                ratio = img.Height / img.Width;
+                height = img.Height;
+                width = img.Width;
             }
+            var dH = Convert.ToDouble(height);
+            var dW = Convert.ToDouble(width);
+            ratio = dH / dW;
             return ratio;
         }
+
     }
 }
