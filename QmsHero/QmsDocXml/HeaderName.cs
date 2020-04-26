@@ -29,10 +29,7 @@ namespace QmsDocXml
         {
             string result = null;
             var header = doc.WorkbookPart.WorksheetParts.First().Worksheet.Elements<Sxml.HeaderFooter>().FirstOrDefault();
-            if (header.DifferentOddEven != null && header.DifferentOddEven)
-            {
-                throw new MultipleHeadersExistException();
-            }
+            
             Match match = config.HeaderNameRegex.Match(header.OddHeader.Text);
             Match match2 = Regex.Match(match.Value, "&\\\"(.*?)\\\"");
             if (match2.Success)
