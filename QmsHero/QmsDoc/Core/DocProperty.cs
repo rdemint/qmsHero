@@ -73,6 +73,7 @@ namespace QmsDoc.Core
             SpreadsheetDocument sdoc = doc as SpreadsheetDocument;
             ExcelDocConfig sdocConfig = config as ExcelDocConfig;
 
+            FileInfo file = doc as FileInfo;
             DocConfig docConfig = config as DocConfig;
 
             if (wdoc != null && wdocConfig != null)
@@ -85,6 +86,10 @@ namespace QmsDoc.Core
                 this.Write(sdoc, sdocConfig);
             }
 
+            else if(file!=null && docConfig != null) {
+                this.Write(file, docConfig);
+            }
+            
             else
             {
                 throw new ReadDocumentNotValidException();
@@ -100,12 +105,13 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        //public virtual DocProperty Read(FileInfo file, WordDocConfig config)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public virtual DocProperty Read(FileInfo file, DocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Write(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
@@ -121,11 +127,6 @@ namespace QmsDoc.Core
         {
             throw new NotImplementedException();
         }
-
-        //public virtual DocProperty Read(FileInfo file, ExcelDocConfig config)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public virtual void Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {

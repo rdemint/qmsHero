@@ -19,7 +19,6 @@ namespace QFileUtil.Tests
             var fixture = new Fixture();
             FileInfo newFile = FileUtil.FileRename(fixture.WordSampleCopy, newName);
             Assert.AreEqual(newName, newFile.Name);
-
         }
     }
 }

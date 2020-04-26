@@ -18,7 +18,7 @@ namespace QmsDocXml.Tests
         public void ReadTest()
         {
             
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var prop = new HeaderEffectiveDate();
             
             //word
@@ -35,7 +35,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void WriteTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             string effDate = "2020-20-20";
             var prop = new HeaderEffectiveDate(effDate);
             string result = null;

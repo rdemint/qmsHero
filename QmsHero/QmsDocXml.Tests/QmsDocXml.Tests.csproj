@@ -58,9 +58,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Docs\Common\Properties\FileRevisionTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
-    <Compile Include="Fixture.cs" />
+    <Compile Include="XmlFixture.cs" />
     <Compile Include="FixtureTests.cs" />
     <Compile Include="HeaderNameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +110,10 @@
       <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
       <Name>QFileUtil</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QmsDoc.Tests\QmsDoc.Tests.csproj">
+      <Project>{d34ce090-906d-4926-8144-3a769dd6b177}</Project>
+      <Name>QmsDoc.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QmsDocXml\QmsDocXml.csproj">
       <Project>{93261315-9128-4BF7-8097-73454C74CFC7}</Project>
       <Name>QmsDocXml</Name>
@@ -121,6 +124,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Docs\" />
     <Folder Include="Fixtures\Processing\" />
   </ItemGroup>
   <Choose>

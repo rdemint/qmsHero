@@ -17,7 +17,7 @@ namespace QmsDocXml.Tests
         [TestMethod()]
         public void ReadWordTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = (string)doc.Inspect(new HeaderName()).State;
             Assert.AreEqual(fixture.WordSampleHeaderName, result);
@@ -26,7 +26,7 @@ namespace QmsDocXml.Tests
         [TestMethod()]
         public void ReadExcelTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = (string)doc.Inspect(new HeaderName()).State;
             Assert.AreEqual(fixture.ExcelSampleHeaderName, result);
@@ -35,7 +35,7 @@ namespace QmsDocXml.Tests
         [TestMethod()]
         public void WriteWordTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var docName = "New procedure (SOP-1)";
             var doc = new WordDoc(fixture.WordSampleCopy);
             doc.Process(new HeaderName(docName));
@@ -48,7 +48,7 @@ namespace QmsDocXml.Tests
         public void WriteExcelTest()
         {
             string docName = "New Procedure (F-001B)";
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             doc.Process(new HeaderName(docName));
             var result = (string)doc.Inspect(new HeaderName()).State;

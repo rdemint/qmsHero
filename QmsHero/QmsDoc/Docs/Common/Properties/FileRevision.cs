@@ -1,4 +1,5 @@
-﻿using QmsDoc.Core;
+﻿using QFileUtil;
+using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDoc.Interfaces;
@@ -37,10 +38,14 @@ namespace QmsDoc.Docs.Common.Properties
             return new FileRevision(result);
         }
 
-        public void Write(FileInfo file, DocConfig config)
+        public override void Write(FileInfo file, DocConfig config)
         {
-            Match match = config.FileRevisionRegex.Match(file.Name);
-            string result = match.ToString().Replace(config.FileRevisionText, "");
+            Match fileRevTextMatch = config.FileRevisionRegex.Match(file.Name);
+            string fileRev = fileRevTextMatch.ToString().Replace(config.FileRevisionText, "");
+            //Match fileRev = Regex.Match(fileRev, @"\d{1,2}");
+            string newFileRevText = fileRevTextMatch.ToString().Replace(fileRev, (string)this.State);
+            string newFileName = file.Name.Replace(fileRevTextMatch.ToString(), newFileRevText);
+            FileUtil.FileRename(file, newFileName);
         }
     }
 }

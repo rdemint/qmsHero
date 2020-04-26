@@ -13,7 +13,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void ReadTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var prop = new HeaderRevision();
             string result = (string)doc.Inspect(prop).State;
@@ -27,7 +27,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void WriteTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             
             //word
             var doc = new WordDoc(fixture.WordSampleCopy);

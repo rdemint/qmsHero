@@ -13,7 +13,7 @@ namespace QmsDocXml.Tests
         public void ReadExcelTest()
         {
 
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = (string)xl.Inspect(new HeaderLogo()).State;
             Assert.AreEqual("GT Medical Logo II", result);
@@ -22,7 +22,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void ReadWordTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = (string)doc.Inspect(new HeaderLogo()).State;
             Assert.AreEqual("GT Medical Logo II.jpg", result);
@@ -31,7 +31,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void WriteWordTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
 
             var logo = new HeaderLogo(fixture.LogoSampleJpgCopy.FullName);
             var doc = new WordDoc(fixture.WordSampleCopy);
@@ -43,7 +43,7 @@ namespace QmsDocXml.Tests
         [TestMethod]
         public void WriteExcelTest()
         {
-            var fixture = new Fixture();
+            var fixture = new XmlFixture();
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             xl.Process(new HeaderLogo(fixture.LogoSampleJpgCopy.FullName));
             var xlResult = (string)xl.Inspect(new HeaderLogo()).State;
