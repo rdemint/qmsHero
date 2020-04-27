@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Docs;
+using QDoc.Interfaces;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
 using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Word
 {
-    public class WordDoc : Doc
+    public class WordDoc : Doc, IDoc
     {
         WordDocConfig docConfig;
         static List<string> fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
@@ -57,13 +58,13 @@ namespace QmsDoc.Docs.Word
 
         public override void Process(QDocState docState)
         {
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-            {
+            //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            //{
                 foreach (QDocProperty prop in docState)
                 {
                     Process(prop);
                 }
-            }
+            //}
         }
 
 
@@ -93,13 +94,13 @@ namespace QmsDoc.Docs.Word
         {
             QDocState returnState = new QDocState();
 
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-            {
+            //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            //{
                 foreach (QDocProperty prop in docState)
                 {
                     returnState.Add(Inspect(prop));
                 }
-            }
+            //}
             return returnState;
         }
 

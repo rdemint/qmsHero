@@ -15,12 +15,12 @@ namespace QmsDoc.Core
     {
         public IDoc CreateDoc(FileInfo file)
         {
-            if (WordDocExtensions.Contains(file.Extension))
+            if (WordDoc.Extensions().Contains(file.Extension))
             {
                 return new WordDoc(file);
             }
 
-            else if (ExcelDocExtensions.Contains(file.Extension))
+            else if (ExcelDoc.Extensions().Contains(file.Extension))
             {
                 return new ExcelDoc(file);
             }

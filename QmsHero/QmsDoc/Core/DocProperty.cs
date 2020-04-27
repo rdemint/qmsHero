@@ -98,23 +98,23 @@ namespace QmsDoc.Core
 
         #region word
 
-        protected virtual DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
+        public virtual DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
 
 
-        protected virtual DocProperty Read(FileInfo file, DocConfig config)
+        public virtual DocProperty Read(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        protected virtual void Write(FileInfo file, DocConfig config)
+        public virtual void Write(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        protected virtual void Write(WordprocessingDocument doc, WordDocConfig config)
+        public virtual void Write(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }

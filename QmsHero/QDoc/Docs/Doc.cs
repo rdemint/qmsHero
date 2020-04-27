@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace QDoc.Docs
 {
-    public abstract class Doc : IDoc
+    public abstract class Doc: IDoc
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
@@ -44,8 +44,6 @@ namespace QDoc.Docs
 
         public abstract QDocProperty Inspect(QDocProperty prop);
 
-        //public abstract QDocProperty Inspect(QDocProperty prop, FileInfo file);
-        
 
     }
 }
