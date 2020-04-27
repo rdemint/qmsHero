@@ -42,8 +42,13 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         [TestMethod]
         public void WriteFormTest()
         {
+            string name = "Really-Important-Form";
             var fixture = new Fixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            doc.Process(new FileDocName(name));
+            string result = doc.Inspect(new FileDocName()).State.ToString();
+            Assert.AreEqual(name, result);
+
         }
     }
 }
