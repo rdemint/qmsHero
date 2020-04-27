@@ -18,6 +18,13 @@ namespace QFileUtil.Tests
             Assert.AreEqual(fixture.ProcessingDir.Name, "Processing");
 
         }
+        [TestMethod]
+        public void UpdateFilesTest()
+        {
+            var fixture = new Fixture();
+            Assert.IsTrue(fixture.ReferenceFiles.Count >= 1);
+            Assert.AreEqual(fixture.ProcessingFiles.Count, fixture.ReferenceFiles.Count);
+        }
 
         [TestMethod]
         public void IsValidTest()

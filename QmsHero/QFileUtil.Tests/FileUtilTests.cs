@@ -20,5 +20,13 @@ namespace QFileUtil.Tests
             FileInfo newFile = FileUtil.FileRename(fixture.WordSampleCopy, newName);
             Assert.AreEqual(newName, newFile.Name);
         }
+
+        [TestMethod]
+        public void DirectoryCopyTest()
+        {
+            var fixture = new Fixture();
+            Assert.IsTrue(fixture.ReferenceFiles.Count >= 1);
+            Assert.AreEqual(fixture.ReferenceFiles.Count, fixture.ProcessingFiles.Count);
+        }
     }
 }

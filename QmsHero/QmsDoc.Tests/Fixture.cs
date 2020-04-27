@@ -32,16 +32,18 @@ namespace QmsDoc.Tests
         public Fixture(): base()
         {
             var topdir = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent;
-            SetReferenceDir(FileUtil.SearchSubDirectory(topdir, "Reference"));
             SetProcessingDir(FileUtil.SearchSubDirectory(topdir, "Processing"));
             FileUtil.CleanDirectoryAndChildren(ProcessingDir);
+            SetReferenceDir(FileUtil.SearchSubDirectory(topdir, "Reference"));
 
             this.ActiveQMSDocuments = this.ReferenceDir.GetDirectories("Active QMS Documents").ToList()[0];
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
             var files = Sop1Documents.GetFiles().ToList();
 
-            var tempWord = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
-            this.WordSampleCopy = this.CopyToProcessingDir(tempWord);
+            //var tempWord = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
+            //this.WordSampleCopy = this.CopyToProcessingDir(tempWord);
+            this.WordSampleCopy = this.ProcessingDir.GetFiles("SOP-001*", SearchOption.AllDirectories).First();
+
             this.WordSampleEffectiveDate = "2018-11-26";
             this.WordSampleRevision = "3";
             this.WordSampleHeaderName = "Quality Manual (SOP-001)";
@@ -49,16 +51,18 @@ namespace QmsDoc.Tests
             this.WordSampleFileDocName = "Quality Manual";
 
 
-            var tempExcel = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
-            this.ExcelSampleCopy = this.CopyToProcessingDir(tempExcel);
+            //var tempExcel = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
+            //this.ExcelSampleCopy = this.CopyToProcessingDir(tempExcel);
+            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*").First();
+
             this.ExcelSampleEffectiveDate = "2018-11-26";
             this.ExcelSampleRevision = "2";
-            var tempLogo = this.ReferenceDir.GetFiles("*.jpg").ToList()[0];
             this.ExcelSampleHeaderName = "Document Control Index (F-001B)";
             this.ExcelSampleDocNumber = "F-001B";
             this.ExcelSampleFileDocName = "Document Control Index";
 
-            this.LogoSampleJpgCopy = this.CopyToProcessingDir(tempLogo);
+            this.LogoSampleJpgCopy = this.ProcessingDir.GetFiles("*.jpg").First();
+
         }
 
         public DirectoryInfo ActiveQMSDocuments { get => activeQMSDocuments; set => activeQMSDocuments = value; }

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\FileCopyNotReadyException.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="IFileCopyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

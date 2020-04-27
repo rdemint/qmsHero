@@ -7,6 +7,7 @@ using System.Linq;
 using Directory = System.IO.Directory;
 using DirectoryInfo = System.IO.DirectoryInfo;
 using FileInfo = System.IO.FileInfo;
+using QFileUtil.Exceptions;
 
 namespace QFileUtil
 {
@@ -48,7 +49,7 @@ namespace QFileUtil
         {
             if(IsReadyToCopy())
             {
-                FileUtil.DirectoryCopy(ReferenceDir, ProcessingDir, true);
+                FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
             }
         }
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
@@ -88,8 +89,7 @@ namespace QFileUtil
             if (ReferenceDir != null &&
                 ProcessingDir != null &&
                 ReferenceDir.Exists &&
-                ProcessingDir.Exists &&
-                ReferenceFiles?.Count >= 1
+                ProcessingDir.Exists
                 )
             {
                 return true;

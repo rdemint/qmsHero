@@ -62,7 +62,7 @@ namespace QDoc.Core
 
         public abstract void Process(QDocProperty docProp);
 
-        public DocCollection DocCollection()
+        public virtual DocCollection DocCollection()
         {
 
             var docs = new DocCollection();

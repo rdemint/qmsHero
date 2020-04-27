@@ -42,66 +42,44 @@ namespace QFileUtil
                 return null;
             }
         }
-
-        public static void DirectoryCopy(DirectoryInfo dir, DirectoryInfo dirTarget, bool copySubDirs)
-        {
-            if (!dir.Exists || !dirTarget.Exists)
+       
+        public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
             {
-                throw new DirectoryNotFoundException();
-            }
+                // Get the subdirectories for the specified directory.
+                DirectoryInfo dir = new DirectoryInfo(sourceDirName);
 
-            DirectoryInfo[] dirs = dir.GetDirectories();
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(dirTarget.FullName, file.Name);
-                file.CopyTo(temppath, true);
-            }
-
-            if (copySubDirs)
-            {
-                foreach (DirectoryInfo subdir in dirs)
+                if (!dir.Exists)
                 {
-                    string temppath = Path.Combine(subdir.FullName, subdir.Name);
-                    DirectoryCopy(subdir, temppath, copySubDirs);
+                    throw new DirectoryNotFoundException(
+                        "Source directory does not exist or could not be found: "
+                        + sourceDirName);
+                }
+
+                DirectoryInfo[] dirs = dir.GetDirectories();
+                // If the destination directory doesn't exist, create it.
+                if (!Directory.Exists(destDirName))
+                {
+                    Directory.CreateDirectory(destDirName);
+                }
+
+                // Get the files in the directory and copy them to the new location.
+                FileInfo[] files = dir.GetFiles();
+                foreach (FileInfo file in files)
+                {
+                    string temppath = Path.Combine(destDirName, file.Name);
+                    file.CopyTo(temppath, true);
+                }
+
+                // If copying subdirectories, copy them and their contents to new location.
+                if (copySubDirs)
+                {
+                    foreach (DirectoryInfo subdir in dirs)
+                    {
+                        string temppath = Path.Combine(destDirName, subdir.Name);
+                        DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                    }
                 }
             }
-        }
-        
-        public static DirectoryInfo DirectoryCopy(DirectoryInfo dir, string destDirName, bool copySubDirs)
-        {
-            var destDirPath = Path.Combine(dir.Parent.FullName, destDirName);
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(dir.FullName);
-            }
-
-            DirectoryInfo[] dirs = dir.GetDirectories();
-
-            if (!Directory.Exists(destDirPath))
-            {
-                Directory.CreateDirectory(destDirPath);
-            }
-
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(destDirPath, file.Name);
-                file.CopyTo(temppath, true);
-            }
-
-            if (copySubDirs)
-            {
-                foreach (DirectoryInfo subdir in dirs)
-                {
-                    string temppath = Path.Combine(destDirPath, subdir.Name);
-                    DirectoryCopy(subdir, temppath, copySubDirs);
-                }
-            }
-
-            return new DirectoryInfo(destDirPath);
-        }
 
         public static DirectoryInfo CreateOrCleanSubDirectory(DirectoryInfo dir, string subDirName) 
         {
