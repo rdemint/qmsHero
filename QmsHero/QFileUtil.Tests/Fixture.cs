@@ -38,7 +38,7 @@ namespace QFileUtil.Tests
             this.WordSampleHeaderName = "Quality Manual (SOP-001)";
 
 
-            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*").First();
+            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*", SearchOption.AllDirectories).First();
             this.ExcelSampleEffectiveDate = "2018-11-26";
             this.ExcelSampleRevision = "2";
             this.ExcelSampleHeaderName = "Document Control Index (F-001B)";

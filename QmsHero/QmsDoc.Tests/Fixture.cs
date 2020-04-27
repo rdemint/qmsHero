@@ -40,10 +40,7 @@ namespace QmsDoc.Tests
             this.Sop1Documents = this.ActiveQMSDocuments.GetDirectories("SOP-001 Quality Manual Documents")[0];
             var files = Sop1Documents.GetFiles().ToList();
 
-            //var tempWord = this.Sop1Documents.GetFiles("SOP-001*").ToList()[0];
-            //this.WordSampleCopy = this.CopyToProcessingDir(tempWord);
             this.WordSampleCopy = this.ProcessingDir.GetFiles("SOP-001*", SearchOption.AllDirectories).First();
-
             this.WordSampleEffectiveDate = "2018-11-26";
             this.WordSampleRevision = "3";
             this.WordSampleHeaderName = "Quality Manual (SOP-001)";
@@ -51,10 +48,7 @@ namespace QmsDoc.Tests
             this.WordSampleFileDocName = "Quality Manual";
 
 
-            //var tempExcel = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
-            //this.ExcelSampleCopy = this.CopyToProcessingDir(tempExcel);
-            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*").First();
-
+            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*", SearchOption.AllDirectories).First();
             this.ExcelSampleEffectiveDate = "2018-11-26";
             this.ExcelSampleRevision = "2";
             this.ExcelSampleHeaderName = "Document Control Index (F-001B)";

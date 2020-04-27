@@ -50,7 +50,16 @@ namespace QFileUtil
             if(IsReadyToCopy())
             {
                 FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
+                
+                var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                if(refFiles.Any())
+                {
+                    referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                }
+                
             }
+
         }
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {
