@@ -8,10 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QDoc.Interfaces;
 
 namespace QmsDoc.Core
 {
-    class DocFactory: QDocFactory
+    public class DocFactory: IQDocFactory
     {
         public IDoc CreateDoc(FileInfo file)
         {

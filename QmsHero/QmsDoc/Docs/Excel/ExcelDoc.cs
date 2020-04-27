@@ -52,13 +52,10 @@ namespace QmsDoc.Docs.Excel
 
         public override void Process(QDocPropertyCollection docState)
         {
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
-            {
                 foreach(QDocProperty prop in docState)
                 {
                     Process(prop);
                 }
-            }
         }
         public override QDocProperty Inspect(QDocProperty prop)
         {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Ioc;
-using QDoc.Core;
+using QmsDoc.Core;
 
 namespace QmsHero
 {

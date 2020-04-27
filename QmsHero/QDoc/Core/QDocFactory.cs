@@ -25,22 +25,7 @@ namespace QDoc.Core
         public List<string> ExcelDocExtensions { get => excelDocExtensions; set => excelDocExtensions = value; }
         public List<string> PdfExtensions { get => pdfExtensions; set => pdfExtensions = value; }
 
-        public IDoc CreateDoc(FileInfo file)
-        {
-            if (wordDocExtensions.Contains(file.Extension))
-            {
-                throw new NotImplementedException();
-            }
+        public abstract IDoc CreateDoc(FileInfo file);
 
-            else if (excelDocExtensions.Contains(file.Extension))
-            {
-                throw new NotImplementedException();
-            }
-
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }

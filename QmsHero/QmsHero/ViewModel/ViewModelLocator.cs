@@ -18,9 +18,10 @@ using CommonServiceLocator;
 using System.ComponentModel;
 using QDoc.Interfaces;
 using QDoc.Core;
-using QDoc.Word;
-using QDoc.Excel;
-
+using QDoc.Docs;
+using QmsDoc.Core;
+using QmsDoc.Docs.Word;
+using QmsDoc.Docs.Excel;
 
 namespace QmsHero.ViewModel
 {

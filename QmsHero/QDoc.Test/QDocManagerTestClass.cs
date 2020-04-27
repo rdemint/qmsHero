@@ -14,12 +14,12 @@ namespace QDoc.Test
         {
         }
 
-        public override void Process(IDocState docState)
+        public override void Process(QDocProperty docProp)
         {
             throw new NotImplementedException();
         }
 
-        public override void Process(QDocProperty docProp)
+        public override void Process(QDocPropertyCollection docState)
         {
             throw new NotImplementedException();
         }

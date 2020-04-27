@@ -47,10 +47,10 @@ namespace QmsDoc.Tests
             this.WordSampleDocNumber = "SOP-001";
             this.WordSampleFileDocName = "Quality Manual";
 
-
-            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*", SearchOption.AllDirectories).First();
-            this.ExcelSampleEffectiveDate = "2018-11-26";
-            this.ExcelSampleRevision = "2";
+            this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001D*", SearchOption.AllDirectories).First();
+            //this.ExcelSampleCopy = this.ProcessingDir.GetFiles("F-001B*", SearchOption.AllDirectories).First();
+            //this.ExcelSampleEffectiveDate = "2018-11-26";
+            //this.ExcelSampleRevision = "2";
             this.ExcelSampleHeaderName = "Document Control Index (F-001B)";
             this.ExcelSampleDocNumber = "F-001B";
             this.ExcelSampleFileDocName = "Document Control Index";

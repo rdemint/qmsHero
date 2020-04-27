@@ -33,7 +33,7 @@ namespace QmsDoc.Core
             foreach(var file in this.FileManager.ProcessingFiles)
             {
                 var doc = this.DocFactory.CreateDoc(file);
-                doc.Process(state);
+                doc?.Process(state);
             }
         }
         public override void Process(QDocProperty docProp)
@@ -41,7 +41,7 @@ namespace QmsDoc.Core
             foreach(var file in this.FileManager.ProcessingFiles)
             {
                 var doc = this.DocFactory.CreateDoc(file);
-                doc.Process(docProp);
+                doc?.Process(docProp);
             }
         }
 
@@ -49,7 +49,7 @@ namespace QmsDoc.Core
         {
             var fileCopy = FileManager.CopyToProcessingDir(file);
             var doc = DocFactory.CreateDoc(file);
-            doc.Process(docProp);
+            doc?.Process(docProp);
         }
     }
 }

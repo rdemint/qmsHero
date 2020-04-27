@@ -68,7 +68,11 @@ namespace QDoc.Core
             var docs = new DocCollection();
             foreach(var file in fileManager.ProcessingFiles)
             {
-                docs.Add(docFactory.CreateDoc(file));
+                var doc = docFactory.CreateDoc(file);
+                if(doc !=null)
+                {
+                    docs.Add(doc);
+                }
             }
 
             return docs;

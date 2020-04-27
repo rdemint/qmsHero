@@ -27,17 +27,10 @@ namespace QFileUtil.Tests
         }
 
         [TestMethod]
-        public void IsValidTest()
-        {
-            var fixture = new Fixture();
-            Assert.AreEqual(false, fixture.IsReadyToCopy());
-        }
-
-        [TestMethod]
         public void IsCleanTest()
         {
             var fixture = new Fixture();
-            Assert.AreEqual(true, fixture.ProcessingDirIsClean());
+            Assert.AreEqual(false, fixture.ProcessingDirIsClean());
         }
     }
 }

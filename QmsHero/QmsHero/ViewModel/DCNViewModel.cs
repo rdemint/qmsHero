@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using QDoc.Core;
+using QmsDoc.Core;
 
 namespace QmsHero.ViewModel
 {
