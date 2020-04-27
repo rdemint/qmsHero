@@ -25,12 +25,10 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         public void ReadTest()
         {
             var fixture = new Fixture();
-            var doc = new WordDoc(fixture.CopyToProcessingDir(fixture.WordSampleCopy));
+            var doc = new WordDoc(fixture.WordSampleCopy);
             bool result = (bool)doc.Inspect(new IsForm()).State;
             Assert.AreEqual(false, result);
-            //var xl = new ExcelDoc(fixture.CopyToProcessingDir(fixture.ExcelSample));
-            //bool xlResult = (bool)xl.Inspect(new IsForm(), xl.FileInfo).State;
-            //Assert.AreEqual(false, xlResult);
+
         }
     }
 }
