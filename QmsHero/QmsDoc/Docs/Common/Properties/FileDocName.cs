@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
@@ -26,7 +27,9 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override DocProperty Read(FileInfo file, DocConfig config)
         {
-            return base.Read(file, config);
+            Match match = config.FileRevisionRegex.Match(file.Name);
+            string result = match.ToString().Replace(config.FileRevisionText, "");
+            return new FileRevision(result);
         }
     }
 }

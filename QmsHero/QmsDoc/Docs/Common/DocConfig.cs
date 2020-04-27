@@ -12,18 +12,18 @@ namespace QmsDoc.Docs.Common
     {
         string fileRevisionText;
         Regex fileRevisionRegex;
-        Regex isSopRegex;
-        Regex isFormRegex;
+        Regex fileSopNumberRegex;
+        Regex fileFormNumberRegex;
 
         public DocConfig()
         {
             this.FileRevisionText = "Rev";
-            this.FileIsSopRegex = new Regex(@"SOP-");
-            this.FileIsFormRegex = new Regex(@"F-");
+            this.FileSopNumberRegex = new Regex(@"SOP-\d\d\d");
+            this.FileFormNumberRegex = new Regex(@"F-\d\d\d\w");
         }
 
-        public Regex FileIsSopRegex { get => isSopRegex; set => isSopRegex = value; }
-        public Regex FileIsFormRegex { get => isFormRegex; set => isFormRegex = value; }
+        public Regex FileSopNumberRegex { get => fileSopNumberRegex; set => fileSopNumberRegex = value; }
+        public Regex FileFormNumberRegex { get => fileFormNumberRegex; set => fileFormNumberRegex = value; }
         public string FileRevisionText { get => fileRevisionText;
             set { 
                 

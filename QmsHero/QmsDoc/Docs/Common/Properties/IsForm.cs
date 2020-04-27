@@ -33,7 +33,7 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override DocProperty Read(FileInfo file, DocConfig config)
         {
-            Match match = config.FileIsFormRegex.Match(file.Name);
+            Match match = config.FileFormNumberRegex.Match(file.Name);
             return new IsForm(match.Success);
         }
 
