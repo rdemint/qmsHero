@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Docs.Common.StateGroups
+namespace QmsDoc.Docs.Common.PropertyGroups
 {
-    class FileStateGroup: QDocStateGroup
+    class FilePropertyGroup: QDocPropertyGroup
     {
         FileDocName fileDocName;
         FileDocNumber fileDocNumber;
         FileRevision filerevision;
-        public FileStateGroup()
+        public FilePropertyGroup()
         {
             this.fileDocName = new FileDocName();
             this.fileDocNumber = new FileDocNumber();
