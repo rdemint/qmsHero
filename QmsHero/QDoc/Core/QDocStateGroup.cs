@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    class DocStateGroup: IToQDocState, INotifyPropertyChanged
+    public abstract class QDocStateGroup: IToQDocState, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
