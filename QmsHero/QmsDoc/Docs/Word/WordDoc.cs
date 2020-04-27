@@ -13,12 +13,13 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Word
 {
-    public class WordDoc: Doc
+    public class WordDoc : Doc
     {
         WordDocConfig docConfig;
         static List<string> fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
 
-        public WordDoc() {
+        public WordDoc()
+        {
         }
 
         public WordDoc(FileInfo fileInfo) : this()
@@ -27,7 +28,8 @@ namespace QmsDoc.Docs.Word
             DocConfig = new WordDocConfig();
         }
 
-        public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : this() {
+        public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : this()
+        {
 
             this.FileInfo = fileInfo;
             this.DocConfig = docConfig;
@@ -38,7 +40,7 @@ namespace QmsDoc.Docs.Word
 
         public override void Process(QDocProperty qprop)
         {
-            if(qprop as IWriteFileInfo != null)
+            if (qprop as IWriteFileInfo != null)
             {
                 qprop.Write(FileInfo, DocConfig);
             }
@@ -53,52 +55,57 @@ namespace QmsDoc.Docs.Word
             }
         }
 
-        public override QDocProperty Inspect(QDocProperty prop) 
+        public override void Process(QDocState docState)
+        {
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            {
+                foreach (QDocProperty prop in docState)
+                {
+                    Process(prop);
+                }
+            }
+        }
+
+
+
+        public override QDocProperty Inspect(QDocProperty prop)
         {
 
             QDocProperty result = null;
 
-            if(prop as IReadFileInfo != null)
-                 {
-                    result = prop.Read(FileInfo, DocConfig);
-                 }
+            if (prop as IReadFileInfo != null)
+            {
+                result = prop.Read(FileInfo, DocConfig);
+            }
             else
-              {
+            {
                 using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-                  {
+                {
                     result = prop.Read(doc, DocConfig);
-                  }
-              }
+                }
+            }
             return result;
+        }
+
+        
+
+        public override QDocState Inspect(QDocState docState)
+        {
+            QDocState returnState = new QDocState();
+
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+            {
+                foreach (QDocProperty prop in docState)
+                {
+                    returnState.Add(Inspect(prop));
+                }
+            }
+            return returnState;
         }
 
         public static List<string> Extensions()
         {
             return fileExtensions;
         }
-        //public override IDocState Inspect (IDocState docState)
-        //{
-
-        //    return base.Inspect(docState);
-        // Create a new instance of IQDocState and set the property values on it. 
-
-        //var docProps = docState.ToCollection();
-        //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-        //{
-        //    object[] methodParams = new object[1];
-        //    methodParams[0] = doc;
-        //    methodParams[1] = DocConfig;
-        //    foreach (QDocProperty docProp in docProps)
-        //    {
-
-        //        var getMethod = docProp.GetType().GetMethod("Read");
-        //        string result = (string)getMethod?.Invoke(docProp, methodParams);
-        //        var stateProperty = docState.GetType().GetProperty(docProp.Name);
-        //        QDocProperty dp = (QDocProperty)stateProperty.GetValue(docState);
-        //        var propertyInfoValue = dp.GetType().GetProperty("Value");
-        //        propertyInfoValue.SetValue(dp, result);
-        //    }
-        //return result;
-        //}
     }
 }

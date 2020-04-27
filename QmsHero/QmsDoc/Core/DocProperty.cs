@@ -55,11 +55,6 @@ namespace QmsDoc.Core
                 return this.Read(file, docConfig);
             }
 
-            //else if(file!=null && sdocConfig !=null)
-            //{
-            //    return this.Read(file, sdocConfig);
-            //}
-
             else
             {
                 throw new ReadDocumentNotValidException();
@@ -103,23 +98,23 @@ namespace QmsDoc.Core
 
         #region word
 
-        public virtual DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
+        protected virtual DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
 
 
-        public virtual DocProperty Read(FileInfo file, DocConfig config)
+        protected virtual DocProperty Read(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Write(FileInfo file, DocConfig config)
+        protected virtual void Write(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Write(WordprocessingDocument doc, WordDocConfig config)
+        protected virtual void Write(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }

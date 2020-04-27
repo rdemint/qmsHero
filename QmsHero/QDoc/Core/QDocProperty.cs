@@ -40,15 +40,11 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual QDocProperty Read(object doc, object docConfig)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract QDocProperty Read(object doc, object docConfig);
 
-        public virtual void Write(object doc, IDocConfig docConfig)
-        {
-            throw new NotImplementedException();
-        }
+
+        public abstract void Write(object doc, IDocConfig docConfig);
+        
 
         public virtual bool IsValid(IDocConfig config)
         {

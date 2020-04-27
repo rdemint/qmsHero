@@ -11,7 +11,6 @@ namespace QDoc.Docs
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
-        static List<string> fileExtensions;
 
         public Doc()
         {
@@ -37,31 +36,16 @@ namespace QDoc.Docs
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         #endregion
 
-        public virtual void Process(IDocState docState)
-        {
-           var docProps = docState.ToCollection();
-           foreach (QDocProperty docProp in docProps)
-                {
-                    Process(docProp);
-                }
-        }
+        public abstract void Process(QDocState docState);
 
         public abstract void Process(QDocProperty prop);
 
-
-
-        public virtual IDocState Inspect(IDocState docState)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual QDocProperty Inspect(QDocProperty prop, FileInfo file)
-        {
-            throw new NotImplementedException();
-        }
-
+        public abstract QDocState Inspect(QDocState docState);
 
         public abstract QDocProperty Inspect(QDocProperty prop);
+
+        //public abstract QDocProperty Inspect(QDocProperty prop, FileInfo file);
+        
 
     }
 }

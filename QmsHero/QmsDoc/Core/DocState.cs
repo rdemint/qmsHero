@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QDoc.Core;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Core
 {
-    class DocState: ObservableCollection<DocProperty>
+    public class DocState: QDocState
     {
     }
 }

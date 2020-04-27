@@ -49,6 +49,17 @@ namespace QmsDoc.Docs.Excel
             
             
         }
+
+        public override void Process(QDocState docState)
+        {
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+            {
+                foreach(QDocProperty prop in docState)
+                {
+                    Process(prop);
+                }
+            }
+        }
         public override QDocProperty Inspect(QDocProperty prop)
         {
             QDocProperty result = null;
@@ -66,16 +77,24 @@ namespace QmsDoc.Docs.Excel
             return result;
         }
 
-        public override IDocState Inspect(IDocState docState)
+        public override QDocState Inspect(QDocState docState)
         {
-            return base.Inspect(docState);
+            QDocState returnState = new QDocState();
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
+            {
+                foreach(QDocProperty prop in docState)
+                {
+                    returnState.Add(Inspect(prop));
+                }
+            }
+
+            return returnState;
         }
 
         public static List<string> Extensions()
         {
             return fileExtensions;
         }
-
 
     }
 }
