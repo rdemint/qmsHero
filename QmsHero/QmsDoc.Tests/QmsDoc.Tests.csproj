@@ -56,6 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\DocManagerTests.cs" />
     <Compile Include="Core\DocPropertyTestClass.cs" />
     <Compile Include="Core\DocPropertyTests.cs" />
     <Compile Include="Docs\Common\Properties\FileRevisionTests.cs" />

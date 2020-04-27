@@ -10,6 +10,6 @@ namespace QDoc.Interfaces
 {
     interface IToQDocState
     {
-        QDocState ToCollection(bool filter);
+        QDocPropertyCollection ToDocState(bool filter);
     }
 }

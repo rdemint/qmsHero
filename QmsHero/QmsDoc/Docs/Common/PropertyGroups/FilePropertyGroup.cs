@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.PropertyGroups
 {
-    class FilePropertyGroup: QDocPropertyGroup
+    public class FilePropertyGroup: QDocPropertyGroup
     {
         FileDocName fileDocName;
         FileDocNumber fileDocNumber;
-        FileRevision filerevision;
+        FileRevision fileRevision;
         public FilePropertyGroup()
         {
             this.fileDocName = new FileDocName();
             this.fileDocNumber = new FileDocNumber();
-            this.filerevision = new FileRevision();
+            this.fileRevision = new FileRevision();
         }
 
-        public FileRevision Filerevision { get => filerevision; set => filerevision = value; }
+        public FileRevision FileRevision { get => fileRevision; set => fileRevision = value; }
         public FileDocNumber FileDocNumber { get => fileDocNumber; set => fileDocNumber = value; }
         public FileDocName FileDocName { get => fileDocName; set => fileDocName = value; }
     }

@@ -14,7 +14,7 @@ namespace QDoc.Interfaces
         bool CanProcessFiles();
 
         void Process(FileInfo file, QDocProperty docProp);
-        void Process(IDocState docEdit);
+        void Process(QDocPropertyCollection docEdit);
         void Process(QDocProperty docProp);
     }
 }

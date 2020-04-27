@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using QDoc.Core;
-using QDoc.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
 using System.Collections.ObjectModel;
 using System.Windows;
+using QmsDoc.Core;
+using QDoc.Core;
+using QmsDocXml.Common.PropertyGroups;
 
 namespace QmsHero.ViewModel
 {
@@ -18,25 +19,23 @@ namespace QmsHero.ViewModel
         string viewDisplayName;
         DocManager manager;
         RelayCommand processFilesCommand;
-        DocState docState;
-        ObservableCollection<DocProperty> docProps;
-        string originalDirPath;
+        HeaderPropertyGroup headerPropertyGroup;
+        string referenceDirPath;
+        string processingDirPath;
 
         public CustomProcessingViewModel()
         {
 
             this.ViewDisplayName = "Custom";
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.OriginalDirPath = null;
-            this.DocEdit = new DocState();
-            //this.DocHeader = new DocHeader();
+            this.HeaderPropertyGroup = new HeaderPropertyGroup();
         }
 
         public RelayCommand ProcessFilesCommand {
             get {
                   this.processFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
-                        () => DirIsValid()
+                        () => ProcessingDirIsValid()
                         );
                 return this.processFilesCommand;
             }
@@ -46,30 +45,53 @@ namespace QmsHero.ViewModel
         }
         private void ProcessFiles()
         {
-            this.manager.ConfigDir(this.OriginalDirPath);
+            
             //var docEdit = new DocEdit(this.DocHeader);
-            this.manager.ProcessFiles(this.DocEdit);
+            this.manager.Process(headerPropertyGroup.ToDocState());
         }
 
-        private bool DirIsValid()
+        private bool ProcessingDirIsValid()
         {
-            return this.Manager.DirIsValid(OriginalDirPath);
+            return manager.DirIsValid(processingDirPath);
+        }
+
+        private bool ReferenceDirIsValid()
+        {
+            return manager.DirIsValid(referenceDirPath);
+        }
+
+        private bool CanProcessFiles()
+        {
+            return manager.CanProcessFiles();
         }
 
         public string ViewDisplayName { 
             get => viewDisplayName; 
             set => viewDisplayName = value; }
         public DocManager Manager { get => manager; set => manager = value; }
-        public string OriginalDirPath { 
-            get => originalDirPath;
+
+        public string ReferenceDirPath
+        {
+            get => referenceDirPath;
+            set
+            {
+                Set<string>(
+                    () => ReferenceDirPath, ref referenceDirPath, value
+                );
+                manager.FileManager.SetReferenceDir(value);
+            }
+        }
+        public string ProcessingDirPath { 
+            get => processingDirPath;
             set {
                 Set<string>(
-                    () => OriginalDirPath, ref originalDirPath, value
-                    );
-             
-            } }
+                    () => ProcessingDirPath, ref processingDirPath, value
+                );
+                manager.FileManager.SetProcessingDir(value);
+            }
+                
+        }
 
-        //public DocHeader DocHeader { get => docHeader; set => docHeader = value; }
-        public DocState DocEdit { get => docState; set => docState = value; }
+        public HeaderPropertyGroup HeaderPropertyGroup { get => headerPropertyGroup; set => headerPropertyGroup = value; }
     }
 }

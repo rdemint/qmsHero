@@ -36,7 +36,7 @@ namespace QDoc.Docs
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         #endregion
 
-        public virtual void Process(QDocState docState)
+        public virtual void Process(QDocPropertyCollection docState)
         {
             foreach (QDocProperty prop in docState)
             {
@@ -46,8 +46,8 @@ namespace QDoc.Docs
 
         public abstract void Process(QDocProperty prop);
 
-        public virtual QDocState Inspect(QDocState docState) {
-            QDocState returnState = new QDocState();
+        public virtual QDocPropertyCollection Inspect(QDocPropertyCollection docState) {
+            QDocPropertyCollection returnState = new QDocPropertyCollection();
 
             foreach (QDocProperty prop in docState)
             {

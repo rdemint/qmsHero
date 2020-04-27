@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Core\QDocPropertyGroup.cs" />
     <Compile Include="Core\QDocAudit.cs" />
+    <Compile Include="Docs\DocCollection.cs" />
     <Compile Include="Interfaces\IQDocFactory.cs" />
     <Compile Include="Core\QDocFactory.cs" />
     <Compile Include="Interfaces\IQDocManagerConfig.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="Exceptions\DocReadException.cs" />
     <Compile Include="Interfaces\IQDocManager.cs" />
     <Compile Include="Interfaces\IDocState.cs" />
-    <Compile Include="Core\QDocState.cs" />
+    <Compile Include="Core\QDocPropertyCollection.cs" />
     <Compile Include="Core\QDocProperty.cs" />
     <Compile Include="Exceptions\DocPropertyGetException.cs" />
     <Compile Include="Exceptions\ProjectDirNotSetException.cs" />

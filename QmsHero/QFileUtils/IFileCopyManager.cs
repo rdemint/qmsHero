@@ -12,6 +12,11 @@ namespace QFileUtil
 
         FileInfo CopyToProcessingDir(FileInfo file);
         int CleanProcessingDir();
+
+        void SetProcessingDir(string path);
+        void SetProcessingDir(DirectoryInfo dir);
+        void SetReferenceDir(string path);
+        void SetReferenceDir(DirectoryInfo dir);
         bool ProcessingDirIsClean();
         bool IsReadyToCopy();
     }

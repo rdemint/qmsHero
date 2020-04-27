@@ -20,9 +20,9 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public QDocState ToCollection(bool filter = true)
+        public QDocPropertyCollection ToDocState(bool filter = true)
         {
-            var state = new QDocState();
+            var state = new QDocPropertyCollection();
             var docProps = this.GetType().GetProperties();
             foreach (PropertyInfo docProp in docProps)
             {
@@ -30,21 +30,21 @@ namespace QDoc.Core
             }
             if (filter)
             {
-                state = FilterCollection(state);
+                state = FilterDocState(state);
             }
             return state;
         }
 
-        public QDocState FilterCollection(QDocState state)
+        public static QDocPropertyCollection FilterDocState(QDocPropertyCollection state)
         {
             var query = state.Where(prop => prop.State != null);
             if (query.Any())
             {
-                return new QDocState(query);
+                return new QDocPropertyCollection(query);
             }
             else
             {
-                return new QDocState();
+                return new QDocPropertyCollection();
             }
         }
     }

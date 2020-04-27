@@ -22,8 +22,8 @@ namespace QmsDoc.Tests.Docs.Word
 
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var state = new QDocState() { new FileDocNumber(), new FileRevision() };
-            var targetState = new QDocState() { new FileDocNumber(newNum), new FileRevision(newRev)};
+            var state = new QDocPropertyCollection() { new FileDocNumber(), new FileRevision() };
+            var targetState = new QDocPropertyCollection() { new FileDocNumber(newNum), new FileRevision(newRev)};
 
             doc.Process(targetState);
             var inspectedState = doc.Inspect(state);
@@ -39,8 +39,8 @@ namespace QmsDoc.Tests.Docs.Word
         {
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var state = new QDocState() { new FileDocName(), new FileRevision() };
-            QDocState result = doc.Inspect(state);
+            var state = new QDocPropertyCollection() { new FileDocName(), new FileRevision() };
+            QDocPropertyCollection result = doc.Inspect(state);
             Assert.AreEqual(result.Count, 2);
             DocProperty fileDocName = result.Where(prop => prop.Name == "FileDocName").First() as DocProperty;
             DocProperty fileRevision = result.Where(prop => prop.Name == "FileRevision").First() as DocProperty;

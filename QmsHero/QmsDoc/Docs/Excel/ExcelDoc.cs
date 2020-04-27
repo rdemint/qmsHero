@@ -50,7 +50,7 @@ namespace QmsDoc.Docs.Excel
             
         }
 
-        public override void Process(QDocState docState)
+        public override void Process(QDocPropertyCollection docState)
         {
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
             {
@@ -77,9 +77,9 @@ namespace QmsDoc.Docs.Excel
             return result;
         }
 
-        public override QDocState Inspect(QDocState docState)
+        public override QDocPropertyCollection Inspect(QDocPropertyCollection docState)
         {
-            QDocState returnState = new QDocState();
+            QDocPropertyCollection returnState = new QDocPropertyCollection();
             using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
             {
                 foreach(QDocProperty prop in docState)

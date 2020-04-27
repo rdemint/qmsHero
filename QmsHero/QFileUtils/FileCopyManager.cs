@@ -26,31 +26,21 @@ namespace QFileUtil
             processingFiles = new List<FileInfo>();
         }
    
-        public FileCopyManager(DirectoryInfo referenceDir, DirectoryInfo processingDir): base()
+        public FileCopyManager(DirectoryInfo referenceDir, DirectoryInfo processingDir): this()
         {
-            ReferenceDir = referenceDir;
-            ProcessingDir = processingDir;
+            SetReferenceDir(referenceDir);
+            SetProcessingDir(processingDir);
         }
 
          public DirectoryInfo ReferenceDir
         {
             get => referenceDir;
-            set
-            {
-                referenceDir = value;
-                UpdateFiles();
 
-            }
         }
         public List<FileInfo> ReferenceFiles { get => referenceFiles;}
     
         public DirectoryInfo ProcessingDir { 
             get => processingDir;
-            set
-            {
-                processingDir = value;
-                UpdateFiles();
-            }
             }
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 
@@ -66,6 +56,31 @@ namespace QFileUtil
             FileInfo fileCopy = FileUtil.FileCopy(file, ProcessingDir, true);
             UpdateFiles();
             return fileCopy;
+        }
+        
+        
+        public void SetReferenceDir(string path)
+        {
+            var dir = new DirectoryInfo(path);
+            SetReferenceDir(dir);
+        }
+
+        public void SetReferenceDir(DirectoryInfo dir)
+        {
+            this.referenceDir = dir;
+            UpdateFiles();
+        }
+
+        public void SetProcessingDir(string path)
+        {
+            var dir = new DirectoryInfo(path);
+            SetProcessingDir(dir);
+        }
+
+        public void SetProcessingDir(DirectoryInfo dir)
+        {
+            this.processingDir = dir;
+            UpdateFiles();
         }
         
         public virtual bool IsReadyToCopy()

@@ -28,13 +28,21 @@ namespace QmsDoc.Core
 
         }
 
-        public override void Process(IDocState docEdit)
+        public override void Process(QDocPropertyCollection state)
         {
-            throw new NotImplementedException();
+            foreach(var file in this.FileManager.ProcessingFiles)
+            {
+                var doc = this.DocFactory.CreateDoc(file);
+                doc.Process(state);
+            }
         }
         public override void Process(QDocProperty docProp)
         {
-            throw new NotImplementedException();
+            foreach(var file in this.FileManager.ProcessingFiles)
+            {
+                var doc = this.DocFactory.CreateDoc(file);
+                doc.Process(docProp);
+            }
         }
 
         public override void Process(FileInfo file, QDocProperty docProp)

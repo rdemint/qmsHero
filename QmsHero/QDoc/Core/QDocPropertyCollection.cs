@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public class QDocState : ObservableCollection<QDocProperty> {
-        public QDocState()
+    public class QDocPropertyCollection : ObservableCollection<QDocProperty> {
+        public QDocPropertyCollection()
         {
 
         }
 
-        public QDocState(List<QDocProperty> list) : base(list)
+        public QDocPropertyCollection(List<QDocProperty> list) : base(list)
         {
         }
 
-        public QDocState(IEnumerable<QDocProperty> collection) : base(collection)
+        public QDocPropertyCollection(IEnumerable<QDocProperty> collection) : base(collection)
         {
         }
     }

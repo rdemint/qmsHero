@@ -32,8 +32,8 @@ namespace QmsDoc.Tests
         public Fixture(): base()
         {
             var topdir = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent;
-            ReferenceDir = FileUtil.SearchSubDirectory(topdir, "Reference");
-            ProcessingDir = FileUtil.SearchSubDirectory(topdir, "Processing");
+            SetReferenceDir(FileUtil.SearchSubDirectory(topdir, "Reference"));
+            SetProcessingDir(FileUtil.SearchSubDirectory(topdir, "Processing"));
             FileUtil.CleanDirectoryAndChildren(ProcessingDir);
 
             this.ActiveQMSDocuments = this.ReferenceDir.GetDirectories("Active QMS Documents").ToList()[0];

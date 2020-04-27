@@ -57,11 +57,22 @@ namespace QDoc.Core
             doc.Process(docProp);
         }
 
-        public abstract void Process(IDocState docState);
+        public abstract void Process(QDocPropertyCollection docState);
 
 
         public abstract void Process(QDocProperty docProp);
-        
+
+        public DocCollection DocCollection()
+        {
+
+            var docs = new DocCollection();
+            foreach(var file in fileManager.ProcessingFiles)
+            {
+                docs.Add(docFactory.CreateDoc(file));
+            }
+
+            return docs;
+        }
 
         #endregion
     }

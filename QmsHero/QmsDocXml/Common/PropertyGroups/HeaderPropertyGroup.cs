@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml.Common.PropertyGroups
 {
-    class HeaderPropertyGroup: QDocPropertyGroup
+    public class HeaderPropertyGroup: QDocPropertyGroup
     {
         HeaderEffectiveDate headerEffectiveDate;
         HeaderLogo headerLogo;

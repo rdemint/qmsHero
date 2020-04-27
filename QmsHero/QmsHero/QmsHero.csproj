@@ -163,6 +163,14 @@
       <Project>{d949b936-f294-4f84-b4f2-6e1f86a932c1}</Project>
       <Name>QControls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QDoc\QDoc.csproj">
+      <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
+      <Name>QDoc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QFileUtils\QFileUtil.csproj">
+      <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>
+      <Name>QFileUtil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QmsDocXml\QmsDocXml.csproj">
       <Project>{93261315-9128-4bf7-8097-73454c74cfc7}</Project>
       <Name>QmsDocXml</Name>
