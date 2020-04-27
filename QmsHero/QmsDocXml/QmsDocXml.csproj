@@ -52,6 +52,7 @@
     <Compile Include="Audit\WordAuditRequires.cs" />
     <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />
+    <Compile Include="Common\PropertyGroups\HeaderPropertyGroup.cs" />
     <Compile Include="HeaderName.cs" />
     <Compile Include="HeaderEffectiveDate.cs" />
     <Compile Include="Common\WordPartHeaderTableCell.cs" />
