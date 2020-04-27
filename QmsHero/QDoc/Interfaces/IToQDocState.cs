@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace QDoc.Interfaces
 {
-    interface IToDocPropertyCollection
+    interface IToQDocState
     {
-        ObservableCollection<QDocProperty> ToCollection(bool filter);
+        QDocState ToCollection(bool filter);
     }
 }

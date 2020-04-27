@@ -17,5 +17,13 @@ namespace QDoc.Core
         {
 
         }
+
+        public QDocState(List<QDocProperty> list) : base(list)
+        {
+        }
+
+        public QDocState(IEnumerable<QDocProperty> collection) : base(collection)
+        {
+        }
     }
 }
