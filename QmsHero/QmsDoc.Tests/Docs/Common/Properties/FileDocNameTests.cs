@@ -27,7 +27,12 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             Assert.AreEqual(fixture.ExcelSampleFileDocName, result);
         }
 
-        public void WriteTest()
+        public void WriteSopTest()
+        {
+            Assert.Fail();
+        }
+
+        public void WriteFormTest()
         {
             Assert.Fail();
         }

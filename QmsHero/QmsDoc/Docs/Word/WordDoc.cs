@@ -14,20 +14,27 @@ namespace QmsDoc.Docs.Word
 {
     public class WordDoc: Doc
     {
-        WordprocessingDocument doc;
-        MainDocumentPart mainDocumentPart;
+        List<string> fileExtensions;
         WordDocConfig docConfig;
 
-        public WordDoc() { }
+        public WordDoc() {
+            this.fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
+        }
 
-        public WordDoc(FileInfo fileInfo) : base(fileInfo) 
+        public WordDoc(FileInfo fileInfo) : this()
         {
+            this.FileInfo = fileInfo;
             DocConfig = new WordDocConfig();
         }
 
-        public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : base(fileInfo, docConfig) { }
+        public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : this() {
+
+            this.FileInfo = fileInfo;
+        }
 
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public List<string> FileExtensions { get => fileExtensions; }
+
         public override void Process(QDocProperty qprop)
         {
             if(qprop as IWriteFileInfo != null)

@@ -3,6 +3,7 @@ using QDoc.Interfaces;
 using System.IO;
 using QDoc.Core;
 using QFileUtil;
+using System.Collections.Generic;
 
 namespace QDoc.Docs
 {
@@ -10,6 +11,7 @@ namespace QDoc.Docs
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
+        List<string> fileExtensions;
 
         public Doc()
         {
@@ -61,5 +63,9 @@ namespace QDoc.Docs
 
         public abstract QDocProperty Inspect(QDocProperty prop);
         
+        public List<string> Extensions()
+        {
+            return this.fileExtensions;
+        }
     }
 }

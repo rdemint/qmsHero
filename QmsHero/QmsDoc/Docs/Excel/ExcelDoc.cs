@@ -15,20 +15,24 @@ namespace QmsDoc.Docs.Excel
     public class ExcelDoc : Doc
     {
         ExcelDocConfig docConfig;
+        List<string> fileExtensions;
 
+        public ExcelDoc() {
+            this.fileExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
+        }
 
-        public ExcelDoc() { }
-
-        public ExcelDoc(FileInfo fileInfo) : base(fileInfo) 
+        public ExcelDoc(FileInfo fileInfo) : this() 
         {
+            this.FileInfo = fileInfo;
             DocConfig = new ExcelDocConfig();
         }
 
-        public ExcelDoc(FileInfo fileInfo, ExcelDocConfig docConfig) : base(fileInfo) 
+        public ExcelDoc(FileInfo fileInfo, ExcelDocConfig docConfig) : this()
         {
+            this.FileInfo = fileInfo;
             DocConfig = docConfig;
         }
-        public ExcelDocConfig DocConfig1 { get => docConfig; set => docConfig = value; }
+        public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
 
         public override void Process(QDocProperty prop)
         {
