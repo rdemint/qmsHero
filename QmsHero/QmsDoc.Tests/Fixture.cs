@@ -16,11 +16,13 @@ namespace QmsDoc.Tests
         string wordSampleRevision;
         string wordSampleHeaderName;
         string wordSampleDocNumber;
+        string wordSampleFileDocName;
 
         string excelSampleEffectiveDate;
         string excelSampleRevision;
         string excelSampleHeaderName;
         string excelSampleDocNumber;
+        string excelSampleFileDocName;
         DirectoryInfo activeQMSDocuments;
         DirectoryInfo sop1Documents;
         string defaultReferenceDirName = "Reference";
@@ -44,6 +46,7 @@ namespace QmsDoc.Tests
             this.WordSampleRevision = "3";
             this.WordSampleHeaderName = "Quality Manual (SOP-001)";
             this.WordSampleDocNumber = "SOP-001";
+            this.WordSampleFileDocName = "Quality Manual";
 
 
             var tempExcel = this.Sop1Documents.GetFiles("F-001B*").ToList()[0];
@@ -53,6 +56,7 @@ namespace QmsDoc.Tests
             var tempLogo = this.ReferenceDir.GetFiles("*.jpg").ToList()[0];
             this.ExcelSampleHeaderName = "Document Control Index (F-001B)";
             this.ExcelSampleDocNumber = "F-001B";
+            this.ExcelSampleFileDocName = "Document Control Index";
 
             this.LogoSampleJpgCopy = this.CopyToProcessingDir(tempLogo);
         }
@@ -68,7 +72,10 @@ namespace QmsDoc.Tests
         public string WordSampleRevision { get => wordSampleRevision; set => wordSampleRevision = value; }
         public string ExcelSampleHeaderName { get => excelSampleHeaderName; set => excelSampleHeaderName = value; }
         public string WordSampleHeaderName { get => wordSampleHeaderName; set => wordSampleHeaderName = value; }
-        public string WordSampleDocNumber { get => wordSampleDocNumber; set => wordSampleDocNumber = value; }
         public string ExcelSampleDocNumber { get => excelSampleDocNumber; set => excelSampleDocNumber = value; }
+        public string ExcelSampleDocName { get => excelSampleFileDocName; set => excelSampleFileDocName = value; }
+        public string WordSampleDocNumber { get => wordSampleDocNumber; set => wordSampleDocNumber = value; }
+        public string WordSampleFileDocName { get => wordSampleFileDocName; set => wordSampleFileDocName = value; }
+        public string ExcelSampleFileDocName { get => excelSampleFileDocName; set => excelSampleFileDocName = value; }
     }
 }

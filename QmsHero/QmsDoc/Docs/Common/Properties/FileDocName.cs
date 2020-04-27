@@ -1,4 +1,5 @@
 ﻿using QmsDoc.Core;
+using QmsDoc.Exceptions;
 using QmsDoc.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Docs.Common.Properties
 {
-    class FileDocName : DocProperty, IReadFileInfo, IWriteFileInfo
+    public class FileDocName : DocProperty, IReadFileInfo, IWriteFileInfo
     {
         public FileDocName()
         {
@@ -27,9 +28,36 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override DocProperty Read(FileInfo file, DocConfig config)
         {
-            Match match = config.FileRevisionRegex.Match(file.Name);
-            string result = match.ToString().Replace(config.FileRevisionText, "");
-            return new FileRevision(result);
+            string docNumbertext = null;
+            Match matchForm = config.FileFormNumberRegex.Match(file.Name);
+            Match matchSop = config.FileSopNumberRegex.Match(file.Name);
+            if (matchForm.Success)
+            {
+                docNumbertext = matchForm.ToString();
+            }
+            else if (matchSop.Success)
+            {
+                docNumbertext = matchSop.ToString();
+            }
+
+            else
+            {
+                throw new DocReadException();
+            }
+
+
+            Match matchRev = config.FileRevisionRegex.Match(file.Name);
+            if (!matchRev.Success)
+            {
+                throw new DocReadException();
+            }
+
+            string nameText = file.Name
+                .Replace(docNumbertext, "")
+                .Replace(matchRev.ToString(), "")
+                .Replace(file.Extension, "")
+                .Trim();
+            return new FileDocName(nameText);
         }
     }
 }
