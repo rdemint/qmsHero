@@ -56,18 +56,6 @@ namespace QmsDoc.Docs.Word
             }
         }
 
-        public override void Process(QDocState docState)
-        {
-            //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-            //{
-                foreach (QDocProperty prop in docState)
-                {
-                    Process(prop);
-                }
-            //}
-        }
-
-
 
         public override QDocProperty Inspect(QDocProperty prop)
         {
@@ -86,22 +74,6 @@ namespace QmsDoc.Docs.Word
                 }
             }
             return result;
-        }
-
-        
-
-        public override QDocState Inspect(QDocState docState)
-        {
-            QDocState returnState = new QDocState();
-
-            //using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-            //{
-                foreach (QDocProperty prop in docState)
-                {
-                    returnState.Add(Inspect(prop));
-                }
-            //}
-            return returnState;
         }
 
         public static List<string> Extensions()
