@@ -27,14 +27,23 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             Assert.AreEqual(fixture.ExcelSampleFileDocName, result);
         }
 
+        [TestMethod]
         public void WriteSopTest()
         {
-            Assert.Fail();
+            string name = "Important Quality Booklet";
+            var fixture = new Fixture();
+            var doc = new WordDoc(fixture.WordSampleCopy);
+            doc.Process(new FileDocName(name));
+            string result = doc.Inspect(new FileDocName()).State.ToString();
+            Assert.AreEqual(name, result);
+
         }
 
+        [TestMethod]
         public void WriteFormTest()
         {
-            Assert.Fail();
+            var fixture = new Fixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
         }
     }
 }

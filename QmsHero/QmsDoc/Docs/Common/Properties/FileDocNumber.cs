@@ -1,4 +1,5 @@
-﻿using QFileUtil;
+﻿using QDoc.Interfaces;
+using QFileUtil;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
 using QmsDoc.Interfaces;
@@ -24,11 +25,15 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override void Write(FileInfo file, DocConfig config)
         {
-            ValidateState(config);
+            if(!IsValid(config))
+            {
+                throw new InvalidDocPropertyStateException();
+            }
             
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);
             Match matchSop = config.FileSopNumberRegex.Match(file.Name);
-            string newName = null;
+            string newName;
+
             if (matchForm.Success)
             {
                 newName = file.Name.Replace(matchForm.ToString(), this.State.ToString());
@@ -68,14 +73,20 @@ namespace QmsDoc.Docs.Common.Properties
             
         }
 
-        public void ValidateState(DocConfig config)
+        public override bool IsValid(IDocConfig iconfig)
         {
+            DocConfig config = iconfig as DocConfig;
             Match matchFormState = config.FileFormNumberRegex.Match(this.State.ToString());
             Match matchSopState = config.FileSopNumberRegex.Match(this.State.ToString());
 
             if (matchFormState.Success == false && matchSopState.Success == false)
             {
-                throw new InvalidDocPropertyStateException();
+                return false;
+            }
+
+            else
+            {
+                return true;
             }
         }
     }

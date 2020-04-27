@@ -8,17 +8,17 @@ using DocumentFormat.OpenXml.Packaging;
 using QDoc.Core;
 using QDoc.Docs;
 using QmsDoc.Core;
+using QmsDoc.Exceptions;
 using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Word
 {
     public class WordDoc: Doc
     {
-        List<string> fileExtensions;
         WordDocConfig docConfig;
+        static List<string> fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
 
         public WordDoc() {
-            this.fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
         }
 
         public WordDoc(FileInfo fileInfo) : this()
@@ -30,6 +30,7 @@ namespace QmsDoc.Docs.Word
         public WordDoc(FileInfo fileInfo, WordDocConfig docConfig) : this() {
 
             this.FileInfo = fileInfo;
+            this.DocConfig = docConfig;
         }
 
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
@@ -69,6 +70,11 @@ namespace QmsDoc.Docs.Word
                   }
               }
             return result;
+        }
+
+        public static List<string> Extensions()
+        {
+            return fileExtensions;
         }
         //public override IDocState Inspect (IDocState docState)
         //{

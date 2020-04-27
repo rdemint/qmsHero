@@ -22,7 +22,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         }
 
         [TestMethod()]
-        public void ValidateSopStateTest()
+        public void IsValidSopTest()
         {
             var newNum = "SOP-10B";
             var fixture = new Fixture();
@@ -31,7 +31,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         }
 
         [TestMethod()]
-        public void ValidateFormStateTest()
+        public void IsValidFormTest()
         {
             var newNum = "F-01B";
             var fixture = new Fixture();

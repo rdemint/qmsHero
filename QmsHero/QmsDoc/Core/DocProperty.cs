@@ -26,16 +26,18 @@ namespace QmsDoc.Core
         }
 
         #region visitor
-        public override QDocProperty Read(object doc, object docConfig)
+        public override QDocProperty Read(object doc, object config)
         {
             //Visitor Pattern
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
-            WordDocConfig wdocConfig = docConfig as WordDocConfig;
+            WordDocConfig wdocConfig = config as WordDocConfig;
 
             SpreadsheetDocument sdoc = doc as SpreadsheetDocument;
-            ExcelDocConfig sdocConfig = docConfig as ExcelDocConfig;
+            ExcelDocConfig sdocConfig = config as ExcelDocConfig;
 
             FileInfo file = doc as FileInfo;
+            DocConfig docConfig = config as DocConfig;
+
 
             if(wdoc!=null && wdocConfig!=null)
             {
@@ -47,15 +49,15 @@ namespace QmsDoc.Core
                 return this.Read(sdoc, sdocConfig);
             }
 
-            else if(file!=null && wdocConfig !=null)
+            else if(file!=null && docConfig !=null)
             {
-                return this.Read(file, wdocConfig);
+                return this.Read(file, docConfig);
             }
 
-            else if(file!=null && sdocConfig !=null)
-            {
-                return this.Read(file, sdocConfig);
-            }
+            //else if(file!=null && sdocConfig !=null)
+            //{
+            //    return this.Read(file, sdocConfig);
+            //}
 
             else
             {

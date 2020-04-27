@@ -1,4 +1,7 @@
-﻿using QmsDoc.Core;
+﻿using QFileUtil;
+using QmsDoc.Core;
+using QmsDoc.Docs.Excel;
+using QmsDoc.Docs.Word;
 using QmsDoc.Exceptions;
 using QmsDoc.Interfaces;
 using System;
@@ -23,7 +26,26 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override void Write(FileInfo file, DocConfig config)
         {
-            base.Write(file, config);
+            string currentName = null;
+            if(WordDoc.Extensions().Contains(file.Extension))
+            {
+                var tempDoc = new WordDoc(file, config as WordDocConfig);
+                currentName = tempDoc.Inspect(new FileDocName()).State.ToString();
+            }
+
+            else if(ExcelDoc.Extensions().Contains(file.Extension))
+            {
+                var tempDoc = new ExcelDoc(file, config as ExcelDocConfig);
+                currentName = tempDoc.Inspect(new FileDocName()).State.ToString();
+            }
+
+            else
+            {
+                throw new DocProcessingException();
+            }
+
+            string newFileName = file.Name.Replace(currentName, this.State.ToString());
+            FileUtil.FileRename(file, newFileName);
         }
 
         public override DocProperty Read(FileInfo file, DocConfig config)

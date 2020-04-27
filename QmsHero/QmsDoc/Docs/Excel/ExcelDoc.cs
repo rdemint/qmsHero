@@ -15,10 +15,9 @@ namespace QmsDoc.Docs.Excel
     public class ExcelDoc : Doc
     {
         ExcelDocConfig docConfig;
-        List<string> fileExtensions;
+        static List<string> fileExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
 
         public ExcelDoc() {
-            this.fileExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
         }
 
         public ExcelDoc(FileInfo fileInfo) : this() 
@@ -70,6 +69,11 @@ namespace QmsDoc.Docs.Excel
         public override IDocState Inspect(IDocState docState)
         {
             return base.Inspect(docState);
+        }
+
+        public static List<string> Extensions()
+        {
+            return fileExtensions;
         }
 
 
