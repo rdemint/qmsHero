@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\DocReadException.cs" />
     <Compile Include="Exceptions\DocWriteException.cs" />
     <Compile Include="Exceptions\ElementNotFoundException.cs" />
+    <Compile Include="Exceptions\InvalidDocPropertyStateException.cs" />
     <Compile Include="Exceptions\MultipleElementsExistException.cs" />
     <Compile Include="Exceptions\MultipleHeadersExistException.cs" />
     <Compile Include="Exceptions\ReadDocumentNotValidException.cs" />
