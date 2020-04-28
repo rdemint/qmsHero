@@ -34,6 +34,9 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="CSharpFunctionalExtensions, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSharpFunctionalExtensions.2.7.1\lib\net461\CSharpFunctionalExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -60,6 +63,8 @@
     <Compile Include="Core\QDocCollection.cs" />
     <Compile Include="Core\QDocPropertyGroup.cs" />
     <Compile Include="Core\QDocAudit.cs" />
+    <Compile Include="Core\QResult.cs" />
+    <Compile Include="Core\QResultExtensions.cs" />
     <Compile Include="Docs\DocCollection.cs" />
     <Compile Include="Interfaces\IQDocFactory.cs" />
     <Compile Include="Core\QDocFactory.cs" />

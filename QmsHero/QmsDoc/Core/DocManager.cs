@@ -46,19 +46,19 @@ namespace QmsDoc.Core
             }
         }
 
-        public void Process(QDocProperty currentProp, QDocProperty targetProp)
-        {
+        //public void Process(QDocProperty currentProp, QDocProperty targetProp)
+        //{
             
-            foreach(var file in this.FileManager.ProcessingFiles)
-            {
-                var doc = this.DocFactory.CreateDoc(file);
-                var inspectedProp = doc.Inspect(currentProp);
-                if(inspectedProp != targetProp)
-                {
-                    doc.Process(targetProp);
-                } 
-            }
-        }
+        //    foreach(var file in this.FileManager.ProcessingFiles)
+        //    {
+        //        var doc = this.DocFactory.CreateDoc(file);
+        //        var inspectedProp = doc.Inspect(currentProp);
+        //        if(inspectedProp != targetProp)
+        //        {
+        //            doc.Process(targetProp);
+        //        } 
+        //    }
+        //}
 
         public DocCollection Inspect(QDocPropertyCollection collection)
         {
@@ -79,11 +79,5 @@ namespace QmsDoc.Core
             return docCollection;
         }
 
-        public override void Process(FileInfo file, QDocProperty docProp)
-        {
-            var fileCopy = FileManager.CopyToProcessingDir(file);
-            var doc = DocFactory.CreateDoc(file);
-            doc?.Process(docProp);
-        }
     }
 }
