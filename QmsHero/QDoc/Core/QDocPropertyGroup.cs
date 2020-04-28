@@ -22,17 +22,17 @@ namespace QDoc.Core
 
         public QDocPropertyCollection ToCollection(bool filter = true)
         {
-            var state = new QDocPropertyCollection();
+            var collection = new QDocPropertyCollection();
             var docProps = this.GetType().GetProperties();
             foreach (PropertyInfo docProp in docProps)
             {
-                state.Add((QDocProperty)docProp.GetValue(this));
+                collection.Add((QDocProperty)docProp.GetValue(this));
             }
             if (filter)
             {
-                state = FilterCollection(state);
+                collection = FilterCollection(collection);
             }
-            return state;
+            return collection;
         }
 
         public static QDocPropertyCollection FilterCollection(QDocPropertyCollection state)

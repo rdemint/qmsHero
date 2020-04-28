@@ -72,7 +72,7 @@ namespace QDoc.Core
                 if (docResult.IsSuccess)
                 {
                     var doc = docResult.Value;
-                    doc.PropertiesCollection = doc.Process(docPropCollection);
+                    doc.PropertyResultCollection = doc.Process(docPropCollection);
                     docCollection.Add(doc);
                 }
             }
@@ -91,7 +91,7 @@ namespace QDoc.Core
                 if(docResult.IsSuccess)
                 {
                     Result<QDocProperty> result = docResult.Value.Process(docProp);
-                    docResult.Value.PropertiesCollection.Add(result);
+                    docResult.Value.PropertyResultCollection.Add(result);
                     docCollection.Add(docResult.Value);
 
                 }
@@ -111,7 +111,7 @@ namespace QDoc.Core
                     foreach (var prop in docPropCollection)
                     {
                         var propResult = doc.Inspect(prop);
-                        doc.PropertiesCollection.Add(propResult);
+                        doc.PropertyResultCollection.Add(propResult);
                     }
                     docCollection.Add(doc);
                 }
@@ -130,7 +130,7 @@ namespace QDoc.Core
                 {
                     var doc = docResult.Value;
                     Result<QDocProperty> result = doc.Inspect(docProp);
-                    doc.PropertiesCollection.Add(result);
+                    doc.PropertyResultCollection.Add(result);
                     docCollection.Add(doc);
                 }
             }

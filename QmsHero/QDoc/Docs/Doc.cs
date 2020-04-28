@@ -6,6 +6,7 @@ using QDoc.Core;
 using QFileUtil;
 using System.Collections.Generic;
 using FluentResults;
+using System.Linq;
 
 namespace QDoc.Docs
 {
@@ -37,7 +38,7 @@ namespace QDoc.Docs
             set { fileInfo = value; } }
 
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public QDocPropertyResultCollection PropertiesCollection { get => results; set => results = value; }
+        public QDocPropertyResultCollection PropertyResultCollection { get => results; set => results = value; }
         #endregion
 
         public virtual QDocPropertyResultCollection Process(QDocPropertyCollection docState)

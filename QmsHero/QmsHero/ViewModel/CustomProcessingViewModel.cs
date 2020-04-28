@@ -47,7 +47,9 @@ namespace QmsHero.ViewModel
         {
             
             //var docEdit = new DocEdit(this.DocHeader);
-            this.manager.Process(headerPropertyGroup.ToCollection());
+            var docCollection = this.manager.Process(headerPropertyGroup.ToCollection());
+            int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
+            MessageBox.Show($"Finished Processing the files. {errorCount} files had errors.");
         }
 
         private bool ProcessingDirIsValid()
