@@ -137,7 +137,7 @@ namespace QmsDocXml
 
         }
 
-        public override void Write(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             //https://stackoverflow.com/questions/2810138/replace-image-in-word-doc-using-openxml
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
@@ -168,9 +168,11 @@ namespace QmsDocXml
                 string imageId = mainPart.HeaderParts.First().GetIdOfPart(imagePart);
                 ImageXml.Add(doc, imageId, cellPar, imageFile);
             }
+
+            return Results.Ok<QDocProperty>(new HeaderLogo(this.State));
         }
 
-        public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
 
             FileInfo imageFile = new FileInfo(this.State.ToString());
@@ -229,10 +231,11 @@ namespace QmsDocXml
                 {
                     imagePart.FeedData(stream);
                 }
+                return Results.Ok<QDocProperty>(new HeaderLogo(this.State));
             }
             else
             {
-                throw new DocWriteException("Could not find both the height and width specification of the current document image");
+                return Results.Fail(new Error("Could not find the width and height specification for the current image."));
             }
 
 

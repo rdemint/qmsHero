@@ -15,8 +15,10 @@ namespace QmsDocXml.Tests
 
             var fixture = new XmlFixture();
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = (string)xl.Inspect(new HeaderLogo()).State;
-            Assert.AreEqual("GT Medical Logo II", result);
+            var result = xl.Inspect(new HeaderLogo());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual("GT Medical Logo II", (string)result.Value.State);
         }
 
         [TestMethod]
@@ -24,8 +26,10 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = (string)doc.Inspect(new HeaderLogo()).State;
-            Assert.AreEqual("GT Medical Logo II.jpg", result);
+            var result = doc.Inspect(new HeaderLogo());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual("GT Medical Logo II.jpg", (string)result.Value.State);
         }
 
         [TestMethod]
@@ -35,9 +39,13 @@ namespace QmsDocXml.Tests
 
             var logo = new HeaderLogo(fixture.LogoSampleJpgCopy.FullName);
             var doc = new WordDoc(fixture.WordSampleCopy);
-            doc.Process(logo);
-            var result = (string)doc.Inspect(new HeaderLogo()).State;
-            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, result);
+            var result = doc.Process(logo);
+            Assert.IsTrue(result.IsSuccess);
+
+            result = doc.Inspect(new HeaderLogo());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, (string)result.Value.State);
         }
 
         [TestMethod]
@@ -46,8 +54,10 @@ namespace QmsDocXml.Tests
             var fixture = new XmlFixture();
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             xl.Process(new HeaderLogo(fixture.LogoSampleJpgCopy.FullName));
-            var xlResult = (string)xl.Inspect(new HeaderLogo()).State;
-            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, xlResult);
+            var result = xl.Inspect(new HeaderLogo());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, (string)result.Value.State);
         }
     }
 }

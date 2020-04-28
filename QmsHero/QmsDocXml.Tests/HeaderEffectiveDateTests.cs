@@ -23,13 +23,16 @@ namespace QmsDocXml.Tests
             
             //word
             var doc = new WordDoc(fixture.WordSampleCopy);
-            string result = (string)doc.Inspect(prop).State;
-            Assert.AreEqual(result, fixture.WordSampleEffectiveDate);
+            var result = doc.Inspect(prop);
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(fixture.WordSampleEffectiveDate, (string)result.Value.State);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            result = (string)xl.Inspect(new HeaderEffectiveDate()).State;
-            Assert.AreEqual(result, fixture.ExcelSampleEffectiveDate);
+            result = xl.Inspect(new HeaderEffectiveDate());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.ExcelSampleEffectiveDate, (string)result.Value.State);
         }
 
         [TestMethod]
@@ -38,19 +41,26 @@ namespace QmsDocXml.Tests
             var fixture = new XmlFixture();
             string effDate = "2020-20-20";
             var prop = new HeaderEffectiveDate(effDate);
-            string result = null;
 
             //word
             var doc = new WordDoc(fixture.WordSampleCopy);
-            doc.Process(prop);
-            result = (string)doc.Inspect(new HeaderEffectiveDate()).State; 
-            Assert.AreEqual(result, effDate);
+            var result = doc.Process(prop);
+            Assert.IsTrue(result.IsSuccess);
+
+            result = doc.Inspect(new HeaderEffectiveDate());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(effDate, (string)result.Value.State);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            xl.Process(prop);
-            result = (string)xl.Inspect(new HeaderEffectiveDate()).State;
-            Assert.AreEqual(effDate, result);
+            result = xl.Process(prop);
+            Assert.IsTrue(result.IsSuccess);
+
+            result = xl.Inspect(new HeaderEffectiveDate());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(effDate, (string)result.Value.State);
         }
 
     }

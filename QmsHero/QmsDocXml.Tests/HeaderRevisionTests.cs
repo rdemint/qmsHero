@@ -16,12 +16,16 @@ namespace QmsDocXml.Tests
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var prop = new HeaderRevision();
-            string result = (string)doc.Inspect(prop).State;
-            Assert.AreEqual(result, fixture.WordSampleRevision);
+            var result = doc.Inspect(prop);
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.WordSampleRevision, (string)result.Value.State);
 
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            result = (string)xl.Inspect(new HeaderRevision()).State;
-            Assert.AreEqual(result, fixture.ExcelSampleRevision);
+            result = xl.Inspect(new HeaderRevision());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State);
         }
 
         [TestMethod]
@@ -33,21 +37,28 @@ namespace QmsDocXml.Tests
             var doc = new WordDoc(fixture.WordSampleCopy);
 
             string rev = "20";
-            Assert.AreEqual(fixture.WordSampleRevision, (string)doc.Inspect(new HeaderRevision()).State);
+            
             var prop = new HeaderRevision(rev);
-            doc.Process(prop);
-            string result = (string)doc.Inspect(new HeaderRevision()).State;
-            Assert.AreEqual(result, rev);
+            var result = doc.Process(prop);
+            Assert.IsTrue(result.IsSuccess);
+
+            result = doc.Inspect(new HeaderRevision());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(rev, (string)result.Value.State);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
-            result = (string)xl.Inspect(new HeaderRevision()).State;
-            Assert.AreEqual(result, fixture.ExcelSampleRevision);
+            result = xl.Inspect(new HeaderRevision());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State);
 
             rev = "12";
             xl.Process(new HeaderRevision(rev));
-            result = (string)xl.Inspect(new HeaderRevision()).State;
-            Assert.AreEqual(rev, result);
+            result = xl.Inspect(new HeaderRevision());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(rev, (string)result.Value.State);
 
         }
     }

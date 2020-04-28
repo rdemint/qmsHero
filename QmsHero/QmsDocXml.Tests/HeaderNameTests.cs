@@ -19,8 +19,10 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = (string)doc.Inspect(new HeaderName()).State;
-            Assert.AreEqual(fixture.WordSampleHeaderName, result);
+            var result = doc.Inspect(new HeaderName());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.WordSampleHeaderName, (string)result.Value.State);
         }
 
         [TestMethod()]
@@ -28,8 +30,10 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = (string)doc.Inspect(new HeaderName()).State;
-            Assert.AreEqual(fixture.ExcelSampleHeaderName, result);
+            var result = doc.Inspect(new HeaderName());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(fixture.ExcelSampleHeaderName, (string)result.Value.State);
         }
 
         [TestMethod()]
@@ -38,9 +42,13 @@ namespace QmsDocXml.Tests
             var fixture = new XmlFixture();
             var docName = "New procedure (SOP-1)";
             var doc = new WordDoc(fixture.WordSampleCopy);
-            doc.Process(new HeaderName(docName));
-            var result = (string)doc.Inspect(new HeaderName()).State;
-            Assert.AreEqual(docName, result);
+            var result = doc.Process(new HeaderName(docName));
+            Assert.IsTrue(result.IsSuccess);
+
+            result = doc.Inspect(new HeaderName());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(docName, (string)result.Value.State);
 
         }
 
@@ -50,9 +58,13 @@ namespace QmsDocXml.Tests
             string docName = "New Procedure (F-001B)";
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            doc.Process(new HeaderName(docName));
-            var result = (string)doc.Inspect(new HeaderName()).State;
-            Assert.AreEqual(docName, result);
+            var result = doc.Process(new HeaderName(docName));
+            Assert.IsTrue(result.IsSuccess);
+
+            result = doc.Inspect(new HeaderName());
+            Assert.IsTrue(result.IsSuccess);
+
+            Assert.AreEqual(docName, (string)result.Value.State);
         }
     }
 }
