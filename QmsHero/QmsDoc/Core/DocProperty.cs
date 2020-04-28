@@ -66,9 +66,22 @@ namespace QmsDoc.Core
 
         }
 
-        public Result<QDocProperty> Write(object doc, IDocConfig config)
+        public override Result<QDocProperty> Write(object doc, IDocConfig config)
         {
             //Visitor Pattern
+            //switch(doc)
+            //{
+            //    case WordprocessingDocument wdoc:
+            //        return this.Write(wdoc, config);
+            //        break;
+            //    default:
+            //        return Results.Fail(new Error("Cannot write to this document type"));
+            //}
+
+            //Maybe this will work?
+            //return this.Write(doc, config);
+
+
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
             WordDocConfig wdocConfig = config as WordDocConfig;
 
@@ -80,18 +93,19 @@ namespace QmsDoc.Core
 
             if (wdoc != null && wdocConfig != null)
             {
-                this.Write(wdoc, wdocConfig);
+                return this.Write(wdoc, wdocConfig);
             }
 
             else if (sdoc != null && sdocConfig != null)
             {
-                this.Write(sdoc, sdocConfig);
+                return this.Write(sdoc, sdocConfig);
             }
 
-            else if(file!=null && docConfig != null) {
-                this.Write(file, docConfig);
+            else if (file != null && docConfig != null)
+            {
+                return this.Write(file, docConfig);
             }
-            
+
             else
             {
                 return Results.Fail(
@@ -105,35 +119,35 @@ namespace QmsDoc.Core
 
         #region word
 
-        public virtual DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
+        public virtual Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
 
 
-        public virtual DocProperty Read(FileInfo file, DocConfig config)
+        public virtual Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Write(FileInfo file, DocConfig config)
+        public virtual Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Write(WordprocessingDocument doc, WordDocConfig config)
+        public virtual Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region excel
-        public virtual DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public virtual Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public virtual Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }

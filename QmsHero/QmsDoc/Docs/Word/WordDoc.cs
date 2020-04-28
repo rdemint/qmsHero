@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
+using FluentResults;
 using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
@@ -38,20 +39,22 @@ namespace QmsDoc.Docs.Word
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public List<string> FileExtensions { get => fileExtensions; }
 
-        public override void Process(QDocProperty qprop)
+        public override Result<QDocProperty> Process(QDocProperty qprop)
         {
             if (qprop as IWriteFileInfo != null)
             {
-                qprop.Write(FileInfo, DocConfig);
+                return qprop.Write(FileInfo, DocConfig);
             }
 
             else
             {
+                Result<QDocProperty> result;
                 using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
                 {
-                    var prop = qprop as DocProperty;
-                    prop.Write(doc, DocConfig);
+                    //var prop = qprop as DocProperty;
+                    result = qprop.Write(doc, DocConfig);
                 }
+                return result;
             }
         }
 

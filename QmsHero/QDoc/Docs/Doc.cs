@@ -4,6 +4,7 @@ using System.IO;
 using QDoc.Core;
 using QFileUtil;
 using System.Collections.Generic;
+using FluentResults;
 
 namespace QDoc.Docs
 {
@@ -11,7 +12,7 @@ namespace QDoc.Docs
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
-        QDocPropertyCollection properties;
+        QDocPropertyResultCollection results;
 
         public Doc()
         {
@@ -35,20 +36,22 @@ namespace QDoc.Docs
             set { fileInfo = value; } }
 
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public QDocPropertyCollection DocProperties { get => properties; set => properties = value; }
+        public QDocPropertyResultCollection Results { get => results; set => results = value; }
         #endregion
 
-        public virtual void Process(QDocPropertyCollection docState)
+        public virtual QDocPropertyResultCollection Process(QDocPropertyCollection docState)
         {
+            QDocPropertyResultCollection collection = new QDocPropertyResultCollection();
             foreach (QDocProperty prop in docState)
             {
-                Process(prop);
+                collection.Add(Process(prop));
             }
+            return collection;
         }
 
-        public abstract void Process(QDocProperty prop);
+        public abstract Result<QDocProperty> Process(QDocProperty prop);
 
-        public virtual QDocPropertyCollection Inspect(QDocPropertyCollection docState) {
+        public virtual QDocPropertyResultCollection Inspect(QDocPropertyCollection docState) {
             QDocPropertyCollection returnState = new QDocPropertyCollection();
 
             foreach (QDocProperty prop in docState)
