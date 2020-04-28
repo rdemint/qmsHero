@@ -1,5 +1,6 @@
 ﻿
 using DocumentFormat.OpenXml.Packaging;
+using FluentResults;
 using QDoc.Core;
 using QDoc.Interfaces;
 using QmsDoc.Docs.Common;
@@ -57,12 +58,15 @@ namespace QmsDoc.Core
 
             else
             {
-                return new Result<QDocProperty>.Fail
+                return Results.Fail(
+                        new Error("Could not read the doc")
+                            .CausedBy(new DocProcessingException())
+                    );
             }
 
         }
 
-        public override void Write(object doc, IDocConfig config)
+        public Result<QDocProperty> Write(object doc, IDocConfig config)
         {
             //Visitor Pattern
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
@@ -90,7 +94,10 @@ namespace QmsDoc.Core
             
             else
             {
-                throw new ReadDocumentNotValidException();
+                return Results.Fail(
+                        new Error("Could not write to the doc")
+                            .CausedBy(new DocProcessingException())
+                    );
             }
         }
 

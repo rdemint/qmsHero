@@ -1,4 +1,6 @@
-﻿using QFileUtil;
+﻿using FluentResults;
+using QDoc.Core;
+using QFileUtil;
 using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
@@ -24,7 +26,7 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public override void Write(FileInfo file, DocConfig config)
+        public Result<DocProperty> Write(FileInfo file, DocConfig config)
         {
             string currentName = null;
             if(WordDoc.Extensions().Contains(file.Extension))
@@ -41,14 +43,17 @@ namespace QmsDoc.Docs.Common.Properties
 
             else
             {
-                throw new DocProcessingException();
+                return Results.Fail(
+                    new Error("File did not have a valid extension to write to")
+                        .CausedBy(new DocWriteException()));
             }
 
             string newFileName = file.Name.Replace(currentName, this.State.ToString());
             FileUtil.FileRename(file, newFileName);
+            return Results.Ok();
         }
 
-        public override DocProperty Read(FileInfo file, DocConfig config)
+        public override Result<DocProperty> Read(FileInfo file, DocConfig config)
         {
             string docNumbertext = null;
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);
@@ -64,14 +69,20 @@ namespace QmsDoc.Docs.Common.Properties
 
             else
             {
-                throw new DocReadException();
+                return Results.Fail(
+                    new Error("Could not read the the property from the file")
+                        .CausedBy(new DocReadException())
+                        );
             }
 
 
             Match matchRev = config.FileRevisionRegex.Match(file.Name);
             if (!matchRev.Success)
             {
-                throw new DocReadException();
+                return Results.Fail(
+                    new Error("Could not read the the property from the file")
+                        .CausedBy(new DocReadException())
+                        );
             }
 
             string nameText = file.Name
@@ -79,7 +90,7 @@ namespace QmsDoc.Docs.Common.Properties
                 .Replace(matchRev.ToString(), "")
                 .Replace(file.Extension, "")
                 .Trim();
-            return new FileDocName(nameText);
+            return Results.Ok<DocProperty>(new FileDocName(nameText));
         }
     }
 }
