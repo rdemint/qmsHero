@@ -29,7 +29,8 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var newNum = "SOP-10B";
             var fixture = new Fixture();
             var wdoc = new WordDoc(fixture.WordSampleCopy);
-            Assert.ThrowsException<InvalidDocPropertyStateException>(()=>wdoc.Process(new FileDocNumber(newNum)));
+            var result = wdoc.Process(new FileDocNumber(newNum));
+            Assert.IsFalse(result.IsSuccess);
         }
 
         [TestMethod()]
@@ -38,7 +39,8 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var newNum = "F-01B";
             var fixture = new Fixture();
             var wdoc = new ExcelDoc(fixture.ExcelSampleCopy);
-            Assert.ThrowsException<InvalidDocPropertyStateException>(() => wdoc.Process(new FileDocNumber(newNum)));
+            var result = wdoc.Process(new FileDocNumber(newNum));
+            Assert.IsFalse(result.IsSuccess);
         }
 
         [TestMethod()]
@@ -72,7 +74,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Inspect(new FileDocNumber());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(fixture.ExcelSampleDocNumber, result);
+            Assert.AreEqual(fixture.ExcelSampleDocNumber, (string)result.Value.State);
 
         }
     }
