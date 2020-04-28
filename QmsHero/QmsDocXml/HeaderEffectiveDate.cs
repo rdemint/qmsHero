@@ -13,6 +13,8 @@ using System.IO;
 using QmsDoc.Docs.Excel;
 using XL = DocumentFormat.OpenXml.Spreadsheet;
 using QmsDoc.Exceptions;
+using FluentResults;
+using QDoc.Core;
 
 namespace QmsDocXml
 {
@@ -34,57 +36,57 @@ namespace QmsDocXml
             return p;
         }
 
-        public override DocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
-            return new HeaderEffectiveDate(match.ToString());
+            return Results.Ok<QDocProperty>(new HeaderEffectiveDate(match.ToString()));
         }
 
-        public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheet = doc.WorkbookPart.WorksheetParts.First().Worksheet;
             var header = workSheet.Elements<XL.HeaderFooter>().FirstOrDefault();
             if (header.DifferentOddEven != null && header.DifferentOddEven)
             {
-                throw new MultipleHeadersExistException();
+                return Results.Fail(new Error("Multiple headers exist")
+                    .CausedBy(new MultipleHeadersExistException()
+                    ));
             }
             Match match = config.HeaderEffectiveDateRegex.Match(header.OddHeader.Text);
             if (match.Success)
             {
                 var m = match.ToString();
-                return new HeaderEffectiveDate(m.Replace(config.HeaderEffectiveDateText, ""));
+                string matchText = m.Replace(config.HeaderEffectiveDateText, "");
+                return Results.Ok<QDocProperty>(new HeaderEffectiveDate(matchText));
             }
 
             else
             {
-                throw new DocReadException();
+                return Results.Fail(new Error("Could not identify the current header effective date.")
+                    .CausedBy(new DocReadException()
+                    ));
             }
         }
 
-        public override void Write(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-                WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
-                WD.Run myRun = (WD.Run)par.Elements<WD.Run>().First().Clone();
-                par.RemoveAllChildren<WD.Run>();
-                WD.Text text = myRun.Elements<WD.Text>().First();
-                text.Text = docConfig.HeaderEffectiveDateText + (string)this.State;
-                par.Append(myRun);
-                this.OnPropertyChanged();
+            WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
+            WD.Run myRun = (WD.Run)par.Elements<WD.Run>().First().Clone();
+            par.RemoveAllChildren<WD.Run>();
+            WD.Text text = myRun.Elements<WD.Text>().First();
+            text.Text = docConfig.HeaderEffectiveDateText + (string)this.State;
+            par.Append(myRun);
+            return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State));
         }
 
-        public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
             foreach (var workSheetPart in workSheetParts)
             {
                 foreach (var header in workSheetPart.Worksheet.Elements<XL.HeaderFooter>().ToList())
                 {
-                    if (header.DifferentOddEven != null && header.DifferentOddEven)
-                    {
-                        throw new MultipleHeadersExistException();
-                    }
-
                     Match match = config.HeaderEffectiveDateRegex.Match(header.OddHeader.Text);
                     if (match.Success)
                     {
@@ -98,12 +100,14 @@ namespace QmsDocXml
 
                     else
                     {
-                        throw new DocReadException();
+                        return Results.Fail(new Error("Could not identify the current header effective date.")
+                            .CausedBy(new DocWriteException()
+                    ));
                     }
-
-
                 }
             }
+            return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State));
+
         }
 
         public override bool IsValid(IDocConfig config)
@@ -119,10 +123,6 @@ namespace QmsDocXml
                 }
                 else { return false; }
         }
-        #endregion
-
-        #region excel
-        //not implemented
         #endregion
 
     }

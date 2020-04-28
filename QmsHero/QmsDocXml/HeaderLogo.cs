@@ -25,6 +25,7 @@ using QmsDoc.Exceptions;
 using System.Text.RegularExpressions;
 using System.IO.Packaging;
 using System.Globalization;
+using FluentResults;
 
 namespace QmsDocXml
 {
@@ -38,7 +39,7 @@ namespace QmsDocXml
         {
         }
 
-        public override DocProperty Read(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
 
@@ -57,16 +58,16 @@ namespace QmsDocXml
 
                 
                 var pictureProperties = picture.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.NonVisualDrawingProperties>().First();
-                return new HeaderLogo(pictureProperties.Name.ToString());
+                return Results.Ok<QDocProperty>(new HeaderLogo(pictureProperties.Name.ToString()));
             }
 
             else
             {
-                return null;
+                return Results.Fail(new Error("Did not identify any drawings in the document."));
             }
         }
 
-        public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
 
@@ -76,7 +77,7 @@ namespace QmsDocXml
 
             if (vmlDrawingParts.Count() > 1)
             {
-                throw new MultipleElementsExistException();
+                return Results.Fail(new Error("Multiple drawings identified in the worksheet."));
             }
 
             else
@@ -84,12 +85,10 @@ namespace QmsDocXml
                 var imageParts = vmlDrawingParts.First().ImageParts;
                 if (imageParts.Count() > 1)
                 {
-                    throw new MultipleElementsExistException();
+                    return Results.Fail(new Error("Multiple images identified in the worksheet."));
                 }
                 else
                 {
-                    
-                    
                     var xmlPartReader = DocumentFormat.OpenXml.OpenXmlPartReader.Create(vmlDrawingParts.First().GetStream());
 
                     Ovml.Shape myShape = null;
@@ -101,10 +100,6 @@ namespace QmsDocXml
                         {
                             foreach (var child in currentEl.ChildElements)
                             {
-                                //var asShapeType = child as Ovml.Shapetype;
-                                //var asShape = child as Ovml.Shape;
-                                //var asShapeLayout = child as Ovml.Office.ShapeLayout;
-
                                 try
                                 {
                                     myShape = new Ovml.Shape(child.OuterXml);
@@ -116,23 +111,22 @@ namespace QmsDocXml
                                     //Element not of interest
                                 }
                             }
-
                         }
                         else
                         {
-                            throw new DocProcessingException();
+                            return Results.Fail(new Error("Could not identify the Shape element in the worksheet drawing."));
                         }
                     }
 
                     if (myShape != null)
                     {
                         var myImageData = myShape.Elements<Ovml.ImageData>().First();
-                        return new HeaderLogo(myImageData.Title.Value);
+                        return Results.Ok<QDocProperty>(new HeaderLogo(myImageData.Title.Value));
                     }
 
                     else
                     {
-                        throw new DocReadException();
+                        return Results.Fail(new Error("Could not identify the Shape element in the worksheet drawing."));
                     }
 
 
