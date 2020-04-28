@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QDoc.Docs;
 using QmsDoc.Core;
 using QmsDoc.Docs.Common.Properties;
 using QmsDoc.Docs.Common.PropertyGroups;
@@ -28,7 +29,10 @@ namespace QmsDoc.Tests.Core
             var manager = new DocManager(fixture);
             var fileGroup = new FilePropertyGroup();
             fileGroup.FileRevision.State = newRev;
-            manager.Process(fileGroup.ToCollection());
+            
+
+            
+            DocCollection processedDocs = manager.Process(fileGroup.ToCollection());
             var docs = manager.ToUnprocessedDocCollection();
             Assert.IsTrue(docs.Count >= 1);
             foreach(var doc in manager.ToUnprocessedDocCollection())

@@ -58,10 +58,67 @@ namespace QDoc.Core
             return doc.Process(docProp);
         }
 
-        public abstract DocCollection Process(QDocPropertyCollection docState);
+        public virtual DocCollection Process(QDocPropertyCollection docPropCollection)
+        {
+            DocCollection docCollection = new DocCollection();
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var doc = this.DocFactory.CreateDoc(file);
+                var result = doc?.Process(docPropCollection);
+                doc.PropertiesCollection = result;
+                docCollection.Add(doc);
+            }
+
+            return docCollection;
+        }
 
 
-        public abstract DocCollection Process(QDocProperty docProp);
+        public virtual DocCollection Process(QDocProperty docProp)
+        {
+            DocCollection docCollection = new DocCollection();
+
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var doc = this.DocFactory.CreateDoc(file);
+                Result<QDocProperty> result = doc?.Process(docProp);
+                doc.PropertiesCollection.Add(result);
+                docCollection.Add(doc);
+            }
+            return docCollection;
+        }
+
+        public DocCollection Inspect(QDocPropertyCollection docPropCollection)
+        {
+            DocCollection docCollection = new DocCollection();
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var doc = this.DocFactory.CreateDoc(file);
+                if (doc != null)
+                {
+                    foreach (var prop in docPropCollection)
+                    {
+                        var propResult = doc.Inspect(prop);
+                        doc.PropertiesCollection.Add(propResult);
+                    }
+                    docCollection.Add(doc);
+                }
+            }
+            return docCollection;
+        }
+
+        public DocCollection Inspect(QDocProperty docProp)
+        {
+            DocCollection docCollection = new DocCollection();
+
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var doc = this.DocFactory.CreateDoc(file);
+                Result<QDocProperty> result = doc?.Inspect(docProp);
+                doc.PropertiesCollection.Add(result);
+                docCollection.Add(doc);
+            }
+            return docCollection;
+        }
 
         public virtual DocCollection ToUnprocessedDocCollection()
         {

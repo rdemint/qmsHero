@@ -30,57 +30,52 @@ namespace QmsDoc.Core
 
         }
 
-        public override void Process(QDocPropertyCollection state)
-        {
-            foreach(var file in this.FileManager.ProcessingFiles)
-            {
-                var doc = this.DocFactory.CreateDoc(file);
-                var result = doc?.Process(state);
-                doc.PropertiesCollection = result;
-            }
-        }
-        public override void Process(QDocProperty docProp)
-        {
-            foreach(var file in this.FileManager.ProcessingFiles)
-            {
-                var doc = this.DocFactory.CreateDoc(file);
-                Result<QDocProperty> result = doc?.Process(docProp);
-                doc.PropertiesCollection.Add(result);
-            }
-        }
-
-        //public void Process(QDocProperty currentProp, QDocProperty targetProp)
+        //public override DocCollection Process(QDocPropertyCollection docPropCollection)
         //{
-            
+
+        //    DocCollection docCollection = new DocCollection();
         //    foreach(var file in this.FileManager.ProcessingFiles)
         //    {
         //        var doc = this.DocFactory.CreateDoc(file);
-        //        var inspectedProp = doc.Inspect(currentProp);
-        //        if(inspectedProp != targetProp)
-        //        {
-        //            doc.Process(targetProp);
-        //        } 
+        //        var result = doc?.Process(docPropCollection);
+        //        doc.PropertiesCollection = result;
+        //        docCollection.Add(doc);
         //    }
+
+        //    return docCollection;
+        //}
+        //public override DocCollection Process(QDocProperty docProp)
+        //{
+        //    DocCollection docCollection = new DocCollection();
+
+        //    foreach (var file in this.FileManager.ProcessingFiles)
+        //    {
+        //        var doc = this.DocFactory.CreateDoc(file);
+        //        Result<QDocProperty> result = doc?.Process(docProp);
+        //        doc.PropertiesCollection.Add(result);
+        //        docCollection.Add(doc);
+        //    }
+        //    return docCollection;
         //}
 
-        public DocCollection Inspect(QDocPropertyCollection collection)
-        {
-            var docCollection = new DocCollection();
-            foreach (var file in this.FileManager.ProcessingFiles)
-            {
-                var doc = this.DocFactory.CreateDoc(file);
-                if(doc != null)
-                {
-                    foreach(var prop in collection)
-                    {
-                        var propResult = doc.Inspect(prop);
-                        doc.PropertiesCollection.Add(propResult);
-                    }
-                    docCollection.Add(doc);
-                }
-            }
-            return docCollection;
-        }
+        //public DocCollection Inspect(QDocPropertyCollection collection)
+        //{
+        //    DocCollection docCollection = new DocCollection();
+        //    foreach (var file in this.FileManager.ProcessingFiles)
+        //    {
+        //        var doc = this.DocFactory.CreateDoc(file);
+        //        if(doc != null)
+        //        {
+        //            foreach(var prop in collection)
+        //            {
+        //                var propResult = doc.Inspect(prop);
+        //                doc.PropertiesCollection.Add(propResult);
+        //            }
+        //            docCollection.Add(doc);
+        //        }
+        //    }
+        //    return docCollection;
+        //}
 
     }
 }
