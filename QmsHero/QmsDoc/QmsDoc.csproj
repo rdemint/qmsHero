@@ -54,6 +54,7 @@
     <Compile Include="Docs\Common\Properties\AsDoc.cs" />
     <Compile Include="Docs\Common\Properties\FileDocName.cs" />
     <Compile Include="Docs\Common\Properties\FileDocNumber.cs" />
+    <Compile Include="Docs\Common\Properties\FileNameHasText.cs" />
     <Compile Include="Docs\Common\Properties\FileRevision.cs" />
     <Compile Include="Docs\Common\Properties\IsForm.cs" />
     <Compile Include="Docs\Common\Properties\IsSop.cs" />

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public abstract class QDocPropertyGroup: IToQDocState, INotifyPropertyChanged
+    public abstract class QDocPropertyGroup: IToQDocState, INotifyPropertyChanged, IEquatable<QDocPropertyGroup>
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -20,7 +20,7 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public QDocPropertyCollection ToDocState(bool filter = true)
+        public QDocPropertyCollection ToCollection(bool filter = true)
         {
             var state = new QDocPropertyCollection();
             var docProps = this.GetType().GetProperties();
@@ -30,12 +30,12 @@ namespace QDoc.Core
             }
             if (filter)
             {
-                state = FilterDocState(state);
+                state = FilterCollection(state);
             }
             return state;
         }
 
-        public static QDocPropertyCollection FilterDocState(QDocPropertyCollection state)
+        public static QDocPropertyCollection FilterCollection(QDocPropertyCollection state)
         {
             var query = state.Where(prop => prop.State != null);
             if (query.Any())
@@ -45,6 +45,21 @@ namespace QDoc.Core
             else
             {
                 return new QDocPropertyCollection();
+            }
+        }
+
+        public bool Equals(QDocPropertyGroup other)
+        {
+            QDocPropertyCollection collection = ToCollection();
+            QDocPropertyCollection otherCollection = other.ToCollection();
+            if(collection == otherCollection)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
             }
         }
     }

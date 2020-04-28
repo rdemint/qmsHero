@@ -28,7 +28,7 @@ namespace QmsDoc.Tests.Core
             var manager = new DocManager(fixture);
             var fileGroup = new FilePropertyGroup();
             fileGroup.FileRevision.State = newRev;
-            manager.Process(fileGroup.ToDocState());
+            manager.Process(fileGroup.ToCollection());
             var docs = manager.DocCollection();
             Assert.IsTrue(docs.Count >= 1);
             foreach(var doc in manager.DocCollection())

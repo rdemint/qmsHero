@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public class QDocPropertyCollection : ObservableCollection<QDocProperty> {
-        public QDocPropertyCollection()
+    public class QDocPropertyCollection : ObservableCollection<QDocProperty>, IEquatable<QDocPropertyCollection>
+    {
+        
+    public QDocPropertyCollection()
         {
 
         }
@@ -24,6 +26,20 @@ namespace QDoc.Core
 
         public QDocPropertyCollection(IEnumerable<QDocProperty> collection) : base(collection)
         {
+        }
+
+        public bool Equals(QDocPropertyCollection other)
+        {
+            IEnumerable<QDocProperty> diffProps = this.Except(other);
+            if(diffProps.Any())
+            {
+                return false;
+            }
+
+            else
+            {
+                return true;
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ namespace QmsHero.ViewModel
         {
             
             //var docEdit = new DocEdit(this.DocHeader);
-            this.manager.Process(headerPropertyGroup.ToDocState());
+            this.manager.Process(headerPropertyGroup.ToCollection());
         }
 
         private bool ProcessingDirIsValid()
