@@ -10,10 +10,11 @@ using QDoc.Docs;
 using QDoc.Interfaces;
 using System.IO;
 using QFileUtil;
+using FluentResults;
 
 namespace QDoc.Core
 {
-    public abstract class QDocManager: IQDocManager
+    public abstract class QDocManager
     {
         IQDocManagerConfig docManagerConfig;
         IFileCopyManager fileManager;
@@ -51,18 +52,18 @@ namespace QDoc.Core
             return this.fileManager.IsReadyToCopy();
         }
 
-        public virtual void Process(FileInfo file, QDocProperty docProp)
+        public virtual Result<QDocProperty> Process(FileInfo file, QDocProperty docProp)
         {
             var doc = DocFactory.CreateDoc(file);
-            doc.Process(docProp);
+            return doc.Process(docProp);
         }
 
-        public abstract void Process(QDocPropertyCollection docState);
+        public abstract DocCollection Process(QDocPropertyCollection docState);
 
 
-        public abstract void Process(QDocProperty docProp);
+        public abstract DocCollection Process(QDocProperty docProp);
 
-        public virtual DocCollection DocCollection()
+        public virtual DocCollection ToUnprocessedDocCollection()
         {
 
             var docs = new DocCollection();

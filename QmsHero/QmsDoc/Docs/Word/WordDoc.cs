@@ -16,7 +16,7 @@ namespace QmsDoc.Docs.Word
     {
         WordDocConfig docConfig;
         static List<string> fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
-        public WordDoc()
+        public WordDoc(): base()
         {
         }
 

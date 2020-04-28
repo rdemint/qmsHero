@@ -1,4 +1,5 @@
-﻿using QDoc.Core;
+﻿using FluentResults;
+using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
 using QFileUtil;
@@ -34,7 +35,8 @@ namespace QmsDoc.Core
             foreach(var file in this.FileManager.ProcessingFiles)
             {
                 var doc = this.DocFactory.CreateDoc(file);
-                doc?.Process(state);
+                var result = doc?.Process(state);
+                doc.PropertiesCollection = result;
             }
         }
         public override void Process(QDocProperty docProp)
@@ -42,7 +44,8 @@ namespace QmsDoc.Core
             foreach(var file in this.FileManager.ProcessingFiles)
             {
                 var doc = this.DocFactory.CreateDoc(file);
-                doc?.Process(docProp);
+                Result<QDocProperty> result = doc?.Process(docProp);
+                doc.PropertiesCollection.Add(result);
             }
         }
 

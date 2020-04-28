@@ -29,9 +29,9 @@ namespace QmsDoc.Tests.Core
             var fileGroup = new FilePropertyGroup();
             fileGroup.FileRevision.State = newRev;
             manager.Process(fileGroup.ToCollection());
-            var docs = manager.DocCollection();
+            var docs = manager.ToUnprocessedDocCollection();
             Assert.IsTrue(docs.Count >= 1);
-            foreach(var doc in manager.DocCollection())
+            foreach(var doc in manager.ToUnprocessedDocCollection())
             {
                 var result = doc.Inspect(new FileRevision());
                 Assert.IsTrue(result.IsSuccess);
@@ -44,7 +44,7 @@ namespace QmsDoc.Tests.Core
         {
             var fixture = new Fixture();
             var manager = new DocManager(fixture);
-            var docs = manager.DocCollection();
+            var docs = manager.ToUnprocessedDocCollection();
             int wordCount = fixture.ProcessingFiles.Where(
                 file => WordDoc.Extensions().Contains(file.Extension)
                 ).Count();

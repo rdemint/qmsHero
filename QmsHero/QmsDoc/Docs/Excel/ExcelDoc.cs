@@ -18,7 +18,7 @@ namespace QmsDoc.Docs.Excel
         ExcelDocConfig docConfig;
         static List<string> fileExtensions = new List<string> { ".xlsx", ".xls", ".xlsm" };
 
-        public ExcelDoc() {
+        public ExcelDoc(): base() {
         }
 
         public ExcelDoc(FileInfo fileInfo) : this() 

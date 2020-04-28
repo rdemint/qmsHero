@@ -17,15 +17,15 @@ namespace QDoc.Docs
 
         public Doc()
         {
-
+            results = new QDocPropertyResultCollection();
         }
 
-        public Doc(System.IO.FileInfo fileInfo)
+        public Doc(System.IO.FileInfo fileInfo): this()
         {
             this.FileInfo = fileInfo;
         }
 
-        public Doc(FileInfo fileInfo, IDocConfig docConfig)
+        public Doc(FileInfo fileInfo, IDocConfig docConfig): this()
         {
             this.FileInfo = fileInfo;
             this.DocConfig = docConfig;
