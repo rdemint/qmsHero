@@ -37,7 +37,7 @@ namespace QmsDoc.Tests.Core
             Assert.IsTrue(docs.Count >= 1);
             foreach(var doc in manager.ToUnprocessedDocCollection())
             {
-                var result = doc.Inspect(new FileRevision());
+                var result = doc?.Inspect(new FileRevision());
                 Assert.IsTrue(result.IsSuccess);
                 Assert.AreEqual(newRev, (string)result.Value.State);
             }

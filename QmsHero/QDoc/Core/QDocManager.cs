@@ -54,8 +54,13 @@ namespace QDoc.Core
 
         public virtual Result<QDocProperty> Process(FileInfo file, QDocProperty docProp)
         {
-            var doc = DocFactory.CreateDoc(file);
-            return doc.Process(docProp);
+            var docResult = DocFactory.CreateDoc(file);
+            if (docResult.IsSuccess)
+                return docResult.Value.Process(docProp);
+            else
+            {
+                return Results.Fail(new Error("Could not process file"));
+            }
         }
 
         public virtual DocCollection Process(QDocPropertyCollection docPropCollection)
@@ -63,10 +68,13 @@ namespace QDoc.Core
             DocCollection docCollection = new DocCollection();
             foreach (var file in this.FileManager.ProcessingFiles)
             {
-                var doc = this.DocFactory.CreateDoc(file);
-                var result = doc?.Process(docPropCollection);
-                doc.PropertiesCollection = result;
-                docCollection.Add(doc);
+                var docResult = this.DocFactory.CreateDoc(file);
+                if (docResult.IsSuccess)
+                {
+                    var doc = docResult.Value;
+                    doc.PropertiesCollection = doc.Process(docPropCollection);
+                    docCollection.Add(doc);
+                }
             }
 
             return docCollection;
@@ -79,10 +87,14 @@ namespace QDoc.Core
 
             foreach (var file in this.FileManager.ProcessingFiles)
             {
-                var doc = this.DocFactory.CreateDoc(file);
-                Result<QDocProperty> result = doc?.Process(docProp);
-                doc.PropertiesCollection.Add(result);
-                docCollection.Add(doc);
+                var docResult = this.DocFactory.CreateDoc(file);
+                if(docResult.IsSuccess)
+                {
+                    Result<QDocProperty> result = docResult.Value.Process(docProp);
+                    docResult.Value.PropertiesCollection.Add(result);
+                    docCollection.Add(docResult.Value);
+
+                }
             }
             return docCollection;
         }
@@ -92,9 +104,10 @@ namespace QDoc.Core
             DocCollection docCollection = new DocCollection();
             foreach (var file in this.FileManager.ProcessingFiles)
             {
-                var doc = this.DocFactory.CreateDoc(file);
-                if (doc != null)
+                var docResult = this.DocFactory.CreateDoc(file);
+                if (docResult.IsSuccess)
                 {
+                    var doc = docResult.Value;
                     foreach (var prop in docPropCollection)
                     {
                         var propResult = doc.Inspect(prop);
@@ -112,10 +125,14 @@ namespace QDoc.Core
 
             foreach (var file in this.FileManager.ProcessingFiles)
             {
-                var doc = this.DocFactory.CreateDoc(file);
-                Result<QDocProperty> result = doc?.Inspect(docProp);
-                doc.PropertiesCollection.Add(result);
-                docCollection.Add(doc);
+                var docResult = this.DocFactory.CreateDoc(file);
+                if(docResult.IsSuccess)
+                {
+                    var doc = docResult.Value;
+                    Result<QDocProperty> result = doc.Inspect(docProp);
+                    doc.PropertiesCollection.Add(result);
+                    docCollection.Add(doc);
+                }
             }
             return docCollection;
         }
@@ -126,10 +143,10 @@ namespace QDoc.Core
             var docs = new DocCollection();
             foreach(var file in fileManager.ProcessingFiles)
             {
-                var doc = docFactory.CreateDoc(file);
-                if(doc !=null)
+                var docResult = docFactory.CreateDoc(file);
+                if(docResult.IsSuccess)
                 {
-                    docs.Add(doc);
+                   docs.Add(docResult.Value);
                 }
             }
 

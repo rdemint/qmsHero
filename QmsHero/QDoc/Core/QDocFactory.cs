@@ -1,4 +1,5 @@
-﻿using QDoc.Docs;
+﻿using FluentResults;
+using QDoc.Docs;
 using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace QDoc.Core
         public List<string> ExcelDocExtensions { get => excelDocExtensions; set => excelDocExtensions = value; }
         public List<string> PdfExtensions { get => pdfExtensions; set => pdfExtensions = value; }
 
-        public abstract Doc CreateDoc(FileInfo file);
+        public abstract Result<Doc> CreateDoc(FileInfo file);
 
     }
 }

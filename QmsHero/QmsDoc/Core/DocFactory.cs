@@ -10,26 +10,28 @@ using System.Text;
 using System.Threading.Tasks;
 using QDoc.Interfaces;
 using QDoc.Docs;
+using FluentResults;
 
 namespace QmsDoc.Core
 {
     public class DocFactory: QDocFactory
     {
-        public override Doc CreateDoc(FileInfo file)
+        public override Result<Doc> CreateDoc(FileInfo file)
         {
             if (WordDoc.Extensions().Contains(file.Extension))
             {
-                return new WordDoc(file);
+                return Results.Ok<Doc>(new WordDoc(file));
             }
 
             else if (ExcelDoc.Extensions().Contains(file.Extension))
             {
-                return new ExcelDoc(file);
+                return Results.Ok<Doc>(new ExcelDoc(file));
             }
 
             else
             {
-                return null;
+                return Results.Fail(
+                    new Error($"This factory does not have capability to process files with {file.Extension} extension"));
             }
         }
     }
