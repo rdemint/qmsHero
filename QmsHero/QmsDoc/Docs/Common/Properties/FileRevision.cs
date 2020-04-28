@@ -1,4 +1,6 @@
-﻿using QFileUtil;
+﻿using FluentResults;
+using QDoc.Core;
+using QFileUtil;
 using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
@@ -31,21 +33,21 @@ namespace QmsDoc.Docs.Common.Properties
         //    return new FileRevision(result);
         //}
 
-        public override DocProperty Read(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileRevisionRegex.Match(file.Name);
             string result = match.ToString().Replace(config.FileRevisionText, "");
-            return new FileRevision(result);
+            return Results.Ok<QDocProperty>(new FileRevision(result));
         }
 
-        public override void Write(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             Match fileRevTextMatch = config.FileRevisionRegex.Match(file.Name);
             string fileRev = fileRevTextMatch.ToString().Replace(config.FileRevisionText, "");
-            //Match fileRev = Regex.Match(fileRev, @"\d{1,2}");
             string newFileRevText = fileRevTextMatch.ToString().Replace(fileRev, (string)this.State);
             string newFileName = file.Name.Replace(fileRevTextMatch.ToString(), newFileRevText);
             FileUtil.FileRename(file, newFileName);
+            return Results.Ok<QDocProperty>(new FileRevision((string)this.State));
         }
     }
 }
