@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using QmsDoc.Docs.Excel;
 using System.Runtime.Serialization;
+using FluentResults;
+using QDoc.Core;
 
 namespace QmsDocXml
 {
@@ -32,36 +34,41 @@ namespace QmsDocXml
             return cell.Elements<Paragraph>().First();
         }
 
-        public override DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
             Match match = config.HeaderRevisionRegex.Match(par.InnerText);
-            return new HeaderRevision(match.ToString());
+            return Results.Ok<QDocProperty>(new HeaderRevision(match.ToString()));
         }
 
-        public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheet = doc.WorkbookPart.WorksheetParts.First().Worksheet;
             var header = workSheet.Elements<XL.HeaderFooter>().FirstOrDefault();
             if (header.DifferentOddEven != null && header.DifferentOddEven)
             {
-                throw new MultipleHeadersExistException();
+                return Results.Fail(new Error("Multiple headers exist in the document"));
             }
             Match match = config.HeaderRevisionRegex.Match(header.OddHeader.Text);
             if(match.Success)
             {
                 var m = match.ToString();
-                return new HeaderRevision(m.Replace(config.HeaderRevisionText, ""));
+                return Results.Ok<QDocProperty>(
+                    new HeaderRevision(m.Replace(config.HeaderRevisionText, ""))
+                    );
             }
 
             else
             {
-                throw new DocReadException();
+                return Results.Fail(
+                    new Error("Could not read the the header revision from the file")
+                        .CausedBy(new DocReadException())
+                        );
             }
         }
 
 
-        public override void Write(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
             par.RemoveAllChildren();
@@ -70,10 +77,10 @@ namespace QmsDocXml
             text.Text = config.HeaderRevisionText + (string)this.State;
             run.Append(text);
             par.Append(run);
-            OnPropertyChanged(); ;
+            return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
         }
 
-        public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
             foreach(var workSheetPart in workSheetParts)
@@ -82,7 +89,7 @@ namespace QmsDocXml
                 {
                     if (header.DifferentOddEven != null && header.DifferentOddEven)
                     {
-                        throw new MultipleHeadersExistException();
+                        return Results.Fail(new Error("Multiple headers exist in the document"));
                     }
 
                     Match match = config.HeaderRevisionRegex.Match(header.OddHeader.Text);
@@ -98,12 +105,16 @@ namespace QmsDocXml
 
                     else
                     {
-                        throw new DocReadException();
+                        return Results.Fail(
+                    new Error("Could not read the the header revision from the file")
+                        .CausedBy(new DocReadException())
+                        );
                     }
 
 
                 }
             }
+            return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
         }
 
         public override bool IsValid(IDocConfig config)

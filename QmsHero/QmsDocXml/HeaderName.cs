@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using QmsDoc.Exceptions;
 using System.Text.RegularExpressions;
+using FluentResults;
+using QDoc.Core;
 
 namespace QmsDocXml
 {
@@ -25,7 +27,7 @@ namespace QmsDocXml
         {
         }
 
-        public override DocProperty Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             string result = null;
             var header = doc.WorkbookPart.WorksheetParts.First().Worksheet.Elements<Sxml.HeaderFooter>().FirstOrDefault();
@@ -47,19 +49,19 @@ namespace QmsDocXml
             }
 
             result = result.Replace(config.HeaderNameText, "");
-            return new HeaderName(result);
+            return Results.Ok<QDocProperty>(new HeaderName(result));
         }
 
-        public override DocProperty Read(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
             Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var par = cell.Elements<Wxml.Paragraph>().First();
             string parText = par.InnerText;
             string result = parText.Replace(config.HeaderNameText, "");
-            return new HeaderName(result);
+            return Results.Ok<QDocProperty>(new HeaderName(result));
         }
 
-        public override void Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
             foreach (var workSheetPart in workSheetParts)
@@ -79,14 +81,15 @@ namespace QmsDocXml
 
                     else
                     {
-                        throw new DocReadException();
+                        return Results.Fail(new Error("Could not determine the current name to replace"));
                     }
 
                 }
             }
+            return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
         }
 
-        public override void Write(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var par = cell.Elements<Wxml.Paragraph>().First();
@@ -94,6 +97,7 @@ namespace QmsDocXml
             par.RemoveAllChildren<Wxml.Run>();
             firstRunClone.Elements<Wxml.Text>().First().Text = config.HeaderNameText + (string)this.State;
             par.Append(firstRunClone);
+            return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
         }
 
     }
