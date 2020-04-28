@@ -1,4 +1,6 @@
-﻿using QDoc.Interfaces;
+﻿using FluentResults;
+using QDoc.Core;
+using QDoc.Interfaces;
 using QFileUtil;
 using QmsDoc.Core;
 using QmsDoc.Exceptions;
@@ -23,11 +25,11 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public override void Write(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             if(!IsValid(config))
             {
-                throw new InvalidDocPropertyStateException();
+                return Results.Fail(new Error("Could not write to the file."));
             }
             
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);
@@ -46,29 +48,30 @@ namespace QmsDoc.Docs.Common.Properties
 
             else
             {
-                throw new DocWriteException();
+                return Results.Fail(new Error("Could not identify the current document number to replace."));
             }
 
             FileUtil.FileRename(file, newName);
+            return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
 
 
         }
 
-        public override DocProperty Read(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);
             Match matchSop = config.FileSopNumberRegex.Match(file.Name);
             if(matchForm.Success)
             {
-                return new FileDocNumber(matchForm.ToString());
+                return Results.Ok<QDocProperty>(new FileDocNumber(matchForm.ToString()));
             }
             else if (matchSop.Success) {
-                return new FileDocNumber(matchSop.ToString());
+                return Results.Ok<QDocProperty>(new FileDocNumber(matchSop.ToString()));
             }
 
             else
             {
-                throw new DocReadException();
+                return Results.Fail<QDocProperty>(new Error("Could not identify the current document number to replace."));
             }
             
         }

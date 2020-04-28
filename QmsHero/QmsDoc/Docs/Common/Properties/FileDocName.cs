@@ -26,7 +26,7 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public Result<DocProperty> Write(FileInfo file, DocConfig config)
+        public Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             string currentName;
             Result<QDocProperty> result;
@@ -60,7 +60,7 @@ namespace QmsDoc.Docs.Common.Properties
             return Results.Ok();
         }
 
-        public Result<DocProperty> Read(FileInfo file, DocConfig config)
+        public Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             string docNumbertext = null;
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);
@@ -97,7 +97,7 @@ namespace QmsDoc.Docs.Common.Properties
                 .Replace(matchRev.ToString(), "")
                 .Replace(file.Extension, "")
                 .Trim();
-            return Results.Ok<DocProperty>(new FileDocName(nameText));
+            return Results.Ok<QDocProperty>(new FileDocName(nameText));
         }
     }
 }

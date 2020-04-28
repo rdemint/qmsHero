@@ -25,31 +25,39 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         {
             var fixture = new Fixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = (string)doc.Inspect(new FileDocName()).State;
-            Assert.AreEqual(fixture.ExcelSampleFileDocName, result);
+            var result = doc.Inspect(new FileDocName());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(fixture.WordSampleFileDocName, (string)result.Value.State);
         }
 
         [TestMethod]
         public void WriteSopTest()
         {
-            string name = "Important Quality Booklet";
+            string newName = "Important Quality Booklet";
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            doc.Process(new FileDocName(name));
-            string result = doc.Inspect(new FileDocName()).State.ToString();
-            Assert.AreEqual(name, result);
+            var processResult = doc.Process(new FileDocName(newName));
+            Assert.IsTrue(processResult.IsSuccess);
+
+            var result = doc.Inspect(new FileDocName());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(newName, (string)result.Value.State);
 
         }
 
         [TestMethod]
         public void WriteFormTest()
         {
-            string name = "Really-Important-Form";
+            string newName = "Really-Important-Form";
             var fixture = new Fixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            doc.Process(new FileDocName(name));
-            string result = doc.Inspect(new FileDocName()).State.ToString();
-            Assert.AreEqual(name, result);
+
+            var processResult = doc.Process(new FileDocName(newName));
+            Assert.IsTrue(processResult.IsSuccess);
+
+            var result = doc.Inspect(new FileDocName());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(newName, (string)result.Value.State);
 
         }
     }

@@ -64,8 +64,6 @@
     <Compile Include="Core\QDocPropertyGroup.cs" />
     <Compile Include="Core\QDocAudit.cs" />
     <Compile Include="Core\QDocPropertyResultCollection.cs" />
-    <Compile Include="Core\QResult.cs" />
-    <Compile Include="Core\QResultExtensions.cs" />
     <Compile Include="Docs\DocCollection.cs" />
     <Compile Include="Interfaces\IQDocFactory.cs" />
     <Compile Include="Core\QDocFactory.cs" />
