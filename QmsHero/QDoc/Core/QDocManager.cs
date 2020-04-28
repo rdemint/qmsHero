@@ -149,7 +149,6 @@ namespace QDoc.Core
                    docs.Add(docResult.Value);
                 }
             }
-
             return docs;
         }
 

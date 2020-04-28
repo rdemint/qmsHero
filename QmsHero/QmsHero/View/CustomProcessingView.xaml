@@ -15,10 +15,11 @@
     <StackPanel
         Margin="20"
         Background="AliceBlue">
-        <controls:QFolderPicker QDisplay="Project Dir" QOutput="{Binding Path=OriginalDirPath}"/>
-        <controls:QCheckFilePicker QDisplay="Logo" QOutput="{Binding Path=DocEdit.DocHeader.LogoPath.Value}"/>
-        <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=DocEdit.DocHeader.EffectiveDate.Value}"/>
-        <controls:QCheckTextBox QDisplay="Revision" QOutput="{Binding Path=DocEdit.DocHeader.Revision.Value}"/>
+        <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
+        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
+        <controls:QCheckFilePicker QDisplay="Logo" QOutput="{Binding Path=HeaderPropertyGroup.HeaderLogo.State}"/>
+        <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=HeaderPropertyGroup.HeaderEffectiveDate.State}"/>
+        <controls:QCheckTextBox QDisplay="Revision" QOutput="{Binding Path=HeaderPropertyGroup.HeaderRevision.State}"/>
         <Button 
             Command="{Binding ProcessFilesCommand}" 
             CommandParameter="{Binding ElementName=ProjectDirElement, Path=QOutput}"

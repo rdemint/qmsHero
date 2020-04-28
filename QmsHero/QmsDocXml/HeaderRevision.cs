@@ -71,12 +71,8 @@ namespace QmsDocXml
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
-            par.RemoveAllChildren();
-            Run run = new Run();
-            Text text = new Text();
+            Text text = par.Elements<Run>().First().Elements<Text>().First();
             text.Text = config.HeaderRevisionText + (string)this.State;
-            run.Append(text);
-            par.Append(run);
             return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
         }
 

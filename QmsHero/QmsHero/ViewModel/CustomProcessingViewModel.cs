@@ -35,7 +35,7 @@ namespace QmsHero.ViewModel
             get {
                   this.processFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
-                        () => ProcessingDirIsValid()
+                        () => ProcessingDirIsValid() && ReferenceDirIsValid()
                         );
                 return this.processFilesCommand;
             }

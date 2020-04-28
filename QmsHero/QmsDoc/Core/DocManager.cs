@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using GalaSoft.MvvmLight.Ioc;
 using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
@@ -14,6 +15,7 @@ namespace QmsDoc.Core
 {
     public class DocManager : QDocManager
     {
+        [PreferredConstructor]
         public DocManager(): base()
         {
             this.FileManager = new FileCopyManager();
