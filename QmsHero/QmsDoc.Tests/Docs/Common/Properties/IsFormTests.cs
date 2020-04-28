@@ -26,8 +26,9 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         {
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            bool result = (bool)doc.Inspect(new IsForm()).State;
-            Assert.AreEqual(false, result);
+            var result = doc.Inspect(new IsForm());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(false, result.Value.State);
 
         }
     }

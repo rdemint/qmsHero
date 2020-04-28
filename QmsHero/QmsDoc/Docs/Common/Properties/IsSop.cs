@@ -1,4 +1,6 @@
-﻿using QDoc.Interfaces;
+﻿using FluentResults;
+using QDoc.Core;
+using QDoc.Interfaces;
 using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
@@ -33,10 +35,10 @@ namespace QmsDoc.Docs.Common.Properties
 
         }
 
-        public override DocProperty Read(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileSopNumberRegex.Match(file.Name);
-            return new IsSop(match.Success);
+            return Results.Ok<QDocProperty>(new IsSop(match.Success));
         }
 
     }

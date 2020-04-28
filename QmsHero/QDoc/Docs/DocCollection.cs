@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace QDoc.Docs
 {
-    public class DocCollection : ObservableCollection<IDoc>
+    public class DocCollection : ObservableCollection<Doc>
     {
         public DocCollection()
         {
         }
 
-        public DocCollection(List<IDoc> list) : base(list)
+        public DocCollection(List<Doc> list) : base(list)
         {
         }
 
-        public DocCollection(IEnumerable<IDoc> collection) : base(collection)
+        public DocCollection(IEnumerable<Doc> collection) : base(collection)
         {
         }
     }

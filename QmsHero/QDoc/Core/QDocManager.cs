@@ -17,7 +17,7 @@ namespace QDoc.Core
     {
         IQDocManagerConfig docManagerConfig;
         IFileCopyManager fileManager;
-        IQDocFactory docFactory;
+        QDocFactory docFactory;
         public QDocManager()
         {
             docManagerConfig = new QDocManagerConfig();
@@ -26,7 +26,7 @@ namespace QDoc.Core
 
         #region Properties
         public IQDocManagerConfig DocManagerConfig { get => docManagerConfig; set => docManagerConfig = value; }
-        public IQDocFactory DocFactory { get => docFactory; set => docFactory = value; }
+        public QDocFactory DocFactory { get => docFactory; set => docFactory = value; }
         public IFileCopyManager FileManager { get => fileManager; set => fileManager = value; }
 
         #endregion

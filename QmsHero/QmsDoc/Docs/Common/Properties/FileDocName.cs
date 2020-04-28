@@ -26,7 +26,7 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public Result<QDocProperty> Write(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             string currentName;
             Result<QDocProperty> result;
@@ -60,7 +60,7 @@ namespace QmsDoc.Docs.Common.Properties
             return Results.Ok();
         }
 
-        public Result<QDocProperty> Read(FileInfo file, DocConfig config)
+        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             string docNumbertext = null;
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);

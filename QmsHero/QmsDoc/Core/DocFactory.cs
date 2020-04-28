@@ -9,12 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QDoc.Interfaces;
+using QDoc.Docs;
 
 namespace QmsDoc.Core
 {
-    public class DocFactory: IQDocFactory
+    public class DocFactory: QDocFactory
     {
-        public IDoc CreateDoc(FileInfo file)
+        public override Doc CreateDoc(FileInfo file)
         {
             if (WordDoc.Extensions().Contains(file.Extension))
             {

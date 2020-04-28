@@ -17,8 +17,10 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var fixture = new Fixture();
             var wdoc = new WordDoc(fixture.WordSampleCopy);
             wdoc.Process(new FileDocNumber(newNum));
-            var result = wdoc.Inspect(new FileDocNumber()).State.ToString();
-            Assert.AreEqual(newNum, result);
+            var result = wdoc.Inspect(new FileDocNumber());
+            Assert.IsTrue(result.IsSuccess);
+            
+            Assert.AreEqual(newNum, (string)result.Value.State);
         }
 
         [TestMethod()]
@@ -46,8 +48,9 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var fixture = new Fixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             doc.Process(new FileDocNumber(newNum));
-            var result = doc.Inspect(new FileDocNumber()).State.ToString();
-            Assert.AreEqual(newNum, result);
+            var result = doc.Inspect(new FileDocNumber());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(newNum, (string)result.Value.State);
         }
 
         [TestMethod()]
@@ -55,8 +58,10 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         {
             var fixture = new Fixture();
             var wdoc = new WordDoc(fixture.WordSampleCopy);
-            var result = (string)wdoc.Inspect(new FileDocNumber()).State;
-            Assert.AreEqual(fixture.WordSampleDocNumber, result);
+
+            var result = wdoc.Inspect(new FileDocNumber());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(fixture.WordSampleDocNumber, (string)result.Value.State);
         }
 
         [TestMethod()]
@@ -64,9 +69,10 @@ namespace QmsDoc.Tests.Docs.Common.Properties
         {
             var fixture = new Fixture();
 
-            var xldoc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var xlResult = xldoc.Inspect(new FileDocNumber()).State.ToString();
-            Assert.AreEqual(fixture.ExcelSampleDocNumber, xlResult);
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            var result = doc.Inspect(new FileDocNumber());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(fixture.ExcelSampleDocNumber, result);
 
         }
     }

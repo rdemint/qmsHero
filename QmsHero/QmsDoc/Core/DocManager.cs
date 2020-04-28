@@ -71,7 +71,7 @@ namespace QmsDoc.Core
                     foreach(var prop in collection)
                     {
                         var propResult = doc.Inspect(prop);
-                        doc.DocProperties.Add(propResult);
+                        doc.PropertiesCollection.Add(propResult);
                     }
                     docCollection.Add(doc);
                 }

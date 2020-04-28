@@ -1,4 +1,5 @@
-﻿using QDoc.Interfaces;
+﻿using QDoc.Docs;
+using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public abstract class QDocFactory : IQDocFactory
+    public abstract class QDocFactory
     {
         List<string> wordDocExtensions;
         List<string> excelDocExtensions;
@@ -25,7 +26,7 @@ namespace QDoc.Core
         public List<string> ExcelDocExtensions { get => excelDocExtensions; set => excelDocExtensions = value; }
         public List<string> PdfExtensions { get => pdfExtensions; set => pdfExtensions = value; }
 
-        public abstract IDoc CreateDoc(FileInfo file);
+        public abstract Doc CreateDoc(FileInfo file);
 
     }
 }

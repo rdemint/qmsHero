@@ -27,7 +27,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Inspect(new FileDocName());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(fixture.WordSampleFileDocName, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleFileDocName, (string)result.Value.State);
         }
 
         [TestMethod]

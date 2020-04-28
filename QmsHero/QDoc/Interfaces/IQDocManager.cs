@@ -9,7 +9,7 @@ namespace QDoc.Interfaces
     {
         IQDocManagerConfig DocManagerConfig { get; set; }
         IFileCopyManager FileManager { get; set; }
-        IQDocFactory DocFactory { get; set; }
+        QDocFactory DocFactory { get; set; }
 
         bool CanProcessFiles();
 

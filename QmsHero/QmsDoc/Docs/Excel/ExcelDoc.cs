@@ -38,8 +38,8 @@ namespace QmsDoc.Docs.Excel
         {
             Result<QDocProperty> result;
 
-            try
-            {
+            //try
+            //{
                 if(prop as IWriteFileInfo != null)
                 {
                     result = prop.Write(FileInfo, DocConfig);
@@ -53,15 +53,15 @@ namespace QmsDoc.Docs.Excel
                 }
 
                 return result;
-            }
+            //}
 
-            catch (Exception e)
-            {
-                return Results.Fail<QDocProperty>(
-                    new Error("Failed to process the document")
-                    .CausedBy(e)
-                    );
-            }
+            //catch (Exception e)
+            //{
+            //    //return Results.Fail<QDocProperty>(
+            //    //    new Error("Failed to process the document")
+            //    //    .CausedBy(e)
+            //    //    );
+            //}
             
             
         }
@@ -70,8 +70,8 @@ namespace QmsDoc.Docs.Excel
         {
             Result<QDocProperty> result;
              
-            try
-            {
+            //try
+            //{
                 if(prop as IReadFileInfo != null)
                     {
                         result = prop.Read(FileInfo, DocConfig);
@@ -84,15 +84,14 @@ namespace QmsDoc.Docs.Excel
                         }
                     }
                 return result;
-            }
-
-            catch (Exception e)
-            {
-                return Results.Fail<QDocProperty>(
-                    new Error("Failed to inspect the document")
-                    .CausedBy(e)
-                );
-            }
+            //}
+            //catch (Exception e)
+            //{
+                //return Results.Fail<QDocProperty>(
+                //    new Error("Failed to inspect the document")
+                //    .CausedBy(e)
+                //);
+            //}
         }
 
         public static List<string> Extensions()

@@ -53,7 +53,6 @@
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
     <Compile Include="Core\DocProperty.cs" />
-    <Compile Include="Docs\Common\Actions\ChangeDocNumber.cs" />
     <Compile Include="Docs\Common\DocConfig.cs" />
     <Compile Include="Docs\Common\Properties\FileDocName.cs" />
     <Compile Include="Docs\Common\Properties\FileDocNumber.cs" />
@@ -78,6 +77,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Docs\Common\Actions\" />
     <Folder Include="Docs\Excel\Properties\" />
     <Folder Include="Docs\Word\Properties\" />
   </ItemGroup>
