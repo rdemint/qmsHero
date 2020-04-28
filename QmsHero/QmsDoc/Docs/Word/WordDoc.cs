@@ -15,7 +15,7 @@ using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Word
 {
-    public class WordDoc : Doc, IDoc
+    public class WordDoc : Doc
     {
         WordDocConfig docConfig;
         static List<string> fileExtensions = new List<string> { ".docx", ".doc", ".docm", ".dotm" };
@@ -59,10 +59,10 @@ namespace QmsDoc.Docs.Word
         }
 
 
-        public override QDocProperty Inspect(QDocProperty prop)
+        public override Result<QDocProperty> Inspect(QDocProperty prop)
         {
 
-            QDocProperty result = null;
+            Result<QDocProperty> result;
 
             if (prop as IReadFileInfo != null)
             {

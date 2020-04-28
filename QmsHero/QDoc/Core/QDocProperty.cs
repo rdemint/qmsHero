@@ -1,11 +1,11 @@
-﻿using CSharpFunctionalExtensions;
-using FluentResults;
+﻿using FluentResults;
 using QDoc.Interfaces;
 using System;
 using System.ComponentModel;
 
 namespace QDoc.Core
 {
+    [DefaultProperty("State")]
     public abstract class QDocProperty: INotifyPropertyChanged, IEquatable<QDocProperty>
     {
         string name;

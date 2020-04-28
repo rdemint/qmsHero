@@ -28,17 +28,19 @@ namespace QmsDoc.Docs.Common.Properties
 
         public Result<DocProperty> Write(FileInfo file, DocConfig config)
         {
-            string currentName = null;
+            string currentName;
+            Result<QDocProperty> result;
+
             if(WordDoc.Extensions().Contains(file.Extension))
             {
                 var tempDoc = new WordDoc(file, config as WordDocConfig);
-                currentName = tempDoc.Inspect(new FileDocName()).State.ToString();
+                result = tempDoc.Inspect(new FileDocName());
             }
 
             else if(ExcelDoc.Extensions().Contains(file.Extension))
             {
                 var tempDoc = new ExcelDoc(file, config as ExcelDocConfig);
-                currentName = tempDoc.Inspect(new FileDocName()).State.ToString();
+                result = tempDoc.Inspect(new FileDocName());
             }
 
             else
@@ -47,13 +49,18 @@ namespace QmsDoc.Docs.Common.Properties
                     new Error("File did not have a valid extension to write to")
                         .CausedBy(new DocWriteException()));
             }
+            
+            if (result.IsFailed)
+                return Results.Fail(new Error("Could not determine the current name to replace"));
+
+            currentName = (string)result.Value.State;
 
             string newFileName = file.Name.Replace(currentName, this.State.ToString());
             FileUtil.FileRename(file, newFileName);
             return Results.Ok();
         }
 
-        public override Result<DocProperty> Read(FileInfo file, DocConfig config)
+        public Result<DocProperty> Read(FileInfo file, DocConfig config)
         {
             string docNumbertext = null;
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
+using FluentResults;
 using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
@@ -33,33 +34,40 @@ namespace QmsDoc.Docs.Excel
         }
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
 
-        public override void Process(QDocProperty prop)
+        public override Result<QDocProperty> Process(QDocProperty prop)
         {
+            Result<QDocProperty> result;
+
             if(prop as IWriteFileInfo != null)
             {
-                prop.Write(FileInfo, DocConfig);
+                result = prop.Write(FileInfo, DocConfig);
             }
             else
             {
                 using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
                 {
-                    prop.Write(doc, DocConfig);
+                   result = prop.Write(doc, DocConfig);
                 }
             }
+
+            return result;
             
             
         }
 
-        public override void Process(QDocPropertyCollection docState)
+        public override QDocPropertyResultCollection Process(QDocPropertyCollection docState)
         {
-                foreach(QDocProperty prop in docState)
+
+            QDocPropertyResultCollection result = new QDocPropertyResultCollection();
+            foreach(QDocProperty prop in docState)
                 {
-                    Process(prop);
+                    result.Add(Process(prop));
                 }
+            return result;
         }
-        public override QDocProperty Inspect(QDocProperty prop)
+        public override Result<QDocProperty> Inspect(QDocProperty prop)
         {
-            QDocProperty result = null;
+            Result<QDocProperty> result;
              if(prop as IReadFileInfo != null)
                 {
                     result = prop.Read(FileInfo, DocConfig);
@@ -72,20 +80,6 @@ namespace QmsDoc.Docs.Excel
                     }
                 }
             return result;
-        }
-
-        public override QDocPropertyCollection Inspect(QDocPropertyCollection docState)
-        {
-            QDocPropertyCollection returnState = new QDocPropertyCollection();
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
-            {
-                foreach(QDocProperty prop in docState)
-                {
-                    returnState.Add(Inspect(prop));
-                }
-            }
-
-            return returnState;
         }
 
         public static List<string> Extensions()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using QDoc.Interfaces;
 using System.IO;
 using QDoc.Core;
@@ -8,7 +9,7 @@ using FluentResults;
 
 namespace QDoc.Docs
 {
-    public abstract class Doc: IDoc
+    public abstract class Doc
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
@@ -51,18 +52,17 @@ namespace QDoc.Docs
 
         public abstract Result<QDocProperty> Process(QDocProperty prop);
 
-        public virtual QDocPropertyResultCollection Inspect(QDocPropertyCollection docState) {
-            QDocPropertyCollection returnState = new QDocPropertyCollection();
-
+        public virtual QDocPropertyResultCollection Inspect(QDocPropertyCollection docState)
+        {
+            QDocPropertyResultCollection collection = new QDocPropertyResultCollection();
             foreach (QDocProperty prop in docState)
             {
-                returnState.Add(Inspect(prop));
+                collection.Add(Inspect(prop));
             }
-            return returnState;
-
+            return collection;
         }
 
-        public abstract QDocProperty Inspect(QDocProperty prop);
+        public abstract Result<QDocProperty> Inspect(QDocProperty prop);
 
 
     }

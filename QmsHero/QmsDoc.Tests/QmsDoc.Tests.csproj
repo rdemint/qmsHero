@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentResults, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentResults.1.5.0\lib\net45\FluentResults.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.1.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -108,6 +111,10 @@
     <ProjectReference Include="..\QDoc\QDoc.csproj">
       <Project>{18e880a8-81a4-42cc-8563-7066ac8d278b}</Project>
       <Name>QDoc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QFileUtil.Tests\QFileUtil.Tests.csproj">
+      <Project>{550624eb-a4df-4731-b8b5-eead8d60dc65}</Project>
+      <Name>QFileUtil.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\QFileUtils\QFileUtil.csproj">
       <Project>{41d7b217-ab9d-4c02-8e2f-83187b5baa8a}</Project>

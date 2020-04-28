@@ -1,4 +1,6 @@
-﻿using QmsDoc.Docs.Common;
+﻿using FluentResults;
+using QDoc.Core;
+using QmsDoc.Docs.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +12,6 @@ namespace QmsDoc.Interfaces
 {
     interface IWriteFileInfo
     {
-        void Write(FileInfo file, DocConfig config);
+        Result<QDocProperty> Write(FileInfo file, DocConfig config);
     }
 }
