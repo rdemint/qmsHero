@@ -11,6 +11,7 @@ namespace QDoc.Docs
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
+        QDocPropertyCollection properties;
 
         public Doc()
         {
@@ -34,6 +35,7 @@ namespace QDoc.Docs
             set { fileInfo = value; } }
 
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
+        public QDocPropertyCollection DocProperties { get => properties; set => properties = value; }
         #endregion
 
         public virtual void Process(QDocPropertyCollection docState)

@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace QDoc.Core
 {
-    public abstract class QDocProperty: INotifyPropertyChanged
+    public abstract class QDocProperty: INotifyPropertyChanged, IEquatable<QDocProperty>
     {
         string name;
         object state;
@@ -52,6 +52,19 @@ namespace QDoc.Core
             {
                 return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Equals(QDocProperty other)
+        {
+            if(this.Name == other.Name && this.State == other.State)
+            {
+                return true;
+            }
+
             else
             {
                 return false;

@@ -50,6 +50,7 @@
     <Compile Include="Core\DocManager.cs" />
     <Compile Include="Core\DocManagerConfig.cs" />
     <Compile Include="Core\DocProperty.cs" />
+    <Compile Include="Docs\Common\Actions\ChangeDocNumber.cs" />
     <Compile Include="Docs\Common\DocConfig.cs" />
     <Compile Include="Docs\Common\Properties\AsDoc.cs" />
     <Compile Include="Docs\Common\Properties\FileDocName.cs" />

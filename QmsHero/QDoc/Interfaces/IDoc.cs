@@ -11,6 +11,7 @@ namespace QDoc.Interfaces
     public interface IDoc
     {
         FileInfo FileInfo { get; set; }
+        QDocPropertyCollection DocProperties { get; set; }
         void Process(QDocPropertyCollection state);
 
         void Process(QDocProperty prop);
