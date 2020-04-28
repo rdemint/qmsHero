@@ -31,10 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSharpFunctionalExtensions, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CSharpFunctionalExtensions.2.7.1\lib\net461\CSharpFunctionalExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="FluentResults, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentResults.1.5.0\lib\net45\FluentResults.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

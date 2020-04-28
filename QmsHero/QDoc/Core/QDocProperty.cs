@@ -1,4 +1,6 @@
-﻿using QDoc.Interfaces;
+﻿using CSharpFunctionalExtensions;
+using FluentResults;
+using QDoc.Interfaces;
 using System;
 using System.ComponentModel;
 
@@ -40,10 +42,10 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public abstract QDocProperty Read(object doc, object docConfig);
+        public abstract Result<QDocProperty> Read(object doc, object docConfig);
 
 
-        public abstract void Write(object doc, IDocConfig docConfig);
+        public abstract Result<QDocProperty> Write(object doc, IDocConfig docConfig);
         
 
         public virtual bool IsValid(IDocConfig config)

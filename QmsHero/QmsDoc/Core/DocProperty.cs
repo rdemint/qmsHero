@@ -27,7 +27,7 @@ namespace QmsDoc.Core
         }
 
         #region visitor
-        public override QDocProperty Read(object doc, object config)
+        public override Result<QDocProperty> Read(object doc, object config)
         {
             //Visitor Pattern
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
@@ -57,7 +57,7 @@ namespace QmsDoc.Core
 
             else
             {
-                throw new ReadDocumentNotValidException();
+                return new Result<QDocProperty>.Fail
             }
 
         }

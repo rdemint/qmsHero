@@ -34,8 +34,8 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="CSharpFunctionalExtensions, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CSharpFunctionalExtensions.2.7.1\lib\net461\CSharpFunctionalExtensions.dll</HintPath>
+    <Reference Include="FluentResults, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentResults.1.5.0\lib\net45\FluentResults.dll</HintPath>
     </Reference>
     <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
