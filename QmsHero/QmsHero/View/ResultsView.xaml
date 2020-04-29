@@ -7,8 +7,11 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ResultsView">
-
-    <Grid>
+    <Page.Resources>
+        <CollectionViewSource x:Key="DocCollectionViewSource" Source="{Binding Path=DocCollection}"/>
+    </Page.Resources>
+    <Grid DataContext="{StaticResource DocCollectionViewSource}">
         <TextBlock Text="Results View Works"/>
+        
     </Grid>
 </Page>

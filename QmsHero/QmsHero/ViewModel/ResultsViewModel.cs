@@ -16,9 +16,19 @@ namespace QmsHero.ViewModel
 
         public ResultsViewModel(): base()
         {
-            this.docCollection = SimpleIoc.Default.GetInstance<ProcessingResultsStore>().DocCollection;
+            this.DocCollection = SimpleIoc.Default.GetInstance<ProcessingResultsStore>().DocCollection;
         }
 
-        public DocCollection DocCollection { get => docCollection; set => docCollection = value; }
+        public DocCollection DocCollection { 
+            get => docCollection; 
+            set { 
+                docCollection = value;
+                RaisePropertyChanged();
+            }
+
+        //public DocCollection InitializeCollection ()
+        //{
+        //    DocCollection.Add()
+        //}
     }
 }

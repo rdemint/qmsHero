@@ -11,8 +11,9 @@ namespace QmsHero.Model
     class ProcessingResultsStore : ObservableObject
     {
         DocCollection docCollection;
-        public ProcessingResultsStore()
+        public ProcessingResultsStore(): base()
         {
+            docCollection = new DocCollection();
         }
 
         public DocCollection DocCollection { 
