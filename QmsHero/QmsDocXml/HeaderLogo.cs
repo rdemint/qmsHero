@@ -160,7 +160,7 @@ namespace QmsDocXml
                 ImagePart imagePart = mainPart.HeaderParts.First().AddImagePart(ImagePartType.Jpeg);
                 //Alternative does not work
                 //ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
-                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     imagePart.FeedData(stream);
                 }
@@ -179,6 +179,10 @@ namespace QmsDocXml
             
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
             var vmlParts = workSheetPart.VmlDrawingParts;
+            if(!vmlParts.Any())
+            {
+                return Results.Fail<QDocProperty>(new Error("Did not find an image in this document"));
+            }
             var vmlPart = workSheetPart.VmlDrawingParts.First();
 
             //get the content of the vmlPart 
@@ -227,7 +231,7 @@ namespace QmsDocXml
 
                 //overwrite current image with the new image
                 ImagePart imagePart = vmlPart.ImageParts.First();
-                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
+                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     imagePart.FeedData(stream);
                 }
@@ -237,64 +241,6 @@ namespace QmsDocXml
             {
                 return Results.Fail(new Error("Could not find the width and height specification for the current image."));
             }
-
-
-            //******************************************************
-            //FileInfo imageFile = new FileInfo(this.State.ToString());
-
-            //var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
-            //var vmlParts = workSheetPart.VmlDrawingParts;
-            //var vmlPart = workSheetPart.VmlDrawingParts.First();
-
-            ////get the content of the vmlPart 
-
-            //string vmlContent = null;
-            //using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
-            //{
-            //    vmlContent = streamReader.ReadToEnd();
-
-            //}
-            //var xEl = Xlinq.XElement.Parse(vmlContent);
-            //var shapeNode = xEl.Descendants().Where(d => d.Name.LocalName == "shape").First();
-            //var styleAttr = shapeNode.Attributes("style").First();
-
-            //var imageNode = shapeNode.Descendants().Where(d => d.Name.LocalName == "imageData").First();
-            //var imageAttr = imageNode.Attributes("title").First();
-
-
-            ////get current image height in string
-            //Match widthMatch = Regex.Match(styleAttr.Value, @"width:.*?pt");
-            //Match heightMatch = Regex.Match(styleAttr.Value, @"height:.*?pt");
-            //if (widthMatch.Success && heightMatch.Success)
-            //{
-            //    string hStr = heightMatch.ToString().Replace("height:", "").Replace("pt", "");
-            //    double imageHeight;
-            //    bool rH = double.TryParse(hStr, out imageHeight);
-
-            //    double targetRatio = ImageXml.GetImageHeightWidthRatio(imageFile);
-            //    double newWidth = Math.Round(imageHeight / targetRatio, 1);
-            //    string newStyleWidth = "width:" + newWidth.ToString() + "pt";
-
-            //    //generate new content to feed to part
-            //    string newVmlContent = vmlContent.Replace(widthMatch.ToString(), newStyleWidth);
-
-            //    var vmlStream = new MemoryStream();
-            //    var writer = new StreamWriter(vmlStream);
-            //    writer.Write(newVmlContent);
-            //    writer.Flush();
-            //    vmlStream.Position = 0;
-            //    vmlPart.FeedData(vmlStream);
-
-            //    ImagePart imagePart = vmlPart.ImageParts.First();
-            //    using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open))
-            //    {
-            //        imagePart.FeedData(stream);
-            //    }
-            //}
-            //else
-            //{
-            //    throw new DocWriteException("Could not find both the height and width specification of the current document image");
-            //}
 
         }
     }

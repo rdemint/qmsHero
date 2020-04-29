@@ -22,6 +22,7 @@ namespace QmsHero.ViewModel
         HeaderPropertyGroup headerPropertyGroup;
         string referenceDirPath;
         string processingDirPath;
+        string logoPath;
 
         public CustomProcessingViewModel()
         {
@@ -45,7 +46,8 @@ namespace QmsHero.ViewModel
         }
         private void ProcessFiles()
         {
-            
+
+
             //var docEdit = new DocEdit(this.DocHeader);
             var docCollection = this.manager.Process(headerPropertyGroup.ToCollection());
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
@@ -95,5 +97,12 @@ namespace QmsHero.ViewModel
         }
 
         public HeaderPropertyGroup HeaderPropertyGroup { get => headerPropertyGroup; set => headerPropertyGroup = value; }
+        public string LogoPath { 
+            get => logoPath;
+            set {
+                Set<string>(
+                    () => LogoPath, ref logoPath, value
+                    );
+            } }
     }
 }
