@@ -82,13 +82,18 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IPageViewModel.cs" />
     <Compile Include="Interfaces\IQmsHeroViewModels.cs" />
+    <Compile Include="Model\ProcessingResultsStore.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
     <Compile Include="ViewModel\ConfigViewModel.cs" />
     <Compile Include="ViewModel\DCNViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ResultsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\CustomProcessingView.xaml.cs">
       <DependentUpon>CustomProcessingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ResultsView.xaml.cs">
+      <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\DCNView.xaml">
       <SubType>Designer</SubType>
@@ -120,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Skins\MainSkin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -156,9 +165,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\QControls\QControls.csproj">
       <Project>{d949b936-f294-4f84-b4f2-6e1f86a932c1}</Project>

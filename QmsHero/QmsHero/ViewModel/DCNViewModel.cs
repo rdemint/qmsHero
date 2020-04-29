@@ -19,7 +19,7 @@ namespace QmsHero.ViewModel
         DocManager manager;
         RelayCommand processFiles;
 
-        public DCNViewModel()
+        public DCNViewModel(): base()
         {
             this.EffectiveDate = "2020-03-20";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
@@ -58,5 +58,6 @@ namespace QmsHero.ViewModel
             System.Windows.MessageBox.Show(ed);
                 
         }
+
     }
 }

@@ -15,4 +15,7 @@
     <DataTemplate DataType="{x:Type vm:DCNViewModel}">
         <view:DCNView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ResultsViewModel}">
+        <view:ResultsView/>
+    </DataTemplate>
 </ResourceDictionary>

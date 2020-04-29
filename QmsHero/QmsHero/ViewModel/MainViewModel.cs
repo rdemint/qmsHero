@@ -29,6 +29,7 @@ namespace QmsHero.ViewModel
         RelayCommand navToConfigViewModel;
         RelayCommand navToCustomProcessingViewModel;
         RelayCommand navToDCNViewModel;
+        RelayCommand navToResultsViewModel;
         public MainViewModel()
         {
             ////if (IsInDesignMode)
@@ -113,6 +114,20 @@ namespace QmsHero.ViewModel
                 return this.navToDCNViewModel;
                 } 
             set => navToDCNViewModel = value; }
+
+        public RelayCommand NavToResultsViewModel {
+            get { 
+                if(this.navToResultsViewModel == null)
+                {
+                    this.navToResultsViewModel = new RelayCommand(
+                        () => this.ActiveViewModel = this.viewModelLocator.ResultsViewModel,
+                        () => this.ActiveViewModel != this.viewModelLocator.ResultsViewModel
+
+                        );
+                }
+                return this.navToResultsViewModel;
+            }
+            set => navToResultsViewModel = value; }
     }
 
 

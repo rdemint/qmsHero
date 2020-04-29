@@ -23,12 +23,13 @@ namespace QmsHero.ViewModel
         string referenceDirPath;
         string processingDirPath;
         string logoPath;
-
+        ResultsViewModel resultsViewModel;
         public CustomProcessingViewModel()
         {
 
             this.ViewDisplayName = "Custom";
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
+            this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
         }
 

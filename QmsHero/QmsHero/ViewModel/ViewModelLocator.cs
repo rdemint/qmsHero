@@ -22,6 +22,7 @@ using QDoc.Docs;
 using QmsDoc.Core;
 using QmsDoc.Docs.Word;
 using QmsDoc.Docs.Excel;
+using QmsHero.Model;
 
 namespace QmsHero.ViewModel
 {
@@ -50,8 +51,10 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<ConfigViewModel>();
             SimpleIoc.Default.Register<CustomProcessingViewModel>();
             SimpleIoc.Default.Register<DCNViewModel>();
+            SimpleIoc.Default.Register<ResultsViewModel>();
 
             SimpleIoc.Default.Register<DocManager>();
+            SimpleIoc.Default.Register<ProcessingResultsStore>();
             SimpleIoc.Default.Register<DocManagerConfig>();
             SimpleIoc.Default.Register<WordDocConfig>();
             SimpleIoc.Default.Register<ExcelDocConfig>();
@@ -80,6 +83,11 @@ namespace QmsHero.ViewModel
         public DCNViewModel DCNViewModel
         {
             get => ServiceLocator.Current.GetInstance<DCNViewModel>();
+        }
+
+        public ResultsViewModel ResultsViewModel
+        {
+            get => ServiceLocator.Current.GetInstance<ResultsViewModel>();
         }
 
         public static void Cleanup()
