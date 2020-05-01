@@ -48,7 +48,9 @@
                             MinWidth="100"
                             MaxHeight="100"
                             />
-                        <TextBox MinWidth="200" Text="{TemplateBinding QState}"/>
+                        <TextBox MinWidth="200" 
+                                 Text="{Binding Path=QState, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 />
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
@@ -64,10 +66,12 @@
                         >
                         <CheckBox
                             Name="myCheckBox"
+                            IsChecked="{Binding Path=QIsValid, RelativeSource={RelativeSource TemplatedParent}}"
                             ></CheckBox>
                         <local:QFilePicker 
                             QIsValid="{Binding ElementName=myCheckBox, Path=IsChecked}" 
-                            IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"/>
+                            IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"
+                            QState="{Binding Path=QState, Mode=TwoWay}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
