@@ -12,6 +12,11 @@
     </Page.Resources>
     <Grid DataContext="{StaticResource DocCollectionViewSource}">
         <TextBlock Text="Results View Works"/>
-        
+        <DataGrid Name="ResultGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File" Binding="{Binding Path=FileInfo.Name}"/>
+                <DataGridCheckBoxColumn Header="Has Errors" Binding="{Binding Path=HasErrors}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

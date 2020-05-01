@@ -10,25 +10,28 @@ using System.Threading.Tasks;
 
 namespace QmsHero.ViewModel
 {
-    public class ResultsViewModel: ViewModelBase
+    public class ResultsViewModel : ViewModelBase
     {
         DocCollection docCollection;
 
-        public ResultsViewModel(): base()
+        public ResultsViewModel() : base()
         {
             this.DocCollection = SimpleIoc.Default.GetInstance<ProcessingResultsStore>().DocCollection;
         }
 
-        public DocCollection DocCollection { 
-            get => docCollection; 
-            set { 
+        public DocCollection DocCollection
+        {
+            get => docCollection;
+            set
+            {
                 docCollection = value;
                 RaisePropertyChanged();
             }
 
-        //public DocCollection InitializeCollection ()
-        //{
-        //    DocCollection.Add()
-        //}
+            //public DocCollection InitializeCollection ()
+            //{
+            //    DocCollection.Add()
+            //}
+        }
     }
 }

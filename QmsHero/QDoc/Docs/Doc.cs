@@ -14,11 +14,13 @@ namespace QDoc.Docs
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
-        QDocPropertyResultCollection results;
+        QDocPropertyResultCollection propertyResultCollection;
+        bool hasErrors;
 
         public Doc()
         {
-            results = new QDocPropertyResultCollection();
+            propertyResultCollection = new QDocPropertyResultCollection();
+            hasErrors = false;
         }
 
         public Doc(System.IO.FileInfo fileInfo): this()
@@ -38,7 +40,17 @@ namespace QDoc.Docs
             set { fileInfo = value; } }
 
         public IDocConfig DocConfig { get => docConfig; set => docConfig = value; }
-        public QDocPropertyResultCollection PropertyResultCollection { get => results; set => results = value; }
+        public QDocPropertyResultCollection PropertyResultCollection { 
+            get => propertyResultCollection;
+            set
+            {
+                propertyResultCollection = value;
+                this.HasErrors = propertyResultCollection.Any(result => result.IsFailed);
+            }
+        }
+        public bool HasErrors { 
+            get => hasErrors; 
+            set => hasErrors = value; }
         #endregion
 
         public virtual QDocPropertyResultCollection Process(QDocPropertyCollection docState)
