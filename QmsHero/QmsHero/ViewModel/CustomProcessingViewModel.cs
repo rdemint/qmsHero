@@ -34,15 +34,15 @@ namespace QmsHero.ViewModel
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
             this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
             this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
+            this.processFilesCommand = new RelayCommand(
+                        () => ProcessFiles(),
+                        () => ProcessingDirIsValid() && ReferenceDirIsValid()
+                        );
         }
 
         public RelayCommand ProcessFilesCommand {
             get {
-                  this.processFilesCommand = new RelayCommand(
-                        () => ProcessFiles(),
-                        () => ProcessingDirIsValid() && ReferenceDirIsValid()
-                        );
-                return this.processFilesCommand;
+                  return this.processFilesCommand;
             }
             set {
                 this.processFilesCommand = value;
@@ -51,12 +51,12 @@ namespace QmsHero.ViewModel
         private void ProcessFiles()
         {
 
-
-            //var docEdit = new DocEdit(this.DocHeader);
+            this.manager.FileManager.SetProcessingDir(this.processingDirPath);
+            this.manager.FileManager.SetReferenceDir(this.referenceDirPath);
             var docCollection = this.manager.Process(headerPropertyGroup.ToCollection());
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;
-            MessageBox.Show($"Finished Processing the files. {errorCount} files had errors.");
+            MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
         }
 
         private bool ProcessingDirIsValid()
