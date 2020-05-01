@@ -71,7 +71,7 @@
                         <local:QFilePicker 
                             QIsValid="{Binding ElementName=myCheckBox, Path=IsChecked}" 
                             IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"
-                            QState="{Binding Path=QState, Mode=TwoWay}"/>
+                            QOutput="{Binding Path=QState, RelativeSource={RelativeSource TemplatedParent}}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
@@ -112,7 +112,8 @@
                             ></CheckBox>
                         <local:QFolderPicker 
                             QIsValid="{Binding ElementName=myCheckBox, Path=IsChecked}" 
-                            IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"/>
+                            IsEnabled="{Binding ElementName=myCheckBox, Path=IsChecked}"
+                            QOutput="{Binding Path=QState, RelativeSource={RelativeSource TemplatedParent}}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
