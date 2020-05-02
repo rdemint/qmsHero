@@ -99,5 +99,10 @@ namespace QmsDoc.Docs.Common.Properties
                 .Trim();
             return Results.Ok<QDocProperty>(new FileDocName(nameText));
         }
+
+        public override Result<QDocProperty> Write(object doc, object config)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

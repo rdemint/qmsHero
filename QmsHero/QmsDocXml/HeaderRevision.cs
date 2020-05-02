@@ -113,7 +113,7 @@ namespace QmsDocXml
             return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
         }
 
-        public override bool IsValid(IDocConfig config)
+        public override bool IsValid(object config)
         {
             var wConfig = config as WordDocConfig;
             var xlConfig = config as ExcelDocConfig;

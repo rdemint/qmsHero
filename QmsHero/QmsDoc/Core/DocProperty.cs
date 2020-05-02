@@ -49,9 +49,19 @@ namespace QmsDoc.Core
                 return this.Read(wdoc, wdocConfig);
             }
 
+            if(wdoc!=null && regexConfig != null)
+            {
+                return this.Read(wdoc, regexConfig);
+            }
+
             else if(sdoc!=null && sdocConfig!=null)
             {
                 return this.Read(sdoc, sdocConfig);
+            }
+
+            else if(sdoc!=null && regexConfig!= null)
+            {
+                return this.Read(sdoc, regexConfig);
             }
 
             else if(file!=null && docConfig !=null)
@@ -69,7 +79,7 @@ namespace QmsDoc.Core
 
         }
 
-        public override Result<QDocProperty> Write(object doc, IDocConfig config)
+        public override Result<QDocProperty> Write(object doc, object config)
         {
             //Visitor Pattern
             //switch(doc)

@@ -39,5 +39,9 @@ namespace QmsDoc.Docs.Common.Properties
             return Results.Ok<QDocProperty>(new IsForm(match.Success));
         }
 
+        public override Result<QDocProperty> Write(object doc, object config)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

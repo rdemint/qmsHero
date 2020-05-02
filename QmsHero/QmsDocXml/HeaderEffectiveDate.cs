@@ -110,7 +110,7 @@ namespace QmsDocXml
 
         }
 
-        public override bool IsValid(IDocConfig config)
+        public override bool IsValid(object config)
         {
             var rx = ((WordDocConfig)config).HeaderEffectiveDateRegex;
             var match = rx.Match(this.State.ToString());

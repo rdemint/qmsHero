@@ -49,5 +49,10 @@ namespace QmsDoc.Docs.Common.Properties
             FileUtil.FileRename(file, newFileName);
             return Results.Ok<QDocProperty>(new FileRevision((string)this.State));
         }
+
+        public override Result<QDocProperty> Write(object doc, object config)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

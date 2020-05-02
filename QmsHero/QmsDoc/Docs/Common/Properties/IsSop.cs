@@ -41,5 +41,9 @@ namespace QmsDoc.Docs.Common.Properties
             return Results.Ok<QDocProperty>(new IsSop(match.Success));
         }
 
+        public override Result<QDocProperty> Write(object doc, object config)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

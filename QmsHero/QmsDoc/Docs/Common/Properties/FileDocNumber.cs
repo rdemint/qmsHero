@@ -76,9 +76,9 @@ namespace QmsDoc.Docs.Common.Properties
             
         }
 
-        public override bool IsValid(IDocConfig iconfig)
+        public override bool IsValid(object iConfig)
         {
-            DocConfig config = iconfig as DocConfig;
+            DocConfig config = iConfig as DocConfig;
             Match matchFormState = config.FileFormNumberRegex.Match(this.State.ToString());
             Match matchSopState = config.FileSopNumberRegex.Match(this.State.ToString());
 
@@ -91,6 +91,11 @@ namespace QmsDoc.Docs.Common.Properties
             {
                 return true;
             }
+        }
+
+        public override Result<QDocProperty> Write(object doc, object config)
+        {
+            throw new NotImplementedException();
         }
     }
 }
