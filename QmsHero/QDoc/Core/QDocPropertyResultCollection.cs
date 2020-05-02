@@ -24,7 +24,13 @@ namespace QDoc.Core
 
         public bool HasErrors()
         {
-            return this.Any(result => result.IsFailed);
+            return this.Any(result => result.IsFailed == true);
+        }
+
+        public bool EachItemSharesState()
+        {
+            object stateReference = this.First().Value.State;
+            return this.All(result => result.Value.State == stateReference);
         }
     }
 }

@@ -9,6 +9,7 @@ using FluentResults;
 using QDoc.Core;
 using QDoc.Docs;
 using QDoc.Interfaces;
+using QmsDoc.Core;
 using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Excel
@@ -34,6 +35,12 @@ namespace QmsDoc.Docs.Excel
         }
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
 
+        public Result<DocAction> Process(DocAction action)
+        {
+            return action.Process(this);
+        }
+        
+        
         public override Result<QDocProperty> Process(QDocProperty prop)
         {
             Result<QDocProperty> result;
@@ -66,6 +73,12 @@ namespace QmsDoc.Docs.Excel
             
         }
 
+        public Result<DocAction> Inspect(DocAction action)
+        {
+            return action.Inspect(this);
+        }
+            
+        
         public override Result<QDocProperty> Inspect(QDocProperty prop)
         {
             Result<QDocProperty> result;

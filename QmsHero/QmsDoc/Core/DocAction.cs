@@ -23,6 +23,7 @@ namespace QmsDoc.Core
         public DocAction()
         {
             this.name = this.GetType().Name;
+            this.resultCollection = new QDocPropertyResultCollection();
         }
         
         public DocAction(object state): this()
@@ -32,11 +33,15 @@ namespace QmsDoc.Core
 
         public object State { get => state; set => state = value; }
         public QDocPropertyResultCollection ResultCollection { get => resultCollection; set => resultCollection = value; }
+        public string Name { get => name;}
 
         public abstract Result<DocAction> Inspect(ExcelDoc doc);
 
+        public abstract Result<DocAction> Inspect(WordDoc doc);
+
         public abstract Result<DocAction> Process(WordDoc doc);
 
+        public abstract Result<DocAction> Process(ExcelDoc doc);
 
     }
 }

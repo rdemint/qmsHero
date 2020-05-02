@@ -61,6 +61,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Actions\RenameDocumentTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
     <Compile Include="TextIsCleanTests.cs" />
     <Compile Include="TextFlagTests.cs" />

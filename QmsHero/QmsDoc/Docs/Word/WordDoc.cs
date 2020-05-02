@@ -39,10 +39,14 @@ namespace QmsDoc.Docs.Word
         public List<string> FileExtensions { get => fileExtensions; }
 
 
+        
+        
         public Result<DocAction> Process(DocAction action) 
         {
             return action.Process(this);
         }
+
+
         
         public Result<QDocProperty> Process(QDocProperty prop, Regex rx)
         {
@@ -87,6 +91,11 @@ namespace QmsDoc.Docs.Word
         }
 
 
+        public Result<DocAction> Inspect(DocAction action)
+        {
+            return action.Inspect(this);
+        }
+        
         public override Result<QDocProperty> Inspect(QDocProperty prop)
         {
 
