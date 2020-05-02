@@ -11,17 +11,25 @@
     <Page.Resources>
         <CollectionViewSource x:Key="DocCollectionViewSource" Source="{Binding Path=DocCollection}"/>
         <vm:ResultsViewModel x:Key="ResultViewModelSource" x:Name="ResultsViewModelSource"/>
+        <DataTemplate x:Key="RowDetailErrorTemplate">
+            <ListBox
+                ItemsSource="{Binding Path=PropertyResultCollection}">
+            </ListBox>
+        </DataTemplate>
     </Page.Resources> 
     <Grid DataContext="{Binding Path=DocCollection}">
         <TextBlock Text="Results View Works"/>
-        <DataGrid Name="ResultGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        <DataGrid 
+            Name="ResultGrid" 
+            ItemsSource="{Binding}" 
+            AutoGenerateColumns="False"
+            RowDetailsTemplate="{Binding Source={StaticResource RowDetailErrorTemplate}}">
             <DataGrid.Columns>
-                <DataGridTextColumn 
-                    Header="File" 
-                    Binding="{Binding Path=FileInfo.Name}"
-                    >
-                </DataGridTextColumn> 
-                <DataGridCheckBoxColumn Header="Errors" Binding="{Binding Path=HasErrors}" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn 
+                    Header="Errors" 
+                    Binding="{Binding Path=HasErrors}" 
+                    IsReadOnly="True"
+                    />
                 <DataGridTemplateColumn Header="Link">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
