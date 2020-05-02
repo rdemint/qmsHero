@@ -135,7 +135,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public Result<QDocProperty> Read(WordprocessingDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Read(WordprocessingDocument doc, Regex regex)
         {
             throw new NotImplementedException();
         }
@@ -145,7 +145,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public Result<QDocProperty> Write(WordprocessingDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Write(WordprocessingDocument doc, Regex regex)
         {
             throw new NotImplementedException();
         }
@@ -157,7 +157,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public Result<QDocProperty> Read(SpreadsheetDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Read(SpreadsheetDocument doc, Regex regex)
         {
             throw new NotImplementedException();
         }
@@ -166,7 +166,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public Result<QDocProperty> Write(SpreadsheetDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Write(SpreadsheetDocument doc, Regex regex)
         {
             throw new NotImplementedException();
         }
