@@ -17,7 +17,7 @@ namespace QmsDocXml.Common
     public static class TextXml
     {
 
-        public static Match Search(WordprocessingDocument doc, Regex rx)
+        public static MatchCollection Search(WordprocessingDocument doc, Regex rx)
         {
             string docText = null;
             using (StreamReader sr = new StreamReader(doc.MainDocumentPart.GetStream()))
@@ -25,7 +25,7 @@ namespace QmsDocXml.Common
                 docText = sr.ReadToEnd();
             }
 
-            return rx.Match(docText);
+            return rx.Matches(docText);
             
         }
         

@@ -50,9 +50,9 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, Regex rx)
         {
-            Match match = TextXml.Search(doc, rx);
-            if (match.Success)
-                return Results.Fail(new Error($"The document contains the text, {match.ToString()}"));
+            MatchCollection matches = TextXml.Search(doc, rx);
+            if (matches.Count > 0)
+                return Results.Fail(new Error($"The document contains {matches.Count} matches for '{matches.ToString()}'"));
             else
             {
                 return Results.Ok<QDocProperty>(new TextFindReplace((string)this.State));
