@@ -12,6 +12,7 @@ using QmsDoc.Core;
 using QDoc.Core;
 using QmsDocXml.Common.PropertyGroups;
 using System.IO;
+using System.Diagnostics;
 
 namespace QmsHero.ViewModel
 {
@@ -32,12 +33,17 @@ namespace QmsHero.ViewModel
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
-            this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
-            this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
+            
             this.processFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
                         () => ProcessingDirIsValid() && ReferenceDirIsValid()
                         );
+            //
+            this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference\\qaladder_logo.jpg";
+            this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
+            this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
+            this.ProcessFiles();
+            //
         }
 
         public RelayCommand ProcessFilesCommand {
@@ -57,6 +63,7 @@ namespace QmsHero.ViewModel
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;
             MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
+
         }
 
         private bool ProcessingDirIsValid()
