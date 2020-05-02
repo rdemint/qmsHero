@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using FluentResults;
@@ -36,6 +37,18 @@ namespace QmsDoc.Docs.Word
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public List<string> FileExtensions { get => fileExtensions; }
 
+        
+        public Result<QDocProperty> Process(QDocProperty prop, Regex rx)
+        {
+            Result<QDocProperty> result;
+            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
+            {
+                result = prop.Write(doc, rx);
+            }
+            return result;
+        }
+        
+        
         public override Result<QDocProperty> Process(QDocProperty qprop)
         {
             //try
@@ -75,28 +88,33 @@ namespace QmsDoc.Docs.Word
 
             //try
             //{
-                if (prop as IReadFileInfo != null)
+            if (prop as IReadFileInfo != null)
+            {
+                result = prop.Read(FileInfo, DocConfig);
+            }
+
+            else
+            {
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
                 {
-                    result = prop.Read(FileInfo, DocConfig);
+                    result = prop.Read(doc, DocConfig);
                 }
-                else
-                {
+            }
+            return result;
+
+        }
+            
+            public Result<QDocProperty> Inspect(QDocProperty prop, Regex rx)
+            {
+                Result<QDocProperty> result;
+
                     using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
                     {
-                        result = prop.Read(doc, DocConfig);
+                        result = prop.Read(doc, rx);
                     }
-                }
                 return result;
-            //}
+            }
 
-            //catch(Exception e)
-            //{
-                //return Results.Fail<QDocProperty>(
-                //    new Error("Failed to inspect the document")
-                //    .CausedBy(e)
-                //);
-            //}
-        }
 
         public static List<string> Extensions()
         {

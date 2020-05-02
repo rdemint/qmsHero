@@ -16,8 +16,5 @@ namespace QmsDoc.Interfaces
         Result<QDocProperty> Read(WordprocessingDocument doc, Regex rx);
 
         Result<QDocProperty> Read(SpreadsheetDocument doc, Regex rx);
-
-
-
     }
 }
