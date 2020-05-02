@@ -16,14 +16,8 @@ namespace QDoc.Core
             this.name = this.GetType().Name;
         }
 
-        public QDocProperty(object value) 
+        public QDocProperty(object state): this()
         {
-            this.name = this.GetType().Name;
-            this.state = value;
-        }
-        public QDocProperty(string name, object state)
-        {
-            this.name = this.GetType().Name;
             this.state = state;
         }
 

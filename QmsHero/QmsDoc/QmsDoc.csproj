@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DocAction.cs" />
     <Compile Include="Core\DocAudit.cs" />
     <Compile Include="Core\DocFactory.cs" />
     <Compile Include="Core\DocManager.cs" />

@@ -21,5 +21,10 @@ namespace QDoc.Core
         public QDocPropertyResultCollection(IEnumerable<Result<QDocProperty>> collection) : base(collection)
         {
         }
+
+        public bool HasErrors()
+        {
+            return this.Any(result => result.IsFailed);
+        }
     }
 }

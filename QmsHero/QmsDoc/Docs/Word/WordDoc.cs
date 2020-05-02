@@ -9,6 +9,7 @@ using DocumentFormat.OpenXml.Packaging;
 using FluentResults;
 using QDoc.Core;
 using QDoc.Docs;
+using QmsDoc.Core;
 using QmsDoc.Interfaces;
 
 namespace QmsDoc.Docs.Word
@@ -37,6 +38,11 @@ namespace QmsDoc.Docs.Word
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public List<string> FileExtensions { get => fileExtensions; }
 
+
+        public Result<DocAction> Process(DocAction action) 
+        {
+            return action.Process(this);
+        }
         
         public Result<QDocProperty> Process(QDocProperty prop, Regex rx)
         {

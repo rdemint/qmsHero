@@ -1,5 +1,7 @@
-﻿using QDoc.Core;
+﻿using FluentResults;
+using QDoc.Core;
 using QDoc.Interfaces;
+using QmsDoc.Docs.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +20,12 @@ namespace QDoc.Test
         {
         }
 
-        public QDocPropertyTestClass(string name, object state) : base(name, state)
-        {
-        }
-
-        public override QDocProperty Read(object doc, object docConfig)
+        public override Result<QDocProperty> Read(object doc, object docConfig)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(object doc, IDocConfig docConfig)
+        public override Result<QDocProperty> Write(object doc, object docConfig)
         {
             throw new NotImplementedException();
         }
