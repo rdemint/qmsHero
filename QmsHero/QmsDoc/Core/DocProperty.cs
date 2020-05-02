@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QmsDoc.Core
@@ -39,6 +40,8 @@ namespace QmsDoc.Core
 
             FileInfo file = doc as FileInfo;
             DocConfig docConfig = config as DocConfig;
+
+            Regex regexConfig = config as Regex;
 
 
             if(wdoc!=null && wdocConfig!=null)
@@ -116,15 +119,6 @@ namespace QmsDoc.Core
         }
 
         #endregion
-
-        #region word
-
-        public virtual Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public virtual Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
@@ -134,8 +128,24 @@ namespace QmsDoc.Core
         {
             throw new NotImplementedException();
         }
+        #region word
+
+        public virtual Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Result<QDocProperty> Read(WordprocessingDocument doc, Regex regex)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Result<QDocProperty> Write(WordprocessingDocument doc, Regex regex)
         {
             throw new NotImplementedException();
         }
@@ -147,10 +157,20 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
+        public Result<QDocProperty> Read(SpreadsheetDocument doc, Regex regex)
+        {
+            throw new NotImplementedException();
+        }
         public virtual Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }
+
+        public Result<QDocProperty> Write(SpreadsheetDocument doc, Regex regex)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
 

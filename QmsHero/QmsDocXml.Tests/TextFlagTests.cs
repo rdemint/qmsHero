@@ -27,9 +27,9 @@ namespace QmsDocXml
             result = doc.Inspect(new TextFlag("Raines"));
             Assert.IsFalse(result.IsSuccess);
             result = doc.Inspect(new TextFlag("Maria"));
-
-
-
+            Assert.IsTrue(result.IsSuccess);
+            result = doc.Inspect(new TextFlag("SOP-002, Purchasing and Suppliers Controls"));
+            Assert.IsFalse(result.IsSuccess);
         }
 
         [TestMethod()]
