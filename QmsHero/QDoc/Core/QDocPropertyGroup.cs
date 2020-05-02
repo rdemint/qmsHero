@@ -20,7 +20,7 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public QDocPropertyCollection ToCollection(bool filter = true)
+        public virtual QDocPropertyCollection ToCollection(bool filter = true)
         {
             var collection = new QDocPropertyCollection();
             var docProps = this.GetType().GetProperties();

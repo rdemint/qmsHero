@@ -42,7 +42,7 @@ namespace QmsHero.ViewModel
             this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference\\qaladder_logo.jpg";
             this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
             this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
-            this.ProcessFiles();
+            //this.ProcessFiles();
             //
         }
 

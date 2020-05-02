@@ -22,7 +22,6 @@
         <controls:QCheckTextBox QDisplay="Revision" QOutput="{Binding Path=HeaderPropertyGroup.HeaderRevision.State}"/>
         <Button 
             Command="{Binding ProcessFilesCommand}" 
-            CommandParameter="{Binding ElementName=ProjectDirElement, Path=QOutput}"
             Content="Process Files"/>
     </StackPanel>
 </Page>
