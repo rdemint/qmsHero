@@ -17,13 +17,13 @@ using QmsDocXml.Common;
 
 namespace QmsDocXml
 {
-    public class TextFindReplace : DocProperty
+    public class TextIsClean : DocProperty
     {
-        public TextFindReplace()
+        public TextIsClean()
         {
         }
 
-        public TextFindReplace(object state) : base(state)
+        public TextIsClean(object state) : base(state)
         {
         }
 
@@ -55,7 +55,7 @@ namespace QmsDocXml
                 return Results.Fail(new Error($"The document contains {matches.Count} matches for '{matches.ToString()}'"));
             else
             {
-                return Results.Ok<QDocProperty>(new TextFindReplace((string)this.State));
+                return Results.Ok<QDocProperty>(new TextIsClean((string)this.State));
             }
         }
         

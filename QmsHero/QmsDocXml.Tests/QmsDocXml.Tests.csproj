@@ -62,7 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="HeaderEffectiveDateTests.cs" />
-    <Compile Include="TextFindReplaceTests.cs" />
+    <Compile Include="TextIsCleanTests.cs" />
     <Compile Include="TextFlagTests.cs" />
     <Compile Include="XmlFixture.cs" />
     <Compile Include="FixtureTests.cs" />

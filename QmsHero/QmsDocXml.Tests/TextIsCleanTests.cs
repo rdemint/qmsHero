@@ -11,29 +11,18 @@ using System.Threading.Tasks;
 namespace QmsDocXml.Tests
 {
     [TestClass()]
-    public class TextFindReplaceTests
+    public class TextIsCleanTests
     {
         [TestMethod()]
-        public void TextFindReplaceReadTest()
+        public void TextIsCleanReadWordTest()
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             Regex rx = new Regex("SOP-002*");
-            var result = doc.Inspect(new TextFindReplace(), rx);
+            var result = doc.Inspect(new TextIsClean(), rx);
             Assert.IsTrue(result.IsSuccess);
-
         }
 
-        [TestMethod()]
-        public void TextFindReplaceTest1()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void WriteTest()
-        {
-            Assert.Fail();
-        }
+        
     }
 }
