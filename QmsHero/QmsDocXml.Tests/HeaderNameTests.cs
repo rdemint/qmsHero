@@ -55,7 +55,7 @@ namespace QmsDocXml.Tests
         [TestMethod()]
         public void WriteExcelTest()
         {
-            string docName = "New Procedure (F-001B)";
+            string docName = "New Procedure";
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Process(new HeaderName(docName));

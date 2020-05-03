@@ -78,15 +78,11 @@ namespace QmsDocXml
             {
                 foreach (var header in workSheetPart.Worksheet.Elements<Sxml.HeaderFooter>().ToList())
                 {
-                    Match match = config.HeaderNameRegex.Match(header.OddHeader.Text);
-                    if (match.Success)
+                    Match currentNameMatch = config.HeaderNameRegex.Match(header.OddHeader.Text);
+                    if (currentNameMatch.Success)
                     {
-                        string currentHeaderVerbose = match.ToString();
-                        string currentHeader = currentHeaderVerbose.Replace(config.HeaderNameText, "");
-                        string replaceHeaderVerbose = currentHeaderVerbose.Replace(currentHeader, (string)this.State);
-
-                        string newInnerText = header.OddHeader.Text.Replace(currentHeaderVerbose, replaceHeaderVerbose);
-                        header.OddHeader.Text = newInnerText;
+                        string newHeaderText = header.OddHeader.Text.Replace(currentNameMatch.ToString(), (string)this.State);
+                        header.OddHeader.Text = newHeaderText;
                     }
 
                     else
