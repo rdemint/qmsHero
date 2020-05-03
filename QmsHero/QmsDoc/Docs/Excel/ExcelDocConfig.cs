@@ -47,8 +47,6 @@ namespace QmsDoc.Docs.Excel
             set
             {
                 headerNameText = value;
-                this.HeaderNameRegex = GenerateHeaderNameRegex(headerNameText);
-                //this.HeaderNameRegex = new Regex(Regex.Escape(headerNameText) + @".*[^]");
             }
             }
 
@@ -62,12 +60,5 @@ namespace QmsDoc.Docs.Excel
             this.HeaderNameText = "DOCUMENT NAME: ";
             this.headerNameRegex = new Regex(@"(?<=\: )(.*?)(?= \()");
         }
-
-        public Regex GenerateHeaderNameRegex(string headerNameText)
-        {
-            return new Regex(Regex.Escape(headerNameText) + @".*[^ (]");
-        }
-
-
     }
 }

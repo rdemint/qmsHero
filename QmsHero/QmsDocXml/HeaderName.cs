@@ -103,11 +103,26 @@ namespace QmsDocXml
         {
             Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var par = cell.Elements<Wxml.Paragraph>().First();
-            Wxml.Run firstRunClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
-            par.RemoveAllChildren<Wxml.Run>();
-            firstRunClone.Elements<Wxml.Text>().First().Text = config.HeaderNameText + (string)this.State;
-            par.Append(firstRunClone);
-            return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
+            //Wxml.Run firstRunClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
+            //par.RemoveAllChildren<Wxml.Run>();
+            //firstRunClone.Elements<Wxml.Text>().First().Text = config.HeaderNameText + (string)this.State;
+            //par.Append(firstRunClone);
+            Match currentNameMatch = config.HeaderNameRegex.Match(par.InnerText);
+            if(currentNameMatch.Success)
+            {
+                foreach(var run in par.Elements<Wxml.Run>())
+                {
+                    var textEl = run.Elements<Wxml.Text>().First();
+                    Match runTextMatch = Regex.Match(textEl.Text, currentNameMatch.ToString());
+                    if (runTextMatch.Success)
+                    {
+                        string newRunText = textEl.Text.Replace(runTextMatch.ToString(), (string)this.State);
+                        textEl.Text = newRunText;
+                        return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
+                    }
+                }
+            }
+            return Results.Fail(new Error($"Could not identify the current Name within a run in the text {par.InnerText} to replace with the new name {this.State.ToString()}, using regular expression {config.HeaderNameRegex.ToString()}"));
         }
 
     }

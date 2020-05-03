@@ -91,12 +91,6 @@ namespace QmsDoc.Docs.Word
 
         }
 
-        public Regex GenerateHeaderNameRegex(string headerNameText)
-        {
-            //return new Regex(Regex.Escape(headerNameText) + @".*[^ (]");
-            return new Regex($"((?:?!(?:{HeaderNameText}).*[^ (]");
-
-        }
 
     }
 }

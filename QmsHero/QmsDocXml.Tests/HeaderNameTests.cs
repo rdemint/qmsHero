@@ -40,7 +40,7 @@ namespace QmsDocXml.Tests
         public void WriteWordTest()
         {
             var fixture = new XmlFixture();
-            var docName = "New procedure (SOP-1)";
+            var docName = "New procedure";
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Process(new HeaderName(docName));
             Assert.IsTrue(result.IsSuccess);
