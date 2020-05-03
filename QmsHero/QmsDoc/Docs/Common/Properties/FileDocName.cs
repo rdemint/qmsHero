@@ -57,7 +57,7 @@ namespace QmsDoc.Docs.Common.Properties
 
             string newFileName = file.Name.Replace(currentName, this.State.ToString());
             FileUtil.FileRename(file, newFileName);
-            return Results.Ok();
+            return Results.Ok<QDocProperty>(new FileDocName((string)this.State));
         }
 
         public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
@@ -98,11 +98,6 @@ namespace QmsDoc.Docs.Common.Properties
                 .Replace(file.Extension, "")
                 .Trim();
             return Results.Ok<QDocProperty>(new FileDocName(nameText));
-        }
-
-        public override Result<QDocProperty> Write(object doc, object config)
-        {
-            throw new NotImplementedException();
         }
     }
 }

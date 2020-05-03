@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using FluentResults;
 using QDoc.Core;
+using QDoc.Docs;
 using QmsDoc.Core;
 using QmsDoc.Docs.Common.Properties;
 using QmsDoc.Docs.Excel;
@@ -66,7 +67,22 @@ namespace QmsDocXml.Actions
 
         public override Result<DocAction> Process(ExcelDoc doc)
         {
-            throw new NotImplementedException();
+            return CommonProcess(doc);
+        }
+
+        public Result<DocAction> CommonProcess(Doc doc)
+        {
+            ResultCollection.Add(doc.Process(new HeaderName((string)this.State)));
+            ResultCollection.Add(doc.Process(new FileDocName((string)this.State)));
+            if (ResultCollection.HasErrors())
+            {
+                return Results.Fail(new Error($"The action {this.Name} did not succeed."));
+            }
+
+            else
+            {
+                return Results.Ok<DocAction>(new RenameDocument((string)this.State, ResultCollection));
+            }
         }
     }
 }
