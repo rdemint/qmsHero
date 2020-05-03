@@ -18,8 +18,7 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            Regex rx = new Regex("SOP-002*");
-            var result = doc.Inspect(new TextIsClean(), rx);
+            var result = doc.Inspect(TextIsClean.Instance("SOP-002"));
             Assert.IsTrue(result.IsSuccess);
         }
 

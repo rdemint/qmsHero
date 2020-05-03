@@ -14,85 +14,56 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using QmsDocXml.Common;
+using QmsDoc.Interfaces;
 
 namespace QmsDocXml
 {
-    public class TextIsClean : DocProperty
+    public class TextIsClean : DocProperty, IReadDocRegex
     {
-        public TextIsClean()
+        Regex regex;
+
+        private TextIsClean(): base()
         {
         }
 
-        public TextIsClean(object state) : base(state)
+        public TextIsClean(string state) : this()
         {
+            this.State = state;
+            this.regex = new Regex(state);
         }
 
-        //public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
-        //{
-        //    bool flagFound = false;
-        //    string docText;
-        //    foreach (WorksheetPart worksheetPart in doc.WorkbookPart.WorksheetParts)
-        //    {
-        //        //var textMatch = worksheetPart.Worksheet.Elements<Text>
-        //    }
-        //    if (flagFound == true)
-        //        return Results.Fail(new Error($"The document contains the disallowed text, {this.State.ToString()}."));
-        //    else
-        //    {
-        //        return Results.Ok<QDocProperty>(new TextFlag((string)this.State));
-        //    }
-        //}
-
-        //public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
-        //{
-        //    return base.Read(doc, config);
-        //}
-
-        public override Result<QDocProperty> Read(WordprocessingDocument doc, Regex rx)
+        private TextIsClean(string state, Regex rx) : base(state)
         {
-            MatchCollection matches = TextXml.Search(doc, rx);
+            this.regex = rx;
+        }
+
+        public Regex Regex { get => regex; }
+
+        public override Result<QDocProperty> Read(WordprocessingDocument doc)
+        {
+            MatchCollection matches = TextXml.Search(doc, regex);
             if (matches.Count > 0)
                 return Results.Fail(new Error($"The document contains {matches.Count} matches for '{matches.ToString()}'"));
             else
             {
-                return Results.Ok<QDocProperty>(new TextIsClean((string)this.State));
+                return Results.Ok<QDocProperty>(new TextIsClean((string)this.State, regex));
             }
         }
         
-        public override Result<QDocProperty> Write(WordprocessingDocument doc, Regex rx)
+        public override Result<QDocProperty> Write(WordprocessingDocument doc)
         {
-            TextXml.SearchAndReplace(doc, rx, this.State.ToString());
-            //string docText;
-            ////headers
-            //foreach(var header in doc.MainDocumentPart.HeaderParts.ToList())
-            //{
-            //    var headerMatches = header.RootElement.Elements<Wxml.Text>().Where(text=> text.Text.ToLower().Contains((string)this.State.ToString().ToLower()));
-            //    if (headerMatches.Any())
-            //        foreach(var headerMatch in headerMatches)
-            //        {
-            //            headerMatch.Select(el=> el.Elements<Wxml.Text>()
-            //            .Select(textEl=> textEl.Text.r)
-            //        }
-            //}
-            ////footer
-            //foreach(var footer in doc.MainDocumentPart.FooterParts.ToList())
-            //{
-            //    var footerMatches = footer.RootElement.Elements<Wxml.Text>().Where(text => text.Text.ToLower().Contains((string)this.State.ToString().ToLower()));
-            //    if (footerMatches.Any())
-            //        return Results.Fail(new Error($"The document contains the disallowed text, '{this.State.ToString()}', at least in the footer part."));
-            //}
+            TextXml.SearchAndReplace(doc, this.Regex, this.State.ToString());
+            return Results.Ok<QDocProperty>(TextIsClean.Instance((string)this.State, (string)this.State));
+        }
 
-            ////body
+        public static TextIsClean Instance(string regexFindPattern, string textToFindOrInsert)
+        {
+            return new TextIsClean(textToFindOrInsert, new Regex(regexFindPattern));
+        }
 
-            //var matches = doc.MainDocumentPart.Document
-            //    .Elements<Wxml.Text>()
-            //    .Where(text => text.Text.ToLower()
-            //    .Contains((string)this.State.ToString().ToLower()));
-            //if (matches.Any())
-            //    return Results.Fail(new Error($"The document contains the disallowed text, '{this.State.ToString()}', at least in the body part."));
-
-            TextXml.SearchAndReplace(doc, rx, this.State.ToString());
-            return Results.Ok<QDocProperty>(new TextFlag((string)this.State));
+        public static TextIsClean Instance(string textToFind)
+        {
+            return new TextIsClean(textToFind);
         }
     }
 }

@@ -28,7 +28,25 @@ namespace QmsDoc.Core
         {
         }
 
+        
+        
+        
         #region visitor
+        public override Result<QDocProperty> Read(object doc)
+        {
+            switch(doc)
+            {
+                case WordprocessingDocument wdoc:
+                    return this.Read(wdoc);
+                case SpreadsheetDocument sdoc:
+                    return this.Read(sdoc);
+                default:
+                    return Results.Fail(
+                        new Error("Could not read the document, because it was not identified as a OpenXml WordprocessingDocument or SpreadsheetDocument")
+                            .CausedBy(new DocProcessingException())
+                    );
+            }
+        }
         public override Result<QDocProperty> Read(object doc, object config)
         {
             //Visitor Pattern
@@ -79,6 +97,11 @@ namespace QmsDoc.Core
 
         }
 
+        public override Result<QDocProperty> Write(object doc)
+        {
+            return this.Write(doc);
+        }
+        
         public override Result<QDocProperty> Write(object doc, object config)
         {
             //Visitor Pattern
@@ -145,7 +168,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Read(WordprocessingDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Read(WordprocessingDocument doc)
         {
             throw new NotImplementedException();
         }
@@ -155,7 +178,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(WordprocessingDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Write(WordprocessingDocument doc)
         {
             throw new NotImplementedException();
         }
@@ -167,7 +190,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Read(SpreadsheetDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Read(SpreadsheetDocument doc)
         {
             throw new NotImplementedException();
         }
@@ -176,7 +199,7 @@ namespace QmsDoc.Core
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(SpreadsheetDocument doc, Regex regex)
+        public virtual Result<QDocProperty> Write(SpreadsheetDocument doc)
         {
             throw new NotImplementedException();
         }

@@ -56,7 +56,6 @@
     <Compile Include="Audit\WordAuditRequires.cs" />
     <Compile Include="Common\TextXml.cs" />
     <Compile Include="TextIsClean.cs" />
-    <Compile Include="TextFlag.cs" />
     <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />
     <Compile Include="Common\PropertyGroups\HeaderPropertyGroup.cs" />

@@ -72,8 +72,9 @@ namespace QmsDocXml.Actions
 
         public Result<DocAction> CommonProcess(Doc doc)
         {
-            ResultCollection.Add(doc.Process(new HeaderName((string)this.State)));
-            ResultCollection.Add(doc.Process(new FileDocName((string)this.State)));
+            //ResultCollection.Add(doc.Process(new HeaderName((string)this.State)));
+            //ResultCollection.Add(doc.Process(new FileDocName((string)this.State)));
+            ResultCollection.Add(doc.Process(new TextIsClean((string)this.State)));
             if (ResultCollection.HasErrors())
             {
                 return Results.Fail(new Error($"The action {this.Name} did not succeed."));

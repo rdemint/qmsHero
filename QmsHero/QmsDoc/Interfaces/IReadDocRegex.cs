@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Interfaces
 {
-    interface IReadDocRegex
+    public interface IReadDocRegex
 
     {
-        Result<QDocProperty> Read(WordprocessingDocument doc, Regex rx);
+        Regex Regex { get;}
 
-        Result<QDocProperty> Read(SpreadsheetDocument doc, Regex rx);
+        Result<QDocProperty> Read(WordprocessingDocument doc);
+
+        Result<QDocProperty> Read(SpreadsheetDocument doc);
     }
 }

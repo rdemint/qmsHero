@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace QmsDoc.Interfaces
 {
-    interface IWriteDocRegex
+    public interface IWriteDocRegex
     {
-        Result<QDocProperty> Write(WordprocessingDocument doc, Regex rx);
+        Regex Regex { get; }
+        Result<QDocProperty> Write(WordprocessingDocument doc);
 
-        Result<QDocProperty> Write(SpreadsheetDocument doc, Regex rx);
+        Result<QDocProperty> Write(SpreadsheetDocument doc);
     }
 }

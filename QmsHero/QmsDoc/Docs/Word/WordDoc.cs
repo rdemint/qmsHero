@@ -48,46 +48,33 @@ namespace QmsDoc.Docs.Word
 
 
         
-        public Result<QDocProperty> Process(QDocProperty prop, Regex rx)
-        {
-            Result<QDocProperty> result;
-            using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
-            {
-                result = prop.Write(doc, rx);
-            }
-            return result;
-        }
-        
-        
         public override Result<QDocProperty> Process(QDocProperty qprop)
         {
-            //try
-            //{
-                if (qprop as IWriteFileInfo != null)
+           Result<QDocProperty> result;
+            if (qprop as IWriteFileInfo != null)
                 {
                     return qprop.Write(FileInfo, DocConfig);
                 }
 
-                else
+                else if(qprop as IWriteDocRegex !=null)
+            {
+
+                var prop = qprop as IWriteDocRegex;
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
                 {
-                    Result<QDocProperty> result;
+                    result = prop.Write(doc);
+                }
+                return result;
+            }    
+            
+            else
+                {
                     using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, true))
                     {
-                        //var prop = qprop as DocProperty;
                         result = qprop.Write(doc, DocConfig);
                     }
                     return result;
                 }
-            //}
-
-            //catch(Exception e)
-            //{
-                //return Results.Fail<QDocProperty>(
-                //    new Error("Failed to process the document")
-                //    .CausedBy(e)
-                //);
-            //}
-            
         }
 
 
@@ -108,6 +95,14 @@ namespace QmsDoc.Docs.Word
                 result = prop.Read(FileInfo, DocConfig);
             }
 
+            else if(prop as IReadDocRegex != null) {
+
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
+                {
+                    result = prop.Read(doc);
+                }
+            }
+
             else
             {
                 using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
@@ -119,18 +114,6 @@ namespace QmsDoc.Docs.Word
 
         }
             
-            public Result<QDocProperty> Inspect(QDocProperty prop, Regex rx)
-            {
-                Result<QDocProperty> result;
-
-                    using (WordprocessingDocument doc = WordprocessingDocument.Open(this.FileInfo.FullName, false))
-                    {
-                        result = prop.Read(doc, rx);
-                    }
-                return result;
-            }
-
-
         public static List<string> Extensions()
         {
             return fileExtensions;

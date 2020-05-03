@@ -64,7 +64,6 @@
     <Compile Include="Actions\RenameDocumentTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
     <Compile Include="TextIsCleanTests.cs" />
-    <Compile Include="TextFlagTests.cs" />
     <Compile Include="XmlFixture.cs" />
     <Compile Include="FixtureTests.cs" />
     <Compile Include="HeaderNameTests.cs" />
@@ -132,6 +131,7 @@
   <ItemGroup>
     <Folder Include="Docs\" />
     <Folder Include="Fixtures\Processing\" />
+    <Folder Include="ManagerActions\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
