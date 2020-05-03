@@ -19,7 +19,10 @@ namespace QmsDoc.Docs.Excel
         Regex revisionRegex;
         int logoHeight;
         string headerNameText;
+        string headerNumber;
         Regex headerNameRegex;
+        Regex headerNumberRegex;
+
 
         public ExcelDocConfig(): base()
         {
@@ -44,9 +47,12 @@ namespace QmsDoc.Docs.Excel
             set
             {
                 headerNameText = value;
-                this.HeaderNameRegex = new Regex(Regex.Escape(headerNameText) + @".*\)");
+                this.HeaderNameRegex = GenerateHeaderNameRegex(headerNameText);
+                //this.HeaderNameRegex = new Regex(Regex.Escape(headerNameText) + @".*[^]");
             }
             }
+
+        public string HeaderNumber { get => headerNumber; set => headerNumber = value; }
 
         public void Initialize()
         {
@@ -54,9 +60,14 @@ namespace QmsDoc.Docs.Excel
             this.HeaderEffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.HeaderRevisionText = "Revision: ";
             this.HeaderNameText = "DOCUMENT NAME: ";
-
-
-
+            this.headerNameRegex = new Regex(@"(?<=\: )(.*?)(?= \()");
         }
+
+        public Regex GenerateHeaderNameRegex(string headerNameText)
+        {
+            return new Regex(Regex.Escape(headerNameText) + @".*[^ (]");
+        }
+
+
     }
 }

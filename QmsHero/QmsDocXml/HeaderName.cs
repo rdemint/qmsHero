@@ -57,8 +57,18 @@ namespace QmsDocXml
             Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var par = cell.Elements<Wxml.Paragraph>().First();
             string parText = par.InnerText;
-            string result = parText.Replace(config.HeaderNameText, "");
-            return Results.Ok<QDocProperty>(new HeaderName(result));
+            //string result = parText.Replace(config.HeaderNameText, "");
+            //Match match = config.HeaderNameRegex.Match(result);
+            Match match = config.HeaderNameRegex.Match(parText);
+
+            if (match.Success)
+            {
+            return Results.Ok<QDocProperty>(new HeaderName(match.ToString()));
+            }
+            else
+            {
+                return Results.Fail(new Error($"Could not match for the document name text within, '{parText}'"));
+            }
         }
 
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)

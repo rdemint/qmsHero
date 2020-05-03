@@ -21,8 +21,8 @@ namespace QmsDocXml.Tests
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Inspect(new HeaderName());
             Assert.IsTrue(result.IsSuccess);
-
-            Assert.AreEqual(fixture.WordSampleHeaderName, (string)result.Value.State);
+            //Assert.AreEqual(fixture.WordSampleHeaderName, (string)result.Value.State);
+            Assert.AreEqual(fixture.WordSampleFileDocName, (string)result.Value.State);
         }
 
         [TestMethod()]
@@ -32,8 +32,8 @@ namespace QmsDocXml.Tests
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Inspect(new HeaderName());
             Assert.IsTrue(result.IsSuccess);
-
-            Assert.AreEqual(fixture.ExcelSampleHeaderName, (string)result.Value.State);
+            //Assert.AreEqual(fixture.ExcelSampleHeaderName, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleFileDocName, (string)result.Value.State);
         }
 
         [TestMethod()]

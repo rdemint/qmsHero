@@ -26,6 +26,9 @@ namespace QmsDoc.Docs.Word
         int headerNameRow;
         int headerNameCol;
         string headerNameText;
+        Regex headerNameRegex;
+        string headerNumber;
+        Regex headerNumberRegex;
         
 
         public WordDocConfig():base()
@@ -51,7 +54,17 @@ namespace QmsDoc.Docs.Word
         
         public int HeaderNameRow { get => headerNameRow; set => headerNameRow = value; }
         public int HeaderNameCol { get => headerNameCol; set => headerNameCol = value; }
-        public string HeaderNameText { get => headerNameText; set => headerNameText = value; }
+        public string HeaderNameText { 
+            get => headerNameText;
+            set
+            {
+                headerNameText = value;
+                //this.HeaderNameRegex = GenerateHeaderNameRegex(value);
+            }
+            }
+        public string HeaderNumber { get => headerNumber; set => headerNumber = value; }
+        public Regex HeaderNumberRegex { get => headerNumberRegex; set => headerNumberRegex = value; }
+        public Regex HeaderNameRegex { get => headerNameRegex; set => headerNameRegex = value; }
 
         #endregion
         public void Initialize()
@@ -71,6 +84,18 @@ namespace QmsDoc.Docs.Word
             this.HeaderNameCol = 1;
             this.HeaderNameRow = 0;
             this.HeaderNameText = "DOCUMENT NAME: ";
+            //this.HeaderNameRegex = GenerateHeaderNameRegex(this.HeaderNameText);
+            this.headerNameRegex = new Regex(@"(?<=\: )(.*?)(?= \()");
+
+
+
+        }
+
+        public Regex GenerateHeaderNameRegex(string headerNameText)
+        {
+            //return new Regex(Regex.Escape(headerNameText) + @".*[^ (]");
+            return new Regex($"((?:?!(?:{HeaderNameText}).*[^ (]");
+
         }
 
     }
