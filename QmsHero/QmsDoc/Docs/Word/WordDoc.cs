@@ -93,7 +93,7 @@ namespace QmsDoc.Docs.Word
 
         public Result<DocAction> Inspect(DocAction action)
         {
-            return action.Inspect(this);
+            return action.Audit(this);
         }
         
         public override Result<QDocProperty> Inspect(QDocProperty prop)

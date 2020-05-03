@@ -31,13 +31,18 @@ namespace QmsDoc.Core
             State = state;
         }
 
+        public DocAction(object state, QDocPropertyResultCollection resultCollection): this(state)
+        {
+            ResultCollection = resultCollection;
+        }
+
         public object State { get => state; set => state = value; }
         public QDocPropertyResultCollection ResultCollection { get => resultCollection; set => resultCollection = value; }
         public string Name { get => name;}
 
-        public abstract Result<DocAction> Inspect(ExcelDoc doc);
+        public abstract Result<DocAction> Audit(ExcelDoc doc);
 
-        public abstract Result<DocAction> Inspect(WordDoc doc);
+        public abstract Result<DocAction> Audit(WordDoc doc);
 
         public abstract Result<DocAction> Process(WordDoc doc);
 

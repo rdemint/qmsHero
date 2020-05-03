@@ -75,7 +75,7 @@ namespace QmsDoc.Docs.Excel
 
         public Result<DocAction> Inspect(DocAction action)
         {
-            return action.Inspect(this);
+            return action.Audit(this);
         }
             
         

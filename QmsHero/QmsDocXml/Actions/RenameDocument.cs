@@ -23,13 +23,17 @@ namespace QmsDocXml.Actions
         {
         }
 
-        public override Result<DocAction> Inspect(ExcelDoc doc)
+        public RenameDocument(object state, QDocPropertyResultCollection resultCollection) : base(state, resultCollection)
         {
-            ResultCollection.Add(doc.Inspect(new HeaderName((string)this.State)));
-            ResultCollection.Add(doc.Inspect(new FileDocName((string)this.State)));
+        }
+
+        public override Result<DocAction> Audit(ExcelDoc doc)
+        {
+            ResultCollection.Add(doc.Inspect(new HeaderName()));
+            ResultCollection.Add(doc.Inspect(new FileDocName()));
             if (ResultCollection.EachItemSharesState())
             {
-                return Results.Ok<DocAction>(new RenameDocument((string)this.State));
+                return Results.Ok<DocAction>(new RenameDocument((string)this.State, ResultCollection));
             }
 
             else 
@@ -38,7 +42,7 @@ namespace QmsDocXml.Actions
             }
         }
 
-        public override Result<DocAction> Inspect(WordDoc doc)
+        public override Result<DocAction> Audit(WordDoc doc)
         {
             throw new NotImplementedException();
         }

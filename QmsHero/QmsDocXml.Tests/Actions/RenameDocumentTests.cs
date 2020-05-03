@@ -15,7 +15,7 @@ namespace QmsDocXml.Tests.Actions
     public class RenameDocumentTests
     {
         [TestMethod()]
-        public void InspectWordTest()
+        public void InspectExcelTest()
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);

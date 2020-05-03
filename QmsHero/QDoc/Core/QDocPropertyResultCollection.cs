@@ -29,8 +29,14 @@ namespace QDoc.Core
 
         public bool EachItemSharesState()
         {
-            object stateReference = this.First().Value.State;
-            return this.All(result => result.Value.State == stateReference);
+            var stateReference = this.First().Value.State;
+            bool boolResult = this.All(result => (string)result.Value.State == (string)stateReference);
+
+            foreach(var result in this)
+            {
+                bool tempResult = (string)result.Value.State == (string)stateReference;
+            }
+            return boolResult;
         }
     }
 }
