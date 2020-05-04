@@ -95,15 +95,24 @@ namespace QmsDocXml.Common
                     Match matchPar = rx.Match(par.InnerText);
                     if(matchPar.Success)
                     {
-                        count += ReplaceRunElementText(par.Elements<Wxml.Run>(), rx, replacementText);
+                        count += ReplaceRunElementText(par, par.Elements<Wxml.Run>(), rx, replacementText);
                     }
+
+                else
+                {
+                    //match is split over multiple runs. 
+                    var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
+                    var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
+                    textClone.Text = replacementText;
+                    
+                    runClone.RemoveAllChildren<Wxml.Text>();
+                    par.RemoveAllChildren<Wxml.Run>();
+                    
+                    runClone.AppendChild<Wxml.Text>(textClone);
+                    par.AppendChild<Wxml.Run>(runClone);
+                    return 1;
                 }
-                return count;
-            //}
-            //else
-            //{
-            //    parEls.First().Elements<Wxml.Run>().First().Elements<Wxml.Text>().First().Text = replacementText;
-            //}
+            }
         }
 
         public static int ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
@@ -116,13 +125,13 @@ namespace QmsDocXml.Common
                 {
                     return 1;
                 }
-            else
+                    else
                 {
                 //Result is split over mulitple text elements.
                 var runTextClone = (Wxml.Text)run.Elements<Wxml.Text>().First().Clone();
                 runTextClone.Text = replacementText;
                 run.RemoveAllChildren<Wxml.Run>();
-                par.AppendChild<Wxml.Run>(runTextClone);
+                run.AppendChild<Wxml.Text>(runTextClone);
 
                 }
             }
