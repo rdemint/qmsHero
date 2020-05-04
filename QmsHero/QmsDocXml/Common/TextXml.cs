@@ -93,71 +93,84 @@ namespace QmsDocXml.Common
             var parMatches = parEls.Where(par => rx.IsMatch(par.InnerText));    
             foreach(var par in parMatches)
                 {
-                        count += ReplaceRunElementText(par, par.Elements<Wxml.Run>(), rx, replacementText);
-               }
+                    var result = ReplaceRunElementText(par, par.Elements<Wxml.Run>(), rx, replacementText);
+                        if (result.IsSuccess)
+                            {
+                            count++;
+                            }
+                        else
+                            {
+                            //match is split over multiple runs. 
+                            var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
+                            var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
+                            textClone.Text = replacementText;
 
-                //else
-                //{
-                //    //match is split over multiple runs. 
-                //    var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
-                //    var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
-                //    textClone.Text = replacementText;
-                    
-                //    runClone.RemoveAllChildren<Wxml.Text>();
-                //    par.RemoveAllChildren<Wxml.Run>();
-                    
-                //    runClone.AppendChild<Wxml.Text>(textClone);
-                //    par.AppendChild<Wxml.Run>(runClone);
-                //    count += 1;
-                //}
+                            runClone.RemoveAllChildren<Wxml.Text>();
+                            par.RemoveAllChildren<Wxml.Run>();
+
+                            runClone.AppendChild<Wxml.Text>(textClone);
+                            par.AppendChild<Wxml.Run>(runClone);
+                            count += 1;
+                        }
+
+                }
             return count;
         }
 
-        public static int ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
+        public static Result<string> ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
         {
             foreach(var run in runEls)
             {
-                var referenceRunTexts = run.Descendants<Wxml.Text>();
-                var result = ReplaceTextElementText(referenceRunTexts, rx, replacementText);
-                if(result.IsSuccess)
+                Match runMatch = rx.Match(run.InnerText);
+                if(runMatch.Success)
                 {
-                    return 1;
-                }
-                    else
-                {
-                var textEls = run.Elements<Wxml.Text>().ToList();
-                var runTextClone = (Wxml.Text)textEls.First().Clone();
-                runTextClone.Text = replacementText;
-                string textSum = "";
-                //Result is split over mulitple text elements.
-                for(var i=0; i<textEls.Count(); i++)
+                    var referenceRunTexts = run.Descendants<Wxml.Text>();
+                    var result = ReplaceTextElementText(referenceRunTexts, rx, replacementText);
+                    if (result.IsSuccess)
                     {
-                        textSum += textEls[i].InnerText;
-                        Match matchInnerText = rx.Match(textSum);
-                        if(matchInnerText.Success)
-                        {
-                            //The list of Text elements whose concatenated InnerText yields the match.
-                            List<Wxml.Text> textElsToDelete = new List<Wxml.Text>();
-                            for(var j=0; j<=i; j++)
-                            {
-                                textElsToDelete.Add(textEls[j]);
-                            }
-                            foreach(var el in textElsToDelete)
-                            {
-                                run.RemoveChild<Wxml.Text>(el);
-                            }
-
-                            run.PrependChild<Wxml.Text>(runTextClone);
-                        }
+                        return result;
                     }
-                //run.RemoveAllChildren<Wxml.Run>();
-                run.AppendChild<Wxml.Text>(runTextClone);
-
+                    else
+                    {
+                        var modifyResult = ModifyRunChildren(run, rx, replacementText);
+                        if (modifyResult.IsSuccess)
+                            return modifyResult;
+                    }
                 }
+                
             }
-            return 1;
+            return Results.Fail(new Error("No match"));
         }
 
+        private static Result<string> ModifyRunChildren(Wxml.Run run, Regex rx, string replacementText)
+        {
+            var textEls = run.Elements<Wxml.Text>().ToList();
+            var runTextClone = (Wxml.Text)textEls.First().Clone();
+            runTextClone.Text = replacementText;
+            string textSum = "";
+            for (var i = 0; i < textEls.Count(); i++)
+            {
+                textSum += textEls[i].InnerText;
+                Match matchInnerText = rx.Match(textSum);
+                if (matchInnerText.Success)
+                {
+                    //The list of Text elements whose concatenated InnerText yields the match.
+                    List<Wxml.Text> textElsToDelete = new List<Wxml.Text>();
+                    for (var j = 0; j <= i; j++)
+                    {
+                        textElsToDelete.Add(textEls[j]);
+                    }
+                    foreach (var el in textElsToDelete)
+                    {
+                        run.RemoveChild<Wxml.Text>(el);
+                    }
+
+                    run.PrependChild<Wxml.Text>(runTextClone);
+                    return Results.Ok<string>("Match success");
+                }
+            }
+            return Results.Fail(new Error("Match not successful"));
+        }
         public static Result<string> ReplaceTextElementText(IEnumerable<Wxml.Text> textEls, Regex rx, string replacementText)
         {
             int replacedCount = 0;
