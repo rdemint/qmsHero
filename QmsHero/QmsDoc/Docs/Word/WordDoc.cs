@@ -41,7 +41,7 @@ namespace QmsDoc.Docs.Word
 
         
         
-        public Result<DocAction> Process(DocAction action) 
+        public Result<DocPropertyGroupManager> Process(DocPropertyGroupManager action) 
         {
             return action.Process(this);
         }
@@ -78,7 +78,7 @@ namespace QmsDoc.Docs.Word
         }
 
 
-        public Result<DocAction> Inspect(DocAction action)
+        public Result<DocPropertyGroupManager> Inspect(DocPropertyGroupManager action)
         {
             return action.Audit(this);
         }

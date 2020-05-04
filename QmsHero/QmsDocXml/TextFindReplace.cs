@@ -18,27 +18,27 @@ using QmsDoc.Interfaces;
 
 namespace QmsDocXml
 {
-    public class TextIsClean : DocProperty, IReadDocRegex, IWriteDocRegex
+    public class TextFindReplace : DocProperty, IReadDocRegex, IWriteDocRegex
     {
         Regex regex;
         int count;
 
-        private TextIsClean(): base()
+        private TextFindReplace(): base()
         {
         }
 
-        public TextIsClean(string state) : this()
+        public TextFindReplace(string state) : this()
         {
             this.State = state;
             this.regex = new Regex(state);
         }
 
-        private TextIsClean(string state, Regex rx) : base(state)
+        private TextFindReplace(string state, Regex rx) : base(state)
         {
             this.regex = rx;
         }
 
-        private TextIsClean(string state, Regex rx, int replacedCount): base(state)
+        private TextFindReplace(string state, Regex rx, int replacedCount): base(state)
         {
             this.regex = rx;
             this.count = replacedCount;
@@ -53,11 +53,11 @@ namespace QmsDocXml
 
             if (count > 0)
             {
-                return Results.Ok<QDocProperty>(TextIsClean.Create((string)this.State, regex.ToString(), count));
+                return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
             }
             else
             {
-                return Results.Ok<QDocProperty>(TextIsClean.Create((string)this.State, regex.ToString(), count));
+                return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
             }
         }
         
@@ -94,7 +94,7 @@ namespace QmsDocXml
 
             //final check
             if (referenceCount == replacedCount)
-                return Results.Ok<QDocProperty>(TextIsClean.Create(this.Regex.ToString(), (string)this.State, replacedCount));
+                return Results.Ok<QDocProperty>(TextFindReplace.Create(this.Regex.ToString(), (string)this.State, replacedCount));
 
             else
             {
@@ -102,19 +102,19 @@ namespace QmsDocXml
             }
         }
 
-        public static TextIsClean Create(string findPattern, string replacementText)
+        public static TextFindReplace Create(string findPattern, string replacementText)
         {
-            return new TextIsClean(replacementText, new Regex(findPattern));
+            return new TextFindReplace(replacementText, new Regex(findPattern));
         }
 
-        public static TextIsClean Create(string findPattern)
+        public static TextFindReplace Create(string findPattern)
         {
-            return new TextIsClean(findPattern);
+            return new TextFindReplace(findPattern);
         }
 
-        private static TextIsClean Create(string findPattern, string replacementText, int count)
+        private static TextFindReplace Create(string findPattern, string replacementText, int count)
         {
-            return new TextIsClean(replacementText, new Regex(findPattern), count);
+            return new TextFindReplace(replacementText, new Regex(findPattern), count);
         }
 
     }

@@ -19,7 +19,7 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Inspect(new RenameDocument());
+            var result = doc.Inspect(new DocNameManager());
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.ExcelSampleDocName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.ExcelSampleDocName);
@@ -31,7 +31,7 @@ namespace QmsDocXml.Tests.Actions
             string newName = "My New SOP";
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Process(new RenameDocument("My New SOP"));
+            var result = doc.Process(new DocNameManager("My New SOP"));
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);

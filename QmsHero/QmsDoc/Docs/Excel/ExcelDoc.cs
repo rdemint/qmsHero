@@ -35,7 +35,7 @@ namespace QmsDoc.Docs.Excel
         }
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
 
-        public Result<DocAction> Process(DocAction action)
+        public Result<DocPropertyGroupManager> Process(DocPropertyGroupManager action)
         {
             return action.Process(this);
         }
@@ -73,7 +73,7 @@ namespace QmsDoc.Docs.Excel
             
         }
 
-        public Result<DocAction> Inspect(DocAction action)
+        public Result<DocPropertyGroupManager> Inspect(DocPropertyGroupManager action)
         {
             return action.Audit(this);
         }

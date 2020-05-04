@@ -18,7 +18,7 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Inspect(TextIsClean.Create("SOP-002"));
+            var result = doc.Inspect(TextFindReplace.Create("SOP-002"));
             Assert.IsFalse(result.IsSuccess);
         }
 
@@ -27,15 +27,15 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Process(TextIsClean.Create("SOP-002", "SOP-222"));
+            var result = doc.Process(TextFindReplace.Create("SOP-002", "SOP-222"));
             Assert.IsTrue(result.IsSuccess);
-            var casted = result.Value as TextIsClean;
+            var casted = result.Value as TextFindReplace;
             Assert.AreEqual(casted.Count, 8);
-            var result2 = doc.Inspect(TextIsClean.Create("SOP-222"));
-            var casted2 = result2.Value as TextIsClean;
+            var result2 = doc.Inspect(TextFindReplace.Create("SOP-222"));
+            var casted2 = result2.Value as TextFindReplace;
             Assert.AreEqual(casted2.Count, 8);
-            var result3 = doc.Inspect(TextIsClean.Create("SOP-002"));
-            var casted3 = result3.Value as TextIsClean;
+            var result3 = doc.Inspect(TextFindReplace.Create("SOP-002"));
+            var casted3 = result3.Value as TextFindReplace;
             Assert.AreEqual(casted3.Count, 0);
 
 
