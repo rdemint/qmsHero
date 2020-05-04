@@ -103,7 +103,10 @@ namespace QmsDocXml.Common
                             //match is split over multiple runs. 
                             var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
                             var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
-                            textClone.Text = replacementText;
+
+                    string matchText = rx.Match(par.InnerText).ToString();
+                    string newInnerText = par.InnerText.Replace(matchText, replacementText);
+                    textClone.Text = newInnerText;
 
                             runClone.RemoveAllChildren<Wxml.Text>();
                             par.RemoveAllChildren<Wxml.Run>();
@@ -132,7 +135,7 @@ namespace QmsDocXml.Common
                     }
                     else
                     {
-                        var modifyResult = ModifyRunChildren(run, rx, replacementText);
+                        var modifyResult = ModifyRunTextChildren(run, rx, replacementText);
                         if (modifyResult.IsSuccess)
                             return modifyResult;
                     }
@@ -142,7 +145,7 @@ namespace QmsDocXml.Common
             return Results.Fail(new Error("No match"));
         }
 
-        private static Result<string> ModifyRunChildren(Wxml.Run run, Regex rx, string replacementText)
+        private static Result<string> ModifyRunTextChildren(Wxml.Run run, Regex rx, string replacementText)
         {
             var textEls = run.Elements<Wxml.Text>().ToList();
             var runTextClone = (Wxml.Text)textEls.First().Clone();
