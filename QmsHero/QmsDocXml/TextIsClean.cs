@@ -41,9 +41,12 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc)
         {
-            MatchCollection matches = TextXml.Search(doc, regex);
-            if (matches.Count > 0)
-                return Results.Fail(new Error($"The document contains {matches.Count} matches for '{matches.ToString()}'"));
+            int count = TextXml.SearchCount(doc, regex);
+
+            if (count > 0)
+            {
+                return Results.Fail(new Error($"The document contains {count} matches for '{regex.ToString()}'"));
+            }
             else
             {
                 return Results.Ok<QDocProperty>(new TextIsClean((string)this.State, regex));
@@ -52,16 +55,35 @@ namespace QmsDocXml
         
         public override Result<QDocProperty> Write(WordprocessingDocument doc)
         {
-            TextXml.SearchAndReplace(doc, this.Regex, this.State.ToString());
-            return Results.Ok<QDocProperty>(TextIsClean.Instance((string)this.State, (string)this.State));
+
+            int referenceCount = TextXml.SearchCount(doc, this.regex);
+
+            int replacedCount = 0;
+            //main
+            foreach(var header in doc.MainDocumentPart.HeaderParts)
+            {
+                MatchCollection matches = this.regex.Matches(header.Header.InnerText) {
+                    if(matches.Count > 0)
+                    {
+                        var textEls = header.RootElement.Elements<Wxml.Text>().Where(textEl=> this.regex.Matches(textEl.Text).Count > 0);
+                        
+                    }
+                }
+            }
+
+            //header
+
+            //footer
+
+            //image
         }
 
-        public static TextIsClean Instance(string regexFindPattern, string textToFindOrInsert)
+        public static TextIsClean Create(string regexFindPattern, string textToFindOrInsert)
         {
             return new TextIsClean(textToFindOrInsert, new Regex(regexFindPattern));
         }
 
-        public static TextIsClean Instance(string textToFind)
+        public static TextIsClean Create(string textToFind)
         {
             return new TextIsClean(textToFind);
         }

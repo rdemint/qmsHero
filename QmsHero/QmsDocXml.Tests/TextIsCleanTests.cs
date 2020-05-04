@@ -18,8 +18,8 @@ namespace QmsDocXml.Tests
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Inspect(TextIsClean.Instance("SOP-002"));
-            Assert.IsTrue(result.IsSuccess);
+            var result = doc.Inspect(TextIsClean.Create("SOP-002"));
+            Assert.IsFalse(result.IsSuccess);
         }
 
         

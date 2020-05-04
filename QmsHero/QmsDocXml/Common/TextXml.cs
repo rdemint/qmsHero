@@ -43,6 +43,70 @@ namespace QmsDocXml.Common
                 {
                     sw.Write(docText);
                 }
-            }
         }
+
+        public static List<MatchCollection> SearchInnerText(WordprocessingDocument doc, Regex rx)
+        {
+            List<MatchCollection> matches = new List<MatchCollection>();
+            matches.Add(rx.Matches(doc.MainDocumentPart.Document.InnerText));
+            
+            
+            if(doc.MainDocumentPart.HeaderParts.Any())
+            foreach(var headerPart in doc.MainDocumentPart.HeaderParts)
+            {
+                matches.Add(rx.Matches(headerPart.Header.InnerText));
+            }
+
+            if(doc.MainDocumentPart.FooterParts.Any())
+            foreach(var footerPart in doc.MainDocumentPart.FooterParts)
+            {
+                matches.Add(rx.Matches(footerPart.Footer.InnerText));
+            }
+
+            if(doc.MainDocumentPart.ImageParts.Any())
+            foreach(var imagePart in doc.MainDocumentPart.ImageParts)
+            {
+                    matches.Add(rx.Matches(imagePart.RootElement.InnerText));
+            }
+
+            return matches;
+
+        }
+
+        public static int SearchCount(WordprocessingDocument doc, Regex rx) {
+
+            var matches = SearchInnerText(doc, rx);
+            int count = 0;
+            foreach (var match in matches)
+            {
+                count += match.Count;
+            }
+            return count;
+
+        }
+
+        public static int ReplaceTextElementText(IEnumerable<Wxml.Text> textEls, Regex rx, string replacementText)
+        {
+            int replacedCount = 0;
+            
+            if (textEls.Any())
+            {
+                foreach (var textEl in textEls)
+                {
+                    var match = rx.Match(textEl.Text);
+                    if (match.Success)
+                    {
+                        string newText = textEl.Text.Replace(match.ToString(), replacementText);
+                        textEl.Text = newText;
+                        replacedCount += 1;
+                    }
+                }
+            }
+            return replacedCount;
+        }
+
+
+    }
+
+
     }
