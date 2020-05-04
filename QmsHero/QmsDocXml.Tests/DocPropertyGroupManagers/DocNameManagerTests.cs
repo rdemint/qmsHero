@@ -19,7 +19,7 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Inspect(DocNameManager.Create());
+            var result = doc.Inspect(DocNameManager.Create(fixture.ExcelSampleDocName));
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.ExcelSampleDocName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.ExcelSampleDocName);
@@ -30,14 +30,14 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Inspect(DocNameManager.Create());
+            var result = doc.Inspect(DocNameManager.Create(fixture.WordSampleFileDocName));
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.WordSampleFileDocName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.WordSampleFileDocName);
         }
 
         [TestMethod]
-        public void ProcessTest()
+        public void ProcessWordTest()
         {
             string newName = "My New SOP";
             var fixture = new XmlFixture();
@@ -46,6 +46,15 @@ namespace QmsDocXml.Tests.Actions
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);
+        }
+
+        [TestMethod]
+        public void ProcessExcelTest()
+        {
+            string newName = "My New SOP";
+            var fixture = new XmlFixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            var result = doc.Process(DocNameManager.Create("Document Control Index", "Better Index"));
         }
     }
 }

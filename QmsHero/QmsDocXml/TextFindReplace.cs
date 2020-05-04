@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using QmsDocXml.Common;
 using QmsDoc.Interfaces;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace QmsDocXml
 {
@@ -109,7 +110,22 @@ namespace QmsDocXml
         }
         public override Result<QDocProperty> Write(SpreadsheetDocument doc)
         {
-            throw new NotImplementedException();
+            int count = 0;
+
+            foreach (var worksheetPart in doc.WorkbookPart.WorksheetParts)
+            {
+                foreach (var worksheet in worksheetPart.Worksheet)
+                {
+                    var worksheetMatches = this.regex.Matches(worksheet.InnerText);
+                    count += worksheetMatches.Count;
+                    }
+                }
+            if(count>0)
+                return Results.Fail(new Error($"There are {count} instances of {this.regex.ToString()} that were not replaced."));
+            else
+            {
+                return Results.Ok<QDocProperty>(TextFindReplace.Create(this.regex.ToString(), (string)this.State, count));
+            }
 
         }
 

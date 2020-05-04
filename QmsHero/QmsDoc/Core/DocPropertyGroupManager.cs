@@ -19,6 +19,8 @@ namespace QmsDoc.Core
         object currentState;
         object targetState;
         string name;
+        int count;
+
         QDocPropertyResultCollection resultCollection;
 
         protected DocPropertyGroupManager()
@@ -27,28 +29,36 @@ namespace QmsDoc.Core
             this.resultCollection = new QDocPropertyResultCollection();
         }
 
+        protected DocPropertyGroupManager(object currentState): this()
+        {
+            this.currentState = currentState;
+        }
+
         protected DocPropertyGroupManager(object currentState, object targetState) : this()
         {
             CurrentState = currentState;
             TargetState = targetState;
         }
 
-        protected DocPropertyGroupManager(object currentState, QDocPropertyResultCollection resultCollection): this()        {
+        protected DocPropertyGroupManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount): this()        {
             CurrentState = currentState;
             ResultCollection = resultCollection;
+            Count = foundCount;
         }
 
-        protected DocPropertyGroupManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection): this()
+        protected DocPropertyGroupManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count): this()
         {
             ResultCollection = resultCollection;
             CurrentState = currentState;
             TargetState = targetState;
+            Count = count;
         }
 
         public object CurrentState { get => currentState; set => currentState = value; }
         public object TargetState { get => targetState; set => targetState = value; }
         public QDocPropertyResultCollection ResultCollection { get => resultCollection; set => resultCollection = value; }
         public string Name { get => name;}
+        public int Count { get => count; set => count = value; }
 
         public abstract Result<DocPropertyGroupManager> Inspect(ExcelDoc doc);
 
@@ -58,5 +68,14 @@ namespace QmsDoc.Core
 
         public abstract Result<DocPropertyGroupManager> Process(ExcelDoc doc);
 
+        public int SuccessCount()
+        {
+            return this.ResultCollection.Where(result => result.IsSuccess).Count();
+        }
+
+        public int FailureCount()
+        {
+            return this.ResultCollection.Where(result => result.IsFailed).Count();
+        }
     }
 }

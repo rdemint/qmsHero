@@ -38,6 +38,14 @@ namespace QmsDocXml.Tests
         }
 
         [TestMethod]
+        public void TextReplaceExcelTest()
+        {
+            var fixture = new XmlFixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            var result = doc.Inspect(TextFindReplace.Create(fixture.ExcelSampleDocNumber, "F-012Z"));
+        }
+
+        [TestMethod]
         public void TextIsCleanWriteWordTest()
         {
             var fixture = new XmlFixture();
