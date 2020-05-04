@@ -88,38 +88,52 @@ namespace QmsDocXml.Common
         public static int ReplaceParagraphElementText(IEnumerable<Wxml.Paragraph> parEls, Regex rx, string replacementText)
         {
             int count = 0;
-            foreach(var par in parEls)
-            {
-                Match matchPar = rx.Match(par.InnerText);
-                if(matchPar.Success)
+            //.Elements<Wxml.Run>().First().InnerText != replacementText)
+            //{
+                foreach(var par in parEls)
                 {
-                    count += ReplaceRunElementText(par.Elements<Wxml.Run>(), rx, replacementText);
+                    Match matchPar = rx.Match(par.InnerText);
+                    if(matchPar.Success)
+                    {
+                        count += ReplaceRunElementText(par.Elements<Wxml.Run>(), rx, replacementText);
+                    }
                 }
-            }
-            return count;
+                return count;
+            //}
+            //else
+            //{
+            //    parEls.First().Elements<Wxml.Run>().First().Elements<Wxml.Text>().First().Text = replacementText;
+            //}
         }
 
-        public static int ReplaceRunElementText(IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
+        public static int ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
         {
-            var referenceRun = (Wxml.Run)runEls.First();
-            var referenceRunNewText = (Wxml.Text)referenceRun.Descendants<Wxml.Text>().First().Clone();
-            referenceRunNewText.Text = replacementText;
-            //Delete current elements
-            //par.RemoveAllChildren<Wxml.Run>();
+            foreach(var run in runEls)
+            {
+                var referenceRunTexts = run.Descendants<Wxml.Text>();
+                var result = ReplaceTextElementText(referenceRunTexts, rx, replacementText);
+                if(result.IsSuccess)
+                {
+                    return 1;
+                }
+            else
+                {
+                //Result is split over mulitple text elements.
+                var runTextClone = (Wxml.Text)run.Elements<Wxml.Text>().First().Clone();
+                runTextClone.Text = replacementText;
+                run.RemoveAllChildren<Wxml.Run>();
+                par.AppendChild<Wxml.Run>(runTextClone);
 
-            referenceRun.RemoveAllChildren<Wxml.Run>();
-            referenceRun.Append(referenceRunNewText);
-
+                }
+            }
             return 1;
         }
 
-        public static int ReplaceTextElementText(IEnumerable<Wxml.Text> textEls, Regex rx, string replacementText)
+        public static Result<string> ReplaceTextElementText(IEnumerable<Wxml.Text> textEls, Regex rx, string replacementText)
         {
             int replacedCount = 0;
             
-            if (textEls.Any())
-            {
-                foreach (var textEl in textEls)
+            foreach (var textEl in textEls)
                 {
                     var match = rx.Match(textEl.Text);
                     if (match.Success)
@@ -127,10 +141,11 @@ namespace QmsDocXml.Common
                         string newText = textEl.Text.Replace(match.ToString(), replacementText);
                         textEl.Text = newText;
                         replacedCount += 1;
+                        return Results.Ok<string>(match.ToString());
                     }
                 }
-            }
-            return replacedCount;
+            return Results.Fail(new Error("Did not match Text text"));
+        }
         }
 
 
