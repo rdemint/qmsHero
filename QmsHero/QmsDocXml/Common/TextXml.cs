@@ -90,29 +90,27 @@ namespace QmsDocXml.Common
             int count = 0;
             //.Elements<Wxml.Run>().First().InnerText != replacementText)
             //{
-                foreach(var par in parEls)
+            var parMatches = parEls.Where(par => rx.IsMatch(par.InnerText));    
+            foreach(var par in parMatches)
                 {
-                    Match matchPar = rx.Match(par.InnerText);
-                    if(matchPar.Success)
-                    {
                         count += ReplaceRunElementText(par, par.Elements<Wxml.Run>(), rx, replacementText);
-                    }
+               }
 
-                else
-                {
-                    //match is split over multiple runs. 
-                    var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
-                    var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
-                    textClone.Text = replacementText;
+                //else
+                //{
+                //    //match is split over multiple runs. 
+                //    var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
+                //    var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
+                //    textClone.Text = replacementText;
                     
-                    runClone.RemoveAllChildren<Wxml.Text>();
-                    par.RemoveAllChildren<Wxml.Run>();
+                //    runClone.RemoveAllChildren<Wxml.Text>();
+                //    par.RemoveAllChildren<Wxml.Run>();
                     
-                    runClone.AppendChild<Wxml.Text>(textClone);
-                    par.AppendChild<Wxml.Run>(runClone);
-                    return 1;
-                }
-            }
+                //    runClone.AppendChild<Wxml.Text>(textClone);
+                //    par.AppendChild<Wxml.Run>(runClone);
+                //    count += 1;
+                //}
+            return count;
         }
 
         public static int ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
