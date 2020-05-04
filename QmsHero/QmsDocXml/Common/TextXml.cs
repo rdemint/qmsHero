@@ -125,10 +125,32 @@ namespace QmsDocXml.Common
                 }
                     else
                 {
-                //Result is split over mulitple text elements.
-                var runTextClone = (Wxml.Text)run.Elements<Wxml.Text>().First().Clone();
+                var textEls = run.Elements<Wxml.Text>().ToList();
+                var runTextClone = (Wxml.Text)textEls.First().Clone();
                 runTextClone.Text = replacementText;
-                run.RemoveAllChildren<Wxml.Run>();
+                string textSum = "";
+                //Result is split over mulitple text elements.
+                for(var i=0; i<textEls.Count(); i++)
+                    {
+                        textSum += textEls[i].InnerText;
+                        Match matchInnerText = rx.Match(textSum);
+                        if(matchInnerText.Success)
+                        {
+                            //The list of Text elements whose concatenated InnerText yields the match.
+                            List<Wxml.Text> textElsToDelete = new List<Wxml.Text>();
+                            for(var j=0; j<=i; j++)
+                            {
+                                textElsToDelete.Add(textEls[j]);
+                            }
+                            foreach(var el in textElsToDelete)
+                            {
+                                run.RemoveChild<Wxml.Text>(el);
+                            }
+
+                            run.PrependChild<Wxml.Text>(runTextClone);
+                        }
+                    }
+                //run.RemoveAllChildren<Wxml.Run>();
                 run.AppendChild<Wxml.Text>(runTextClone);
 
                 }
@@ -154,9 +176,4 @@ namespace QmsDocXml.Common
             return Results.Fail(new Error("Did not match Text text"));
         }
         }
-
-
-    }
-
-
     }
