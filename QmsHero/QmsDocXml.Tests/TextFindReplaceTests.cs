@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace QmsDocXml.Tests
 {
     [TestClass()]
-    public class TextIsCleanTests
+    public class TextFindReplaceTests
     {
         [TestMethod()]
         public void TextIsCleanReadWordTest()
@@ -19,7 +20,21 @@ namespace QmsDocXml.Tests
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Inspect(TextFindReplace.Create("SOP-002"));
-            Assert.IsFalse(result.IsSuccess);
+            Assert.IsTrue(result.IsSuccess);
+            var casted = result.Value as TextFindReplace;
+            Assert.AreEqual(casted.Count, 8);
+        }
+
+        [TestMethod]
+        public void TextFindExcelTest()
+        {
+            var fixture = new XmlFixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            var result = doc.Inspect(TextFindReplace.Create(fixture.ExcelSampleDocNumber));
+            Assert.IsTrue(result.IsSuccess);
+            var casted = result.Value as TextFindReplace;
+            Assert.AreEqual(casted.Count, 1);
+
         }
 
         [TestMethod]

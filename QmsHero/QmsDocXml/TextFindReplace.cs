@@ -102,6 +102,17 @@ namespace QmsDocXml
             }
         }
 
+        public override Result<QDocProperty> Read(SpreadsheetDocument doc)
+        {
+            int count = TextXml.SearchCount(doc, this.regex);
+            return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
+        }
+        public override Result<QDocProperty> Write(SpreadsheetDocument doc)
+        {
+            throw new NotImplementedException();
+
+        }
+
         public static TextFindReplace Create(string findPattern, string replacementText)
         {
             return new TextFindReplace(replacementText, new Regex(findPattern));

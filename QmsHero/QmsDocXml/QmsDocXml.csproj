@@ -50,7 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\RenameDocument.cs" />
+    <Compile Include="DocPropertyGroupManagers\DocNameManager.cs" />
     <Compile Include="Audit\ExcelAuditRequires.cs" />
     <Compile Include="Audit\HeaderAudit.cs" />
     <Compile Include="Audit\WordAuditRequires.cs" />

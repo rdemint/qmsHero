@@ -17,31 +17,31 @@ namespace QmsDoc.Core
     {
         //Coordinates updates to QDocProperties
         object currentState;
-        int currentStateCount;
         object targetState;
-        int targetStateCount;
         string name;
         QDocPropertyResultCollection resultCollection;
 
-        public DocPropertyGroupManager()
+        protected DocPropertyGroupManager()
         {
             this.name = this.GetType().Name;
             this.resultCollection = new QDocPropertyResultCollection();
         }
-        
-        public DocPropertyGroupManager(object currentState): this()
+
+        protected DocPropertyGroupManager(object currentState, object targetState) : this()
         {
             CurrentState = currentState;
+            TargetState = targetState;
         }
 
-        public DocPropertyGroupManager(object currentState, QDocPropertyResultCollection resultCollection): this(currentState)
-        {
+        protected DocPropertyGroupManager(object currentState, QDocPropertyResultCollection resultCollection): this()        {
+            CurrentState = currentState;
             ResultCollection = resultCollection;
         }
 
-        public DocPropertyGroupManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection): this(currentState)
+        protected DocPropertyGroupManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection): this()
         {
             ResultCollection = resultCollection;
+            CurrentState = currentState;
             TargetState = targetState;
         }
 
@@ -49,12 +49,10 @@ namespace QmsDoc.Core
         public object TargetState { get => targetState; set => targetState = value; }
         public QDocPropertyResultCollection ResultCollection { get => resultCollection; set => resultCollection = value; }
         public string Name { get => name;}
-        public int TargetStateCount { get => targetStateCount; set => targetStateCount = value; }
-        public int CurrentStateCount { get => currentStateCount; set => currentStateCount = value; }
 
-        public abstract Result<DocPropertyGroupManager> Audit(ExcelDoc doc);
+        public abstract Result<DocPropertyGroupManager> Inspect(ExcelDoc doc);
 
-        public abstract Result<DocPropertyGroupManager> Audit(WordDoc doc);
+        public abstract Result<DocPropertyGroupManager> Inspect(WordDoc doc);
 
         public abstract Result<DocPropertyGroupManager> Process(WordDoc doc);
 

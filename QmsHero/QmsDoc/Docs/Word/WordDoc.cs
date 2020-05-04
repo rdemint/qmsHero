@@ -80,7 +80,7 @@ namespace QmsDoc.Docs.Word
 
         public Result<DocPropertyGroupManager> Inspect(DocPropertyGroupManager action)
         {
-            return action.Audit(this);
+            return action.Inspect(this);
         }
         
         public override Result<QDocProperty> Inspect(QDocProperty prop)

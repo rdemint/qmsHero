@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
-using QmsDocXml.Actions;
+using QmsDocXml.DocPropertyGroupManagers;
 using QmsDocXml.Tests;
 using System;
 using System.Collections.Generic;
@@ -12,26 +12,37 @@ using System.Threading.Tasks;
 namespace QmsDocXml.Tests.Actions
 {
     [TestClass()]
-    public class RenameDocumentTests
+    public class DocNameManagerTests
     {
         [TestMethod()]
         public void InspectExcelTest()
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Inspect(new DocNameManager());
+            var result = doc.Inspect(DocNameManager.Create());
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.ExcelSampleDocName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.ExcelSampleDocName);
         }
 
+        [TestMethod()]
+        public void InspectWordTest()
+        {
+            var fixture = new XmlFixture();
+            var doc = new WordDoc(fixture.WordSampleCopy);
+            var result = doc.Inspect(DocNameManager.Create());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.WordSampleFileDocName);
+            Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.WordSampleFileDocName);
+        }
+
         [TestMethod]
-        public void ProcessExcelTest()
+        public void ProcessTest()
         {
             string newName = "My New SOP";
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Process(new DocNameManager("My New SOP"));
+            var result = doc.Process(DocNameManager.Create("Document Control Index", "Better Index"));
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);

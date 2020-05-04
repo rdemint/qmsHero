@@ -61,9 +61,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Actions\RenameDocumentTests.cs" />
+    <Compile Include="DocPropertyGroupManagers\DocNameManagerTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
-    <Compile Include="TextIsCleanTests.cs" />
+    <Compile Include="TextFindReplaceTests.cs" />
     <Compile Include="XmlFixture.cs" />
     <Compile Include="FixtureTests.cs" />
     <Compile Include="HeaderNameTests.cs" />

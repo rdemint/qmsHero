@@ -99,7 +99,18 @@ namespace QmsDoc.Core
 
         public override Result<QDocProperty> Write(object doc)
         {
-            return this.Write(doc);
+            switch (doc)
+            {
+                case WordprocessingDocument wdoc:
+                    return this.Write(wdoc);
+                case SpreadsheetDocument sdoc:
+                    return this.Write(sdoc);
+                default:
+                    return Results.Fail(
+                        new Error("Could not process the document, because it was not identified as a OpenXml WordprocessingDocument or SpreadsheetDocument")
+                            .CausedBy(new DocProcessingException())
+                    );
+            }
         }
         
         public override Result<QDocProperty> Write(object doc, object config)

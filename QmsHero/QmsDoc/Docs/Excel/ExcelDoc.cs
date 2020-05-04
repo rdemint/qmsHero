@@ -45,37 +45,33 @@ namespace QmsDoc.Docs.Excel
         {
             Result<QDocProperty> result;
 
-            //try
-            //{
-                if(prop as IWriteFileInfo != null)
+            if(prop as IWriteFileInfo != null)
+            {
+                result = prop.Write(FileInfo, DocConfig);
+            }
+                
+            else if(prop as IWriteDocRegex !=null)
+            {
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
                 {
-                    result = prop.Write(FileInfo, DocConfig);
+                    result = prop.Write(doc);
                 }
-                else
+            }
+            else
+            {
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
                 {
-                    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
-                    {
-                       result = prop.Write(doc, DocConfig);
-                    }
+                    result = prop.Write(doc, DocConfig);
                 }
+            }
 
-                return result;
-            //}
-
-            //catch (Exception e)
-            //{
-            //    //return Results.Fail<QDocProperty>(
-            //    //    new Error("Failed to process the document")
-            //    //    .CausedBy(e)
-            //    //    );
-            //}
-            
+            return result;
             
         }
 
         public Result<DocPropertyGroupManager> Inspect(DocPropertyGroupManager action)
         {
-            return action.Audit(this);
+            return action.Inspect(this);
         }
             
         
@@ -83,28 +79,26 @@ namespace QmsDoc.Docs.Excel
         {
             Result<QDocProperty> result;
              
-            //try
-            //{
-                if(prop as IReadFileInfo != null)
+            if(prop as IReadFileInfo != null)
+                {
+                    result = prop.Read(FileInfo, DocConfig);
+                }
+
+            else if (prop as IReadDocRegex != null)
+            {
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, true))
+                {
+                    result = prop.Read(doc);
+                }
+            }
+            else
+                {
+                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
                     {
-                        result = prop.Read(FileInfo, DocConfig);
+                    result = prop.Read(doc, DocConfig);
                     }
-                 else
-                    {
-                    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(this.FileInfo.FullName, false))
-                        {
-                       result = prop.Read(doc, DocConfig);
-                        }
-                    }
-                return result;
-            //}
-            //catch (Exception e)
-            //{
-                //return Results.Fail<QDocProperty>(
-                //    new Error("Failed to inspect the document")
-                //    .CausedBy(e)
-                //);
-            //}
+                }
+            return result;
         }
 
         public static List<string> Extensions()

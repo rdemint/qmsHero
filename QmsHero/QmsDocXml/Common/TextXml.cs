@@ -73,6 +73,21 @@ namespace QmsDocXml.Common
 
         }
 
+        public static List<MatchCollection> SearchInnerText(SpreadsheetDocument doc, Regex rx)
+        {
+            List<MatchCollection> matches = new List<MatchCollection>();
+
+            foreach (var worksheetPart in doc.WorkbookPart.WorksheetParts)
+            {
+                //header
+                foreach (var worksheet in worksheetPart.Worksheet)
+                {
+                    matches.Add(rx.Matches(worksheet.InnerText));
+                }
+            }
+            return matches;
+        }
+
         public static int SearchCount(WordprocessingDocument doc, Regex rx) {
 
             var matches = SearchInnerText(doc, rx);
@@ -83,6 +98,17 @@ namespace QmsDocXml.Common
             }
             return count;
 
+        }
+
+        public static int SearchCount(SpreadsheetDocument doc, Regex rx)
+        {
+            var matches = SearchInnerText(doc, rx);
+            int count = 0;
+            foreach (var match in matches)
+            {
+                count += match.Count;
+            }
+            return count;
         }
 
         public static int ReplaceParagraphElementText(IEnumerable<Wxml.Paragraph> parEls, Regex rx, string replacementText)
