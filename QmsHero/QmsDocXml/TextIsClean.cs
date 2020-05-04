@@ -18,9 +18,10 @@ using QmsDoc.Interfaces;
 
 namespace QmsDocXml
 {
-    public class TextIsClean : DocProperty, IReadDocRegex
+    public class TextIsClean : DocProperty, IReadDocRegex, IWriteDocRegex
     {
         Regex regex;
+        int count;
 
         private TextIsClean(): base()
         {
@@ -37,7 +38,14 @@ namespace QmsDocXml
             this.regex = rx;
         }
 
+        private TextIsClean(string state, Regex rx, int replacedCount): base(state)
+        {
+            this.regex = rx;
+            this.count = replacedCount;
+        }
+
         public Regex Regex { get => regex; }
+        public int Count { get => count; }
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc)
         {
@@ -45,11 +53,11 @@ namespace QmsDocXml
 
             if (count > 0)
             {
-                return Results.Fail(new Error($"The document contains {count} matches for '{regex.ToString()}'"));
+                return Results.Ok<QDocProperty>(TextIsClean.Create((string)this.State, regex.ToString(), count));
             }
             else
             {
-                return Results.Ok<QDocProperty>(new TextIsClean((string)this.State, regex));
+                return Results.Ok<QDocProperty>(TextIsClean.Create((string)this.State, regex.ToString(), count));
             }
         }
         
@@ -60,32 +68,54 @@ namespace QmsDocXml
 
             int replacedCount = 0;
             //main
+            var mainTextEls = doc.MainDocumentPart.Document.Descendants<Wxml.Paragraph>().ToList();
+            replacedCount += TextXml.ReplaceParagraphElementText(mainTextEls, this.regex, (string)this.State);
+
+            //header
             foreach(var header in doc.MainDocumentPart.HeaderParts)
             {
-                MatchCollection matches = this.regex.Matches(header.Header.InnerText) {
-                    if(matches.Count > 0)
+                MatchCollection matches = this.regex.Matches(header.Header.InnerText);
+                if(matches.Count > 0)
                     {
-                        var textEls = header.RootElement.Elements<Wxml.Text>().Where(textEl=> this.regex.Matches(textEl.Text).Count > 0);
-                        
+                        var textEls = header.RootElement.Descendants<Wxml.Paragraph>().Where(textEl=> this.regex.Matches(textEl.InnerText).Count > 0);
+                        replacedCount += TextXml.ReplaceParagraphElementText(textEls, this.regex, (string)this.State);
                     }
+            }
+            //footer
+            foreach (var footer in doc.MainDocumentPart.FooterParts)
+            {
+                MatchCollection matches = this.regex.Matches(footer.Footer.InnerText);
+                if (matches.Count > 0)
+                {
+                    var textEls = footer.RootElement.Descendants<Wxml.Paragraph>().Where(textEl => this.regex.Matches(textEl.InnerText).Count > 0);
+                    replacedCount += TextXml.ReplaceParagraphElementText(textEls, this.regex, (string)this.State);
                 }
             }
 
-            //header
+            //final check
+            if (referenceCount == replacedCount)
+                return Results.Ok<QDocProperty>(TextIsClean.Create(this.Regex.ToString(), (string)this.State, replacedCount));
 
-            //footer
-
-            //image
+            else
+            {
+                return Results.Fail(new Error($"{referenceCount} suspected occurences of pattern '{this.regex.ToString()}', and {replacedCount} were replaced with new text {(string)this.State}."));
+            }
         }
 
-        public static TextIsClean Create(string regexFindPattern, string textToFindOrInsert)
+        public static TextIsClean Create(string findPattern, string replacementText)
         {
-            return new TextIsClean(textToFindOrInsert, new Regex(regexFindPattern));
+            return new TextIsClean(replacementText, new Regex(findPattern));
         }
 
-        public static TextIsClean Create(string textToFind)
+        public static TextIsClean Create(string findPattern)
         {
-            return new TextIsClean(textToFind);
+            return new TextIsClean(findPattern);
         }
+
+        private static TextIsClean Create(string findPattern, string replacementText, int count)
+        {
+            return new TextIsClean(replacementText, new Regex(findPattern), count);
+        }
+
     }
 }

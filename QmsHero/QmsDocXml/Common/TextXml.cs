@@ -85,6 +85,34 @@ namespace QmsDocXml.Common
 
         }
 
+        public static int ReplaceParagraphElementText(IEnumerable<Wxml.Paragraph> parEls, Regex rx, string replacementText)
+        {
+            int count = 0;
+            foreach(var par in parEls)
+            {
+                Match matchPar = rx.Match(par.InnerText);
+                if(matchPar.Success)
+                {
+                    count += ReplaceRunElementText(par.Elements<Wxml.Run>(), rx, replacementText);
+                }
+            }
+            return count;
+        }
+
+        public static int ReplaceRunElementText(IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
+        {
+            var referenceRun = (Wxml.Run)runEls.First();
+            var referenceRunNewText = (Wxml.Text)referenceRun.Descendants<Wxml.Text>().First().Clone();
+            referenceRunNewText.Text = replacementText;
+            //Delete current elements
+            //par.RemoveAllChildren<Wxml.Run>();
+
+            referenceRun.RemoveAllChildren<Wxml.Run>();
+            referenceRun.Append(referenceRunNewText);
+
+            return 1;
+        }
+
         public static int ReplaceTextElementText(IEnumerable<Wxml.Text> textEls, Regex rx, string replacementText)
         {
             int replacedCount = 0;
