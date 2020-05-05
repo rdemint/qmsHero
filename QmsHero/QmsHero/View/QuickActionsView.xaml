@@ -10,12 +10,13 @@
       Title="QuickActionsView">
 
     <StackPanel Orientation="Vertical">
-        <TextBox Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
+        <TextBox Text="Select the files to work with."/>
         <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
         <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
-        <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding DocNameManager.CurrentState}"/>
-        <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding DocNameManager.TargetState}"/>
+        <TextBox Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
+        <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding CurrentDocumentName}"/>
+        <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding NewDocumentName}"/>
         <Button Command="{Binding ProcessFilesCommand}"  Content="Rename"/>
-        <Button Command="{Binding ProcessFilesCommand}" Content="Inspect"/>
+        <Button Command="{Binding InspectFilesCommand}" Content="Inspect"/>
     </StackPanel>
 </Page>

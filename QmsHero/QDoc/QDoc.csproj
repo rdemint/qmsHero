@@ -60,6 +60,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\QDocPropertyGroupManager.cs" />
     <Compile Include="Core\QDocConfig.cs" />
     <Compile Include="Core\QDocPropertyGroup.cs" />
     <Compile Include="Core\QDocAudit.cs" />

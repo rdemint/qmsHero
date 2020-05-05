@@ -75,6 +75,11 @@ namespace QDoc.Docs
             return collection;
         }
 
+        public Result<QDocActionManager> Process(QDocActionManager action)
+        {
+            return action.Process(this);
+        }
+
         public abstract Result<QDocProperty> Inspect(QDocProperty prop);
 
 

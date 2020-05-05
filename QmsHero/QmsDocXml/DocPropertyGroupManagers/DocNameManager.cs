@@ -42,7 +42,7 @@ namespace QmsDocXml.DocPropertyGroupManagers
             var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
-                Count += 1;
+                count += 1;
             }
             ResultCollection.Add(fileResult);
             consistencyCheck.Add(fileResult);
@@ -57,7 +57,7 @@ namespace QmsDocXml.DocPropertyGroupManagers
             var result = doc.Inspect(TextFindReplace.Create((string)this.CurrentState));
             var findResult = result.Value as TextFindReplace;
             ResultCollection.Add(result);
-            Count += findResult.Count;
+            count += findResult.Count;
             if (ResultCollection.HasErrors())
             {
 
@@ -69,7 +69,7 @@ namespace QmsDocXml.DocPropertyGroupManagers
                     .Create(
                     (string)ResultCollection.First().Value.State.ToString(),
                     ResultCollection,
-                    Count));
+                    count));
             }
         }
         
@@ -165,7 +165,7 @@ namespace QmsDocXml.DocPropertyGroupManagers
             if (fileDocName == (string)this.CurrentState)
             {
                 ResultCollection.Add(doc.Process(new FileDocName((string)this.TargetState)));
-                Count++;
+                count++;
             }
 
             var result = doc.Process(
@@ -177,7 +177,7 @@ namespace QmsDocXml.DocPropertyGroupManagers
             if(result.IsSuccess)
             {
                 var replaceResult = result.Value as TextFindReplace;
-                Count += replaceResult.Count;
+                count += replaceResult.Count;
             }
 
             if (ResultCollection.HasErrors())

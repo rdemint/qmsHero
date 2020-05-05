@@ -23,6 +23,8 @@ namespace QmsHero.ViewModel
         string processingDirPath;
         ResultsViewModel resultsViewModel;
         DocNameManager docNameManager;
+        string currentDocumentName;
+        string newDocumentName;
 
         public QuickActionsViewModel()
         {
@@ -67,14 +69,26 @@ namespace QmsHero.ViewModel
 
         public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
         public DocNameManager DocNameManager { get => docNameManager; set => docNameManager = value; }
-
-        private void ProcessFiles()
+        public string NewDocumentName { 
+            get => newDocumentName;
+            set{ Set<string>(() => NewDocumentName, ref newDocumentName, value); }}
+        public string CurrentDocumentName
         {
+            get => currentDocumentName;
+            set { Set<string>(()=> CurrentDocumentName, ref currentDocumentName, value);}}
 
+        
+        private void ConfigManagerDir()
+        {
             this.manager.FileManager.SetProcessingDir(this.processingDirPath);
             this.manager.FileManager.SetReferenceDir(this.referenceDirPath);
-            //var docCollection = this.manager.Process(headerPropertyGroup.ToCollection());
-            var docCollection = new DocCollection();
+        }
+        
+        private void ProcessFiles()
+        {
+            this.ConfigManagerDir();
+            var docNameManager = DocNameManager.Create(currentDocumentName);
+            var docCollection = this.manager.Process(docNameManager);
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;
             MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
@@ -93,7 +107,14 @@ namespace QmsHero.ViewModel
 
         private bool CanProcessFiles()
         {
-            return manager.CanProcessFiles();
+            return manager.CanProcessFiles() && DocNameManager.CurrentState !=null ;
+        }
+
+        private bool CanInspectFiles()
+        {
+            return manager.CanProcessFiles() &&
+                DocNameManager.CurrentState != null &&
+                DocNameManager.TargetState != null;
         }
     }
 }

@@ -1,20 +1,15 @@
 ﻿using FluentResults;
-using DocumentFormat.OpenXml.Packaging;
-using Wxml = DocumentFormat.OpenXml.Wordprocessing;
-using Sxml = DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QmsDoc.Docs.Word;
-using QmsDoc.Docs.Excel;
 using QDoc.Core;
-using GalaSoft.MvvmLight;
+using QDoc.Docs;
 
-namespace QmsDoc.Core
+namespace QDoc.Core
 {
-    public abstract class DocPropertyGroupManager
+    public abstract class QDocActionManager
     {
         //Coordinates updates to QDocProperties
         protected object currentState;
@@ -24,30 +19,30 @@ namespace QmsDoc.Core
 
         QDocPropertyResultCollection resultCollection;
 
-        protected DocPropertyGroupManager()
+        protected QDocActionManager()
         {
             this.name = this.GetType().Name;
             this.resultCollection = new QDocPropertyResultCollection();
         }
 
-        protected DocPropertyGroupManager(object currentState): this()
+        protected QDocActionManager(object currentState): this()
         {
             this.currentState = currentState;
         }
 
-        protected DocPropertyGroupManager(object currentState, object targetState) : this()
+        protected QDocActionManager(object currentState, object targetState) : this()
         {
             this.currentState = currentState;
             this.targetState = targetState;
         }
 
-        protected DocPropertyGroupManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount): this()        {
+        protected QDocActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount): this()        {
             this.currentState = currentState;
             this.resultCollection = resultCollection;
             this.count = foundCount;
         }
 
-        protected DocPropertyGroupManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count): this()
+        protected QDocActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count): this()
         {
             ResultCollection = resultCollection;
             this.currentState = currentState;
@@ -70,13 +65,10 @@ namespace QmsDoc.Core
             get => count;
         }
 
-        public abstract Result<DocPropertyGroupManager> Inspect(ExcelDoc doc);
+        public abstract Result<QDocActionManager> Inspect(Doc doc);
 
-        public abstract Result<DocPropertyGroupManager> Inspect(WordDoc doc);
+        public abstract Result<QDocActionManager> Process(Doc doc);
 
-        public abstract Result<DocPropertyGroupManager> Process(WordDoc doc);
-
-        public abstract Result<DocPropertyGroupManager> Process(ExcelDoc doc);
 
         public int SuccessCount()
         {

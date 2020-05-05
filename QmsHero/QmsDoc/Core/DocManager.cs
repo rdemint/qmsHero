@@ -23,7 +23,7 @@ namespace QmsDoc.Core
             this.DocFactory = new DocFactory();
         }
 
-        public DocManager(IFileCopyManager fManager)
+        public DocManager(IFileCopyManager fManager): base()
         {
             //This Constructor useful in unit tests where concrete fixture can be passed
             this.FileManager = fManager;
@@ -32,16 +32,40 @@ namespace QmsDoc.Core
 
         }
 
+        public virtual DocCollection Process(DocPropertyGroupManager docPropManager)
+        {
+            DocCollection docCollection = new DocCollection();
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var docResult = this.DocFactory.CreateDoc(file);
+                if (docResult.IsSuccess)
+                {
+                    var doc = docResult.Value;
+                    doc.PropertyResultCollection = doc.Process(docPropManager);
+                    docCollection.Add(doc);
+                }
+            }
+
+            return docCollection;
+        }
+
         //public override DocCollection Process(QDocPropertyCollection docPropCollection)
         //{
 
         //    DocCollection docCollection = new DocCollection();
-        //    foreach(var file in this.FileManager.ProcessingFiles)
+        //    foreach (var file in this.FileManager.ProcessingFiles)
         //    {
-        //        var doc = this.DocFactory.CreateDoc(file);
-        //        var result = doc?.Process(docPropCollection);
-        //        doc.PropertiesCollection = result;
-        //        docCollection.Add(doc);
+        //        var docResult = this.DocFactory.CreateDoc(file);
+        //        if(docResult.IsSuccess)
+        //        {
+        //            var doc = docResult.Value;
+        //            var processResult = doc.Process(docPropCollection);
+        //            foreach(var res in processResult)
+        //            {
+        //                doc.PropertyResultCollection.Add(res);
+        //            }
+        //            docCollection.Add(doc);
+        //        }
         //    }
 
         //    return docCollection;
@@ -49,29 +73,34 @@ namespace QmsDoc.Core
         //public override DocCollection Process(QDocProperty docProp)
         //{
         //    DocCollection docCollection = new DocCollection();
-
         //    foreach (var file in this.FileManager.ProcessingFiles)
         //    {
-        //        var doc = this.DocFactory.CreateDoc(file);
-        //        Result<QDocProperty> result = doc?.Process(docProp);
-        //        doc.PropertiesCollection.Add(result);
-        //        docCollection.Add(doc);
+        //        var docResult = this.DocFactory.CreateDoc(file);
+        //        if (docResult.IsSuccess)
+        //        {
+        //            var doc = docResult.Value;
+        //            var processResult = doc.Process(docProp);
+        //            doc.PropertyResultCollection.Add(processResult);
+        //            docCollection.Add(doc);
+        //        }
         //    }
+
         //    return docCollection;
         //}
 
-        //public DocCollection Inspect(QDocPropertyCollection collection)
+        //public override DocCollection Inspect(QDocPropertyCollection collection)
         //{
         //    DocCollection docCollection = new DocCollection();
         //    foreach (var file in this.FileManager.ProcessingFiles)
         //    {
-        //        var doc = this.DocFactory.CreateDoc(file);
-        //        if(doc != null)
+        //        var docResult = this.DocFactory.CreateDoc(file);
+        //        if (docResult.IsSuccess)
         //        {
-        //            foreach(var prop in collection)
+        //            var doc = docResult.Value;
+        //            foreach (var prop in collection)
         //            {
         //                var propResult = doc.Inspect(prop);
-        //                doc.PropertiesCollection.Add(propResult);
+        //                doc.PropertyResultCollection.Add(propResult);
         //            }
         //            docCollection.Add(doc);
         //        }

@@ -52,6 +52,8 @@ namespace QDoc.Core
             return this.fileManager.IsReadyToCopy();
         }
 
+        
+        
         public virtual Result<QDocProperty> Process(FileInfo file, QDocProperty docProp)
         {
             var docResult = DocFactory.CreateDoc(file);
@@ -62,6 +64,8 @@ namespace QDoc.Core
                 return Results.Fail(new Error("Could not process file"));
             }
         }
+
+        
 
         public virtual DocCollection Process(QDocPropertyCollection docPropCollection)
         {
@@ -99,7 +103,7 @@ namespace QDoc.Core
             return docCollection;
         }
 
-        public DocCollection Inspect(QDocPropertyCollection docPropCollection)
+        public virtual DocCollection Inspect(QDocPropertyCollection docPropCollection)
         {
             DocCollection docCollection = new DocCollection();
             foreach (var file in this.FileManager.ProcessingFiles)
