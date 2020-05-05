@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace LadderControls.Commands
+namespace QControls.Commands
 {
     public class ShowFileDialogCommand: ICommand
     {

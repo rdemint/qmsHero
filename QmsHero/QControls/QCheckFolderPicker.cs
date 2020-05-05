@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace LadderControls
+namespace QControls
 {
     class QCheckFolderPicker: QFolderPicker
     {

@@ -87,15 +87,23 @@
     <Compile Include="ViewModel\ConfigViewModel.cs" />
     <Compile Include="ViewModel\DCNViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\QuickActionsViewModel.cs" />
     <Compile Include="ViewModel\ResultsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\CustomProcessingView.xaml.cs">
       <DependentUpon>CustomProcessingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\QuickActionsView.xaml.cs">
+      <DependentUpon>QuickActionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\DCNView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuickActionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

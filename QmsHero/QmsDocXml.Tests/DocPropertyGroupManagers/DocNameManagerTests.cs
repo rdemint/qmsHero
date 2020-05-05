@@ -54,7 +54,7 @@ namespace QmsDocXml.Tests.Actions
         [TestMethod]
         public void ProcessExcelTest()
         {
-            string newName = "Better Index";
+            string newName = "Better Index" ;
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Process(DocNameManager.Create("Document Control Index", newName));

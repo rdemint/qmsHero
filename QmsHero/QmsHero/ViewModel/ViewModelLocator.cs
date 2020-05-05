@@ -15,10 +15,6 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
-using System.ComponentModel;
-using QDoc.Interfaces;
-using QDoc.Core;
-using QDoc.Docs;
 using QmsDoc.Core;
 using QmsDoc.Docs.Word;
 using QmsDoc.Docs.Excel;
@@ -52,6 +48,7 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<CustomProcessingViewModel>();
             SimpleIoc.Default.Register<DCNViewModel>();
             SimpleIoc.Default.Register<ResultsViewModel>();
+            SimpleIoc.Default.Register<QuickActionsViewModel>();
 
             SimpleIoc.Default.Register<DocManager>();
             SimpleIoc.Default.Register<ProcessingResultsStore>();
@@ -88,6 +85,11 @@ namespace QmsHero.ViewModel
         public ResultsViewModel ResultsViewModel
         {
             get => ServiceLocator.Current.GetInstance<ResultsViewModel>();
+        }
+
+        public QuickActionsViewModel QuickActionsViewModel
+        {
+            get => ServiceLocator.Current.GetInstance<QuickActionsViewModel>();
         }
 
         public static void Cleanup()
