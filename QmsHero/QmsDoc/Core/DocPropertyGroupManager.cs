@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 using QmsDoc.Docs.Word;
 using QmsDoc.Docs.Excel;
 using QDoc.Core;
+using GalaSoft.MvvmLight;
 
 namespace QmsDoc.Core
 {
-    public abstract class DocPropertyGroupManager
+    public abstract class DocPropertyGroupManager: ObservableObject
     {
         //Coordinates updates to QDocProperties
         object currentState;
@@ -54,11 +55,30 @@ namespace QmsDoc.Core
             Count = count;
         }
 
-        public object CurrentState { get => currentState; set => currentState = value; }
-        public object TargetState { get => targetState; set => targetState = value; }
+        public object CurrentState
+        {
+            get => currentState;
+            set { 
+                Set<object>(() => CurrentState, ref currentState, value);
+            }
+        }
+        public object TargetState
+        {
+            get => targetState;
+            set { 
+                Set<object>(() => TargetState, ref targetState, value);
+            }
+        }
         public QDocPropertyResultCollection ResultCollection { get => resultCollection; set => resultCollection = value; }
         public string Name { get => name;}
-        public int Count { get => count; set => count = value; }
+        public int Count
+        {
+            get => count;
+            set {
+                Set<int>(() => Count, ref count, value);
+
+            }
+        }
 
         public abstract Result<DocPropertyGroupManager> Inspect(ExcelDoc doc);
 

@@ -4,15 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:QmsHero.View"
-      xmlns:controls="clr-namespace:QControls"
+      xmlns:controls="clr-namespace:QControls;assembly=QControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="QuickActionsView">
 
-    <Grid>
-        <controls:QCheckBox QDisplay="Document Name"/>
-        <controls:QCheckBox QDisplay="Document Number"/>
-        <Button Command="ProcessFiles" Content="Process Files"/>
-        <Button Command="InspectFiles" Content="Inspect Files"/>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBox Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
+        <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
+        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
+        <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding DocNameManager.CurrentState}"/>
+        <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding DocNameManager.TargetState}"/>
+        <Button Command="{Binding ProcessFilesCommand}"  Content="Rename"/>
+        <Button Command="{Binding ProcessFilesCommand}" Content="Inspect"/>
+    </StackPanel>
 </Page>

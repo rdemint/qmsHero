@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using QDoc.Core;
 using QDoc.Docs;
 using QmsDoc.Core;
+using QmsDocXml.DocPropertyGroupManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace QmsHero.ViewModel
         string referenceDirPath;
         string processingDirPath;
         ResultsViewModel resultsViewModel;
+        DocNameManager docNameManager;
 
         public QuickActionsViewModel()
         {
@@ -32,7 +34,6 @@ namespace QmsHero.ViewModel
                         () => ProcessFiles(),
                         () => ProcessingDirIsValid() && ReferenceDirIsValid()
                         );
-            //
             this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
             this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
         }
@@ -63,6 +64,10 @@ namespace QmsHero.ViewModel
             }
 
         }
+
+        public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
+        public DocNameManager DocNameManager { get => docNameManager; set => docNameManager = value; }
+
         private void ProcessFiles()
         {
 

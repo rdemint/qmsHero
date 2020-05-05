@@ -1,4 +1,5 @@
 ﻿using QDoc.Core;
+using QDoc.Docs;
 using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,12 @@ namespace QDoc.Test
         {
         }
 
-        public override void Process(QDocProperty docProp)
+        public override DocCollection Process(QDocProperty docProp)
         {
             throw new NotImplementedException();
         }
 
-        public override void Process(QDocPropertyCollection docState)
+        public override DocCollection Process(QDocPropertyCollection docState)
         {
             throw new NotImplementedException();
         }
