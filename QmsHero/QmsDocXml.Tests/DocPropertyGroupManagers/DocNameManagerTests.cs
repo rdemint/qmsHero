@@ -21,8 +21,10 @@ namespace QmsDocXml.Tests.Actions
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Inspect(DocNameManager.Create(fixture.ExcelSampleDocName));
             Assert.IsTrue(result.IsSuccess);
+
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.ExcelSampleDocName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.ExcelSampleDocName);
+            Assert.AreEqual(result.Value.Count, 2);
         }
 
         [TestMethod()]
@@ -34,6 +36,7 @@ namespace QmsDocXml.Tests.Actions
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.WordSampleFileDocName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.WordSampleFileDocName);
+            Assert.AreEqual(result.Value.Count, 18);
         }
 
         [TestMethod]
@@ -41,8 +44,8 @@ namespace QmsDocXml.Tests.Actions
         {
             string newName = "My New SOP";
             var fixture = new XmlFixture();
-            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Process(DocNameManager.Create("Document Control Index", "Better Index"));
+            var doc = new WordDoc(fixture.WordSampleCopy);
+            var result = doc.Process(DocNameManager.Create("Quality Manual", newName));
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
             Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);
@@ -51,10 +54,14 @@ namespace QmsDocXml.Tests.Actions
         [TestMethod]
         public void ProcessExcelTest()
         {
-            string newName = "My New SOP";
+            string newName = "Better Index";
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Process(DocNameManager.Create("Document Control Index", "Better Index"));
+            var result = doc.Process(DocNameManager.Create("Document Control Index", newName));
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
+            Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);
+
         }
     }
 }

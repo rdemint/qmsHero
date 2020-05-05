@@ -119,7 +119,7 @@ namespace QmsDocXml.Common
             var parMatches = parEls.Where(par => rx.IsMatch(par.InnerText));    
             foreach(var par in parMatches)
                 {
-                    var result = ReplaceRunElementText(par, par.Elements<Wxml.Run>(), rx, replacementText);
+                    var result = ReplaceRunElementText(par, par.Descendants<Wxml.Run>(), rx, replacementText);
                         if (result.IsSuccess)
                             {
                             count++;
@@ -127,12 +127,12 @@ namespace QmsDocXml.Common
                         else
                             {
                             //match is split over multiple runs. 
-                            var runClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
-                            var textClone = (Wxml.Text)runClone.Elements<Wxml.Text>().First().Clone();
+                            var runClone = (Wxml.Run)par.Descendants<Wxml.Run>().First().Clone();
+                            var textClone = (Wxml.Text)runClone.Descendants<Wxml.Text>().First().Clone();
 
-                    string matchText = rx.Match(par.InnerText).ToString();
-                    string newInnerText = par.InnerText.Replace(matchText, replacementText);
-                    textClone.Text = newInnerText;
+                            string matchText = rx.Match(par.InnerText).ToString();
+                            string newInnerText = par.InnerText.Replace(matchText, replacementText);
+                            textClone.Text = newInnerText;
 
                             runClone.RemoveAllChildren<Wxml.Text>();
                             par.RemoveAllChildren<Wxml.Run>();
@@ -174,28 +174,31 @@ namespace QmsDocXml.Common
         private static Result<string> ModifyRunTextChildren(Wxml.Run run, Regex rx, string replacementText)
         {
             var textEls = run.Elements<Wxml.Text>().ToList();
-            var runTextClone = (Wxml.Text)textEls.First().Clone();
-            runTextClone.Text = replacementText;
-            string textSum = "";
-            for (var i = 0; i < textEls.Count(); i++)
+            if (textEls.Any())
             {
-                textSum += textEls[i].InnerText;
-                Match matchInnerText = rx.Match(textSum);
-                if (matchInnerText.Success)
+                var runTextClone = (Wxml.Text)textEls.First().Clone();
+                runTextClone.Text = replacementText;
+                string textSum = "";
+                for (var i = 0; i < textEls.Count(); i++)
                 {
-                    //The list of Text elements whose concatenated InnerText yields the match.
-                    List<Wxml.Text> textElsToDelete = new List<Wxml.Text>();
-                    for (var j = 0; j <= i; j++)
+                    textSum += textEls[i].InnerText;
+                    Match matchInnerText = rx.Match(textSum);
+                    if (matchInnerText.Success)
                     {
-                        textElsToDelete.Add(textEls[j]);
-                    }
-                    foreach (var el in textElsToDelete)
-                    {
-                        run.RemoveChild<Wxml.Text>(el);
-                    }
+                        //The list of Text elements whose concatenated InnerText yields the match.
+                        List<Wxml.Text> textElsToDelete = new List<Wxml.Text>();
+                        for (var j = 0; j <= i; j++)
+                        {
+                            textElsToDelete.Add(textEls[j]);
+                        }
+                        foreach (var el in textElsToDelete)
+                        {
+                            run.RemoveChild<Wxml.Text>(el);
+                        }
 
-                    run.PrependChild<Wxml.Text>(runTextClone);
-                    return Results.Ok<string>("Match success");
+                        run.PrependChild<Wxml.Text>(runTextClone);
+                        return Results.Ok<string>("Match success");
+                    }
                 }
             }
             return Results.Fail(new Error("Match not successful"));

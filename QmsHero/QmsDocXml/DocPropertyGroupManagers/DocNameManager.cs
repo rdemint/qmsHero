@@ -9,6 +9,7 @@ using QmsDoc.Docs.Word;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -34,21 +35,31 @@ namespace QmsDocXml.DocPropertyGroupManagers
         {
         }
 
-        public override Result<DocPropertyGroupManager> Inspect(ExcelDoc doc)
+        public Result<DocPropertyGroupManager> CommonInspect(Doc doc)
         {
-            //Ensures consistency between the names
+            var consistencyCheck = new QDocPropertyResultCollection();
+
             var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
-            ResultCollection.Add(fileResult);
-            if(fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
+            if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 Count += 1;
             }
-            
+            ResultCollection.Add(fileResult);
+            consistencyCheck.Add(fileResult);
+            consistencyCheck.Add(doc.Inspect(new HeaderName()));
+
+
+            if (!consistencyCheck.EachItemSharesState())
+            {
+                return Results.Fail(new Error("The header name and file name are not consistent.  The document was not fully inspected."));
+            }
+
             var result = doc.Inspect(TextFindReplace.Create((string)this.CurrentState));
             var findResult = result.Value as TextFindReplace;
             ResultCollection.Add(result);
             Count += findResult.Count;
-            if (ResultCollection.HasErrors()) {
+            if (ResultCollection.HasErrors())
+            {
 
                 return Results.Fail(new Error("Errors occured in inspecting this document."));
             }
@@ -58,41 +69,54 @@ namespace QmsDocXml.DocPropertyGroupManagers
                     .Create(
                     (string)ResultCollection.First().Value.State.ToString(),
                     ResultCollection,
-                    Count)); 
+                    Count));
             }
+        }
+        
+        public override Result<DocPropertyGroupManager> Inspect(ExcelDoc doc)
+        {
+            return CommonInspect(doc);
+            //Ensures consistency between the names first
+            //var consistencyCheck = new QDocPropertyResultCollection();
 
-            //ResultCollection.Add(doc.Inspect(new HeaderName()));
-            //ResultCollection.Add(doc.Inspect(new FileDocName()));
-            //if (ResultCollection.EachItemSharesState())
+            //var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
+            //if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
+            //{
+            //    Count += 1;
+            //}
+            //ResultCollection.Add(fileResult);
+            //consistencyCheck.Add(fileResult);
+            //consistencyCheck.Add(doc.Inspect(new HeaderName()));
+
+
+            //if (!consistencyCheck.EachItemSharesState())
+            //{
+            //    return Results.Fail(new Error("The header name and file name are not consistent.  The document was not fully inspected."));
+            //}
+            
+            //var result = doc.Inspect(TextFindReplace.Create((string)this.CurrentState));
+            //var findResult = result.Value as TextFindReplace;
+            //ResultCollection.Add(result);
+            //Count += findResult.Count;
+            //if (ResultCollection.HasErrors()) {
+
+            //    return Results.Fail(new Error("Errors occured in inspecting this document."));
+            //}
+            //else
             //{
             //    return Results.Ok<DocPropertyGroupManager>(DocNameManager
             //        .Create(
-            //        (string)ResultCollection.First().Value.State.ToString(), 
-            //        ResultCollection));
+            //        (string)ResultCollection.First().Value.State.ToString(),
+            //        ResultCollection,
+            //        Count)); 
             //}
 
-            //else 
-            //{
-            //    return Results.Fail(new Error($"The document file name and header name are not consistent for {doc.FileInfo.FullName}."));
-            //}
+            
         }
 
         public override Result<DocPropertyGroupManager> Inspect(WordDoc doc)
         {
-            ResultCollection.Add(doc.Inspect(new HeaderName()));
-            ResultCollection.Add(doc.Inspect(new FileDocName()));
-            if (ResultCollection.EachItemSharesState())
-            {
-                return Results.Ok<DocPropertyGroupManager>(DocNameManager
-                    .Create(
-                    (string)ResultCollection.First().Value.State.ToString(),
-                    ResultCollection));
-            }
-
-            else
-            {
-                return Results.Fail(new Error($"The document file name and header name are not consistent for {doc.FileInfo.FullName}."));
-            }
+            return CommonInspect(doc);
         }
 
         public override Result<DocPropertyGroupManager> Process(WordDoc doc)
@@ -150,12 +174,17 @@ namespace QmsDocXml.DocPropertyGroupManagers
                     (string)this.TargetState)
                 );
             ResultCollection.Add(result);
-            var replaceResult = result.Value as TextFindReplace;
-            Count += replaceResult.Count;
+            if(result.IsSuccess)
+            {
+                var replaceResult = result.Value as TextFindReplace;
+                Count += replaceResult.Count;
+            }
 
             if (ResultCollection.HasErrors())
             {
-                return Results.Fail(new Error($"The action {this.Name} did not succeed."));
+                var errormsg = ResultCollection.Where(r => r.IsFailed).ToString();
+                return Results.Fail(new Error($"The action {this.Name} did not succeed. {errormsg}")
+                    .WithMetadata("ResultCollection", ResultCollection));
             }
 
             else

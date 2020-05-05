@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using QmsDocXml.Common;
 using QmsDoc.Interfaces;
 using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace QmsDocXml
 {
@@ -94,7 +95,8 @@ namespace QmsDocXml
             }
 
             //final check
-            if (referenceCount == replacedCount)
+            //-1 to account for potential occurence in FileName
+            if (referenceCount == replacedCount-1 | referenceCount == replacedCount)
                 return Results.Ok<QDocProperty>(TextFindReplace.Create(this.Regex.ToString(), (string)this.State, replacedCount));
 
             else
@@ -112,21 +114,36 @@ namespace QmsDocXml
         {
             int count = 0;
 
+            var referenceCountResult = this.Read(doc).Value as TextFindReplace;
+            int referenceCount = referenceCountResult.Count;
+
+
+
             foreach (var worksheetPart in doc.WorkbookPart.WorksheetParts)
             {
                 foreach (var worksheet in worksheetPart.Worksheet)
                 {
+                    foreach(var header in worksheetPart.Worksheet.Elements<Sxml.HeaderFooter>())
+                    {
+                        Match currentNameMatch = this.regex.Match(header.OddHeader.Text);
+                        if (currentNameMatch.Success)
+                        {
+                            string newHeaderText = header.OddHeader.Text.Replace(currentNameMatch.ToString(), (string)this.State);
+                            header.OddHeader.Text = newHeaderText;
+                            count++;
+                        }
+
+                    }
                     var worksheetMatches = this.regex.Matches(worksheet.InnerText);
                     count += worksheetMatches.Count;
                     }
                 }
-            if(count>0)
-                return Results.Fail(new Error($"There are {count} instances of {this.regex.ToString()} that were not replaced."));
+            if(referenceCount-1 == count | referenceCount == count)
+                return Results.Ok<QDocProperty>(TextFindReplace.Create(this.regex.ToString(), (string)this.State, count));
             else
             {
-                return Results.Ok<QDocProperty>(TextFindReplace.Create(this.regex.ToString(), (string)this.State, count));
+                return Results.Fail(new Error($"{referenceCount} occurences of {this.regex.ToString()} suspected and {count} were replace."));
             }
-
         }
 
         public static TextFindReplace Create(string findPattern, string replacementText)
