@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace QmsHero.ViewModel
 {
@@ -19,6 +20,7 @@ namespace QmsHero.ViewModel
         string viewDisplayName;
         DocManager manager;
         RelayCommand processFilesCommand;
+        RelayCommand inspectFilesCommand;
         string referenceDirPath;
         string processingDirPath;
         ResultsViewModel resultsViewModel;
@@ -32,10 +34,15 @@ namespace QmsHero.ViewModel
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
 
+            //this.inspectFilesCommand = new RelayCommand(
+            //        ()=> InspectFiles(),
+            //        () => CanInspectFiles()
+            //    );
             this.processFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
-                        () => ProcessingDirIsValid() && ReferenceDirIsValid()
+                        () => CanProcessFiles()
                         );
+
             this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
             this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
         }
@@ -67,8 +74,14 @@ namespace QmsHero.ViewModel
 
         }
 
-        public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
-        public DocNameManager DocNameManager { get => docNameManager; set => docNameManager = value; }
+        public RelayCommand ProcessFilesCommand { 
+            get => processFilesCommand;
+            set
+            {
+                if (processFilesCommand != value)
+                { processFilesCommand = value; }
+            }
+        } 
         public string NewDocumentName { 
             get => newDocumentName;
             set{ Set<string>(() => NewDocumentName, ref newDocumentName, value); }}
@@ -77,22 +90,55 @@ namespace QmsHero.ViewModel
             get => currentDocumentName;
             set { Set<string>(()=> CurrentDocumentName, ref currentDocumentName, value);}}
 
-        
+        public RelayCommand InspectFilesCommand
+        {
+            get
+            {
+                if (inspectFilesCommand == null)
+                {
+                    inspectFilesCommand = new RelayCommand(
+                    () => InspectFiles()
+                    //() => CanInspectFiles()
+                    );
+                }
+                return inspectFilesCommand;
+            }
+            set
+            {
+                if (inspectFilesCommand != value)
+                {
+                    inspectFilesCommand = value;
+                }
+            }
+        }
+
         private void ConfigManagerDir()
         {
             this.manager.FileManager.SetProcessingDir(this.processingDirPath);
             this.manager.FileManager.SetReferenceDir(this.referenceDirPath);
         }
         
+        private void InspectFiles()
+        {
+            ConfigManagerDir();
+            var docNameManager = DocNameManager.Create(currentDocumentName);
+            ShareResults(this.manager.Process(docNameManager));
+        }
+        
         private void ProcessFiles()
         {
-            this.ConfigManagerDir();
+            ConfigManagerDir();
             var docNameManager = DocNameManager.Create(currentDocumentName);
-            var docCollection = this.manager.Process(docNameManager);
+            ShareResults(this.manager.Process(docNameManager));
+            
+
+        }
+
+        private void ShareResults(DocCollection docCollection)
+        {
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;
             MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
-
         }
 
         private bool ProcessingDirIsValid()
@@ -107,14 +153,19 @@ namespace QmsHero.ViewModel
 
         private bool CanProcessFiles()
         {
-            return manager.CanProcessFiles() && DocNameManager.CurrentState !=null ;
+            return ProcessingDirIsValid() && 
+                ReferenceDirIsValid() && 
+                currentDocumentName != null && 
+                newDocumentName != null;
         }
 
         private bool CanInspectFiles()
         {
-            return manager.CanProcessFiles() &&
-                DocNameManager.CurrentState != null &&
-                DocNameManager.TargetState != null;
+            var result1 = ProcessingDirIsValid();
+            var result2 = ReferenceDirIsValid();
+            var result3 = currentDocumentName != null;
+
+            return result1 && result2 && result3;
         }
     }
 }

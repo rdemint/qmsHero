@@ -20,11 +20,12 @@ namespace QmsDocXml.Tests.Actions
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var propCollection = doc.Inspect(DocNameManager.Create(fixture.ExcelSampleDocName));
-            Assert.AreEqual(
-                propCollection.Where(prop=> prop.Value.Name == "HeaderName").First().Value.State.ToString(),
-                fixture.ExcelSampleDocName
-                );
+            //Assert.AreEqual(
+            //    propCollection.Where(prop=> prop.Value.Name == "HeaderName").First().Value.State.ToString(),
+            //    fixture.ExcelSampleDocName
+            //    );
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
+            Assert.IsFalse(propCollection.HasErrors());
             Assert.AreEqual(textFind.Count, 1);
         }
 
@@ -34,11 +35,12 @@ namespace QmsDocXml.Tests.Actions
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var propCollection = doc.Inspect(DocNameManager.Create(fixture.WordSampleFileDocName));
-            Assert.AreEqual(
-                propCollection.Where(prop => prop.Value.Name == "HeaderName").First().Value.State.ToString(),
-                fixture.WordSampleFileDocName
-                );
+            //Assert.AreEqual(
+            //    propCollection.Where(prop => prop.Value.Name == "HeaderName").First().Value.State.ToString(),
+            //    fixture.WordSampleFileDocName
+            //    );
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
+            Assert.IsFalse(propCollection.HasErrors());
             Assert.AreEqual(textFind.Count, 19);
         }
 

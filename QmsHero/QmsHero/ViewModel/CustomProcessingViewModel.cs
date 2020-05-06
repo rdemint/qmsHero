@@ -34,7 +34,7 @@ namespace QmsHero.ViewModel
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
             
-            this.processFilesCommand = new RelayCommand(
+            this.ProcessFilesCommand = new RelayCommand(
                         () => ProcessFiles(),
                         () => ProcessingDirIsValid() && ReferenceDirIsValid()
                         );
@@ -51,7 +51,10 @@ namespace QmsHero.ViewModel
                   return this.processFilesCommand;
             }
             set {
-                this.processFilesCommand = value;
+                if(this.processFilesCommand != value)
+                {
+                    this.processFilesCommand = value;
+                }
             } 
         }
         private void ProcessFiles()
@@ -76,11 +79,7 @@ namespace QmsHero.ViewModel
             return manager.DirIsValid(referenceDirPath);
         }
 
-        private bool CanProcessFiles()
-        {
-            return manager.CanProcessFiles();
-        }
-
+        
         public string ViewDisplayName { 
             get => viewDisplayName; 
             set => viewDisplayName = value; }

@@ -35,12 +35,12 @@ namespace QmsDocXml
             this.regex = new Regex(state);
         }
 
-        private TextFindReplace(string state, Regex rx) : base(state)
+        private TextFindReplace(string state, Regex rx): this(state)
         {
             this.regex = rx;
         }
 
-        private TextFindReplace(string state, Regex rx, int replacedCount): base(state)
+        private TextFindReplace(string state, Regex rx, int replacedCount): this(state)
         {
             this.regex = rx;
             this.count = replacedCount;
@@ -108,7 +108,7 @@ namespace QmsDocXml
         public override Result<QDocProperty> Read(SpreadsheetDocument doc)
         {
             int count = TextXml.SearchCount(doc, this.regex);
-            return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
+            return Results.Ok<QDocProperty>(TextFindReplace.Create(regex.ToString(), regex.ToString(), count));
         }
         public override Result<QDocProperty> Write(SpreadsheetDocument doc)
         {
@@ -142,22 +142,37 @@ namespace QmsDocXml
                 return Results.Ok<QDocProperty>(TextFindReplace.Create(this.regex.ToString(), (string)this.State, count));
             else
             {
-                return Results.Fail(new Error($"{referenceCount} occurences of {this.regex.ToString()} suspected and {count} were replace."));
+                return Results.Fail(new Error($"{referenceCount} occurences of {this.regex.ToString()} suspected and {count} were replaced."));
             }
         }
 
         public static TextFindReplace Create(string findPattern, string replacementText)
         {
-            return new TextFindReplace(replacementText, new Regex(findPattern));
+            if(replacementText==null)
+            {
+                return new TextFindReplace(findPattern);
+            }
+            else
+            {
+                return new TextFindReplace(replacementText, new Regex(findPattern));
+            }
         }
 
         public static TextFindReplace Create(string findPattern)
         {
-            return new TextFindReplace(findPattern);
+            return new TextFindReplace(findPattern, new Regex(findPattern));
+        }
+
+        private static TextFindReplace Create(string findPattern, int count)
+        {
+            return new TextFindReplace(findPattern, new Regex(findPattern), count);
         }
 
         private static TextFindReplace Create(string findPattern, string replacementText, int count)
         {
+            switch {
+
+            }
             return new TextFindReplace(replacementText, new Regex(findPattern), count);
         }
 

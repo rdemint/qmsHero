@@ -42,8 +42,8 @@ namespace QmsDocXml.QDocActionManagers
             {
                 count += 1;
             }
-            PropertyResultCollection.Add(fileResult);
-            PropertyResultCollection.Add(doc.Inspect(new HeaderName()));
+            //PropertyResultCollection.Add(fileResult);
+            //PropertyResultCollection.Add(doc.Inspect(new HeaderName()));
 
             var result = doc.Inspect(TextFindReplace.Create((string)this.CurrentState));
             var findResult = result.Value as TextFindReplace;
