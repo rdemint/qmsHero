@@ -69,11 +69,7 @@ namespace QmsDoc.Docs.Word
         }
 
 
-        public QDocPropertyResultCollection Inspect(QDocActionManager action)
-        {
-            return action.Inspect(this);
-        }
-        
+       
         public override Result<QDocProperty> Inspect(QDocProperty prop)
         {
 

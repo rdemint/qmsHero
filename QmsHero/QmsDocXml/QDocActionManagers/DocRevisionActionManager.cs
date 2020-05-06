@@ -25,11 +25,11 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        public DocRevisionActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
+        private DocRevisionActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
         {
         }
 
-        public DocRevisionActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
+        private DocRevisionActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
         {
         }
 
@@ -55,35 +55,38 @@ namespace QmsDocXml.QDocActionManagers
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {
+            var col = new QDocPropertyResultCollection();
             var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count ++;
             }
-            PropertyResultCollection.Add(fileResult);
+            col.Add(fileResult);
 
             var headerResult = doc.Inspect(new HeaderRevision((string)this.CurrentState));
             if(headerResult.IsSuccess && headerResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count++;
             }
-            PropertyResultCollection.Add(headerResult);
+            col.Add(headerResult);
 
-            return PropertyResultCollection;
+            return col;
         }
 
         public override QDocPropertyResultCollection Process(Doc doc)
         {
+            var col = new QDocPropertyResultCollection();
+
             var fileResult = doc.Process(new FileDocName((string)this.TargetState));
             if(fileResult.IsSuccess)
                 count++;
-            PropertyResultCollection.Add(fileResult);
+            col.Add(fileResult);
             
             var headerResult = doc.Process(new HeaderRevision((string)this.TargetState));
             if(headerResult.IsSuccess)
                 count++;
-            PropertyResultCollection.Add(headerResult);
-            return PropertyResultCollection;
+            col.Add(headerResult);
+            return col;
         }
     }
 }

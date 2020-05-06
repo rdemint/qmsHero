@@ -17,12 +17,9 @@ namespace QDoc.Core
         protected object targetState;
         string name;
         protected int count;
-        protected QDocPropertyResultCollection propertyResultCollection;
-
         protected QDocActionManager()
         {
             this.name = this.GetType().Name;
-            this.propertyResultCollection = new QDocPropertyResultCollection();
         }
 
         protected QDocActionManager(object currentState): this()
@@ -30,23 +27,17 @@ namespace QDoc.Core
             this.currentState = currentState;
         }
 
-        protected QDocActionManager(object currentState, object targetState) : this()
+        protected QDocActionManager(object currentState, object targetState) : this(currentState)
         {
-            this.currentState = currentState;
             this.targetState = targetState;
         }
 
-        protected QDocActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount): this()        {
-            this.currentState = currentState;
-            this.propertyResultCollection = resultCollection;
+        protected QDocActionManager(object currentState, int foundCount): this(currentState)        {
             this.count = foundCount;
         }
 
-        protected QDocActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count): this()
+        protected QDocActionManager(object currentState, object targetState, int count): this(currentState, targetState)
         {
-            PropertyResultCollection = resultCollection;
-            this.currentState = currentState;
-            this.targetState = targetState;
             this.count = count;
         }
 
@@ -58,7 +49,6 @@ namespace QDoc.Core
         {
             get => targetState;
         }
-        public QDocPropertyResultCollection PropertyResultCollection { get => propertyResultCollection; set => propertyResultCollection = value; }
         public string Name { get => name;}
         public int Count
         {
@@ -73,17 +63,6 @@ namespace QDoc.Core
         public virtual QDocPropertyResultCollection Process(Doc doc)
         {
             throw new NotImplementedException();
-        }
-
-
-        public int SuccessCount()
-        {
-            return this.PropertyResultCollection.Where(result => result.IsSuccess).Count();
-        }
-
-        public int FailureCount()
-        {
-            return this.PropertyResultCollection.Where(result => result.IsFailed).Count();
         }
 
     }

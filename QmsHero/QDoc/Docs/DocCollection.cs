@@ -33,5 +33,18 @@ namespace QDoc.Docs
             }
             return false;
         }
+
+        public DocCollection DocumentsWithErrors()
+        {
+            var collection = new DocCollection();
+            foreach(Doc doc in this)
+            {
+                if(doc.PropertyResultCollection.HasErrors())
+                {
+                    collection.Add(doc);
+                }
+            }
+            return collection;
+        }
     }
 }
