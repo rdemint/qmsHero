@@ -21,55 +21,129 @@ using System.ComponentModel;
 
 namespace QmsDocXml
 {
-    public class TextFindReplace : QDocActionManager, IReadDocRegex, IWriteDocRegex
+    public class TextFindReplace : DocProperty, IReadDocRegex, IWriteDocRegex
     {
         Regex regex;
         int count;
 
-        private TextFindReplace(): base()
+        private TextFindReplace() : base()
         {
         }
 
-        public TextFindReplace(string currentState) : this()
+        private TextFindReplace(string findPattern) : this()
         {
-            this.currentState = currentState;
+            this.regex = new Regex(findPattern);
+            this.state = findPattern;
         }
 
-        private TextFindReplace(object currentState, object targetState): this()
+        private TextFindReplace(string findPattern, int count) : this()
         {
-            this.currentState = currentState;
-            this.targetState = targetState;
+            this.regex = new Regex(findPattern);
+            this.state = findPattern;
+            this.count = count;
+        }
+        private TextFindReplace(string findPattern, string replaceText) : this()
+        {
+            this.regex = new Regex(findPattern);
+            this.state = replaceText;
         }
 
-        private TextFindReplace(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : this()
+        private TextFindReplace(string findPattern, string replaceText, int count) : this()
         {
-            this.currentState = currentState;
-            this.propertyResultCollection = resultCollection;
-            this.count = foundCount;
+            this.regex = new Regex(findPattern);
+            this.state = replaceText;
+            this.count = count;
         }
+
 
         public Regex Regex { get => regex; }
         public int Count { get => count; }
 
-        public QDocPropertyResultCollection Inspect(WordDoc doc)
+        public static TextFindReplace Create(string findPattern)
         {
-            
+            return new TextFindReplace(findPattern);
         }
 
-        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
+        private static TextFindReplace Create(string findPattern, int count)
         {
-
+            return new TextFindReplace(findPattern, count);
         }
 
-        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
+        public static TextFindReplace Create(string findPattern, string replacementText)
         {
-
+            return new TextFindReplace(findPattern, replacementText);
         }
 
-        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
-        {
 
+
+        private static TextFindReplace Create(string findPattern, string replacementText, int count)
+        {
+            return new TextFindReplace(findPattern, replacementText, count);
         }
+        //private TextFindReplace(): base()
+        //{
+        //}
+
+        //public TextFindReplace(string currentState) : this()
+        //{
+        //    this.currentState = currentState;
+        //}
+
+        //private TextFindReplace(object currentState, object targetState): this()
+        //{
+        //    this.currentState = currentState;
+        //    this.targetState = targetState;
+        //}
+
+        //private TextFindReplace(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : this()
+        //{
+        //    this.currentState = currentState;
+        //    this.propertyResultCollection = resultCollection;
+        //    this.count = foundCount;
+        //}
+
+
+
+        //public QDocPropertyResultCollection Inspect(WordDoc wdoc)
+        //{
+        //    using (WordprocessingDocument doc = WordprocessingDocument.Open(wdoc.FileInfo.FullName, false))
+        //    {
+        //        int count = TextXml.SearchCount(doc, regex);
+
+        //        if (count > 0)
+        //        {
+        //            return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.CurrentState, regex.ToString(), count));
+        //        }
+        //        else
+        //        {
+        //            return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
+        //        }
+        //    }
+        //}
+
+        //public QDocPropertyResultCollection Inspect(ExcelDoc sdoc)
+        //{
+        //    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(sdoc.FileInfo.FullName, true))
+        //    {
+        //        //
+        //    }
+        //}
+
+        //public QDocPropertyResultCollection Process(WordDoc sdoc)
+        //{
+        //    using (WordprocessingDocument doc = WordprocessingDocument.Open(sdoc.FileInfo.FullName, false))
+        //    {
+        //        //
+        //    }
+        //}
+
+        //public QDocPropertyResultCollection Process(ExcelDoc sdoc)
+        //{
+        //    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(sdoc.FileInfo.FullName, true))
+        //    {
+        //        //
+        //    }
+        //}
         //
         //
         //
@@ -172,35 +246,6 @@ namespace QmsDocXml
             }
         }
 
-        public static TextFindReplace Create(string findPattern, string replacementText)
-        {
-            if(replacementText==null)
-            {
-                return new TextFindReplace(findPattern);
-            }
-            else
-            {
-                return new TextFindReplace(replacementText, new Regex(findPattern));
-            }
-        }
-
-        public static TextFindReplace Create(string findPattern)
-        {
-            return new TextFindReplace(findPattern, new Regex(findPattern));
-        }
-
-        private static TextFindReplace Create(string findPattern, int count)
-        {
-            return new TextFindReplace(findPattern, new Regex(findPattern), count);
-        }
-
-        private static TextFindReplace Create(string findPattern, string replacementText, int count)
-        {
-            switch {
-
-            }
-            return new TextFindReplace(replacementText, new Regex(findPattern), count);
-        }
 
     }
 }

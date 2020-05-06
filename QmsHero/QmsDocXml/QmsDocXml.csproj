@@ -55,6 +55,7 @@
     <Compile Include="Audit\HeaderAudit.cs" />
     <Compile Include="Audit\WordAuditRequires.cs" />
     <Compile Include="Common\TextXml.cs" />
+    <Compile Include="HasText.cs" />
     <Compile Include="TextFindReplace.cs" />
     <Compile Include="Common\ImageXml.cs" />
     <Compile Include="Common\ExcelXml.cs" />

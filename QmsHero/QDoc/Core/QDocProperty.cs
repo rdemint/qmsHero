@@ -9,7 +9,7 @@ namespace QDoc.Core
     public abstract class QDocProperty: INotifyPropertyChanged, IEquatable<QDocProperty>
     {
         string name;
-        object state;
+        protected object state;
 
         public QDocProperty()
         {
