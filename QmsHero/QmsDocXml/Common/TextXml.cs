@@ -66,7 +66,10 @@ namespace QmsDocXml.Common
             if(doc.MainDocumentPart.ImageParts.Any())
             foreach(var imagePart in doc.MainDocumentPart.ImageParts)
             {
-                    matches.Add(rx.Matches(imagePart.RootElement.InnerText));
+                    if(imagePart.RootElement != null && imagePart.RootElement.InnerText != null)
+                    {
+                        matches.Add(rx.Matches(imagePart.RootElement.InnerText));
+                    }
             }
 
             return matches;

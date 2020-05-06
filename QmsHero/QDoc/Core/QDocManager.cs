@@ -153,6 +153,24 @@ namespace QDoc.Core
             return docCollection;
         }
 
+        public DocCollection Inspect(QDocActionManager actionManager)
+        {
+            DocCollection docCollection = new DocCollection();
+
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var docResult = this.DocFactory.CreateDoc(file);
+                if (docResult.IsSuccess)
+                {
+                    var doc = docResult.Value;
+                    var resultCollection = doc.Inspect(actionManager);
+                    doc.PropertyResultCollection = resultCollection;
+                    docCollection.Add(doc);
+                }
+            }
+            return docCollection;
+        }
+
         public virtual DocCollection ToUnprocessedDocCollection()
         {
 

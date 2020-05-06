@@ -65,6 +65,11 @@ namespace QDoc.Docs
 
         public abstract Result<QDocProperty> Process(QDocProperty prop);
 
+        public virtual QDocPropertyResultCollection Process(QDocActionManager actionManager)
+        {
+            return actionManager.Process(this);
+        }
+
         public virtual QDocPropertyResultCollection Inspect(QDocPropertyCollection docState)
         {
             QDocPropertyResultCollection collection = new QDocPropertyResultCollection();
@@ -75,13 +80,14 @@ namespace QDoc.Docs
             return collection;
         }
 
-        public virtual QDocPropertyResultCollection Process(QDocActionManager action)
-        {
-            return action.Process(this);
-        }
+        
 
         public abstract Result<QDocProperty> Inspect(QDocProperty prop);
 
+        public virtual QDocPropertyResultCollection Inspect(QDocActionManager actionManager)
+        {
+            return actionManager.Process(this);
+        }
 
     }
 }

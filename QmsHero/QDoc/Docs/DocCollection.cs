@@ -21,5 +21,17 @@ namespace QDoc.Docs
         public DocCollection(IEnumerable<Doc> collection) : base(collection)
         {
         }
+
+        public bool HasErrors()
+        {
+            foreach(Doc doc in this)
+            {
+                if(doc.PropertyResultCollection.HasErrors())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -152,22 +152,13 @@ namespace QmsDocXml
         public override Result<QDocProperty> Read(WordprocessingDocument doc)
         {
             int count = TextXml.SearchCount(doc, regex);
-
-            if (count > 0)
-            {
-                return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
-            }
-            else
-            {
-                return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
-            }
+            return Results.Ok<QDocProperty>(TextFindReplace.Create(regex.ToString(), count));
         }
         
         public override Result<QDocProperty> Write(WordprocessingDocument doc)
         {
 
             int referenceCount = TextXml.SearchCount(doc, this.regex);
-
             int replacedCount = 0;
             //main
             var mainTextEls = doc.MainDocumentPart.Document.Descendants<Wxml.Paragraph>().ToList();
@@ -239,7 +230,7 @@ namespace QmsDocXml
                     }
                 }
             if(referenceCount-1 == count | referenceCount == count)
-                return Results.Ok<QDocProperty>(TextFindReplace.Create(this.regex.ToString(), (string)this.State, count));
+                return Results.Ok<QDocProperty>(TextFindReplace.Create(this.regex.ToString(), count));
             else
             {
                 return Results.Fail(new Error($"{referenceCount} occurences of {this.regex.ToString()} suspected and {count} were replaced."));

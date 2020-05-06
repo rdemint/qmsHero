@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml.QDocActionManagers;
@@ -70,6 +71,24 @@ namespace QmsDocXml.Tests.Actions
                 Assert.IsTrue(propResult.IsSuccess);
             }
 
+        }
+
+        [TestMethod]
+        public void InspectDirTest()
+        {
+            string newName = "Better Index";
+            var fixture = new XmlFixture();
+            var manager = new DocManager(fixture);
+            var docNameManager = DocNameManager.Create(newName);
+            Assert.IsTrue(manager.CanProcessFiles());
+            var docCollection = manager.Process(docNameManager);
+            Assert.IsFalse(docCollection.HasErrors());
+        }
+
+        [TestMethod]
+        public void ProcessDirTest()
+        {
+            Assert.Fail();
         }
     }
 }

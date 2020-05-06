@@ -122,7 +122,7 @@ namespace QmsHero.ViewModel
         {
             ConfigManagerDir();
             var docNameManager = DocNameManager.Create(currentDocumentName);
-            ShareResults(this.manager.Process(docNameManager));
+            ShareResults(this.manager.Inspect(docNameManager));
         }
         
         private void ProcessFiles()
