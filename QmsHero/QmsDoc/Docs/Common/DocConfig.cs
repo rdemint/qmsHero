@@ -14,12 +14,14 @@ namespace QmsDoc.Docs.Common
         Regex fileRevisionRegex;
         Regex fileSopNumberRegex;
         Regex fileFormNumberRegex;
+        Regex fileNumberRegex;
 
         public DocConfig()
         {
             this.FileRevisionText = "Rev";
             this.FileSopNumberRegex = new Regex(@"SOP-\d\d\d");
             this.FileFormNumberRegex = new Regex(@"F-\d\d\d\w");
+            this.FileNumberRegex = new Regex(@"-\d\d\d");
         }
 
         public Regex FileSopNumberRegex { get => fileSopNumberRegex; set => fileSopNumberRegex = value; }
@@ -32,5 +34,6 @@ namespace QmsDoc.Docs.Common
             }
         }
         public Regex FileRevisionRegex { get => fileRevisionRegex; set => fileRevisionRegex = value; }
+        public Regex FileNumberRegex { get => fileNumberRegex; set => fileNumberRegex = value; }
     }
 }

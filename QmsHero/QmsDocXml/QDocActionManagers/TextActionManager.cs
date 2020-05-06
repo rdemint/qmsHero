@@ -19,33 +19,13 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        private TextActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
+        protected TextActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
         {
         }
 
-        private TextActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
+        protected TextActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
         {
         }
-
-        //public static QDocActionManager Create(object currentState)
-        //{
-        //    return new TextActionManager(currentState);
-        //}
-
-        //public static QDocActionManager Create(object currentState, object targetState)
-        //{
-        //    return new TextActionManager(currentState, targetState);
-        //}
-
-        //protected static QDocActionManager Create(object currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        //{
-        //    return new TextActionManager(currentState, resultCollection, replacementCount);
-        //}
-
-        //protected static QDocActionManager Create(object currentStateToFind, object targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        //{
-        //    return new TextActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
-        //}
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {

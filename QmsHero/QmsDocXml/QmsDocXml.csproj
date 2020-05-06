@@ -55,6 +55,7 @@
     <Compile Include="Audit\HeaderAudit.cs" />
     <Compile Include="Audit\WordAuditRequires.cs" />
     <Compile Include="Common\TextXml.cs" />
+    <Compile Include="QDocActionManagers\DocNumberActionManager.cs" />
     <Compile Include="QDocActionManagers\DocRevisionActionManager.cs" />
     <Compile Include="QDocActionManagers\TextActionManager.cs" />
     <Compile Include="TextFindReplace.cs" />

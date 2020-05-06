@@ -3,7 +3,6 @@ using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml.QDocActionManagers;
-using QmsDocXml.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +12,14 @@ using System.Threading.Tasks;
 namespace QmsDocXml.Tests.QDocActionManagers
 {
     [TestClass()]
-    public class DocNameManagerTests
+    public class DocNumberActionManagerTests
     {
         [TestMethod()]
-        public void InspectExcelTest()
+        public void InspectTest()
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var propCollection = doc.Inspect(new DocNameActionManager(fixture.ExcelSampleDocName));
+            var propCollection = doc.Inspect(new DocNumberActionManager(fixture.ExcelSampleDocNumber));
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
             Assert.IsFalse(propCollection.HasErrors());
             Assert.AreEqual(textFind.Count, 1);
@@ -31,20 +30,20 @@ namespace QmsDocXml.Tests.QDocActionManagers
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var propCollection = doc.Inspect(new DocNameActionManager(fixture.WordSampleFileDocName));
+            var propCollection = doc.Inspect(new DocNumberActionManager(fixture.WordSampleDocNumber));
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
             Assert.IsFalse(propCollection.HasErrors());
-            Assert.AreEqual(textFind.Count, 19);
+            Assert.AreEqual(textFind.Count, 8);
         }
 
         [TestMethod]
         public void ProcessWordTest()
         {
-            string newName = "My New SOP";
+            string newNum = "SOP-111";
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var propCollection = doc.Process(new DocNameActionManager("Quality Manual", newName));
-            foreach(var propResult in propCollection)
+            var propCollection = doc.Process(new DocNumberActionManager("SOP-001", newNum));
+            foreach (var propResult in propCollection)
             {
                 Assert.IsTrue(propResult.IsSuccess);
             }
@@ -54,10 +53,10 @@ namespace QmsDocXml.Tests.QDocActionManagers
         [TestMethod]
         public void ProcessExcelTest()
         {
-            string newName = "Better Index" ;
+            string newNum = "F-222Z";
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var propCollection = doc.Process(new DocNameActionManager("Document Control Index", newName));
+            var propCollection = doc.Process(new DocNumberActionManager("F-001B", newNum));
             foreach (var propResult in propCollection)
             {
                 Assert.IsTrue(propResult.IsSuccess);
@@ -68,10 +67,10 @@ namespace QmsDocXml.Tests.QDocActionManagers
         [TestMethod]
         public void InspectDirTest()
         {
-            string newName = "Better Index";
+            string newNum = "F-001B";
             var fixture = new XmlFixture();
             var manager = new DocManager(fixture);
-            var docNameManager = new DocNameActionManager(newName);
+            var docNameManager = new DocNumberActionManager(newNum);
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Inspect(docNameManager);
             Assert.IsFalse(docCollection.HasErrors());
@@ -80,11 +79,11 @@ namespace QmsDocXml.Tests.QDocActionManagers
         [TestMethod]
         public void ProcessDirTest()
         {
-            string currentName = "Document Control Index";
-            string newName = "Better Index";
+            string currentNum = "F-001B";
+            string newNum = "F-012Z";
             var fixture = new XmlFixture();
             var manager = new DocManager(fixture);
-            var docNameManager = new DocNameActionManager(currentName, newName);
+            var docNameManager = new DocNumberActionManager(currentNum, newNum);
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Process(docNameManager);
             Assert.IsFalse(docCollection.HasErrors());

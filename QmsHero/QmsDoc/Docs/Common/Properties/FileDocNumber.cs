@@ -93,9 +93,5 @@ namespace QmsDoc.Docs.Common.Properties
             }
         }
 
-        public override Result<QDocProperty> Write(object doc, object config)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

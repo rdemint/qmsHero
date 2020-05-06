@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDocXml.Tests.QDocActionManagers
+namespace QmsDocXml.QDocActionManagers
 {
     public class DocNumberActionManager : TextActionManager
     {
