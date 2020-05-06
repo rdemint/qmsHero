@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QmsDocXml.Tests.Actions
+namespace QmsDocXml.Tests.QDocActionManagers
 {
     [TestClass()]
     public class DocNameManagerTests
@@ -20,7 +20,7 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var propCollection = doc.Inspect(DocNameManager.Create(fixture.ExcelSampleDocName));
+            var propCollection = doc.Inspect(DocNameActionManager.Create(fixture.ExcelSampleDocName));
             //Assert.AreEqual(
             //    propCollection.Where(prop=> prop.Value.Name == "HeaderName").First().Value.State.ToString(),
             //    fixture.ExcelSampleDocName
@@ -35,7 +35,7 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var propCollection = doc.Inspect(DocNameManager.Create(fixture.WordSampleFileDocName));
+            var propCollection = doc.Inspect(DocNameActionManager.Create(fixture.WordSampleFileDocName));
             //Assert.AreEqual(
             //    propCollection.Where(prop => prop.Value.Name == "HeaderName").First().Value.State.ToString(),
             //    fixture.WordSampleFileDocName
@@ -51,7 +51,7 @@ namespace QmsDocXml.Tests.Actions
             string newName = "My New SOP";
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var propCollection = doc.Process(DocNameManager.Create("Quality Manual", newName));
+            var propCollection = doc.Process(DocNameActionManager.Create("Quality Manual", newName));
             foreach(var propResult in propCollection)
             {
                 Assert.IsTrue(propResult.IsSuccess);
@@ -65,7 +65,7 @@ namespace QmsDocXml.Tests.Actions
             string newName = "Better Index" ;
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var propCollection = doc.Process(DocNameManager.Create("Document Control Index", newName));
+            var propCollection = doc.Process(DocNameActionManager.Create("Document Control Index", newName));
             foreach (var propResult in propCollection)
             {
                 Assert.IsTrue(propResult.IsSuccess);
@@ -79,7 +79,7 @@ namespace QmsDocXml.Tests.Actions
             string newName = "Better Index";
             var fixture = new XmlFixture();
             var manager = new DocManager(fixture);
-            var docNameManager = DocNameManager.Create(newName);
+            var docNameManager = DocNameActionManager.Create(newName);
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Inspect(docNameManager);
             Assert.IsFalse(docCollection.HasErrors());
@@ -92,7 +92,7 @@ namespace QmsDocXml.Tests.Actions
             string newName = "Better Index";
             var fixture = new XmlFixture();
             var manager = new DocManager(fixture);
-            var docNameManager = DocNameManager.Create(currentName, newName);
+            var docNameManager = DocNameActionManager.Create(currentName, newName);
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Process(docNameManager);
             Assert.IsFalse(docCollection.HasErrors());

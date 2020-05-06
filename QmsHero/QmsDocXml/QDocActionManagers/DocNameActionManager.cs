@@ -16,22 +16,22 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml.QDocActionManagers
 {
-    public class DocNameManager : QDocActionManager
+    public class DocNameActionManager : QDocActionManager
 
     {
-        private DocNameManager(object currentState): base(currentState)
+        public DocNameActionManager(object currentState): base(currentState)
         {
         }
 
-        private DocNameManager(object currentState, object targetState) : base(currentState, targetState)
+        public DocNameActionManager(object currentState, object targetState) : base(currentState, targetState)
         {
         }
 
-        private DocNameManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int replacementCount) : base(currentState, targetState, resultCollection, replacementCount)
+        private DocNameActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int replacementCount) : base(currentState, targetState, resultCollection, replacementCount)
         {
         }
 
-        private DocNameManager(object currentState, QDocPropertyResultCollection resultCollection, int replacementCount) : base(currentState, resultCollection, replacementCount)
+        private DocNameActionManager(object currentState, QDocPropertyResultCollection resultCollection, int replacementCount) : base(currentState, resultCollection, replacementCount)
         {
         }
 
@@ -79,24 +79,24 @@ namespace QmsDocXml.QDocActionManagers
             return PropertyResultCollection;
         }
 
-        public static QDocActionManager Create(object currentState)
+        public static QDocActionManager Create(string currentState)
         {
-            return new DocNameManager(currentState);
+            return new DocNameActionManager(currentState);
         }
 
-        public static QDocActionManager Create(object currentState, object targetState)
+        public static QDocActionManager Create(string currentState, string targetState)
         {
-            return new DocNameManager(currentState, targetState);
+            return new DocNameActionManager(currentState, targetState);
         }
 
-        public static QDocActionManager Create(object currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
+        protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
         {
-            return new DocNameManager(currentState, resultCollection, replacementCount);
+            return new DocNameActionManager(currentState, resultCollection, replacementCount);
         }
 
-        public static QDocActionManager Create(object currentStateToFind, object targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
+        protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
         {
-            return new DocNameManager(currentStateToFind, targetState, resultCollection, replacementCount);
+            return new DocNameActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
         }
 
     }

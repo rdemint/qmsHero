@@ -24,7 +24,7 @@ namespace QmsHero.ViewModel
         string referenceDirPath;
         string processingDirPath;
         ResultsViewModel resultsViewModel;
-        DocNameManager docNameManager;
+        DocNameActionManager docNameManager;
         string currentDocumentName;
         string newDocumentName;
 
@@ -121,14 +121,14 @@ namespace QmsHero.ViewModel
         private void InspectFiles()
         {
             ConfigManagerDir();
-            var docNameManager = DocNameManager.Create(currentDocumentName);
+            var docNameManager = DocNameActionManager.Create(currentDocumentName);
             ShareResults(this.manager.Inspect(docNameManager));
         }
         
         private void ProcessFiles()
         {
             ConfigManagerDir();
-            var docNameManager = DocNameManager.Create(currentDocumentName);
+            var docNameManager = DocNameActionManager.Create(currentDocumentName);
             ShareResults(this.manager.Process(docNameManager));
             
 

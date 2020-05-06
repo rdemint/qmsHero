@@ -61,8 +61,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="DocPropertyGroupManagers\DocNameManagerTests.cs" />
+    <Compile Include="QDocActionManagers\DocNameManagerTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
+    <Compile Include="QDocActionManagers\DocNumberActionManager.cs" />
+    <Compile Include="QDocActionManagers\DocRevisionActionManagerTests.cs" />
     <Compile Include="TextFindReplaceTests.cs" />
     <Compile Include="XmlFixture.cs" />
     <Compile Include="FixtureTests.cs" />

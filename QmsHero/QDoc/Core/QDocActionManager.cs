@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using QDoc.Core;
 using QDoc.Docs;
+using System.Runtime.CompilerServices;
 
 namespace QDoc.Core
 {
@@ -84,5 +85,6 @@ namespace QDoc.Core
         {
             return this.PropertyResultCollection.Where(result => result.IsFailed).Count();
         }
+
     }
 }
