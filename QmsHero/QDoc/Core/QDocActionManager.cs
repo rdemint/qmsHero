@@ -16,8 +16,7 @@ namespace QDoc.Core
         protected object targetState;
         string name;
         protected int count;
-
-        QDocPropertyResultCollection propertyResultCollection;
+        protected QDocPropertyResultCollection propertyResultCollection;
 
         protected QDocActionManager()
         {

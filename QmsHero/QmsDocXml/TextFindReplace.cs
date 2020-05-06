@@ -17,10 +17,11 @@ using QmsDocXml.Common;
 using QmsDoc.Interfaces;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.ComponentModel;
 
 namespace QmsDocXml
 {
-    public class TextFindReplace : DocProperty, IReadDocRegex, IWriteDocRegex
+    public class TextFindReplace : QDocActionManager, IReadDocRegex, IWriteDocRegex
     {
         Regex regex;
         int count;
@@ -29,25 +30,50 @@ namespace QmsDocXml
         {
         }
 
-        public TextFindReplace(string state) : this()
+        public TextFindReplace(string currentState) : this()
         {
-            this.State = state;
-            this.regex = new Regex(state);
+            this.currentState = currentState;
         }
 
-        private TextFindReplace(string state, Regex rx): this(state)
+        private TextFindReplace(object currentState, object targetState): this()
         {
-            this.regex = rx;
+            this.currentState = currentState;
+            this.targetState = targetState;
         }
 
-        private TextFindReplace(string state, Regex rx, int replacedCount): this(state)
+        private TextFindReplace(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : this()
         {
-            this.regex = rx;
-            this.count = replacedCount;
+            this.currentState = currentState;
+            this.propertyResultCollection = resultCollection;
+            this.count = foundCount;
         }
 
         public Regex Regex { get => regex; }
         public int Count { get => count; }
+
+        public QDocPropertyResultCollection Inspect(WordDoc doc)
+        {
+            
+        }
+
+        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
+        {
+
+        }
+
+        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
+        {
+
+        }
+
+        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
+        {
+
+        }
+        //
+        //
+        //
+
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc)
         {
