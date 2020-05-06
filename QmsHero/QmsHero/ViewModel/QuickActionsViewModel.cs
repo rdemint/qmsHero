@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using QDoc.Core;
 using QDoc.Docs;
 using QmsDoc.Core;
-using QmsDocXml.DocPropertyGroupManagers;
+using QmsDocXml.QDocActionManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
-using QmsDocXml.DocPropertyGroupManagers;
+using QmsDocXml.QDocActionManagers;
 using QmsDocXml.Tests;
 using System;
 using System.Collections.Generic;
@@ -19,12 +19,13 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Inspect(DocNameManager.Create(fixture.ExcelSampleDocName));
-            Assert.IsTrue(result.IsSuccess);
-
-            Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.ExcelSampleDocName);
-            Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.ExcelSampleDocName);
-            Assert.AreEqual(result.Value.Count, 2);
+            var propCollection = doc.Inspect(DocNameManager.Create(fixture.ExcelSampleDocName));
+            Assert.AreEqual(
+                propCollection.Where(prop=> prop.Value.Name == "HeaderName").First().Value.State.ToString(),
+                fixture.ExcelSampleDocName
+                );
+            var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
+            Assert.AreEqual(textFind.Count, 2);
         }
 
         [TestMethod()]
@@ -32,11 +33,13 @@ namespace QmsDocXml.Tests.Actions
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Inspect(DocNameManager.Create(fixture.WordSampleFileDocName));
-            Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), fixture.WordSampleFileDocName);
-            Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), fixture.WordSampleFileDocName);
-            Assert.AreEqual(result.Value.Count, 18);
+            var propCollection = doc.Inspect(DocNameManager.Create(fixture.WordSampleFileDocName));
+            Assert.AreEqual(
+                propCollection.Where(prop => prop.Value.Name == "HeaderName").First().Value.State.ToString(),
+                fixture.ExcelSampleDocName
+                );
+            var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
+            Assert.AreEqual(textFind.Count, 18);
         }
 
         [TestMethod]
@@ -45,10 +48,12 @@ namespace QmsDocXml.Tests.Actions
             string newName = "My New SOP";
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Process(DocNameManager.Create("Quality Manual", newName));
-            Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
-            Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);
+            var propCollection = doc.Process(DocNameManager.Create("Quality Manual", newName));
+            foreach(var propResult in propCollection)
+            {
+                Assert.IsTrue(propResult.IsSuccess);
+            }
+
         }
 
         [TestMethod]
@@ -57,10 +62,11 @@ namespace QmsDocXml.Tests.Actions
             string newName = "Better Index" ;
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
-            var result = doc.Process(DocNameManager.Create("Document Control Index", newName));
-            Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(result.Value.ResultCollection.First().Value.State.ToString(), newName);
-            Assert.AreEqual(result.Value.ResultCollection.Last().Value.State.ToString(), newName);
+            var propCollection = doc.Process(DocNameManager.Create("Document Control Index", newName));
+            foreach (var propResult in propCollection)
+            {
+                Assert.IsTrue(propResult.IsSuccess);
+            }
 
         }
     }

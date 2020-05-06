@@ -75,7 +75,7 @@ namespace QDoc.Docs
             return collection;
         }
 
-        public Result<QDocActionManager> Process(QDocActionManager action)
+        public virtual QDocPropertyResultCollection Process(QDocActionManager action)
         {
             return action.Process(this);
         }

@@ -63,7 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\DocPropertyGroupManager.cs" />
     <Compile Include="Core\DocAudit.cs" />
     <Compile Include="Core\DocFactory.cs" />
     <Compile Include="Core\DocManager.cs" />

@@ -17,12 +17,12 @@ namespace QDoc.Core
         string name;
         protected int count;
 
-        QDocPropertyResultCollection resultCollection;
+        QDocPropertyResultCollection propertyResultCollection;
 
         protected QDocActionManager()
         {
             this.name = this.GetType().Name;
-            this.resultCollection = new QDocPropertyResultCollection();
+            this.propertyResultCollection = new QDocPropertyResultCollection();
         }
 
         protected QDocActionManager(object currentState): this()
@@ -38,13 +38,13 @@ namespace QDoc.Core
 
         protected QDocActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount): this()        {
             this.currentState = currentState;
-            this.resultCollection = resultCollection;
+            this.propertyResultCollection = resultCollection;
             this.count = foundCount;
         }
 
         protected QDocActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count): this()
         {
-            ResultCollection = resultCollection;
+            PropertyResultCollection = resultCollection;
             this.currentState = currentState;
             this.targetState = targetState;
             this.count = count;
@@ -58,26 +58,32 @@ namespace QDoc.Core
         {
             get => targetState;
         }
-        public QDocPropertyResultCollection ResultCollection { get => resultCollection; set => resultCollection = value; }
+        public QDocPropertyResultCollection PropertyResultCollection { get => propertyResultCollection; set => propertyResultCollection = value; }
         public string Name { get => name;}
         public int Count
         {
             get => count;
         }
 
-        public abstract Result<QDocActionManager> Inspect(Doc doc);
+        public virtual QDocPropertyResultCollection Inspect(Doc doc)
+        {
+            throw new NotImplementedException();
+        }
 
-        public abstract Result<QDocActionManager> Process(Doc doc);
+        public virtual QDocPropertyResultCollection Process(Doc doc)
+        {
+            throw new NotImplementedException();
+        }
 
 
         public int SuccessCount()
         {
-            return this.ResultCollection.Where(result => result.IsSuccess).Count();
+            return this.PropertyResultCollection.Where(result => result.IsSuccess).Count();
         }
 
         public int FailureCount()
         {
-            return this.ResultCollection.Where(result => result.IsFailed).Count();
+            return this.PropertyResultCollection.Where(result => result.IsFailed).Count();
         }
     }
 }

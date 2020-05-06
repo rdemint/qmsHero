@@ -65,7 +65,23 @@ namespace QDoc.Core
             }
         }
 
-        
+
+        public virtual DocCollection Process(QDocActionManager docActionManager)
+        {
+            DocCollection docCollection = new DocCollection();
+            foreach (var file in this.FileManager.ProcessingFiles)
+            {
+                var docResult = this.DocFactory.CreateDoc(file);
+                if (docResult.IsSuccess)
+                {
+                    var doc = docResult.Value;
+                    doc.PropertyResultCollection = doc.Process(docActionManager);
+                    docCollection.Add(doc);
+                }
+            }
+
+            return docCollection;
+        }
 
         public virtual DocCollection Process(QDocPropertyCollection docPropCollection)
         {
@@ -112,11 +128,7 @@ namespace QDoc.Core
                 if (docResult.IsSuccess)
                 {
                     var doc = docResult.Value;
-                    foreach (var prop in docPropCollection)
-                    {
-                        var propResult = doc.Inspect(prop);
-                        doc.PropertyResultCollection.Add(propResult);
-                    }
+                    doc.PropertyResultCollection = doc.Inspect(docPropCollection);
                     docCollection.Add(doc);
                 }
             }

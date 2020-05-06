@@ -38,15 +38,6 @@ namespace QmsDoc.Docs.Word
         public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public List<string> FileExtensions { get => fileExtensions; }
 
-
-        
-        
-        public Result<DocPropertyGroupManager> Process(DocPropertyGroupManager action) 
-        {
-            return action.Process(this);
-        }
-
-
         
         public override Result<QDocProperty> Process(QDocProperty qprop)
         {
@@ -78,7 +69,7 @@ namespace QmsDoc.Docs.Word
         }
 
 
-        public Result<DocPropertyGroupManager> Inspect(DocPropertyGroupManager action)
+        public QDocPropertyResultCollection Inspect(QDocActionManager action)
         {
             return action.Inspect(this);
         }
