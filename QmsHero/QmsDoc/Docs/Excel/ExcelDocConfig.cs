@@ -30,14 +30,7 @@ namespace QmsDoc.Docs.Excel
         }
 
         public string HeaderEffectiveDateText { get => effectiveDateText; set => effectiveDateText = value; }
-        public string HeaderRevisionText { 
-            get => headerRevisionText;
-            set
-            {
-                headerRevisionText = value;
-                this.HeaderRevisionRegex = new Regex(Regex.Escape(headerRevisionText) + @"\d{1,2}");
-            }
-            }
+        public string HeaderRevisionText { get => headerRevisionText; set => headerRevisionText = value; }
         public Regex HeaderRevisionRegex { get => revisionRegex; set => revisionRegex = value; }
         public Regex HeaderEffectiveDateRegex { get => effectiveDateRegex; set => effectiveDateRegex = value; }
         public int LogoHeight { get => logoHeight; set => logoHeight = value; }
@@ -57,6 +50,7 @@ namespace QmsDoc.Docs.Excel
             this.HeaderEffectiveDateText = "Effective Date: ";
             this.HeaderEffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.HeaderRevisionText = "Revision: ";
+            this.HeaderRevisionRegex = new Regex(@":\s*\d{1,2}s*$");
             this.HeaderNameText = "DOCUMENT NAME: ";
             this.headerNameRegex = new Regex(@"(?<=\: )(.*?)(?= \()");
         }

@@ -27,16 +27,18 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        private DocNameActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int replacementCount) : base(currentState, targetState, resultCollection, replacementCount)
+        private DocNameActionManager(object currentState, object targetState, int replacementCount) : base(currentState, targetState, replacementCount)
         {
         }
 
-        private DocNameActionManager(object currentState, QDocPropertyResultCollection resultCollection, int replacementCount) : base(currentState, resultCollection, replacementCount)
+        private DocNameActionManager(object currentState, int replacementCount) : base(currentState, replacementCount)
         {
         }
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {
+            var col = new QDocPropertyResultCollection();
+
             var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
@@ -48,19 +50,21 @@ namespace QmsDocXml.QDocActionManagers
                     (string)this.CurrentState)
                 );
             var findResult = result.Value as TextFindReplace;
-            PropertyResultCollection.Add(result);
+            col.Add(result);
             count += findResult.Count;
-            return PropertyResultCollection;
+            return col;
 
         }
         
 
         public override QDocPropertyResultCollection Process(Doc doc)
         {
+            var col = new QDocPropertyResultCollection();
+
             var fileDocName = doc.Inspect(new FileDocName()).Value.State.ToString();
             if (fileDocName == (string)this.CurrentState)
             {
-                PropertyResultCollection.Add(doc.Process(new FileDocName((string)this.TargetState)));
+                col.Add(doc.Process(new FileDocName((string)this.TargetState)));
                 count++;
             }
 
@@ -69,35 +73,35 @@ namespace QmsDocXml.QDocActionManagers
                     (string)this.CurrentState,
                     (string)this.TargetState)
                 );
-            PropertyResultCollection.Add(result);
+            col.Add(result);
             if(result.IsSuccess)
             {
                 var replaceResult = result.Value as TextFindReplace;
                 count += replaceResult.Count;
             }
 
-            return PropertyResultCollection;
+            return col;
         }
 
-        public static QDocActionManager Create(string currentState)
-        {
-            return new DocNameActionManager(currentState);
-        }
+        //public static QDocActionManager Create(string currentState)
+        //{
+        //    return new DocNameActionManager(currentState);
+        //}
 
-        public static QDocActionManager Create(string currentState, string targetState)
-        {
-            return new DocNameActionManager(currentState, targetState);
-        }
+        //public static QDocActionManager Create(string currentState, string targetState)
+        //{
+        //    return new DocNameActionManager(currentState, targetState);
+        //}
 
-        protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        {
-            return new DocNameActionManager(currentState, resultCollection, replacementCount);
-        }
+        //protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
+        //{
+        //    return new DocNameActionManager(currentState, resultCollection, replacementCount);
+        //}
 
-        protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        {
-            return new DocNameActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
-        }
+        //protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
+        //{
+        //    return new DocNameActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
+        //}
 
     }
 }

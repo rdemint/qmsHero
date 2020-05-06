@@ -19,41 +19,54 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        protected TextActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
+        protected TextActionManager(object currentState, int foundCount) : base(currentState, foundCount)
         {
         }
 
-        protected TextActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
+        protected TextActionManager(object currentState, object targetState, int count) : base(currentState, targetState, count)
         {
         }
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
+        {
+            var col = new QDocPropertyResultCollection();
+            return Inspect(doc, col);
+            
+        }
+
+        protected QDocPropertyResultCollection Inspect(Doc doc, QDocPropertyResultCollection col)
         {
             var result = doc.Inspect(
                 TextFindReplace.Create(
                     (string)this.CurrentState)
                 );
             var findResult = result.Value as TextFindReplace;
-            PropertyResultCollection.Add(result);
+            col.Add(result);
             count += findResult.Count;
-            return PropertyResultCollection;
+            return col;
         }
 
         public override QDocPropertyResultCollection Process(Doc doc)
+        {
+            var col = new QDocPropertyResultCollection();
+            return Process(doc, col);
+        }
+
+        protected QDocPropertyResultCollection Process(Doc doc, QDocPropertyResultCollection col)
         {
             var result = doc.Process(
                 TextFindReplace.Create(
                     (string)this.CurrentState,
                     (string)this.TargetState)
                 );
-            PropertyResultCollection.Add(result);
+            col.Add(result);
             if (result.IsSuccess)
             {
                 var replaceResult = result.Value as TextFindReplace;
                 count += replaceResult.Count;
             }
 
-            return PropertyResultCollection;
+            return col;
         }
 
 

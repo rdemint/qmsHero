@@ -15,6 +15,7 @@ using QmsDoc.Docs.Excel;
 using System.Runtime.Serialization;
 using FluentResults;
 using QDoc.Core;
+using QmsDocXml.Common;
 
 namespace QmsDocXml
 {
@@ -71,9 +72,21 @@ namespace QmsDocXml
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
-            Text text = par.Elements<Run>().First().Elements<Text>().First();
-            text.Text = config.HeaderRevisionText + (string)this.State;
-            return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
+            Match parMatch = config.HeaderRevisionRegex.Match(par.InnerText);
+            if(parMatch.Success)
+            {
+                var tempParList = new List<Paragraph>();
+                tempParList.Add(par);
+                TextXml.ReplaceParagraphElementText(tempParList, config.HeaderRevisionRegex, (string)this.state);
+                //Text text = par.Elements<Run>().First().Elements<Text>().First();
+                //text.Text = config.HeaderRevisionText + (string)this.State;
+                return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
+            }
+            else
+            {
+                return Results.Fail((
+                    new Error($"Did not identify header text, '{(string)this.state} in the target document text, '{par.InnerText}'.")));
+            }
         }
 
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)

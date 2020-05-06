@@ -25,38 +25,38 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        private DocRevisionActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
+        private DocRevisionActionManager(object currentState, int foundCount) : base(currentState, foundCount)
         {
         }
 
-        private DocRevisionActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
+        private DocRevisionActionManager(object currentState, object targetState, int count) : base(currentState, targetState, count)
         {
         }
 
-        public static QDocActionManager Create(string currentState)
-        {
-            return new DocRevisionActionManager(currentState);
-        }
+        //public static QDocActionManager Create(string currentState)
+        //{
+        //    return new DocRevisionActionManager(currentState);
+        //}
 
-        public static QDocActionManager Create(string currentState, string targetState)
-        {
-            return new DocRevisionActionManager(currentState, targetState);
-        }
+        //public static QDocActionManager Create(string currentState, string targetState)
+        //{
+        //    return new DocRevisionActionManager(currentState, targetState);
+        //}
 
-        protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        {
-            return new DocRevisionActionManager(currentState, resultCollection, replacementCount);
-        }
+        //protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
+        //{
+        //    return new DocRevisionActionManager(currentState, resultCollection, replacementCount);
+        //}
 
-        protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        {
-            return new DocRevisionActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
-        }
+        //protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
+        //{
+        //    return new DocRevisionActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
+        //}
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {
             var col = new QDocPropertyResultCollection();
-            var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
+            var fileResult = doc.Inspect(new FileRevision((string)this.CurrentState));
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count ++;
@@ -77,7 +77,7 @@ namespace QmsDocXml.QDocActionManagers
         {
             var col = new QDocPropertyResultCollection();
 
-            var fileResult = doc.Process(new FileDocName((string)this.TargetState));
+            var fileResult = doc.Process(new FileRevision((string)this.TargetState));
             if(fileResult.IsSuccess)
                 count++;
             col.Add(fileResult);

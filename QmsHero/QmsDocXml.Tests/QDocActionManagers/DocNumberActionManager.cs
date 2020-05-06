@@ -20,31 +20,35 @@ namespace QmsDocXml.Tests.QDocActionManagers
         {
         }
 
-        protected DocNumberActionManager(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : base(currentState, resultCollection, foundCount)
+        protected DocNumberActionManager(object currentState, int foundCount) : base(currentState, foundCount)
         {
         }
 
-        protected DocNumberActionManager(object currentState, object targetState, QDocPropertyResultCollection resultCollection, int count) : base(currentState, targetState, resultCollection, count)
+        protected DocNumberActionManager(object currentState, object targetState, int count) : base(currentState, targetState, count)
         {
         }
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {
+            var col = new QDocPropertyResultCollection();
+
             var fileResult = doc.Inspect(new FileDocNumber((string)this.CurrentState));
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count++;
             }
-            PropertyResultCollection.Add(fileResult);
+            col.Add(fileResult);
             return base.Inspect(doc);
         }
 
         public override QDocPropertyResultCollection Process(Doc doc)
         {
+            var col = new QDocPropertyResultCollection();
+
             var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
             if (fileResult.IsSuccess)
                 count++;
-            PropertyResultCollection.Add(fileResult);
+            col.Add(fileResult);
             return base.Process(doc);
         }
 
