@@ -86,7 +86,7 @@ namespace QDoc.Docs
 
         public virtual QDocPropertyResultCollection Inspect(QDocActionManager actionManager)
         {
-            return actionManager.Process(this);
+            return actionManager.Inspect(this);
         }
 
     }

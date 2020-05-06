@@ -81,14 +81,21 @@ namespace QmsDocXml.Tests.Actions
             var manager = new DocManager(fixture);
             var docNameManager = DocNameManager.Create(newName);
             Assert.IsTrue(manager.CanProcessFiles());
-            var docCollection = manager.Process(docNameManager);
+            var docCollection = manager.Inspect(docNameManager);
             Assert.IsFalse(docCollection.HasErrors());
         }
 
         [TestMethod]
         public void ProcessDirTest()
         {
-            Assert.Fail();
+            string currentName = "Document Control Index";
+            string newName = "Better Index";
+            var fixture = new XmlFixture();
+            var manager = new DocManager(fixture);
+            var docNameManager = DocNameManager.Create(currentName, newName);
+            Assert.IsTrue(manager.CanProcessFiles());
+            var docCollection = manager.Process(docNameManager);
+            Assert.IsFalse(docCollection.HasErrors());
         }
     }
 }
