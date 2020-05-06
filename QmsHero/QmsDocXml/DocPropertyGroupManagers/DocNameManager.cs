@@ -35,7 +35,7 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        public QDocPropertyResultCollection CommonInspect(Doc doc)
+        public override QDocPropertyResultCollection Inspect(Doc doc)
         {
             var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
@@ -45,53 +45,16 @@ namespace QmsDocXml.QDocActionManagers
             PropertyResultCollection.Add(fileResult);
             PropertyResultCollection.Add(doc.Inspect(new HeaderName()));
 
-            //if (!consistencyCheck.EachItemSharesState())
-            //{
-            //    return Results.Fail(new Error("The header name and file name are not consistent.  The document was not fully inspected."));
-            //}
-
             var result = doc.Inspect(TextFindReplace.Create((string)this.CurrentState));
             var findResult = result.Value as TextFindReplace;
             PropertyResultCollection.Add(result);
             count += findResult.Count;
             return PropertyResultCollection;
 
-            //if (PropertyResultCollection.HasErrors())
-            //{
-
-            //    return Results.Fail(new Error("Errors occured in inspecting this document."));
-            //}
-            //else
-            //{
-            //    return Results.Ok<QDocActionManager>(DocNameManager
-            //        .Create(
-            //        (string)PropertyResultCollection.First().Value.State.ToString(),
-            //        PropertyResultCollection,
-            //        count));
-            //}
         }
         
-        public QDocPropertyResultCollection Inspect(ExcelDoc doc)
-        {
-            return CommonInspect(doc);
-        }
 
-        public QDocPropertyResultCollection Inspect(WordDoc doc)
-        {
-            return CommonInspect(doc);
-        }
-
-        public QDocPropertyResultCollection Process(WordDoc doc)
-        {
-            return CommonProcess(doc);
-        }
-
-        public QDocPropertyResultCollection Process(ExcelDoc doc)
-        {
-            return CommonProcess(doc);
-        }
-
-        public QDocPropertyResultCollection CommonProcess(Doc doc)
+        public override QDocPropertyResultCollection Process(Doc doc)
         {
             var fileDocName = doc.Inspect(new FileDocName()).Value.State.ToString();
             if (fileDocName == (string)this.CurrentState)
@@ -113,22 +76,6 @@ namespace QmsDocXml.QDocActionManagers
             }
 
             return PropertyResultCollection;
-            //if (PropertyResultCollection.HasErrors())
-            //{
-            //    var errormsg = PropertyResultCollection.Where(r => r.IsFailed).ToString();
-            //    return Results.Fail(new Error($"The action {this.Name} did not succeed. {errormsg}")
-            //        .WithMetadata("ResultCollection", PropertyResultCollection));
-            //}
-
-            //else
-            //{
-            //    return Results.Ok<QDocActionManager>(
-            //        DocNameManager.Create(
-            //            (string)this.CurrentState,
-            //            (string)this.TargetState,
-            //            PropertyResultCollection,
-            //            Count));
-            //}
         }
 
         public static QDocActionManager Create(object currentState)

@@ -25,7 +25,7 @@ namespace QmsDocXml.Tests.Actions
                 fixture.ExcelSampleDocName
                 );
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
-            Assert.AreEqual(textFind.Count, 2);
+            Assert.AreEqual(textFind.Count, 1);
         }
 
         [TestMethod()]
@@ -36,10 +36,10 @@ namespace QmsDocXml.Tests.Actions
             var propCollection = doc.Inspect(DocNameManager.Create(fixture.WordSampleFileDocName));
             Assert.AreEqual(
                 propCollection.Where(prop => prop.Value.Name == "HeaderName").First().Value.State.ToString(),
-                fixture.ExcelSampleDocName
+                fixture.WordSampleFileDocName
                 );
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
-            Assert.AreEqual(textFind.Count, 18);
+            Assert.AreEqual(textFind.Count, 19);
         }
 
         [TestMethod]
