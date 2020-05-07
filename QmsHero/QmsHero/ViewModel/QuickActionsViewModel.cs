@@ -259,19 +259,16 @@ namespace QmsHero.ViewModel
 
         private bool CanProcessFiles()
         {
-            return ProcessingDirIsValid() && 
-                ReferenceDirIsValid() && 
-                CurrentDocumentName != null && 
-                NewDocumentName != null;
+            return ProcessingDirIsValid() &&
+                ReferenceDirIsValid(); 
+
         }
 
         private bool CanInspectFiles()
         {
             var result1 = ProcessingDirIsValid();
             var result2 = ReferenceDirIsValid();
-            var result3 = CurrentDocumentName != null;
-
-            return result1 && result2 && result3;
+            return result1 && result2;
         }
     }
 }

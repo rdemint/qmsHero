@@ -18,8 +18,8 @@ namespace QFileUtil
         void SetReferenceDir(string path);
         void SetReferenceDir(DirectoryInfo dir);
         bool ProcessingDirIsClean();
-        bool IsReadyToCopy();
+        bool ReferenceDirAndProcessingDirAreNotNullandExist();
 
-        void UpdateFiles();
+        int UpdateFiles();
     }
 }

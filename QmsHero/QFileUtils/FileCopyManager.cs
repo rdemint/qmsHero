@@ -47,7 +47,7 @@ namespace QFileUtil
 
         public virtual int UpdateFiles()
         {
-            if(IsReadyToCopy())
+            if(ReferenceDirAndProcessingDirAreNotNullandExist())
             {
                 FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
                 
@@ -94,7 +94,7 @@ namespace QFileUtil
             UpdateFiles();
         }
         
-        public virtual bool IsReadyToCopy()
+        public virtual bool ReferenceDirAndProcessingDirAreNotNullandExist()
         {
             if (ReferenceDir != null &&
                 ProcessingDir != null &&

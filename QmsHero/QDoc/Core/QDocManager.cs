@@ -49,7 +49,7 @@ namespace QDoc.Core
 
         public bool CanProcessFiles()
         {
-            return this.fileManager.IsReadyToCopy();
+            return this.fileManager.ReferenceDirAndProcessingDirAreNotNullandExist();
         }
 
         
