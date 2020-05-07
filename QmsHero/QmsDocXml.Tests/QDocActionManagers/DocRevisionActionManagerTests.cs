@@ -63,13 +63,14 @@ namespace QmsDocXml.Tests.QDocActionManagers
         [TestMethod]
         public void RegexText()
         {
-            var rx = new Regex(@":\s*\d{1,2}s*$");
+            var rx = new Regex(@":\s*\d{1,2}\s*\Z");
+            var wildData = "&L&G&C&\"Arial,Regular\"&10DOCUMENT NAME: &\"Arial,Bold\"Document Control Index (F-001B)&R&\"Arial,Regular\"&10&K000000Effective Date: 2018-11-26 \nRevision: 2 ";
             var dateText = "Effective Date: 2018-12-03";
-            var revText = "Rev: 3";
+            //var revText = "Rev: 3";
             var revText2 = "Rev:3";
             var dateMatch = rx.Match(dateText);
             Assert.IsFalse(dateMatch.Success);
-            var revMatch = rx.Match(revText);
+            var revMatch = rx.Match(wildData);
             Assert.IsTrue(revMatch.Success);
             var revMatch2 = rx.Match(revText2);
             Assert.IsTrue(revMatch2.Success);

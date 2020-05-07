@@ -50,7 +50,7 @@ namespace QmsDoc.Docs.Excel
             this.HeaderEffectiveDateText = "Effective Date: ";
             this.HeaderEffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.HeaderRevisionText = "Revision: ";
-            this.HeaderRevisionRegex = new Regex(@":\s*\d{1,2}s*$");
+            this.HeaderRevisionRegex = new Regex(@":\s*\d{1,2}\s*\Z");
             this.HeaderNameText = "DOCUMENT NAME: ";
             this.headerNameRegex = new Regex(@"(?<=\: )(.*?)(?= \()");
         }
