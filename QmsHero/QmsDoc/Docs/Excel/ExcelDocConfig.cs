@@ -21,6 +21,7 @@ namespace QmsDoc.Docs.Excel
         string headerNameText;
         string headerNumber;
         Regex headerNameRegex;
+        Regex headerNumberRegexWithContext;
         Regex headerNumberRegex;
 
 
@@ -44,15 +45,17 @@ namespace QmsDoc.Docs.Excel
             }
 
         public string HeaderNumber { get => headerNumber; set => headerNumber = value; }
+        public Regex HeaderNameRegexWithContext { get => headerNumberRegexWithContext; set => headerNumberRegexWithContext = value; }
 
         public void Initialize()
         {
             this.HeaderEffectiveDateText = "Effective Date: ";
             this.HeaderEffectiveDateRegex = new Regex(@"\d\d\d\d-\d\d-\d\d");
             this.HeaderRevisionText = "Revision: ";
-            this.HeaderRevisionRegex = new Regex(@":\s*\d{1,2}\s*\Z");
+            this.HeaderRevisionRegex = new Regex(@"(?<=\:)\s*\d{1,2}(?=\s*\Z)");
             this.HeaderNameText = "DOCUMENT NAME: ";
             this.headerNameRegex = new Regex(@"(?<=\: )(.*?)(?= \()");
+            this.headerNumberRegexWithContext = new Regex(@"(?<=\: )(.*?)(?= \()");
         }
     }
 }

@@ -104,12 +104,13 @@ namespace QmsDocXml
                     Match match = config.HeaderRevisionRegex.Match(header.OddHeader.Text);
                     if (match.Success)
                     {
-                        string currentRevVerbose = match.ToString();
-                        string currentRev = currentRevVerbose.Replace(config.HeaderRevisionText, "");
-                        string replaceRevVerbose = currentRevVerbose.Replace(currentRev, (string)this.State);
-
-                        string newInnerText = header.OddHeader.Text.Replace(currentRevVerbose, replaceRevVerbose);
-                        header.OddHeader.Text = newInnerText;
+                        string currentRev = match.ToString();
+                        header.OddHeader.Text = Regex.Replace(
+                            header.OddHeader.Text, 
+                            config.HeaderRevisionRegex.ToString(), 
+                            (string)this.State);
+                        //string newInnerText = header.OddHeader.Text.Replace(currentRev, replaceRev);
+                        //header.OddHeader.Text = newInnerText;
                     }
 
                     else
