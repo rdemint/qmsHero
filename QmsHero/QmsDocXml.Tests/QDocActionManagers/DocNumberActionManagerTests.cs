@@ -39,10 +39,10 @@ namespace QmsDocXml.Tests.QDocActionManagers
         [TestMethod]
         public void ProcessWordTest()
         {
-            string newNum = "SOP-111";
+            string newNum = "-111";
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var propCollection = doc.Process(new DocNumberActionManager("SOP-001", newNum));
+            var propCollection = doc.Process(new DocNumberActionManager("-001", newNum));
             foreach (var propResult in propCollection)
             {
                 Assert.IsTrue(propResult.IsSuccess);

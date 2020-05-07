@@ -125,7 +125,7 @@ namespace QmsDocXml.Common
                     var result = ReplaceRunElementText(par, par.Descendants<Wxml.Run>(), rx, replacementText);
                         if (result.IsSuccess)
                             {
-                            count++;
+                            count+= (int)result.Value;
                             }
                         else
                             {
@@ -149,8 +149,9 @@ namespace QmsDocXml.Common
             return count;
         }
 
-        public static Result<string> ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
+        public static Result<int> ReplaceRunElementText(Wxml.Paragraph par, IEnumerable<Wxml.Run> runEls, Regex rx, string replacementText)
         {
+            var count = 0;
             foreach(var run in runEls)
             {
                 Match runMatch = rx.Match(run.InnerText);
@@ -160,18 +161,26 @@ namespace QmsDocXml.Common
                     var result = ReplaceTextElementText(referenceRunTexts, rx, replacementText);
                     if (result.IsSuccess)
                     {
-                        return result;
+                        count++;
                     }
                     else
                     {
                         var modifyResult = ModifyRunTextChildren(run, rx, replacementText);
                         if (modifyResult.IsSuccess)
-                            return modifyResult;
+                            count++;
                     }
                 }
                 
             }
-            return Results.Fail(new Error("No match"));
+            if(count>0)
+            {
+                return Results.Ok<int>(count);
+            }
+            else
+            {
+                return Results.Fail(new Error("No match"));
+
+            }
         }
 
         private static Result<string> ModifyRunTextChildren(Wxml.Run run, Regex rx, string replacementText)
