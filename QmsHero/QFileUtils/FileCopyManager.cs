@@ -45,7 +45,7 @@ namespace QFileUtil
             }
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 
-        public virtual void UpdateFiles()
+        public virtual int UpdateFiles()
         {
             if(IsReadyToCopy())
             {
@@ -58,8 +58,9 @@ namespace QFileUtil
                     processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                 }
                 
+                return referenceFiles.Count + processingFiles.Count;
             }
-
+            return -1;
         }
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {

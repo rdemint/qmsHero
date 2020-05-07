@@ -194,7 +194,7 @@ namespace QmsHero.ViewModel
         private void ProcessFilesName()
         {
             ConfigManagerDir();
-            var docNameManager = new DocNameActionManager(currentDocumentName);
+            var docNameManager = new DocNameActionManager(currentDocumentName, newDocumentName);
             ShareResults(this.manager.Process(docNameManager));
         }
 

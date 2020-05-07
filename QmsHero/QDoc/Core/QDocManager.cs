@@ -56,13 +56,16 @@ namespace QDoc.Core
         
         public virtual Result<QDocProperty> Process(FileInfo file, QDocProperty docProp)
         {
+            Result<QDocProperty> doc;
             var docResult = DocFactory.CreateDoc(file);
             if (docResult.IsSuccess)
-                return docResult.Value.Process(docProp);
+                doc = docResult.Value.Process(docProp);
             else
             {
                 return Results.Fail(new Error("Could not process file"));
             }
+            this.fileManager.UpdateFiles();
+            return doc;
         }
 
 
@@ -79,7 +82,7 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-
+            this.fileManager.UpdateFiles();
             return docCollection;
         }
 
@@ -96,7 +99,7 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-
+            this.fileManager.UpdateFiles();
             return docCollection;
         }
 
@@ -116,6 +119,7 @@ namespace QDoc.Core
 
                 }
             }
+            this.fileManager.UpdateFiles();
             return docCollection;
         }
 
@@ -132,6 +136,8 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
+            this.fileManager.UpdateFiles();
+
             return docCollection;
         }
 
@@ -150,6 +156,8 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
+            this.fileManager.UpdateFiles();
+
             return docCollection;
         }
 
@@ -168,6 +176,8 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
+            this.fileManager.UpdateFiles();
+
             return docCollection;
         }
 
@@ -183,6 +193,8 @@ namespace QDoc.Core
                    docs.Add(docResult.Value);
                 }
             }
+            this.fileManager.UpdateFiles();
+
             return docs;
         }
 
