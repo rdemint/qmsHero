@@ -7,6 +7,7 @@ using QmsDoc.Core;
 using QmsDocXml.QDocActionManagers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +20,26 @@ namespace QmsHero.ViewModel
     {
         string viewDisplayName;
         DocManager manager;
-        RelayCommand processFilesCommand;
-        RelayCommand inspectFilesCommand;
+        RelayCommand inspectFileNameCommand; 
+        RelayCommand processFileNameCommand;
+        string currentDocumentName;
+        string newDocumentName;
+        RelayCommand inspectFileRevisionCommand;
+        RelayCommand processFileRevisionCommand;
+        string currentFileRevision;
+        string newFileRevision;
+        RelayCommand inspectFileNumberCommand;
+        RelayCommand processFileNumberCommand;
+        string currentFileNumber;
+        string newFileNumber;
+        RelayCommand inspectFileTextCommand;
+        RelayCommand processFileTextCommand;
+        string currentFileText;
+        string newFileText;
+
         string referenceDirPath;
         string processingDirPath;
         ResultsViewModel resultsViewModel;
-        DocNameActionManager docNameManager;
-        string currentDocumentName;
-        string newDocumentName;
 
         public QuickActionsViewModel()
         {
@@ -34,18 +47,42 @@ namespace QmsHero.ViewModel
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
 
-            //this.inspectFilesCommand = new RelayCommand(
-            //        ()=> InspectFiles(),
-            //        () => CanInspectFiles()
-            //    );
-            this.processFilesCommand = new RelayCommand(
-                        () => ProcessFiles(),
+            this.inspectFileNameCommand = new RelayCommand(
+                    () => InspectFilesName(),
+                    () => CanInspectFiles()
+                );
+            this.processFileNameCommand = new RelayCommand(
+                        () => ProcessFilesName(),
                         () => CanProcessFiles()
                         );
+
+            this.inspectFileNumberCommand = new RelayCommand(
+                ()=> InspectFilesNumber(),
+                ()=> CanInspectFiles()
+               );
+
+            this.processFileNumberCommand = new RelayCommand(
+                () => ProcessFilesNumber(),
+                () => CanProcessFiles()
+                );
+
+            this.inspectFileRevisionCommand = new RelayCommand(
+                () => InspectFilesRevision(),
+                () => CanInspectFiles());
+
+            this.processFileRevisionCommand = new RelayCommand(() => ProcessFilesRevision(), () => CanProcessFiles());
+
+            this.inspectFileTextCommand = new RelayCommand(
+                () => InspectFilesText(),
+                () => CanInspectFiles());
+
+            this.processFileTextCommand = new RelayCommand(() => ProcessFilesText(), () => CanProcessFiles());
 
             this.referenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference";
             this.processingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Processing";
         }
+
+        
 
         public string ViewDisplayName { get => viewDisplayName; set => viewDisplayName = value; }
         public DocManager Manager { get => manager; set => manager = value; }
@@ -74,43 +111,72 @@ namespace QmsHero.ViewModel
 
         }
 
-        public RelayCommand ProcessFilesCommand { 
-            get => processFilesCommand;
+        public RelayCommand ProcessFilesCommand {
+            get { 
+                if(processFileNameCommand == null)
+                {
+                    processFileNameCommand = new RelayCommand(
+                        () => ProcessFilesName(),
+                        () => CanProcessFiles()
+                        );
+                }
+                return processFileNameCommand;
+            }
             set
             {
-                if (processFilesCommand != value)
-                { processFilesCommand = value; }
+                if (processFileNameCommand != value)
+                { processFileNameCommand = value; }
             }
         } 
         public string NewDocumentName { 
             get => newDocumentName;
-            set{ Set<string>(() => NewDocumentName, ref newDocumentName, value); }}
+            set{ 
+                Set<string>(() => NewDocumentName, ref newDocumentName, value);
+                ProcessFilesCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged();
+            }}
         public string CurrentDocumentName
         {
             get => currentDocumentName;
-            set { Set<string>(()=> CurrentDocumentName, ref currentDocumentName, value);}}
+            set { 
+                Set<string>(()=> CurrentDocumentName, ref currentDocumentName, value);
+                InspectFilesCommand.RaiseCanExecuteChanged();
+            }}
 
         public RelayCommand InspectFilesCommand
         {
             get
             {
-                if (inspectFilesCommand == null)
+                if (inspectFileNameCommand == null)
                 {
-                    inspectFilesCommand = new RelayCommand(
-                    () => InspectFiles()
-                    //() => CanInspectFiles()
+                    inspectFileNameCommand = new RelayCommand(
+                    () => InspectFilesName(),
+                    () => CanInspectFiles()
                     );
                 }
-                return inspectFilesCommand;
+                return inspectFileNameCommand;
             }
             set
             {
-                if (inspectFilesCommand != value)
+                if (inspectFileNameCommand != value)
                 {
-                    inspectFilesCommand = value;
+                    inspectFileNameCommand = value;
                 }
             }
         }
+
+        public RelayCommand InspectFileRevisionCommand { get => inspectFileRevisionCommand; set => inspectFileRevisionCommand = value; }
+        public RelayCommand ProcessFileRevisionCommand { get => processFileRevisionCommand; set => processFileRevisionCommand = value; }
+        public RelayCommand InspectFileNumberCommand { get => inspectFileNumberCommand; set => inspectFileNumberCommand = value; }
+        public RelayCommand ProcessFileNumberCommand { get => processFileNumberCommand; set => processFileNumberCommand = value; }
+        public RelayCommand InspectFileTextCommand { get => inspectFileTextCommand; set => inspectFileTextCommand = value; }
+        public RelayCommand ProcessFileTextCommand { get => processFileTextCommand; set => processFileTextCommand = value; }
+        public string CurrentFileRevision { get => currentFileRevision; set { Set<string>(() => CurrentFileRevision, ref currentFileRevision, value); }}
+        public string NewFileRevision { get => newFileRevision; set { Set<string>(() => NewFileRevision, ref newFileRevision, value); } }
+        public string CurrentFileNumber { get => currentFileNumber; set { Set<string>(() => CurrentFileNumber, ref currentFileNumber, value); }}
+        public string NewFileNumber { get => newFileNumber; set { Set<string>(() => NewFileNumber, ref newFileNumber, value); }}
+        public string CurrentFileText { get => currentFileText; set { Set<string>(() => CurrentFileText, ref currentFileText, value); }}
+        public string NewFileText { get => newFileText; set { Set<string>(() => NewFileText, ref newFileText, value);} }
 
         private void ConfigManagerDir()
         {
@@ -118,20 +184,60 @@ namespace QmsHero.ViewModel
             this.manager.FileManager.SetReferenceDir(this.referenceDirPath);
         }
         
-        private void InspectFiles()
+        private void InspectFilesName()
         {
             ConfigManagerDir();
             var docNameManager = new DocNameActionManager(currentDocumentName);
             ShareResults(this.manager.Inspect(docNameManager));
         }
         
-        private void ProcessFiles()
+        private void ProcessFilesName()
         {
             ConfigManagerDir();
             var docNameManager = new DocNameActionManager(currentDocumentName);
             ShareResults(this.manager.Process(docNameManager));
-            
+        }
 
+        private void InspectFilesText()
+        {
+            ConfigManagerDir();
+            var docNameManager = new DocNameActionManager(currentFileText);
+            ShareResults(this.manager.Process(docNameManager));
+        }
+
+        private void InspectFilesRevision()
+        {
+            ConfigManagerDir();
+            var docNameManager = new DocNameActionManager(currentFileRevision);
+            ShareResults(this.manager.Process(docNameManager));
+        }
+
+        private void InspectFilesNumber()
+        {
+            ConfigManagerDir();
+            var docNameManager = new DocNameActionManager(currentFileNumber);
+            ShareResults(this.manager.Process(docNameManager));
+        }
+
+        private void ProcessFilesText()
+        {
+            ConfigManagerDir();
+            var docNameManager = new DocNameActionManager(currentFileText, newFileText);
+            ShareResults(this.manager.Process(docNameManager));
+        }
+
+        private void ProcessFilesRevision()
+        {
+            ConfigManagerDir();
+            var docNameManager = new DocNameActionManager(currentFileRevision, newFileRevision);
+            ShareResults(this.manager.Process(docNameManager));
+        }
+
+        private void ProcessFilesNumber()
+        {
+            ConfigManagerDir();
+            var docNameManager = new DocNameActionManager(currentFileNumber, newFileNumber);
+            ShareResults(this.manager.Process(docNameManager));
         }
 
         private void ShareResults(DocCollection docCollection)
@@ -155,15 +261,15 @@ namespace QmsHero.ViewModel
         {
             return ProcessingDirIsValid() && 
                 ReferenceDirIsValid() && 
-                currentDocumentName != null && 
-                newDocumentName != null;
+                CurrentDocumentName != null && 
+                NewDocumentName != null;
         }
 
         private bool CanInspectFiles()
         {
             var result1 = ProcessingDirIsValid();
             var result2 = ReferenceDirIsValid();
-            var result3 = currentDocumentName != null;
+            var result3 = CurrentDocumentName != null;
 
             return result1 && result2 && result3;
         }

@@ -61,6 +61,7 @@ namespace QmsHero.ViewModel
             this.NavToCustomProcessingViewModel.RaiseCanExecuteChanged();
             this.NavToConfigViewModel.RaiseCanExecuteChanged();
             this.NavToDCNViewModel.RaiseCanExecuteChanged();
+            this.NavToQuickActionsViewModel.RaiseCanExecuteChanged();
         }
         public ViewModelBase ActiveViewModel
         {

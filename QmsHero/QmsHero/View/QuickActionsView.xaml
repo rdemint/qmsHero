@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:QmsHero.View"
+      xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
       xmlns:controls="clr-namespace:QControls;assembly=QControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -13,10 +14,43 @@
         <TextBox Text="Select the files to work with."/>
         <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
         <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
-        <TextBox Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
-        <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding CurrentDocumentName}"/>
-        <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding NewDocumentName}"/>
-        <Button Command="{Binding ProcessFilesCommand}"  Content="Rename"/>
-        <Button Command="{Binding InspectFilesCommand}" Content="Inspect"/>
+        <dragablz:TabablzControl>
+            <TabItem Header="Doc Name">
+                <StackPanel Orientation="Vertical">
+                    <TextBox Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
+                    <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding CurrentDocumentName}"/>
+                    <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding NewDocumentName}"/>
+                    <Button Command="{Binding ProcessFilesCommand}"  Content="Rename"/>
+                    <Button Command="{Binding InspectFilesCommand}" Content="Inspect"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Doc Number">
+                <StackPanel>
+                    <TextBox Text="Renumber a document throughout the project, or renumber all documents with the same '-DDD' pattern."/>
+                    <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentDocumentNumber}"/>
+                    <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewDocumentNumber}"/>
+                    <Button Command="{Binding ProcessFilesCommand}"  Content="Renumber"/>
+                    <Button Command="{Binding InspectFilesCommand}" Content="Inspect"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Doc Revision">
+                <StackPanel>
+                    <TextBox Text="Inspect that the Revisions of the file and within the document match, or change the revision across the project."/>
+                    <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentRevisionNumber}"/>
+                    <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewRevisionNumber}"/>
+                    <Button Command="{Binding ProcessFilesCommand}"  Content="Renumber"/>
+                    <Button Command="{Binding InspectFilesCommand}" Content="Inspect"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Doc Text">
+                <StackPanel>
+                    <TextBox Text="Inspect for instances of text across or project, replacing it as desired.  Careful!"/>
+                    <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentText}"/>
+                    <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewText}"/>
+                    <Button Command="{Binding ProcessFilesCommand}"  Content="Renumber"/>
+                    <Button Command="{Binding InspectFilesCommand}" Content="Inspect"/>
+                </StackPanel>
+            </TabItem>
+        </dragablz:TabablzControl>
     </StackPanel>
 </Page>
