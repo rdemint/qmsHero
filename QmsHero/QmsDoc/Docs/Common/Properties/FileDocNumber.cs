@@ -27,30 +27,33 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
-            if(!IsValid(config))
-            {
-                return Results.Fail(new Error("Could not write to the file."));
-            }
-            
-            Match matchForm = config.FileFormNumberRegex.Match(file.Name);
-            Match matchSop = config.FileSopNumberRegex.Match(file.Name);
+            Match matchFile;
+            string pattern = (string)this.state;
+            Match matchForm = config.FileFormNumberRegex.Match(pattern);
+            Match matchSop = config.FileSopNumberRegex.Match(pattern);
+            Match matchBothFormAndSop = config.FileNumberRegex.Match(pattern);
             string newName;
 
             if (matchForm.Success)
             {
-                newName = file.Name.Replace(matchForm.ToString(), this.State.ToString());
-
+                matchFile = config.FileFormNumberRegex.Match(file.Name);
             }
             else if (matchSop.Success)
             {
-                newName = file.Name.Replace(matchSop.ToString(), this.State.ToString());
+                matchFile = config.FileSopNumberRegex.Match(file.Name);
             }
 
+            else if (matchBothFormAndSop.Success)
+            {
+                matchFile = config.FileNumberRegex.Match(file.Name);
+            } 
+            
             else
             {
                 return Results.Fail(new Error("Could not identify the current document number to replace."));
             }
 
+            newName = file.Name.Replace(matchFile.ToString(), this.State.ToString());
             FileUtil.FileRename(file, newName);
             return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
 
@@ -75,23 +78,5 @@ namespace QmsDoc.Docs.Common.Properties
             }
             
         }
-
-        public override bool IsValid(object iConfig)
-        {
-            DocConfig config = iConfig as DocConfig;
-            Match matchFormState = config.FileFormNumberRegex.Match(this.State.ToString());
-            Match matchSopState = config.FileSopNumberRegex.Match(this.State.ToString());
-
-            if (matchFormState.Success == false && matchSopState.Success == false)
-            {
-                return false;
-            }
-
-            else
-            {
-                return true;
-            }
-        }
-
     }
 }

@@ -65,6 +65,18 @@ namespace QmsDocXml.Tests.QDocActionManagers
         }
 
         [TestMethod]
+        public void ProcessBaseSopAndFormNumberDirTest()
+        {
+            string newNum = "-290";
+            var fixture = new XmlFixture();
+            var manager = new DocManager(fixture);
+            Assert.IsTrue(manager.CanProcessFiles());
+            var docCollection = manager.Process(new DocNumberActionManager("-001", newNum));
+            var docsWithErrors = docCollection.DocumentsWithErrors();
+            Assert.IsFalse(docCollection.HasErrors());
+        }
+
+        [TestMethod]
         public void InspectDirTest()
         {
             string newNum = "F-001B";

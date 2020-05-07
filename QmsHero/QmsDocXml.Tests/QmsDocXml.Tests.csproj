@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="QDocActionManagers\DocNameManagerTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
-    <Compile Include="QDocActionManagers\DocNumberActionManager.cs" />
     <Compile Include="QDocActionManagers\DocNumberActionManagerTests.cs" />
     <Compile Include="QDocActionManagers\DocRevisionActionManagerTests.cs" />
     <Compile Include="TextFindReplaceTests.cs" />
