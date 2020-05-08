@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using QDoc.Core;
 using QDoc.Docs;
 using System.Runtime.CompilerServices;
+using QDoc.Interfaces;
 
 namespace QDoc.Core
 {
@@ -55,12 +56,12 @@ namespace QDoc.Core
             get => count;
         }
 
-        public virtual QDocPropertyResultCollection Inspect(Doc doc)
+        public virtual QDocPropertyResultCollection Inspect(IDoc doc)
         {
             throw new NotImplementedException();
         }
 
-        public virtual QDocPropertyResultCollection Process(Doc doc)
+        public virtual QDocPropertyResultCollection Process(IDoc doc)
         {
             throw new NotImplementedException();
         }

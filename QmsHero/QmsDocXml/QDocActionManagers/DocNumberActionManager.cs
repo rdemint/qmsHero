@@ -1,5 +1,6 @@
 ﻿using QDoc.Core;
 using QDoc.Docs;
+using QDoc.Interfaces;
 using QmsDoc.Docs.Common.Properties;
 using QmsDocXml.QDocActionManagers;
 using System;
@@ -42,7 +43,7 @@ namespace QmsDocXml.QDocActionManagers
             return base.Inspect(doc, col);
         }
 
-        public override QDocPropertyResultCollection Process(Doc doc)
+        public override QDocPropertyResultCollection Process(IDoc doc)
         {
             //Rename occurences of a Document Number within the filename and word / excel text.  
             var col = new QDocPropertyResultCollection();

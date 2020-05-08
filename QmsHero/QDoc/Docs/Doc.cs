@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace QDoc.Docs
 {
-    public abstract class Doc
+    public abstract class Doc: IDoc
     {
         FileInfo fileInfo;
         IDocConfig docConfig;
@@ -63,14 +63,6 @@ namespace QDoc.Docs
             }
             return collection;
         }
-
-        public abstract Result<QDocProperty> Process(QDocProperty prop);
-
-        public virtual QDocPropertyResultCollection Process(QDocActionManager actionManager)
-        {
-            return actionManager.Process(this);
-        }
-
         public virtual QDocPropertyResultCollection Inspect(QDocPropertyCollection docState)
         {
             QDocPropertyResultCollection collection = new QDocPropertyResultCollection();
@@ -81,14 +73,25 @@ namespace QDoc.Docs
             return collection;
         }
 
-        
-
+        public abstract Result<QDocProperty> Process(QDocProperty prop);
         public abstract Result<QDocProperty> Inspect(QDocProperty prop);
+
+        public virtual QDocPropertyResultCollection Process(QDocActionManager actionManager)
+        {
+            return actionManager.Process(this);
+        }
+
 
         public virtual QDocPropertyResultCollection Inspect(QDocActionManager actionManager)
         {
             return actionManager.Inspect(this);
         }
+        
+
+        
+
+        
+
 
     }
 }

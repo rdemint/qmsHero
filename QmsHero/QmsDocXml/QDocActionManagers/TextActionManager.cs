@@ -1,5 +1,6 @@
 ﻿using QDoc.Core;
 using QDoc.Docs;
+using QDoc.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +28,14 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        public override QDocPropertyResultCollection Inspect(Doc doc)
+        public override QDocPropertyResultCollection Inspect(IDoc doc)
         {
             var col = new QDocPropertyResultCollection();
             return Inspect(doc, col);
             
         }
 
-        protected QDocPropertyResultCollection Inspect(Doc doc, QDocPropertyResultCollection col)
+        protected QDocPropertyResultCollection Inspect(IDoc doc, QDocPropertyResultCollection col)
         {
             var result = doc.Inspect(
                 TextFindReplace.Create(
@@ -46,13 +47,13 @@ namespace QmsDocXml.QDocActionManagers
             return col;
         }
 
-        public override QDocPropertyResultCollection Process(Doc doc)
+        public override QDocPropertyResultCollection Process(IDoc doc)
         {
             var col = new QDocPropertyResultCollection();
             return Process(doc, col);
         }
 
-        protected QDocPropertyResultCollection Process(Doc doc, QDocPropertyResultCollection col)
+        protected QDocPropertyResultCollection Process(IDoc doc, QDocPropertyResultCollection col)
         {
             var result = doc.Process(
                 TextFindReplace.Create(

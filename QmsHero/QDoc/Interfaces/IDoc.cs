@@ -1,4 +1,5 @@
-﻿using QDoc.Core;
+﻿using FluentResults;
+using QDoc.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,13 +11,18 @@ namespace QDoc.Interfaces
 {
     public interface IDoc
     {
+        IDocConfig DocConfig { get; set; }
         FileInfo FileInfo { get; set; }
-        QDocPropertyCollection DocProperties { get; set; }
-        void Process(QDocPropertyCollection state);
+        QDocPropertyCollection PropertyResultCollection { get; set; }
+        QDocPropertyResultCollection Process(QDocPropertyCollection state);
 
-        void Process(QDocProperty prop);
-        QDocProperty Inspect(QDocProperty prop);
+        Result<QDocProperty> Process(QDocProperty prop);
+        Result<QDocProperty> Inspect(QDocProperty prop);
 
-        QDocPropertyCollection Inspect(QDocPropertyCollection state);
+        QDocPropertyResultCollection Inspect(QDocPropertyCollection state);
+
+        QDocPropertyResultCollection Process(QDocActionManager actionManager);
+
+        QDocPropertyResultCollection Inspect(QDocActionManager actionManager);
     }
 }
