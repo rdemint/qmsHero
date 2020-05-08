@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QmsDoc.Docs.Common.Properties;
+using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDoc.Tests;
 using System;
@@ -27,9 +28,10 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Inspect(new IsForm());
-            Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(false, result.Value.State);
+            Assert.IsFalse(result.IsSuccess);
 
+            var xl = new ExcelDoc(fixture.ExcelSampleCopy);
+            Assert.IsTrue(xl.Inspect(new IsForm()).IsSuccess);
         }
     }
 }

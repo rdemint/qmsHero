@@ -13,7 +13,7 @@ namespace QDoc.Interfaces
     {
         IDocConfig DocConfig { get; set; }
         FileInfo FileInfo { get; set; }
-        QDocPropertyCollection PropertyResultCollection { get; set; }
+        QDocPropertyResultCollection PropertyResultCollection { get; set; }
         QDocPropertyResultCollection Process(QDocPropertyCollection state);
 
         Result<QDocProperty> Process(QDocProperty prop);

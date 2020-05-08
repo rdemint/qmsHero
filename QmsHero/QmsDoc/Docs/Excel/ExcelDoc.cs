@@ -35,7 +35,7 @@ namespace QmsDoc.Docs.Excel
         }
         public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
 
-        public QDocPropertyResultCollection Process(QDocActionManager action)
+        public override QDocPropertyResultCollection Process(QDocActionManager action)
         {
             return action.Process(this);
         }

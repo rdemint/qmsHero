@@ -30,7 +30,7 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        public override QDocPropertyResultCollection Inspect(Doc doc)
+        public override QDocPropertyResultCollection Inspect(IDoc doc)
         {
             var col = new QDocPropertyResultCollection();
 

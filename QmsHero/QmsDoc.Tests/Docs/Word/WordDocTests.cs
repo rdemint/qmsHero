@@ -19,7 +19,7 @@ namespace QmsDoc.Tests.Docs.Word
         public void ProcessStateTest()
         {
             var newRev = "12";
-            var newNum = "F-012B";
+            var newNum = "SOP-333";
 
             var fixture = new Fixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
