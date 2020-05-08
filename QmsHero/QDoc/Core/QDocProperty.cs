@@ -10,8 +10,7 @@ namespace QDoc.Core
     {
         string name;
         protected object state;
-        protected int readCount;
-        protected int writeCount;
+        protected int stateCount;
 
         public QDocProperty()
         {
@@ -23,6 +22,12 @@ namespace QDoc.Core
             this.state = state;
         }
 
+        public QDocProperty(object state, int stateCount) : this()
+        {
+            this.state = state;
+            this.stateCount = stateCount;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public object State
@@ -32,6 +37,7 @@ namespace QDoc.Core
 
         }
         public string Name { get => name; }
+        protected int StateCount { get => stateCount;}
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {

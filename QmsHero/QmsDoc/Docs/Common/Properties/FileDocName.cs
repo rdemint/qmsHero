@@ -26,6 +26,10 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
+        public FileDocName(object state, int stateCount) : base(state, stateCount)
+        {
+        }
+
         public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             string currentName;

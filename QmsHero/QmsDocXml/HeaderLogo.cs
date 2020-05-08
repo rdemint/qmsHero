@@ -39,6 +39,10 @@ namespace QmsDocXml
         {
         }
 
+        public HeaderLogo(object state, int stateCount) : base(state, stateCount)
+        {
+        }
+
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);

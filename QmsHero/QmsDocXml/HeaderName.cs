@@ -27,6 +27,10 @@ namespace QmsDocXml
         {
         }
 
+        public HeaderName(object state, int stateCount) : base(state, stateCount)
+        {
+        }
+
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             string result = null;

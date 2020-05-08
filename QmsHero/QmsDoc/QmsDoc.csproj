@@ -95,8 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Docs\Common\Actions\" />
-    <Folder Include="Docs\Excel\Properties\" />
-    <Folder Include="Docs\Word\Properties\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QDoc\QDoc.csproj">

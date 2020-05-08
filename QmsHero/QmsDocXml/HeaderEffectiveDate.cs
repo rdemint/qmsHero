@@ -25,6 +25,10 @@ namespace QmsDocXml
 
         public HeaderEffectiveDate(object value) : base(value) { }
 
+        public HeaderEffectiveDate(object state, int stateCount) : base(state, stateCount)
+        {
+        }
+
 
         #region word
 

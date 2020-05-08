@@ -29,6 +29,10 @@ namespace QmsDocXml
         {
         }
 
+        public HeaderRevision(object state, int stateCount) : base(state, stateCount)
+        {
+        }
+
         public Paragraph FetchRevisionPart(WordprocessingDocument doc, WordDocConfig config)
         {
             TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);

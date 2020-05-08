@@ -26,6 +26,10 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
+        public FileRevision(object state, int stateCount) : base(state, stateCount)
+        {
+        }
+
         //public override DocProperty Read(FileInfo file, ExcelDocConfig config)
         //{
         //    Match match = config.FileRevisionRegex.Match(file.Name);

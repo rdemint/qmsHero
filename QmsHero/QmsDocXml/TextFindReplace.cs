@@ -24,7 +24,6 @@ namespace QmsDocXml
     public class TextFindReplace : DocProperty, IReadDocRegex, IWriteDocRegex
     {
         Regex regex;
-        int count;
 
         private TextFindReplace() : base()
         {
@@ -40,7 +39,7 @@ namespace QmsDocXml
         {
             this.regex = new Regex(findPattern);
             this.state = findPattern;
-            this.count = count;
+            stateCount = count;
         }
         private TextFindReplace(string findPattern, string replaceText) : this()
         {
@@ -52,12 +51,15 @@ namespace QmsDocXml
         {
             this.regex = new Regex(findPattern);
             this.state = replaceText;
-            this.count = count;
+            this.stateCount = count;
         }
 
+        public TextFindReplace(object state, int stateCount) : base(state, stateCount)
+        {
+        }
 
         public Regex Regex { get => regex; }
-        public int Count { get => count; }
+        public int Count { get => stateCount; }
 
         public static TextFindReplace Create(string findPattern)
         {
@@ -80,74 +82,6 @@ namespace QmsDocXml
         {
             return new TextFindReplace(findPattern, replacementText, count);
         }
-        //private TextFindReplace(): base()
-        //{
-        //}
-
-        //public TextFindReplace(string currentState) : this()
-        //{
-        //    this.currentState = currentState;
-        //}
-
-        //private TextFindReplace(object currentState, object targetState): this()
-        //{
-        //    this.currentState = currentState;
-        //    this.targetState = targetState;
-        //}
-
-        //private TextFindReplace(object currentState, QDocPropertyResultCollection resultCollection, int foundCount) : this()
-        //{
-        //    this.currentState = currentState;
-        //    this.propertyResultCollection = resultCollection;
-        //    this.count = foundCount;
-        //}
-
-
-
-        //public QDocPropertyResultCollection Inspect(WordDoc wdoc)
-        //{
-        //    using (WordprocessingDocument doc = WordprocessingDocument.Open(wdoc.FileInfo.FullName, false))
-        //    {
-        //        int count = TextXml.SearchCount(doc, regex);
-
-        //        if (count > 0)
-        //        {
-        //            return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.CurrentState, regex.ToString(), count));
-        //        }
-        //        else
-        //        {
-        //            return Results.Ok<QDocProperty>(TextFindReplace.Create((string)this.State, regex.ToString(), count));
-        //        }
-        //    }
-        //}
-
-        //public QDocPropertyResultCollection Inspect(ExcelDoc sdoc)
-        //{
-        //    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(sdoc.FileInfo.FullName, true))
-        //    {
-        //        //
-        //    }
-        //}
-
-        //public QDocPropertyResultCollection Process(WordDoc sdoc)
-        //{
-        //    using (WordprocessingDocument doc = WordprocessingDocument.Open(sdoc.FileInfo.FullName, false))
-        //    {
-        //        //
-        //    }
-        //}
-
-        //public QDocPropertyResultCollection Process(ExcelDoc sdoc)
-        //{
-        //    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(sdoc.FileInfo.FullName, true))
-        //    {
-        //        //
-        //    }
-        //}
-        //
-        //
-        //
-
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc)
         {
