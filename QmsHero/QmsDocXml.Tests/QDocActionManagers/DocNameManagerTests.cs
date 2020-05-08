@@ -23,7 +23,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var propCollection = doc.Inspect(new DocNameActionManager(fixture.ExcelSampleDocName));
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
             Assert.IsFalse(propCollection.HasErrors());
-            Assert.AreEqual(textFind.Count, 1);
+            Assert.AreEqual(textFind.StateCount, 1);
         }
 
         [TestMethod()]
@@ -34,7 +34,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var propCollection = doc.Inspect(new DocNameActionManager(fixture.WordSampleFileDocName));
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
             Assert.IsFalse(propCollection.HasErrors());
-            Assert.AreEqual(textFind.Count, 19);
+            Assert.AreEqual(textFind.StateCount, 19);
         }
 
         [TestMethod]

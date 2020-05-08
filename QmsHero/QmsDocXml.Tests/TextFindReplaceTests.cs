@@ -22,7 +22,7 @@ namespace QmsDocXml.Tests
             var result = doc.Inspect(TextFindReplace.Create("SOP-002"));
             Assert.IsTrue(result.IsSuccess);
             var casted = result.Value as TextFindReplace;
-            Assert.AreEqual(casted.Count, 8);
+            Assert.AreEqual(casted.StateCount, 8);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace QmsDocXml.Tests
             var result = doc.Inspect(TextFindReplace.Create(fixture.ExcelSampleDocNumber));
             Assert.IsTrue(result.IsSuccess);
             var casted = result.Value as TextFindReplace;
-            Assert.AreEqual(casted.Count, 1);
+            Assert.AreEqual(casted.StateCount, 1);
 
         }
 
@@ -53,13 +53,13 @@ namespace QmsDocXml.Tests
             var result = doc.Process(TextFindReplace.Create("SOP-002", "SOP-222"));
             Assert.IsTrue(result.IsSuccess);
             var casted = result.Value as TextFindReplace;
-            Assert.AreEqual(casted.Count, 8);
+            Assert.AreEqual(casted.StateCount, 8);
             var result2 = doc.Inspect(TextFindReplace.Create("SOP-222"));
             var casted2 = result2.Value as TextFindReplace;
-            Assert.AreEqual(casted2.Count, 8);
+            Assert.AreEqual(casted2.StateCount, 8);
             var result3 = doc.Inspect(TextFindReplace.Create("SOP-002"));
             var casted3 = result3.Value as TextFindReplace;
-            Assert.AreEqual(casted3.Count, 0);
+            Assert.AreEqual(casted3.StateCount, 0);
 
 
         }

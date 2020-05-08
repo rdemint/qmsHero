@@ -36,12 +36,15 @@ namespace QmsDoc.Docs.Common.Properties
         public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileFormNumberRegex.Match(file.Name);
-            return Results.Ok<QDocProperty>(new IsForm(match.Success));
+            if(match.Success)
+            {
+                return Results.Ok<QDocProperty>(new IsForm(match.Success));
+            }
+            else
+            {
+                return Results.Fail(new Error($"File {file.Name} did not match the criteria {config.FileFormNumberRegex}."));
+            }
         }
 
-        public override Result<QDocProperty> Write(object doc, object config)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -33,25 +33,6 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        //public static QDocActionManager Create(string currentState)
-        //{
-        //    return new DocRevisionActionManager(currentState);
-        //}
-
-        //public static QDocActionManager Create(string currentState, string targetState)
-        //{
-        //    return new DocRevisionActionManager(currentState, targetState);
-        //}
-
-        //protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        //{
-        //    return new DocRevisionActionManager(currentState, resultCollection, replacementCount);
-        //}
-
-        //protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        //{
-        //    return new DocRevisionActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
-        //}
 
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {

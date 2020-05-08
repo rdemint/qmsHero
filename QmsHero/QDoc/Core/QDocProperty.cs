@@ -37,7 +37,7 @@ namespace QDoc.Core
 
         }
         public string Name { get => name; }
-        protected int StateCount { get => stateCount;}
+        public int StateCount { get => stateCount;}
 
         protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {

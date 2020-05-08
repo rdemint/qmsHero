@@ -42,7 +42,7 @@ namespace QmsDocXml.QDocActionManagers
                 );
             var findResult = result.Value as TextFindReplace;
             col.Add(result);
-            count += findResult.Count;
+            count += findResult.StateCount;
             return col;
         }
 
@@ -63,7 +63,7 @@ namespace QmsDocXml.QDocActionManagers
             if (result.IsSuccess)
             {
                 var replaceResult = result.Value as TextFindReplace;
-                count += replaceResult.Count;
+                count += replaceResult.StateCount;
             }
 
             return col;

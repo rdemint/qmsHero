@@ -38,12 +38,15 @@ namespace QmsDoc.Docs.Common.Properties
         public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileSopNumberRegex.Match(file.Name);
-            return Results.Ok<QDocProperty>(new IsSop(match.Success));
+            if(match.Success)
+            {
+                return Results.Ok<QDocProperty>(new IsSop(match.Success));
+            }
+            else
+            {
+                return Results.Fail(new Error($"File {file.Name} did not match the criteria {config.FileNumberRegex};"));
+            }
         }
 
-        public override Result<QDocProperty> Write(object doc, object config)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

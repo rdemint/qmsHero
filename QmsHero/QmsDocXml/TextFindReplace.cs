@@ -59,7 +59,7 @@ namespace QmsDocXml
         }
 
         public Regex Regex { get => regex; }
-        public int Count { get => stateCount; }
+        public int StateCount { get => stateCount; }
 
         public static TextFindReplace Create(string findPattern)
         {
@@ -140,7 +140,7 @@ namespace QmsDocXml
             int count = 0;
 
             var referenceCountResult = this.Read(doc).Value as TextFindReplace;
-            int referenceCount = referenceCountResult.Count;
+            int referenceCount = referenceCountResult.StateCount;
 
 
 

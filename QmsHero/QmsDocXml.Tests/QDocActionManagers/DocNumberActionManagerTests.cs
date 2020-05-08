@@ -22,7 +22,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var propCollection = doc.Inspect(new DocNumberActionManager(fixture.ExcelSampleDocNumber));
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
             Assert.IsFalse(propCollection.HasErrors());
-            Assert.AreEqual(textFind.Count, 1);
+            Assert.AreEqual(textFind.StateCount, 1);
         }
 
         [TestMethod()]
@@ -33,7 +33,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var propCollection = doc.Inspect(new DocNumberActionManager(fixture.WordSampleDocNumber));
             var textFind = propCollection.Where(prop => prop.Value.Name == "TextFindReplace").First().Value as TextFindReplace;
             Assert.IsFalse(propCollection.HasErrors());
-            Assert.AreEqual(textFind.Count, 8);
+            Assert.AreEqual(textFind.StateCount, 8);
         }
 
         [TestMethod]
@@ -57,11 +57,6 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var propCollection = doc.Process(new DocNumberActionManager("F-001B", newNum));
-            foreach (var propResult in propCollection)
-            {
-                Assert.IsTrue(propResult.IsSuccess);
-            }
-
         }
 
         [TestMethod]
@@ -98,8 +93,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var docNameManager = new DocNumberActionManager(currentNum, newNum);
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Process(docNameManager);
-            Assert.IsFalse(docCollection.HasErrors());
-            
+            Assert.IsTrue(docCollection.Count > 0);
         }
     }
 }

@@ -180,8 +180,8 @@ namespace QmsHero.ViewModel
 
         private void ConfigManagerDir()
         {
-            this.manager.FileManager.SetProcessingDir(this.processingDirPath);
             this.manager.FileManager.SetReferenceDir(this.referenceDirPath);
+            this.manager.FileManager.SetProcessingDir(this.processingDirPath);
         }
         
         private void InspectFilesName()

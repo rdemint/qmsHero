@@ -45,11 +45,31 @@ namespace QFileUtil
             }
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 
+        
         public virtual int UpdateFiles()
+        {
+            if (ReferenceDirAndProcessingDirAreNotNullandExist())
+            {
+              var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                if (refFiles.Any())
+                {
+                    referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                }
+
+                return referenceFiles.Count + processingFiles.Count;
+            }
+
+            return -1;
+
+        }
+        
+        
+        public virtual int UpdateFiles2()
         {
             if(ReferenceDirAndProcessingDirAreNotNullandExist())
             {
-                FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
+                
                 
                 var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                 if(refFiles.Any())
@@ -79,7 +99,12 @@ namespace QFileUtil
         public void SetReferenceDir(DirectoryInfo dir)
         {
             this.referenceDir = dir;
-            UpdateFiles();
+            if (ReferenceDirAndProcessingDirAreNotNullandExist())
+            {
+                CleanProcessingDir();
+                FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
+                UpdateFiles();
+            }
         }
 
         public void SetProcessingDir(string path)
@@ -91,6 +116,12 @@ namespace QFileUtil
         public void SetProcessingDir(DirectoryInfo dir)
         {
             this.processingDir = dir;
+            if (ReferenceDirAndProcessingDirAreNotNullandExist())
+            {
+                CleanProcessingDir();
+                FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
+                UpdateFiles();
+            }
             UpdateFiles();
         }
         

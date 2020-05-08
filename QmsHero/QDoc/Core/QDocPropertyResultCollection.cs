@@ -38,5 +38,15 @@ namespace QDoc.Core
             }
             return boolResult;
         }
+
+        public int TotalStateCount()
+        {
+            int totalCount = 0;
+            foreach( var result in this)
+            {
+                totalCount += result.Value.StateCount;
+            }
+            return totalCount;
+        }
     }
 }

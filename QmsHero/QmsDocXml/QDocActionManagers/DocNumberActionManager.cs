@@ -49,7 +49,7 @@ namespace QmsDocXml.QDocActionManagers
             var fileResultCurrent = doc.Inspect(new FileDocNumber(this.currentState));
             if(fileResultCurrent.IsSuccess)
             {
-                if((string)this.currentState == fileResultCurrent.Value.ToString())
+                if((string)this.currentState == fileResultCurrent.Value.State.ToString())
                 {
                     var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
                     if (fileResult.IsSuccess)

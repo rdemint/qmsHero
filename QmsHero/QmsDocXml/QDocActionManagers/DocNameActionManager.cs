@@ -51,7 +51,7 @@ namespace QmsDocXml.QDocActionManagers
                 );
             var findResult = result.Value as TextFindReplace;
             col.Add(result);
-            count += findResult.Count;
+            count += findResult.StateCount;
             return col;
 
         }
@@ -61,8 +61,8 @@ namespace QmsDocXml.QDocActionManagers
         {
             var col = new QDocPropertyResultCollection();
 
-            var fileDocName = doc.Inspect(new FileDocName()).Value.State.ToString();
-            if (fileDocName == (string)this.CurrentState)
+            var fileNameResult = doc.Inspect(new FileDocName((string)this.currentState));
+            if (fileNameResult.IsSuccess)
             {
                 col.Add(doc.Process(new FileDocName((string)this.TargetState)));
                 count++;
@@ -77,31 +77,12 @@ namespace QmsDocXml.QDocActionManagers
             if(result.IsSuccess)
             {
                 var replaceResult = result.Value as TextFindReplace;
-                count += replaceResult.Count;
+                count += replaceResult.StateCount;
             }
 
             return col;
         }
 
-        //public static QDocActionManager Create(string currentState)
-        //{
-        //    return new DocNameActionManager(currentState);
-        //}
-
-        //public static QDocActionManager Create(string currentState, string targetState)
-        //{
-        //    return new DocNameActionManager(currentState, targetState);
-        //}
-
-        //protected static QDocActionManager Create(string currentState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        //{
-        //    return new DocNameActionManager(currentState, resultCollection, replacementCount);
-        //}
-
-        //protected static QDocActionManager Create(string currentStateToFind, string targetState, QDocPropertyResultCollection resultCollection, int replacementCount)
-        //{
-        //    return new DocNameActionManager(currentStateToFind, targetState, resultCollection, replacementCount);
-        //}
+       }
 
     }
-}
