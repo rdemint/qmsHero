@@ -20,6 +20,7 @@ namespace QmsDoc.Core
 {
     public abstract class DocProperty : QDocProperty, INotifyPropertyChanged
     {
+        
         public DocProperty()
         {
         }
@@ -115,20 +116,6 @@ namespace QmsDoc.Core
         
         public override Result<QDocProperty> Write(object doc, object config)
         {
-            //Visitor Pattern
-            //switch(doc)
-            //{
-            //    case WordprocessingDocument wdoc:
-            //        return this.Write(wdoc, config);
-            //        break;
-            //    default:
-            //        return Results.Fail(new Error("Cannot write to this document type"));
-            //}
-
-            //Maybe this will work?
-            //return this.Write(doc, config);
-
-
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
             WordDocConfig wdocConfig = config as WordDocConfig;
 

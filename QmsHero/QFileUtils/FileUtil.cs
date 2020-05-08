@@ -24,9 +24,16 @@ namespace QFileUtil
 
         public static FileInfo FileRename(FileInfo file, string newNameWithExtension)
         {
+            string oldFilePath = file.FullName;
             FileInfo newFile = new FileInfo(Path.Combine(file.DirectoryName, newNameWithExtension));
             file.MoveTo(newFile.FullName);
-            return file;
+
+            var oldFile = new FileInfo(oldFilePath);
+            if(oldFile.Exists && file.Exists && oldFile.Name != file.Name)
+            {
+                oldFile.Delete();
+            }
+            return newFile;
         }
 
 

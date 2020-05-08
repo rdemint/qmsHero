@@ -99,6 +99,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Process(docNameManager);
             Assert.IsFalse(docCollection.HasErrors());
+            
         }
     }
 }

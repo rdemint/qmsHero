@@ -43,12 +43,20 @@ namespace QmsDocXml.QDocActionManagers
 
         public override QDocPropertyResultCollection Process(Doc doc)
         {
+            //Rename occurences of a Document Number within the filename and word / excel text.  
             var col = new QDocPropertyResultCollection();
-
-            var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
-            if (fileResult.IsSuccess)
-                count++;
-            col.Add(fileResult);
+            
+            var fileResultCurrent = doc.Inspect(new FileDocNumber(this.currentState));
+            if(fileResultCurrent.IsSuccess)
+            {
+                if((string)this.currentState == fileResultCurrent.Value.ToString())
+                {
+                    var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
+                    if (fileResult.IsSuccess)
+                        count++;
+                    col.Add(fileResult);
+                }
+            }
             return base.Process(doc, col);
         }
 

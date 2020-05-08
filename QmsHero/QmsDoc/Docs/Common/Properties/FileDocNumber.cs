@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using FluentResults;
 using QDoc.Core;
 using QDoc.Interfaces;
 using QFileUtil;
@@ -27,35 +28,78 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
-            Match matchFile;
-            string pattern = (string)this.state;
-            Match matchForm = config.FileFormNumberRegex.Match(pattern);
-            Match matchSop = config.FileSopNumberRegex.Match(pattern);
-            Match matchBothFormAndSop = config.FileNumberRegex.Match(pattern);
+            //Match matchFile;
+            //string pattern = (string)this.state;
+            //Match isValidFormPatternMatch = config.FileFormNumberRegex.Match(pattern);
+            //Match isValidSopPatternMatch = config.FileSopNumberRegex.Match(pattern);
+            //Match isValidNumberPattern = config.FileNumberRegex.Match(pattern);
+            //string newName;
+
+
+            //if(isValidFormPatternMatch.Success)
+            //{
+            //    matchFile = config.FileFormNumberRegex.Match(file.Name);
+            //    if(matchFile.Success && isValidFormPatternMatch.ToString() == pattern)
+            //    {
+            //        newName = file.Name.Replace(matchFile.ToString(), this.State.ToString());
+            //        FileUtil.FileRename(file, newName);
+            //        return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
+            //    }
+            //}
+            //else if (isValidSopPatternMatch.Success)
+            //{
+            //    Match fileIsSopMatch = config.FileSopNumberRegex.Match(file.Name);
+            //    if(isValidFormPatternMatch.ToString() == pattern)
+            //    {
+            //        newName = file.Name.Replace(fileIsSopMatch.ToString(), this.State.ToString());
+            //        FileUtil.FileRename(file, newName);
+            //        return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
+            //    }
+            //}
+
+            //else if (isValidNumberPattern.Success)
+            //{
+            //    Match fileIsSopMatch = config.FileNumberRegex.Match(file.Name);
+            //    if (fileIsSopMatch.Success && isValidNumberPattern.ToString() == pattern)
+            //    {
+            //        //The pattern is present in the file name
+            //        newName = file.Name.Replace(fileIsSopMatch.ToString(), this.State.ToString());
+            //        FileUtil.FileRename(file, newName);
+            //        return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
+
+            //    }
+
+            //}
+            string patternToInspectFile = (string)this.state;
+            Match isValidFormFileMatch = config.FileFormNumberRegex.Match(file.Name);
+            Match isValidSopFileMatch = config.FileSopNumberRegex.Match(file.Name);
+            Match isValidNumberFile = config.FileNumberRegex.Match(file.Name);
             string newName;
 
-            if (matchForm.Success)
+            if (isValidFormFileMatch.Success)
             {
-                matchFile = config.FileFormNumberRegex.Match(file.Name);
+                newName = file.Name.Replace(isValidFormFileMatch.ToString(), this.State.ToString());
+                    FileUtil.FileRename(file, newName);
+                    return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
             }
-            else if (matchSop.Success)
+            else if (isValidSopFileMatch.Success)
             {
-                matchFile = config.FileSopNumberRegex.Match(file.Name);
+                newName = file.Name.Replace(isValidSopFileMatch.ToString(), this.State.ToString());
+                FileUtil.FileRename(file, newName);
+                return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
             }
 
-            else if (matchBothFormAndSop.Success)
+            else if (isValidNumberFile.Success)
             {
-                matchFile = config.FileNumberRegex.Match(file.Name);
-            } 
-            
+                newName = file.Name.Replace(isValidNumberFile.ToString(), this.State.ToString());
+                FileUtil.FileRename(file, newName);
+                return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
+            }
+
             else
             {
                 return Results.Fail(new Error("Could not identify the current document number to replace."));
             }
-
-            newName = file.Name.Replace(matchFile.ToString(), this.State.ToString());
-            FileUtil.FileRename(file, newName);
-            return Results.Ok<QDocProperty>(new FileDocNumber((string)this.State));
 
 
         }

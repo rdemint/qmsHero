@@ -10,6 +10,8 @@ namespace QDoc.Core
     {
         string name;
         protected object state;
+        protected int readCount;
+        protected int writeCount;
 
         public QDocProperty()
         {
