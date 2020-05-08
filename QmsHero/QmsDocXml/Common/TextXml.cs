@@ -130,11 +130,8 @@ namespace QmsDocXml.Common
                         else
                             {
                     //match is split over multiple runs. 
-                        var runClone = par.Descendants<Wxml.Run>().Where(run => run.Elements<Wxml.Text>().Any() == true).First();
-                        var textClone = (Wxml.Text)runClone.Descendants<Wxml.Text>().First().CloneNode(true);
-
-                        //var runClone = (Wxml.Run)par.Descendants<Wxml.Run>().First().Clone();
-                        //    var textClone = (Wxml.Text)runClone.Descendants<Wxml.Text>().First().Clone();
+                        var runClone = par.Descendants<Wxml.Run>().Where(run => run.Elements<Wxml.Text>().Any() == true).First().Clone() as Wxml.Run;
+                        var textClone = (Wxml.Text)runClone.Descendants<Wxml.Text>().First().Clone();
 
                             string matchText = rx.Match(par.InnerText).ToString();
                             string newInnerText = par.InnerText.Replace(matchText, replacementText);

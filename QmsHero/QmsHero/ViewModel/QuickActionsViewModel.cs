@@ -111,7 +111,7 @@ namespace QmsHero.ViewModel
 
         }
 
-        public RelayCommand ProcessFilesCommand {
+        public RelayCommand ProcessFileNameCommand {
             get { 
                 if(processFileNameCommand == null)
                 {
@@ -132,7 +132,7 @@ namespace QmsHero.ViewModel
             get => newDocumentName;
             set{ 
                 Set<string>(() => NewDocumentName, ref newDocumentName, value);
-                ProcessFilesCommand.RaiseCanExecuteChanged();
+                ProcessFileNameCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged();
             }}
         public string CurrentDocumentName
@@ -140,10 +140,10 @@ namespace QmsHero.ViewModel
             get => currentDocumentName;
             set { 
                 Set<string>(()=> CurrentDocumentName, ref currentDocumentName, value);
-                InspectFilesCommand.RaiseCanExecuteChanged();
+                InspectFileNameCommand.RaiseCanExecuteChanged();
             }}
 
-        public RelayCommand InspectFilesCommand
+        public RelayCommand InspectFileNameCommand
         {
             get
             {
