@@ -39,7 +39,7 @@ namespace QmsDocXml
         {
         }
 
-        public HeaderLogo(object state, int stateCount) : base(state, stateCount)
+        private HeaderLogo(object state, int stateCount) : base(state, stateCount)
         {
         }
 

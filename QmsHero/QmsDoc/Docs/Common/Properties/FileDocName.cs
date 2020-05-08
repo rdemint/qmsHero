@@ -26,7 +26,7 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public FileDocName(object state, int stateCount) : base(state, stateCount)
+        private FileDocName(object state, int stateCount) : base(state, stateCount)
         {
         }
 

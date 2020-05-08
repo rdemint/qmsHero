@@ -27,7 +27,7 @@ namespace QmsDocXml
         {
         }
 
-        public HeaderName(object state, int stateCount) : base(state, stateCount)
+        private HeaderName(object state, int stateCount) : base(state, stateCount)
         {
         }
 

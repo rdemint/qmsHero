@@ -22,7 +22,7 @@ namespace QDoc.Core
             this.state = state;
         }
 
-        public QDocProperty(object state, int stateCount) : this()
+        protected QDocProperty(object state, int stateCount) : this()
         {
             this.state = state;
             this.stateCount = stateCount;

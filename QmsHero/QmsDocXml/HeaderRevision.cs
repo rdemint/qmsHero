@@ -29,7 +29,7 @@ namespace QmsDocXml
         {
         }
 
-        public HeaderRevision(object state, int stateCount) : base(state, stateCount)
+        private HeaderRevision(object state, int stateCount) : base(state, stateCount)
         {
         }
 

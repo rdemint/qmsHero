@@ -26,7 +26,7 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public FileRevision(object state, int stateCount) : base(state, stateCount)
+        private FileRevision(object state, int stateCount) : base(state, stateCount)
         {
         }
 

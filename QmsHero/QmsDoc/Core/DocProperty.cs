@@ -29,7 +29,7 @@ namespace QmsDoc.Core
         {
         }
 
-        public DocProperty(object state, int stateCount) : base(state, stateCount) { }
+        protected DocProperty(object state, int stateCount) : base(state, stateCount) { }
 
         
         
