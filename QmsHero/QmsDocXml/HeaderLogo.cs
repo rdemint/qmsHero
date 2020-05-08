@@ -62,7 +62,7 @@ namespace QmsDocXml
 
                 
                 var pictureProperties = picture.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.NonVisualDrawingProperties>().First();
-                return Results.Ok<QDocProperty>(new HeaderLogo(pictureProperties.Name.ToString()));
+                return Results.Ok<QDocProperty>(new HeaderLogo(pictureProperties.Name.ToString(), 1));
             }
 
             else
@@ -125,7 +125,7 @@ namespace QmsDocXml
                     if (myShape != null)
                     {
                         var myImageData = myShape.Elements<Ovml.ImageData>().First();
-                        return Results.Ok<QDocProperty>(new HeaderLogo(myImageData.Title.Value));
+                        return Results.Ok<QDocProperty>(new HeaderLogo(myImageData.Title.Value, 1));
                     }
 
                     else
@@ -173,7 +173,7 @@ namespace QmsDocXml
                 ImageXml.Add(doc, imageId, cellPar, imageFile);
             }
 
-            return Results.Ok<QDocProperty>(new HeaderLogo(this.State));
+            return Results.Ok<QDocProperty>(new HeaderLogo(this.State, 1));
         }
 
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -239,7 +239,7 @@ namespace QmsDocXml
                 {
                     imagePart.FeedData(stream);
                 }
-                return Results.Ok<QDocProperty>(new HeaderLogo(this.State));
+                return Results.Ok<QDocProperty>(new HeaderLogo(this.State, 1));
             }
             else
             {

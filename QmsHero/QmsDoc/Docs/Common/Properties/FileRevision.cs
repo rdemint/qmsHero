@@ -30,28 +30,38 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        //public override DocProperty Read(FileInfo file, ExcelDocConfig config)
-        //{
-        //    Match match = config.FileRevisionRegex.Match(file.Name);
-        //    string result = match.ToString().Replace(config.FileRevisionText, "");
-        //    return new FileRevision(result);
-        //}
-
         public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileRevisionRegex.Match(file.Name);
-            string result = match.ToString().Replace(config.FileRevisionText, "");
-            return Results.Ok<QDocProperty>(new FileRevision(result));
+            if (match.Success)
+            {
+                string result = match.ToString().Replace(config.FileRevisionText, "");
+                return Results.Ok<QDocProperty>(new FileRevision(result, 1));
+
+            }
+
+            else
+            {
+                return Results.Fail(new Error($"Could not find a text match with the pattern '{this.state}' in the file name {file.Name}."));
+            } 
         }
 
         public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
             Match fileRevTextMatch = config.FileRevisionRegex.Match(file.Name);
+            if(fileRevTextMatch.Success)
+        {
             string fileRev = fileRevTextMatch.ToString().Replace(config.FileRevisionText, "");
             string newFileRevText = fileRevTextMatch.ToString().Replace(fileRev, (string)this.State);
             string newFileName = file.Name.Replace(fileRevTextMatch.ToString(), newFileRevText);
             FileUtil.FileRename(file, newFileName);
-            return Results.Ok<QDocProperty>(new FileRevision((string)this.State));
+            return Results.Ok<QDocProperty>(new FileRevision((string)this.State, 1));
+
+        }
+            else
+            {
+                return Results.Fail(new Error($"Could not find a text match with the pattern '{this.state}' to replace in the file name {file.Name}."));
+            }
         }
 
     }

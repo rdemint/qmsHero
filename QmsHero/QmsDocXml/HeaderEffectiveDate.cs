@@ -30,8 +30,6 @@ namespace QmsDocXml
         }
 
 
-        #region word
-
         public WD.Paragraph FetchEffectiveDatePart(WordprocessingDocument doc, int row, int col)
         {
 
@@ -44,7 +42,14 @@ namespace QmsDocXml
         {
             WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
-            return Results.Ok<QDocProperty>(new HeaderEffectiveDate(match.ToString()));
+            if(match.Success)
+            {
+                return Results.Ok<QDocProperty>(new HeaderEffectiveDate(match.ToString(), 1));
+            }
+            else
+            {
+                return Results.Fail(new Error($"Did not find any text of the pattern {this.state} in the document text '{par.InnerText}'."));
+            }
         }
 
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -62,7 +67,7 @@ namespace QmsDocXml
             {
                 var m = match.ToString();
                 string matchText = m.Replace(config.HeaderEffectiveDateText, "");
-                return Results.Ok<QDocProperty>(new HeaderEffectiveDate(matchText));
+                return Results.Ok<QDocProperty>(new HeaderEffectiveDate(matchText, 1));
             }
 
             else
@@ -81,7 +86,7 @@ namespace QmsDocXml
             WD.Text text = myRun.Elements<WD.Text>().First();
             text.Text = docConfig.HeaderEffectiveDateText + (string)this.State;
             par.Append(myRun);
-            return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State));
+            return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State, 1));
         }
 
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -110,7 +115,7 @@ namespace QmsDocXml
                     }
                 }
             }
-            return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State));
+            return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State, 1));
 
         }
 
@@ -127,7 +132,6 @@ namespace QmsDocXml
                 }
                 else { return false; }
         }
-        #endregion
 
     }
 }

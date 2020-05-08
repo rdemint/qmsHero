@@ -53,7 +53,7 @@ namespace QmsDocXml
             }
 
             result = result.Replace(config.HeaderNameText, "");
-            return Results.Ok<QDocProperty>(new HeaderName(result));
+            return Results.Ok<QDocProperty>(new HeaderName(result, 1));
         }
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
@@ -67,7 +67,7 @@ namespace QmsDocXml
 
             if (match.Success)
             {
-            return Results.Ok<QDocProperty>(new HeaderName(match.ToString()));
+            return Results.Ok<QDocProperty>(new HeaderName(match.ToString(), 1));
             }
             else
             {
@@ -96,7 +96,7 @@ namespace QmsDocXml
 
                 }
             }
-            return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
+            return Results.Ok<QDocProperty>(new HeaderName((string)this.State, 1));
         }
 
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
@@ -118,7 +118,7 @@ namespace QmsDocXml
                     {
                         string newRunText = textEl.Text.Replace(runTextMatch.ToString(), (string)this.State);
                         textEl.Text = newRunText;
-                        return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
+                        return Results.Ok<QDocProperty>(new HeaderName((string)this.State, 1));
                     }
                 }
             }

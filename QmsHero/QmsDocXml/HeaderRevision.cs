@@ -43,7 +43,7 @@ namespace QmsDocXml
         {
             Paragraph par = FetchRevisionPart(doc, config);
             Match match = config.HeaderRevisionRegex.Match(par.InnerText);
-            return Results.Ok<QDocProperty>(new HeaderRevision(match.ToString()));
+            return Results.Ok<QDocProperty>(new HeaderRevision(match.ToString(), 1));
         }
 
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -59,7 +59,7 @@ namespace QmsDocXml
             {
                 var m = match.ToString();
                 return Results.Ok<QDocProperty>(
-                    new HeaderRevision(m.Replace(config.HeaderRevisionText, ""))
+                    new HeaderRevision(m.Replace(config.HeaderRevisionText, ""), 1)
                     );
             }
 
@@ -84,7 +84,7 @@ namespace QmsDocXml
                 TextXml.ReplaceParagraphElementText(tempParList, config.HeaderRevisionRegex, (string)this.state);
                 //Text text = par.Elements<Run>().First().Elements<Text>().First();
                 //text.Text = config.HeaderRevisionText + (string)this.State;
-                return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
+                return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State, 1));
             }
             else
             {
@@ -128,7 +128,7 @@ namespace QmsDocXml
 
                 }
             }
-            return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State));
+            return Results.Ok<QDocProperty>(new HeaderRevision((string)this.State, 1));
         }
 
         public override bool IsValid(object config)
