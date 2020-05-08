@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Packaging;
 using FluentResults;
 using QDoc.Core;
+using QDoc.Docs;
 using QDoc.Interfaces;
 using QmsDoc.Docs.Common;
 using QmsDoc.Docs.Excel;

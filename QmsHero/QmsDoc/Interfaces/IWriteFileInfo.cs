@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using QDoc.Core;
+using QDoc.Docs;
 using QmsDoc.Docs.Common;
 using System;
 using System.Collections.Generic;

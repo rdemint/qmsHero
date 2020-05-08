@@ -9,5 +9,8 @@ namespace QDoc.Interfaces
 {
     public interface IDocConfig
     {
+        Regex FileNumberRegex { get; set; }
+        Regex FileSopNumberRegex { get; set; }
+        Regex FileFormNumberRegex { get; set; }
     }
 }

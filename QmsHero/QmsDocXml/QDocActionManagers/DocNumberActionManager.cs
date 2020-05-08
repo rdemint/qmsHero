@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QmsDocXml.QDocActionManagers
@@ -32,7 +33,7 @@ namespace QmsDocXml.QDocActionManagers
         {
             var col = new QDocPropertyResultCollection();
 
-            var fileResult = doc.Inspect(new FileDocNumber((string)this.CurrentState));
+            var fileResult = doc.Inspect(new FileDocNumber());
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count++;
@@ -45,17 +46,57 @@ namespace QmsDocXml.QDocActionManagers
         {
             //Rename occurences of a Document Number within the filename and word / excel text.  
             var col = new QDocPropertyResultCollection();
-            
-            var fileResultCurrent = doc.Inspect(new FileDocNumber(this.currentState));
-            if(fileResultCurrent.IsSuccess)
+            //
+            //
+            Match fileMatch;
+            string patternToInspectFile = (string)this.currentState;
+            Match isValidFormPatternMatch = doc.DocConfig.FileFormNumberRegex.Match(patternToInspectFile);
+            Match isValidSopPatternMatch = doc.DocConfig.FileSopNumberRegex.Match(patternToInspectFile);
+            Match isValidNumberPatternMatch = doc.DocConfig.FileNumberRegex.Match(patternToInspectFile);
+
+            if (isValidFormPatternMatch.Success)
             {
-                if((string)this.currentState == fileResultCurrent.Value.State.ToString())
+                fileMatch = doc.DocConfig.FileFormNumberRegex.Match(doc.FileInfo.Name);
+                if (fileMatch.Success)
                 {
                     var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
                     if (fileResult.IsSuccess)
                         count++;
                     col.Add(fileResult);
                 }
+            }
+            else if (isValidSopPatternMatch.Success)
+            {
+                fileMatch = doc.DocConfig.FileSopNumberRegex.Match(doc.FileInfo.Name);
+                if (fileMatch.Success)
+                {
+                    var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
+                    if (fileResult.IsSuccess)
+                        count++;
+                    col.Add(fileResult);
+                }
+            }
+
+            else if (isValidNumberPatternMatch.Success)
+            {
+                fileMatch = doc.DocConfig.FileNumberRegex.Match(doc.FileInfo.Name);
+                if (fileMatch.Success)
+                {
+                    var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
+                    if (fileResult.IsSuccess)
+                        count++;
+                    col.Add(fileResult);
+                }
+
+            }
+
+            //
+            //
+            var fileResultCurrent = doc.Inspect(new FileDocNumber());
+
+            if(fileResultCurrent.IsSuccess)
+            {
+                
             }
             return base.Process(doc, col);
         }

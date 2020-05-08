@@ -1,5 +1,6 @@
 ﻿
 
+using QDoc.Docs;
 using QDoc.Interfaces;
 using QmsDoc.Docs.Common;
 using System;

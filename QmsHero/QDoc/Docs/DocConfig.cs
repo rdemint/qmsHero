@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace QmsDoc.Docs.Common
+namespace QDoc.Docs
 {
     public class DocConfig: IDocConfig
     {

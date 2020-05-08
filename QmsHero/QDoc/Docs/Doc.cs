@@ -26,6 +26,7 @@ namespace QDoc.Docs
         public Doc(System.IO.FileInfo fileInfo): this()
         {
             this.FileInfo = fileInfo;
+            this.DocConfig = new DocConfig();
         }
 
         public Doc(FileInfo fileInfo, IDocConfig docConfig): this()

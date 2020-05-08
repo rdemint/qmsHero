@@ -19,7 +19,7 @@ namespace QmsDocXml.QDocActionManagers
     public class DocNameActionManager : QDocActionManager
 
     {
-        public DocNameActionManager(object currentState): base(currentState)
+        public DocNameActionManager(object currentState) : base(currentState)
         {
         }
 
@@ -39,7 +39,7 @@ namespace QmsDocXml.QDocActionManagers
         {
             var col = new QDocPropertyResultCollection();
 
-            var fileResult = doc.Inspect(new FileDocName((string)this.CurrentState));
+            var fileResult = doc.Inspect(new FileDocName());
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count += 1;
@@ -55,34 +55,40 @@ namespace QmsDocXml.QDocActionManagers
             return col;
 
         }
-        
+
 
         public override QDocPropertyResultCollection Process(Doc doc)
         {
             var col = new QDocPropertyResultCollection();
 
-            var fileNameResult = doc.Inspect(new FileDocName((string)this.currentState));
+            var fileNameResult = doc.Inspect(new FileDocName());
             if (fileNameResult.IsSuccess)
             {
-                col.Add(doc.Process(new FileDocName((string)this.TargetState)));
-                count++;
-            }
+                if (fileNameResult.IsSuccess && (string)this.currentState == fileNameResult.Value.State.ToString())
+                {
+                    var fileResult = doc.Process(new FileDocName((string)this.TargetState));
+                    if (fileResult.IsSuccess)
+                    {
+                        count++;
+                        col.Add(fileResult);
+                    }
+                }
 
-            var result = doc.Process(
-                TextFindReplace.Create(
-                    (string)this.CurrentState,
-                    (string)this.TargetState)
-                );
-            col.Add(result);
-            if(result.IsSuccess)
-            {
-                var replaceResult = result.Value as TextFindReplace;
-                count += replaceResult.StateCount;
-            }
+                var result = doc.Process(
+                    TextFindReplace.Create(
+                        (string)this.CurrentState,
+                        (string)this.TargetState)
+                    );
+                col.Add(result);
+                if (result.IsSuccess)
+                {
+                    var replaceResult = result.Value as TextFindReplace;
+                    count += replaceResult.StateCount;
+                }
 
+            }
             return col;
         }
-
-       }
+    }
 
     }

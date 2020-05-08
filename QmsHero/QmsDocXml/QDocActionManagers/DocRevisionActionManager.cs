@@ -37,14 +37,14 @@ namespace QmsDocXml.QDocActionManagers
         public override QDocPropertyResultCollection Inspect(Doc doc)
         {
             var col = new QDocPropertyResultCollection();
-            var fileResult = doc.Inspect(new FileRevision((string)this.CurrentState));
+            var fileResult = doc.Inspect(new FileRevision());
             if (fileResult.IsSuccess && fileResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count ++;
             }
             col.Add(fileResult);
 
-            var headerResult = doc.Inspect(new HeaderRevision((string)this.CurrentState));
+            var headerResult = doc.Inspect(new HeaderRevision());
             if(headerResult.IsSuccess && headerResult.Value.State.ToString() == (string)this.CurrentState)
             {
                 count++;
@@ -58,15 +58,22 @@ namespace QmsDocXml.QDocActionManagers
         {
             var col = new QDocPropertyResultCollection();
 
-            var fileResult = doc.Process(new FileRevision((string)this.TargetState));
-            if(fileResult.IsSuccess)
-                count++;
-            col.Add(fileResult);
+            if((string)this.currentState == "*")
+            {
+                var fileResult = doc.Process(new FileRevision((string)this.TargetState));
+                if(fileResult.IsSuccess)
+                    count++;
+                col.Add(fileResult);
             
-            var headerResult = doc.Process(new HeaderRevision((string)this.TargetState));
-            if(headerResult.IsSuccess)
-                count++;
-            col.Add(headerResult);
+                var headerResult = doc.Process(new HeaderRevision((string)this.TargetState));
+                if(headerResult.IsSuccess)
+                    count++;
+                col.Add(headerResult);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
             return col;
         }
     }

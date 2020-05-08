@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using QDoc.Core;
+using QDoc.Docs;
 using QFileUtil;
 using QmsDoc.Core;
 using QmsDoc.Docs.Excel;
@@ -32,19 +33,31 @@ namespace QmsDoc.Docs.Common.Properties
 
         public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
         {
-            string currentName;
             Result<QDocProperty> result;
-
-            if(WordDoc.Extensions().Contains(file.Extension))
+            if (WordDoc.Extensions().Contains(file.Extension))
             {
                 var tempDoc = new WordDoc(file, config as WordDocConfig);
                 result = tempDoc.Inspect(new FileDocName());
+                if(result.IsSuccess)
+                {
+                    string currentText = result.Value.State.ToString();
+                    string newFileName = file.Name.Replace(currentText, this.State.ToString());
+                    FileUtil.FileRename(file, newFileName);
+                    return Results.Ok<QDocProperty>(new FileDocName((string)this.State, 1));
+                }
             }
 
-            else if(ExcelDoc.Extensions().Contains(file.Extension))
+            else if (ExcelDoc.Extensions().Contains(file.Extension))
             {
                 var tempDoc = new ExcelDoc(file, config as ExcelDocConfig);
                 result = tempDoc.Inspect(new FileDocName());
+                if (result.IsSuccess)
+                {
+                    string currentText = result.Value.State.ToString();
+                    string newFileName = file.Name.Replace(currentText, this.State.ToString());
+                    FileUtil.FileRename(file, newFileName);
+                    return Results.Ok<QDocProperty>(new FileDocName((string)this.State, 1));
+                }
             }
 
             else
@@ -53,15 +66,8 @@ namespace QmsDoc.Docs.Common.Properties
                     new Error("File did not have a valid extension to write to")
                         .CausedBy(new DocWriteException()));
             }
+            return Results.Fail(new Error($"Did not match a name with pattern {this.state} in the file name {file.Name}."));
             
-            if (result.IsFailed)
-                return Results.Fail(new Error("Could not determine the current name to replace"));
-
-            currentName = (string)result.Value.State;
-
-            string newFileName = file.Name.Replace(currentName, this.State.ToString());
-            FileUtil.FileRename(file, newFileName);
-            return Results.Ok<QDocProperty>(new FileDocName((string)this.State, 1));
         }
 
         public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
