@@ -25,14 +25,14 @@ namespace QmsDocXml.Tests
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Inspect(prop);
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(fixture.WordSampleEffectiveDate, (string)result.Value.State);
+            Assert.AreEqual(fixture.WordSampleEffectiveDate, (string)result.Value);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             result = xl.Inspect(new HeaderEffectiveDate());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.ExcelSampleEffectiveDate, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleEffectiveDate, (string)result.Value);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace QmsDocXml.Tests
             result = doc.Inspect(new HeaderEffectiveDate());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(effDate, (string)result.Value.State);
+            Assert.AreEqual(effDate, (string)result.Value);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
@@ -60,7 +60,7 @@ namespace QmsDocXml.Tests
             result = xl.Inspect(new HeaderEffectiveDate());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(effDate, (string)result.Value.State);
+            Assert.AreEqual(effDate, (string)result.Value);
         }
 
     }

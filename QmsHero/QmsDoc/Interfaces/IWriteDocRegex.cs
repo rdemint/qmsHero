@@ -13,8 +13,8 @@ namespace QmsDoc.Interfaces
     public interface IWriteDocRegex
     {
         Regex Regex { get; }
-        Result<QDocProperty> Write(WordprocessingDocument doc);
+        Result<int> Write(WordprocessingDocument doc);
 
-        Result<QDocProperty> Write(SpreadsheetDocument doc);
+        Result<int> Write(SpreadsheetDocument doc);
     }
 }

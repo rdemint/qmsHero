@@ -36,14 +36,14 @@ namespace QmsDocXml
             return p;
         }
 
-        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<int> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
             Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
             return Results.Ok<QDocProperty>(new HeaderEffectiveDate(match.ToString()));
         }
 
-        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheet = doc.WorkbookPart.WorksheetParts.First().Worksheet;
             var header = workSheet.Elements<XL.HeaderFooter>().FirstOrDefault();
@@ -69,7 +69,7 @@ namespace QmsDocXml
             }
         }
 
-        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<int> Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
             WD.Run myRun = (WD.Run)par.Elements<WD.Run>().First().Clone();
@@ -80,7 +80,7 @@ namespace QmsDocXml
             return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State));
         }
 
-        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
             foreach (var workSheetPart in workSheetParts)

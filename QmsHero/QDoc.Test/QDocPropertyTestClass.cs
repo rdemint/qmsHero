@@ -20,12 +20,12 @@ namespace QDoc.Test
         {
         }
 
-        public override Result<QDocProperty> Read(object doc, object docConfig)
+        public override Result<int> Read(object doc, object docConfig)
         {
             throw new NotImplementedException();
         }
 
-        public override Result<QDocProperty> Write(object doc, object docConfig)
+        public override Result<int> Write(object doc, object docConfig)
         {
             throw new NotImplementedException();
         }

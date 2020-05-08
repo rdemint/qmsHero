@@ -12,6 +12,6 @@ namespace QmsDoc.Interfaces
 {
     interface IWriteFileInfo
     {
-        Result<QDocProperty> Write(FileInfo file, DocConfig config);
+        Result<int> Write(FileInfo file, DocConfig config);
     }
 }

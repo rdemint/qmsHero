@@ -39,7 +39,7 @@ namespace QmsDocXml
         {
         }
 
-        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<int> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
 
@@ -67,7 +67,7 @@ namespace QmsDocXml
             }
         }
 
-        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
 
@@ -137,7 +137,7 @@ namespace QmsDocXml
 
         }
 
-        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig docConfig)
+        public override Result<int> Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
             //https://stackoverflow.com/questions/2810138/replace-image-in-word-doc-using-openxml
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
@@ -172,7 +172,7 @@ namespace QmsDocXml
             return Results.Ok<QDocProperty>(new HeaderLogo(this.State));
         }
 
-        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
 
             FileInfo imageFile = new FileInfo(this.State.ToString());

@@ -39,7 +39,7 @@ namespace QmsDoc.Tests.Core
             {
                 var result = doc?.Inspect(new FileRevision());
                 Assert.IsTrue(result.IsSuccess);
-                Assert.AreEqual(newRev, (string)result.Value.State);
+                Assert.AreEqual(newRev, (string)result.Value);
             }
         }
 

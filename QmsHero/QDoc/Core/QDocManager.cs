@@ -54,9 +54,9 @@ namespace QDoc.Core
 
         
         
-        public virtual Result<QDocProperty> Process(FileInfo file, QDocProperty docProp)
+        public virtual Result<int> Process(FileInfo file, QDocProperty docProp)
         {
-            Result<QDocProperty> doc;
+            Result<int> doc;
             var docResult = DocFactory.CreateDoc(file);
             if (docResult.IsSuccess)
                 doc = docResult.Value.Process(docProp);
@@ -113,7 +113,7 @@ namespace QDoc.Core
                 var docResult = this.DocFactory.CreateDoc(file);
                 if(docResult.IsSuccess)
                 {
-                    Result<QDocProperty> result = docResult.Value.Process(docProp);
+                    Result<int> result = docResult.Value.Process(docProp);
                     docResult.Value.PropertyResultCollection.Add(result);
                     docCollection.Add(docResult.Value);
 
@@ -151,7 +151,7 @@ namespace QDoc.Core
                 if(docResult.IsSuccess)
                 {
                     var doc = docResult.Value;
-                    Result<QDocProperty> result = doc.Inspect(docProp);
+                    Result<int> result = doc.Inspect(docProp);
                     doc.PropertyResultCollection.Add(result);
                     docCollection.Add(doc);
                 }

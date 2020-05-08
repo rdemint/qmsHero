@@ -33,14 +33,14 @@ namespace QmsDoc.Docs.Common.Properties
         //    return new FileRevision(result);
         //}
 
-        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
+        public override Result<int> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileRevisionRegex.Match(file.Name);
             string result = match.ToString().Replace(config.FileRevisionText, "");
             return Results.Ok<QDocProperty>(new FileRevision(result));
         }
 
-        public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
+        public override Result<int> Write(FileInfo file, DocConfig config)
         {
             Match fileRevTextMatch = config.FileRevisionRegex.Match(file.Name);
             string fileRev = fileRevTextMatch.ToString().Replace(config.FileRevisionText, "");

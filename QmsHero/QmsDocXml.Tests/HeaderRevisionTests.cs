@@ -19,13 +19,13 @@ namespace QmsDocXml.Tests
             var result = doc.Inspect(prop);
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.WordSampleRevision, (string)result.Value.State);
+            Assert.AreEqual(fixture.WordSampleRevision, (string)result.Value);
 
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             result = xl.Inspect(new HeaderRevision());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value);
         }
 
         [TestMethod]
@@ -44,21 +44,21 @@ namespace QmsDocXml.Tests
 
             result = doc.Inspect(new HeaderRevision());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(rev, (string)result.Value.State);
+            Assert.AreEqual(rev, (string)result.Value);
 
             //excel
             var xl = new ExcelDoc(fixture.ExcelSampleCopy);
             result = xl.Inspect(new HeaderRevision());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value);
 
             rev = "12";
             xl.Process(new HeaderRevision(rev));
             result = xl.Inspect(new HeaderRevision());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(rev, (string)result.Value.State);
+            Assert.AreEqual(rev, (string)result.Value);
 
         }
     }

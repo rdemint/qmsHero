@@ -10,15 +10,13 @@ namespace QDoc.Core
     {
         string name;
         protected object state;
-        protected int readCount;
-        protected int writeCount;
 
-        public QDocProperty()
+        private QDocProperty()
         {
             this.name = this.GetType().Name;
         }
 
-        public QDocProperty(object state): this()
+        protected QDocProperty(object state): this()
         {
             this.state = state;
         }
@@ -28,8 +26,6 @@ namespace QDoc.Core
         public object State
         {
             get => state;
-            set => this.state = value;
-
         }
         public string Name { get => name; }
 
@@ -38,23 +34,23 @@ namespace QDoc.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual Result<QDocProperty> Read(object doc)
+        public virtual Result<int> Read(object doc)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(object doc)
+        public virtual Result<int> Write(object doc)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Read(object doc, object config)
+        public virtual Result<int> Read(object doc, object config)
         {
             throw new NotImplementedException();
         }
 
 
-        public virtual Result<QDocProperty> Write(object doc, object config)
+        public virtual Result<int> Write(object doc, object config)
         {
             throw new NotImplementedException();
         }

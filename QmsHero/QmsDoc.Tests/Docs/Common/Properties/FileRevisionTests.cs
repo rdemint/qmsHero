@@ -23,7 +23,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Inspect(new FileRevision());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(fixture.ExcelSampleRevision, result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleRevision, result.Value);
         }
 
         [TestMethod()]
@@ -35,7 +35,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             doc.Process(new FileRevision(newRev));
             var result = doc.Inspect(new FileRevision());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(newRev, result.Value.State);
+            Assert.AreEqual(newRev, result.Value);
         }
 
 

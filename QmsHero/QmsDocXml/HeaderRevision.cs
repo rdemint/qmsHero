@@ -35,14 +35,14 @@ namespace QmsDocXml
             return cell.Elements<Paragraph>().First();
         }
 
-        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<int> Read(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
             Match match = config.HeaderRevisionRegex.Match(par.InnerText);
             return Results.Ok<QDocProperty>(new HeaderRevision(match.ToString()));
         }
 
-        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheet = doc.WorkbookPart.WorksheetParts.First().Worksheet;
             var header = workSheet.Elements<XL.HeaderFooter>().FirstOrDefault();
@@ -69,7 +69,7 @@ namespace QmsDocXml
         }
 
 
-        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<int> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             Paragraph par = FetchRevisionPart(doc, config);
             Match parMatch = config.HeaderRevisionRegex.Match(par.InnerText);
@@ -89,7 +89,7 @@ namespace QmsDocXml
             }
         }
 
-        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
             foreach(var workSheetPart in workSheetParts)

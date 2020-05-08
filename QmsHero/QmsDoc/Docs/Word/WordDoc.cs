@@ -39,9 +39,9 @@ namespace QmsDoc.Docs.Word
         public List<string> FileExtensions { get => fileExtensions; }
 
         
-        public override Result<QDocProperty> Process(QDocProperty qprop)
+        public override Result<int> Process(QDocProperty qprop)
         {
-           Result<QDocProperty> result;
+           Result<int> result;
             if (qprop as IWriteFileInfo != null)
                 {
                     return qprop.Write(FileInfo, DocConfig);
@@ -70,10 +70,10 @@ namespace QmsDoc.Docs.Word
 
 
        
-        public override Result<QDocProperty> Inspect(QDocProperty prop)
+        public override Result<int> Inspect(QDocProperty prop)
         {
 
-            Result<QDocProperty> result;
+            Result<int> result;
 
             //try
             //{

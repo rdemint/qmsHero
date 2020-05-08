@@ -15,6 +15,6 @@ namespace QmsDoc.Interfaces
 {
     interface IReadFileInfo
     {
-        Result<QDocProperty> Read(FileInfo file, DocConfig config);
+        Result<int> Read(FileInfo file, DocConfig config);
     }
 }

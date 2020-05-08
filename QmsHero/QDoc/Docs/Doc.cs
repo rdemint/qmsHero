@@ -63,7 +63,7 @@ namespace QDoc.Docs
             return collection;
         }
 
-        public abstract Result<QDocProperty> Process(QDocProperty prop);
+        public abstract Result<int> Process(QDocProperty prop);
 
         public virtual QDocPropertyResultCollection Process(QDocActionManager actionManager)
         {
@@ -82,7 +82,7 @@ namespace QDoc.Docs
 
         
 
-        public abstract Result<QDocProperty> Inspect(QDocProperty prop);
+        public abstract Result<int> Inspect(QDocProperty prop);
 
         public virtual QDocPropertyResultCollection Inspect(QDocActionManager actionManager)
         {

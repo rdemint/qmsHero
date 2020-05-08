@@ -33,13 +33,13 @@ namespace QmsDoc.Docs.Common.Properties
             }
         }
 
-        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
+        public override Result<int> Read(FileInfo file, DocConfig config)
         {
             Match match = config.FileFormNumberRegex.Match(file.Name);
             return Results.Ok<QDocProperty>(new IsForm(match.Success));
         }
 
-        public override Result<QDocProperty> Write(object doc, object config)
+        public override Result<int> Write(object doc, object config)
         {
             throw new NotImplementedException();
         }

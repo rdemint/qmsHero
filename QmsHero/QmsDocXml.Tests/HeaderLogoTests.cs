@@ -18,7 +18,7 @@ namespace QmsDocXml.Tests
             var result = xl.Inspect(new HeaderLogo());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual("GT Medical Logo II", (string)result.Value.State);
+            Assert.AreEqual("GT Medical Logo II", (string)result.Value);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace QmsDocXml.Tests
             var result = doc.Inspect(new HeaderLogo());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual("GT Medical Logo II.jpg", (string)result.Value.State);
+            Assert.AreEqual("GT Medical Logo II.jpg", (string)result.Value);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace QmsDocXml.Tests
             result = doc.Inspect(new HeaderLogo());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, (string)result.Value.State);
+            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, (string)result.Value);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace QmsDocXml.Tests
             var result = xl.Inspect(new HeaderLogo());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, (string)result.Value.State);
+            Assert.AreEqual(fixture.LogoSampleJpgCopy.Name, (string)result.Value);
         }
     }
 }

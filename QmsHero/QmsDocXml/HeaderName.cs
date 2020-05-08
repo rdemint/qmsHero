@@ -27,7 +27,7 @@ namespace QmsDocXml
         {
         }
 
-        public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             string result = null;
             var header = doc.WorkbookPart.WorksheetParts.First().Worksheet.Elements<Sxml.HeaderFooter>().FirstOrDefault();
@@ -52,7 +52,7 @@ namespace QmsDocXml
             return Results.Ok<QDocProperty>(new HeaderName(result));
         }
 
-        public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<int> Read(WordprocessingDocument doc, WordDocConfig config)
         {
             Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var par = cell.Elements<Wxml.Paragraph>().First();
@@ -71,7 +71,7 @@ namespace QmsDocXml
             }
         }
 
-        public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public override Result<int> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             var workSheetParts = doc.WorkbookPart.WorksheetParts.ToList();
             foreach (var workSheetPart in workSheetParts)
@@ -95,7 +95,7 @@ namespace QmsDocXml
             return Results.Ok<QDocProperty>(new HeaderName((string)this.State));
         }
 
-        public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
+        public override Result<int> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
             var par = cell.Elements<Wxml.Paragraph>().First();

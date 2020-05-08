@@ -28,10 +28,10 @@ namespace QmsDoc.Tests.Docs.Word
 
             doc.Process(targetState);
             QDocPropertyResultCollection resultCollection = doc.Inspect(state);
-            Result<QDocProperty> fileDocNumber = resultCollection.Where(result => result.Value.Name == "FileDocNumber").First();
+            Result<int> fileDocNumber = resultCollection.Where(result => result.Value.Name == "FileDocNumber").First();
             Assert.IsTrue(fileDocNumber.IsSuccess);
            
-            Result<QDocProperty> fileRevision = resultCollection.Where(result => result.Value.Name == "FileRevision").First();
+            Result<int> fileRevision = resultCollection.Where(result => result.Value.Name == "FileRevision").First();
             Assert.IsTrue(fileRevision.IsSuccess);
 
             Assert.AreEqual(newNum, (string)fileDocNumber.Value.State);
@@ -49,10 +49,10 @@ namespace QmsDoc.Tests.Docs.Word
 
             Assert.AreEqual(resultCollection.Count, 2);
 
-            Result<QDocProperty> fileDocName = resultCollection.Where(prop => prop.Value.Name == "FileDocName").First();
+            Result<int> fileDocName = resultCollection.Where(prop => prop.Value.Name == "FileDocName").First();
             Assert.IsTrue(fileDocName.IsSuccess);
 
-            Result<QDocProperty> fileRevision = resultCollection.Where(result => result.Value.Name == "FileRevision").First();
+            Result<int> fileRevision = resultCollection.Where(result => result.Value.Name == "FileRevision").First();
             Assert.IsTrue(fileRevision.IsSuccess);
 
             Assert.AreEqual(fixture.WordSampleFileDocName, (string)fileDocName.Value.State);

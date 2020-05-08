@@ -149,13 +149,13 @@ namespace QmsDocXml
         //
 
 
-        public override Result<QDocProperty> Read(WordprocessingDocument doc)
+        public override Result<int> Read(WordprocessingDocument doc)
         {
             int count = TextXml.SearchCount(doc, regex);
             return Results.Ok<QDocProperty>(TextFindReplace.Create(regex.ToString(), count));
         }
         
-        public override Result<QDocProperty> Write(WordprocessingDocument doc)
+        public override Result<int> Write(WordprocessingDocument doc)
         {
 
             int referenceCount = TextXml.SearchCount(doc, this.regex);
@@ -196,12 +196,12 @@ namespace QmsDocXml
             }
         }
 
-        public override Result<QDocProperty> Read(SpreadsheetDocument doc)
+        public override Result<int> Read(SpreadsheetDocument doc)
         {
             int count = TextXml.SearchCount(doc, this.regex);
             return Results.Ok<QDocProperty>(TextFindReplace.Create(regex.ToString(), regex.ToString(), count));
         }
-        public override Result<QDocProperty> Write(SpreadsheetDocument doc)
+        public override Result<int> Write(SpreadsheetDocument doc)
         {
             int count = 0;
 

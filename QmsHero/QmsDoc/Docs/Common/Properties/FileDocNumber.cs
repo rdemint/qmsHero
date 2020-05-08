@@ -26,7 +26,7 @@ namespace QmsDoc.Docs.Common.Properties
         {
         }
 
-        public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
+        public override Result<int> Write(FileInfo file, DocConfig config)
         {
             //Match matchFile;
             //string pattern = (string)this.state;
@@ -104,7 +104,7 @@ namespace QmsDoc.Docs.Common.Properties
 
         }
 
-        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
+        public override Result<int> Read(FileInfo file, DocConfig config)
         {
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);
             Match matchSop = config.FileSopNumberRegex.Match(file.Name);

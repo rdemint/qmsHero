@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace QDoc.Core
 {
-    public class QDocPropertyResultCollection : ObservableCollection<Result<QDocProperty>>
+    public class QDocPropertyResultCollection : ObservableCollection<Result<int>>
     {
         public QDocPropertyResultCollection()
         {
         }
 
-        public QDocPropertyResultCollection(List<Result<QDocProperty>> list) : base(list)
+        public QDocPropertyResultCollection(List<Result<int>> list) : base(list)
         {
         }
 
-        public QDocPropertyResultCollection(IEnumerable<Result<QDocProperty>> collection) : base(collection)
+        public QDocPropertyResultCollection(IEnumerable<Result<int>> collection) : base(collection)
         {
         }
 
@@ -27,14 +27,14 @@ namespace QDoc.Core
             return this.Any(result => result.IsFailed == true);
         }
 
-        public bool EachItemSharesState()
+        public bool EachItemSharesCount()
         {
-            var stateReference = this.First().Value.State;
-            bool boolResult = this.All(result => (string)result.Value.State == (string)stateReference);
+            var stateReference = this.First().Value;
+            bool boolResult = this.All(result => (int)result.Value == (int)stateReference);
 
             foreach(var result in this)
             {
-                bool tempResult = (string)result.Value.State == (string)stateReference;
+                bool tempResult = (string)result.Value == (string)stateReference;
             }
             return boolResult;
         }

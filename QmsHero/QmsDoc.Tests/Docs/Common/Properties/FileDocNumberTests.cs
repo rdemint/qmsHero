@@ -19,8 +19,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             wdoc.Process(new FileDocNumber(newNum));
             var result = wdoc.Inspect(new FileDocNumber());
             Assert.IsTrue(result.IsSuccess);
-            
-            Assert.AreEqual(newNum, (string)result.Value.State);
+            Assert.AreEqual(1, result.Value);
         }
 
         [TestMethod()]
@@ -52,7 +51,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             doc.Process(new FileDocNumber(newNum));
             var result = doc.Inspect(new FileDocNumber());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(newNum, (string)result.Value.State);
+            Assert.AreEqual(1, result.Value);
         }
 
         [TestMethod()]
@@ -63,7 +62,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
 
             var result = wdoc.Inspect(new FileDocNumber());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(fixture.WordSampleDocNumber, (string)result.Value.State);
+            Assert.AreEqual(fixture.WordSampleDocNumber, (string)result.Value);
         }
 
         [TestMethod()]
@@ -74,7 +73,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var result = doc.Inspect(new FileDocNumber());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(fixture.ExcelSampleDocNumber, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleDocNumber, (string)result.Value);
 
         }
     }

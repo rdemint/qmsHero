@@ -41,9 +41,9 @@ namespace QmsDoc.Docs.Excel
         }
         
         
-        public override Result<QDocProperty> Process(QDocProperty prop)
+        public override Result<int> Process(QDocProperty prop)
         {
-            Result<QDocProperty> result;
+            Result<int> result;
 
             if(prop as IWriteFileInfo != null)
             {
@@ -75,9 +75,9 @@ namespace QmsDoc.Docs.Excel
         }
             
         
-        public override Result<QDocProperty> Inspect(QDocProperty prop)
+        public override Result<int> Inspect(QDocProperty prop)
         {
-            Result<QDocProperty> result;
+            Result<int> result;
              
             if(prop as IReadFileInfo != null)
                 {

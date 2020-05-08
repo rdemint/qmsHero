@@ -18,18 +18,15 @@ namespace QmsDoc.Docs.Common.Properties
 {
     public class FileDocName : DocProperty, IReadFileInfo, IWriteFileInfo
     {
-        public FileDocName()
-        {
-        }
 
         public FileDocName(object state) : base(state)
         {
         }
 
-        public override Result<QDocProperty> Write(FileInfo file, DocConfig config)
+        public override Result<int> Write(FileInfo file, DocConfig config)
         {
             string currentName;
-            Result<QDocProperty> result;
+            Result<int> result;
 
             if(WordDoc.Extensions().Contains(file.Extension))
             {
@@ -53,14 +50,14 @@ namespace QmsDoc.Docs.Common.Properties
             if (result.IsFailed)
                 return Results.Fail(new Error("Could not determine the current name to replace"));
 
-            currentName = (string)result.Value.State;
+            currentName = (string)result.Value;
 
             string newFileName = file.Name.Replace(currentName, this.State.ToString());
             FileUtil.FileRename(file, newFileName);
             return Results.Ok<QDocProperty>(new FileDocName((string)this.State));
         }
 
-        public override Result<QDocProperty> Read(FileInfo file, DocConfig config)
+        public override Result<int> Read(FileInfo file, DocConfig config)
         {
             string docNumbertext = null;
             Match matchForm = config.FileFormNumberRegex.Match(file.Name);

@@ -28,7 +28,7 @@ namespace QmsDoc.Tests.Docs.Common.Properties
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Inspect(new IsSop());
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(true, (bool)result.Value.State);
+            Assert.AreEqual(true, (bool)result.Value);
         }
     }
 }

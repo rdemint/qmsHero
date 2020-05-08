@@ -21,19 +21,12 @@ namespace QmsDoc.Core
     public abstract class DocProperty : QDocProperty, INotifyPropertyChanged
     {
         
-        public DocProperty()
-        {
-        }
-
         public DocProperty(object state) : base(state)
         {
         }
-
-        
-        
         
         #region visitor
-        public override Result<QDocProperty> Read(object doc)
+        public override Result<int> Read(object doc)
         {
             switch(doc)
             {
@@ -48,7 +41,7 @@ namespace QmsDoc.Core
                     );
             }
         }
-        public override Result<QDocProperty> Read(object doc, object config)
+        public override Result<int> Read(object doc, object config)
         {
             //Visitor Pattern
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
@@ -98,7 +91,7 @@ namespace QmsDoc.Core
 
         }
 
-        public override Result<QDocProperty> Write(object doc)
+        public override Result<int> Write(object doc)
         {
             switch (doc)
             {
@@ -114,7 +107,7 @@ namespace QmsDoc.Core
             }
         }
         
-        public override Result<QDocProperty> Write(object doc, object config)
+        public override Result<int> Write(object doc, object config)
         {
             WordprocessingDocument wdoc = doc as WordprocessingDocument;
             WordDocConfig wdocConfig = config as WordDocConfig;
@@ -150,54 +143,54 @@ namespace QmsDoc.Core
         }
 
         #endregion
-        public virtual Result<QDocProperty> Read(FileInfo file, DocConfig config)
+        public virtual Result<int> Read(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(FileInfo file, DocConfig config)
+        public virtual Result<int> Write(FileInfo file, DocConfig config)
         {
             throw new NotImplementedException();
         }
         #region word
 
-        public virtual Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
+        public virtual Result<int> Read(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Read(WordprocessingDocument doc)
+        public virtual Result<int> Read(WordprocessingDocument doc)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
+        public virtual Result<int> Write(WordprocessingDocument doc, WordDocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(WordprocessingDocument doc)
+        public virtual Result<int> Write(WordprocessingDocument doc)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region excel
-        public virtual Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
+        public virtual Result<int> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Read(SpreadsheetDocument doc)
+        public virtual Result<int> Read(SpreadsheetDocument doc)
         {
             throw new NotImplementedException();
         }
-        public virtual Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
+        public virtual Result<int> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Result<QDocProperty> Write(SpreadsheetDocument doc)
+        public virtual Result<int> Write(SpreadsheetDocument doc)
         {
             throw new NotImplementedException();
         }
