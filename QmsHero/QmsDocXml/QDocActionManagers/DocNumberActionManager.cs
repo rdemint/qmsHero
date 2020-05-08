@@ -30,7 +30,7 @@ namespace QmsDocXml.QDocActionManagers
         {
         }
 
-        public override QDocPropertyResultCollection Inspect(IDoc doc)
+        public override QDocPropertyResultCollection Inspect(Doc doc)
         {
             var col = new QDocPropertyResultCollection();
 
@@ -43,7 +43,7 @@ namespace QmsDocXml.QDocActionManagers
             return base.Inspect(doc, col);
         }
 
-        public override QDocPropertyResultCollection Process(IDoc doc)
+        public override QDocPropertyResultCollection Process(Doc doc)
         {
             //Rename occurences of a Document Number within the filename and word / excel text.  
             var col = new QDocPropertyResultCollection();
@@ -58,7 +58,7 @@ namespace QmsDocXml.QDocActionManagers
             if (isValidFormPatternMatch.Success)
             {
                 fileMatch = doc.DocConfig.FileFormNumberRegex.Match(doc.FileInfo.Name);
-                if (fileMatch.Success)
+                if (fileMatch.Success && fileMatch.ToString() == (string)this.currentState)
                 {
                     var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
                     if (fileResult.IsSuccess)
@@ -69,7 +69,7 @@ namespace QmsDocXml.QDocActionManagers
             else if (isValidSopPatternMatch.Success)
             {
                 fileMatch = doc.DocConfig.FileSopNumberRegex.Match(doc.FileInfo.Name);
-                if (fileMatch.Success)
+                if (fileMatch.Success && fileMatch.ToString() == (string)this.currentState)
                 {
                     var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
                     if (fileResult.IsSuccess)
@@ -81,7 +81,7 @@ namespace QmsDocXml.QDocActionManagers
             else if (isValidNumberPatternMatch.Success)
             {
                 fileMatch = doc.DocConfig.FileNumberRegex.Match(doc.FileInfo.Name);
-                if (fileMatch.Success)
+                if (fileMatch.Success && fileMatch.ToString() == (string)this.currentState)
                 {
                     var fileResult = doc.Process(new FileDocNumber((string)this.TargetState));
                     if (fileResult.IsSuccess)

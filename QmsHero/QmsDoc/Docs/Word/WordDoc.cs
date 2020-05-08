@@ -35,7 +35,6 @@ namespace QmsDoc.Docs.Word
             this.DocConfig = docConfig;
         }
 
-        public new WordDocConfig DocConfig { get => docConfig; set => docConfig = value; }
         public List<string> FileExtensions { get => fileExtensions; }
 
         

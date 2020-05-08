@@ -33,7 +33,6 @@ namespace QmsDoc.Docs.Excel
             this.FileInfo = fileInfo;
             DocConfig = docConfig;
         }
-        public ExcelDocConfig DocConfig { get => docConfig; set => docConfig = value; }
 
         public override QDocPropertyResultCollection Process(QDocActionManager action)
         {

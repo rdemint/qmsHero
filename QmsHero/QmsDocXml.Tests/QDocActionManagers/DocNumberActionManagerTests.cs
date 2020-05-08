@@ -57,6 +57,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             var fixture = new XmlFixture();
             var doc = new ExcelDoc(fixture.ExcelSampleCopy);
             var propCollection = doc.Process(new DocNumberActionManager("F-001B", newNum));
+            Assert.IsNotNull(propCollection);
         }
 
         [TestMethod]

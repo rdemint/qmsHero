@@ -56,12 +56,12 @@ namespace QDoc.Core
             get => count;
         }
 
-        public virtual QDocPropertyResultCollection Inspect(IDoc doc)
+        public virtual QDocPropertyResultCollection Inspect(Doc doc)
         {
             throw new NotImplementedException();
         }
 
-        public virtual QDocPropertyResultCollection Process(IDoc doc)
+        public virtual QDocPropertyResultCollection Process(Doc doc)
         {
             throw new NotImplementedException();
         }
