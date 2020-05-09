@@ -72,7 +72,24 @@ namespace QmsDocXml.QDocActionManagers
             }
             else
             {
-                throw new NotImplementedException();
+                var currentFileRevisionResult = doc.Inspect(new FileRevision());
+                if (currentFileRevisionResult.IsSuccess && currentFileRevisionResult.Value.State.ToString() == (string)this.CurrentState)
+                {
+                    var fileResult = doc.Process(new FileRevision((string)this.TargetState));
+                    if (fileResult.IsSuccess)
+                        count++;
+                    col.Add(fileResult);
+                }
+
+                var currentHeaderRevisionResult = doc.Inspect(new HeaderRevision());
+                if (currentHeaderRevisionResult.IsSuccess && currentHeaderRevisionResult.Value.State.ToString() == (string)this.CurrentState)
+                {
+                    var headerResult = doc.Process(new HeaderRevision((string)this.TargetState));
+                    if (headerResult.IsSuccess)
+                        count++;
+                    col.Add(headerResult);
+                }
+
             }
             return col;
         }
