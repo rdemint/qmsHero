@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyDocumentProperty.cs" />
     <Compile Include="QDocActionManagers\DocNameActionManager.cs" />
     <Compile Include="Audit\ExcelAuditRequires.cs" />
     <Compile Include="Audit\HeaderAudit.cs" />

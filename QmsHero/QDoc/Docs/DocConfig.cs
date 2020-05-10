@@ -15,6 +15,10 @@ namespace QDoc.Docs
         Regex fileSopNumberRegex;
         Regex fileFormNumberRegex;
         Regex fileNumberRegex;
+        string lastModifiedByText;
+        DateTime modifiedTime;
+        DateTime createdTime;
+        string CreatorText;
 
         public DocConfig()
         {
@@ -22,6 +26,10 @@ namespace QDoc.Docs
             this.FileSopNumberRegex = new Regex(@"SOP-\d\d\d");
             this.FileFormNumberRegex = new Regex(@"F-\d\d\d\w");
             this.FileNumberRegex = new Regex(@"-\d\d\d");
+            this.LastModifiedByText = "Lean RAQA Systems";
+            this.CreatorText = "Lean RAQA Systems";
+            this.ModifiedTime = DateTime.Now;
+            this.CreatedTime = DateTime.Now;
         }
 
         public Regex FileSopNumberRegex { get => fileSopNumberRegex; set => fileSopNumberRegex = value; }
@@ -35,5 +43,9 @@ namespace QDoc.Docs
         }
         public Regex FileRevisionRegex { get => fileRevisionRegex; set => fileRevisionRegex = value; }
         public Regex FileNumberRegex { get => fileNumberRegex; set => fileNumberRegex = value; }
+        public string LastModifiedByText { get => lastModifiedByText; set => lastModifiedByText = value; }
+        public DateTime ModifiedTime { get => modifiedTime; set => modifiedTime = value; }
+        public DateTime CreatedTime { get => createdTime; set => createdTime = value; }
+        public string CreatorText1 { get => CreatorText; set => CreatorText = value; }
     }
 }

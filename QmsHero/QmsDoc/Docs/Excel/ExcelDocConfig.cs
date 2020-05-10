@@ -24,6 +24,8 @@ namespace QmsDoc.Docs.Excel
         Regex headerNameRegex;
         Regex headerNumberRegexWithContext;
         Regex headerNumberRegex;
+        
+
 
 
         public ExcelDocConfig(): base()
@@ -47,6 +49,8 @@ namespace QmsDoc.Docs.Excel
 
         public string HeaderNumber { get => headerNumber; set => headerNumber = value; }
         public Regex HeaderNameRegexWithContext { get => headerNumberRegexWithContext; set => headerNumberRegexWithContext = value; }
+        public string LastModifiedByText { get => lastModifiedByText; set => lastModifiedByText = value; }
+        public DateTime ModifiedTime { get => modifiedTime; set => modifiedTime = value; }
 
         public void Initialize()
         {
