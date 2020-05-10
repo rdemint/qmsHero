@@ -46,6 +46,6 @@ namespace QDoc.Docs
         public string LastModifiedByText { get => lastModifiedByText; set => lastModifiedByText = value; }
         public DateTime ModifiedTime { get => modifiedTime; set => modifiedTime = value; }
         public DateTime CreatedTime { get => createdTime; set => createdTime = value; }
-        public string CreatorText { get => CreatorText; set => CreatorText = value; }
+        public string CreatorText { get => creatorText; set => creatorText = value; }
     }
 }

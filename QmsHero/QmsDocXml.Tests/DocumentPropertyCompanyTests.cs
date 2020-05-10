@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 namespace QmsDocXml
 {
     [TestClass()]
-    public class CompanyDocumentPropertyTests
+    public class DocumentPropertyCompanyTests
     {
         [TestMethod()]
         public void WriteWordTest()
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Process(new CompanyDocumentProperty("QA LADDER LLC"));
+            var result = doc.Process(new DocumentPropertyCompany("QA LADDER LLC"));
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.State, "QA LADDER LLC");
         }
@@ -28,7 +28,7 @@ namespace QmsDocXml
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
-            var result = doc.Inspect(new CompanyDocumentProperty());
+            var result = doc.Inspect(new DocumentPropertyCompany());
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(result.Value.State, "");
         }
