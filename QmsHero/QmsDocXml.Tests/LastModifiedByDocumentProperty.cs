@@ -12,31 +12,31 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml.Tests
 {
-    class AuthorDocumentProperty : DocProperty
+    class LastModifiedByDocumentProperty : DocProperty
     {
-        public AuthorDocumentProperty()
+        public LastModifiedByDocumentProperty()
         {
         }
 
-        public AuthorDocumentProperty(object state) : base(state)
+        public LastModifiedByDocumentProperty(object state) : base(state)
         {
         }
 
-        public AuthorDocumentProperty(object state, int stateCount) : base(state, stateCount)
+        public LastModifiedByDocumentProperty(object state, int stateCount) : base(state, stateCount)
         {
         }
 
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            var props = doc.PackageProperties.LastModifiedBy = "Lean RAQA Systems;
-            if (props != null)
+            var prop = doc.PackageProperties.LastModifiedBy;
+            if (prop != null)
             {
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty(props.Company.Text, 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty(prop, 1));
             }
 
-            else if (props.Company == null)
+            else if (prop == null)
             {
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty("", 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty("", 1));
             }
             return Results.Fail(new Error("Did not read the Company Document Property"));
 
@@ -44,32 +44,32 @@ namespace QmsDocXml.Tests
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            var props = doc.ExtendedFilePropertiesPart.Properties;
-            if (props.Company != null)
+            var prop = doc.PackageProperties.LastModifiedBy;
+            if (prop != null)
             {
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty(props.Company.Text, 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty(prop, 1));
             }
 
             else if (props.Company == null)
             {
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty("", 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty("", 1));
             }
             return Results.Fail(new Error("Did not read the Company Document Property"));
         }
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            var props = doc.ExtendedFilePropertiesPart.Properties;
-            if (props.Company != null)
+            var prop = doc.PackageProperties.LastModifiedBy;
+            if (prop != null)
             {
-                props.Company.Text = (string)state;
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty(props.Company.Text, 1));
+                prop = (string)this.state;
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty(prop, 1));
             }
 
             else if (props.Company == null)
             {
                 props.Company = new DocumentFormat.OpenXml.ExtendedProperties.Company();
                 props.Company.Text = (string)state;
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty("", 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty("", 1));
             }
             return Results.Fail(new Error("Did not read the Company Document Property"));
         }
@@ -80,14 +80,14 @@ namespace QmsDocXml.Tests
             if (props.Company != null)
             {
                 props.Company.Text = (string)state;
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty(props.Company.Text, 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty(props.Company.Text, 1));
             }
 
             else if (props.Company == null)
             {
                 props.Company = new DocumentFormat.OpenXml.ExtendedProperties.Company();
                 props.Company.Text = (string)state;
-                return Results.Ok<QDocProperty>(new CompanyDocumentProperty("", 1));
+                return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty("", 1));
             }
             return Results.Fail(new Error("Did not read the Company Document Property"));
         }
