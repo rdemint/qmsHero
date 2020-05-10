@@ -21,9 +21,7 @@ namespace QmsHero.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
+        
         ViewModelBase activeViewModel;
         ViewModelLocator viewModelLocator;
         RelayCommand navToConfigViewModel;
@@ -31,24 +29,15 @@ namespace QmsHero.ViewModel
         RelayCommand navToDCNViewModel;
         RelayCommand navToResultsViewModel;
         RelayCommand navToQuickActionsViewModel;
+        RelayCommand navToFilePropertiesViewModel;
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-
-
-            //this.viewModelLocator = new ViewModelLocator();
-            // OR
             this.navToQuickActionsViewModel = new RelayCommand(
                 () => this.ActiveViewModel = this.viewModelLocator.QuickActionsViewModel
                 );
-
+            this.navToFilePropertiesViewModel = new RelayCommand(
+                () => this.ActiveViewModel = this.viewModelLocator.FilePropertiesViewModel
+                );
 
             this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
             this.activeViewModel = viewModelLocator.QuickActionsViewModel;
@@ -137,6 +126,7 @@ namespace QmsHero.ViewModel
             set => navToResultsViewModel = value; }
 
         public RelayCommand NavToQuickActionsViewModel { get => navToQuickActionsViewModel; set => navToQuickActionsViewModel = value; }
+        public RelayCommand NavToFilePropertiesViewModel { get => navToFilePropertiesViewModel; set => navToFilePropertiesViewModel = value; }
     }
 
 

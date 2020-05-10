@@ -49,6 +49,7 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<DCNViewModel>();
             SimpleIoc.Default.Register<ResultsViewModel>();
             SimpleIoc.Default.Register<QuickActionsViewModel>();
+            SimpleIoc.Default.Register<FilePropertiesViewModel>();
 
             SimpleIoc.Default.Register<DocManager>();
             SimpleIoc.Default.Register<ProcessingResultsStore>();
@@ -90,6 +91,11 @@ namespace QmsHero.ViewModel
         public QuickActionsViewModel QuickActionsViewModel
         {
             get => ServiceLocator.Current.GetInstance<QuickActionsViewModel>();
+        }
+
+        public FilePropertiesViewModel FilePropertiesViewModel
+        {
+            get => ServiceLocator.Current.GetInstance<FilePropertiesViewModel>();
         }
 
         public static void Cleanup()

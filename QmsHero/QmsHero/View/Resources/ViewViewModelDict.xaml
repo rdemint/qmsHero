@@ -21,4 +21,7 @@
     <DataTemplate DataType="{x:Type vm:QuickActionsViewModel}">
         <view:QuickActionsView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:FilePropertiesViewModel}">
+        <view:FilePropertiesView/>
+    </DataTemplate>
 </ResourceDictionary>

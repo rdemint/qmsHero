@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml.Common.PropertyGroups
 {
-    class DocumentPropertyPropertyGroup : QDocPropertyGroup
+    public class DocumentPropertyPropertyGroup : QDocPropertyGroup
     {
         DocumentPropertyCompany documentPropertyCompany;
         DocumentPropertyCreator documentPropertyCreator;

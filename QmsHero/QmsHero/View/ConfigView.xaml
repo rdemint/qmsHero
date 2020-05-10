@@ -19,5 +19,7 @@
              CornerRadius="5">
             <TextBlock Text="Configure the Project" HorizontalAlignment="Center" FontWeight="Bold"/>
         </Border>
+        <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
+        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
     </StackPanel>
 </Page>

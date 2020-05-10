@@ -83,12 +83,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\FileProcessingViewModel.cs" />
+    <Compile Include="View\FilePropertiesView.xaml.cs">
+      <DependentUpon>FilePropertiesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IPageViewModel.cs" />
     <Compile Include="Interfaces\IQmsHeroViewModels.cs" />
     <Compile Include="Model\ProcessingResultsStore.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
     <Compile Include="ViewModel\ConfigViewModel.cs" />
     <Compile Include="ViewModel\DCNViewModel.cs" />
+    <Compile Include="ViewModel\FilePropertiesViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\QuickActionsViewModel.cs" />
     <Compile Include="ViewModel\ResultsViewModel.cs" />
@@ -102,6 +107,10 @@
     <Compile Include="View\ResultsView.xaml.cs">
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\FilePropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DCNView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

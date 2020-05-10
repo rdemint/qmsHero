@@ -59,6 +59,7 @@
                     <Button Content="Config" Command="{Binding NavToConfigViewModel}"/>
                     <Button Content="Custom" Command="{Binding NavToCustomProcessingViewModel}"/>
                     <Button Content="Actions" Command="{Binding NavToQuickActionsViewModel}"/>
+                    <Button Content="File Props." Command="{Binding NavToFilePropertiesViewModel}"/>
                     <Button Content="DCN" Command="{Binding NavToDCNViewModel}"/>
                     <Button Content="Results" Command="{Binding NavToResultsViewModel}"/>
                 </StackPanel>
