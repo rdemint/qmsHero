@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml
 {
-    class DocumentPropertyLastModifiedBy : DocProperty
+    public class DocumentPropertyLastModifiedBy : DocProperty
     {
         public DocumentPropertyLastModifiedBy()
         {

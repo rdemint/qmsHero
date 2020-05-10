@@ -40,7 +40,7 @@ namespace QmsHero.ViewModel
                 );
 
             this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
-            this.activeViewModel = viewModelLocator.QuickActionsViewModel;
+            this.activeViewModel = viewModelLocator.FilePropertiesViewModel;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

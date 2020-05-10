@@ -20,9 +20,10 @@ namespace QmsHero.ViewModel
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
 
+
         }
 
-        private void ProcessFiles(QDocPropertyCollection docPropertyCollection)
+        public void Process(QDocPropertyCollection docPropertyCollection)
         {
 
             var docCollection = this.manager.Process(docPropertyCollection);

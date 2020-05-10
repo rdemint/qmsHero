@@ -50,6 +50,7 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<ResultsViewModel>();
             SimpleIoc.Default.Register<QuickActionsViewModel>();
             SimpleIoc.Default.Register<FilePropertiesViewModel>();
+            SimpleIoc.Default.Register<FileProcessingViewModel>();
 
             SimpleIoc.Default.Register<DocManager>();
             SimpleIoc.Default.Register<ProcessingResultsStore>();

@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\DesignDataViewModel.cs" />
     <Compile Include="ViewModel\FileProcessingViewModel.cs" />
     <Compile Include="View\FilePropertiesView.xaml.cs">
       <DependentUpon>FilePropertiesView.xaml</DependentUpon>

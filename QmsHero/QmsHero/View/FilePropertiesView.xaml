@@ -13,11 +13,10 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Change the File properties across the project"/>
-            <controls:QCheckTextBox QDisplay="Creator" QOutput="{Binding FilePropertyGroup.DocumentPropertyCreator}"/>
-            <controls:QCheckTextBox QDisplay="Creator" QOutput="{Binding FilePropertyGroup.DocumentPropertyCompany}"/>
-            <controls:QCheckTextBox QDisplay="Creator" QOutput="{Binding FilePropertyGroup.DocumentPropertyCreated}"/>
-            <controls:QCheckTextBox QDisplay="Creator" QOutput="{Binding FilePropertyGroup.DocumentPropertyLastModifiedBy}"/>
-
+            <controls:QCheckTextBox QDisplay="Creator" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyCreator.State}"/>
+            <controls:QCheckTextBox QDisplay="Company" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyCompany.State}"/>
+            <controls:QCheckTextBox QDisplay="Last Modified By" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyLastModifiedBy.State}"/>
+            <Button Command="{Binding ProcessFilesCommand}" Content="Process Files"/>
         </StackPanel>
     </Grid>
 </Page>

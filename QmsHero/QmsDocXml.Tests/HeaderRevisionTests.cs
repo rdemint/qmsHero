@@ -25,7 +25,7 @@ namespace QmsDocXml.Tests
             result = xl.Inspect(new HeaderRevision());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State.ToString().Trim());
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace QmsDocXml.Tests
             result = xl.Inspect(new HeaderRevision());
             Assert.IsTrue(result.IsSuccess);
 
-            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State);
+            Assert.AreEqual(fixture.ExcelSampleRevision, (string)result.Value.State.ToString().Trim());
 
             rev = "12";
             xl.Process(new HeaderRevision(rev));

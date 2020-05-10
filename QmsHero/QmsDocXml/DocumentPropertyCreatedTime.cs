@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml
 {
-    class DocumentPropertyCreatedTime : DocProperty
+    public class DocumentPropertyCreatedTime : DocProperty
     {
         public DocumentPropertyCreatedTime()
         {

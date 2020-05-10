@@ -15,12 +15,16 @@ namespace QmsDocXml.Common.PropertyGroups
         DocumentPropertyLastModifiedBy documentPropertyLastModifiedBy;
         public DocumentPropertyPropertyGroup()
         {
+            this.documentPropertyCompany = new DocumentPropertyCompany();
+            this.documentPropertyCreator = new DocumentPropertyCreator();
+            this.documentPropertyLastModifiedBy = new DocumentPropertyLastModifiedBy();
+            this.documentPropertyCreatedTime = new DocumentPropertyCreatedTime();
         }
 
         public DocumentPropertyCompany DocumentPropertyCompany { get => documentPropertyCompany; set => documentPropertyCompany = value; }
-        internal DocumentPropertyLastModifiedBy DocumentPropertyLastModifiedBy { get => documentPropertyLastModifiedBy; set => documentPropertyLastModifiedBy = value; }
-        internal DocumentPropertyCreatedTime DocumentPropertyCreatedTime { get => documentPropertyCreatedTime; set => documentPropertyCreatedTime = value; }
-        internal DocumentPropertyCreator DocumentPropertyCreator { get => documentPropertyCreator; set => documentPropertyCreator = value; }
+        public DocumentPropertyLastModifiedBy DocumentPropertyLastModifiedBy { get => documentPropertyLastModifiedBy; set => documentPropertyLastModifiedBy = value; }
+        public DocumentPropertyCreatedTime DocumentPropertyCreatedTime { get => documentPropertyCreatedTime; set => documentPropertyCreatedTime = value; }
+        public DocumentPropertyCreator DocumentPropertyCreator { get => documentPropertyCreator; set => documentPropertyCreator = value; }
     }
 
 

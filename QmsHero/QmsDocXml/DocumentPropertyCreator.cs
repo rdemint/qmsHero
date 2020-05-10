@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml
 {
-    class DocumentPropertyCreator : DocProperty
+    public class DocumentPropertyCreator : DocProperty
     {
         public DocumentPropertyCreator()
         {

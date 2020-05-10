@@ -43,7 +43,7 @@ namespace QmsDocXml.Tests.QDocActionManagers
             Assert.IsTrue(manager.CanProcessFiles());
             var docCollection = manager.Inspect(docNameManager);
             var docsWithErrors = docCollection.DocumentsWithErrors();
-            Assert.AreEqual(1, docsWithErrors.Count); //F-001D Rev. 2
+            Assert.AreEqual(0, docsWithErrors.Count); //F-001D Rev. 2
         }
 
         [TestMethod]
