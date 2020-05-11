@@ -14,14 +14,27 @@
     Title="qmsHero" Height="450" Width="800"
     TextElement.FontWeight="Medium"
     TextElement.FontSize="14"
-        >
-    <Window.Resources>
+    TitleCaps="False"
+    >
+    <mah:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/ViewViewModelDict.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Window.Resources>
+    </mah:MetroWindow.Resources>
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button ToolTip="Implement cool tooltip feature">
+                <iconPacks:PackIconModern Width="22" Height="22" Kind="InterfaceDropdown"/>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+    <mah:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Image Source="Resources/Media/qaladder_logo.jpg"></Image>
+        </DataTemplate>
+    </mah:MetroWindow.IconTemplate>
     <DockPanel>
         <Border 
             DockPanel.Dock="Top"
@@ -39,8 +52,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Expander 
              Padding="5"
              Margin="4"
@@ -66,6 +80,15 @@
                 Grid.Row="0"
                 x:Name="MainContentFrame"
                 Content="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.ActiveViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <StatusBar 
+           Grid.Row="1"
+            Grid.ColumnSpan="2"
+            >
+            <StatusBarItem
+           >Processing Results</StatusBarItem>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <StatusBarItem>Need to implement this feature</StatusBarItem>
+        </StatusBar>
         </Grid>
     </DockPanel>
 </mah:MetroWindow>
