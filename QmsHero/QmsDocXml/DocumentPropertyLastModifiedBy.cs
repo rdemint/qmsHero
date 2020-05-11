@@ -33,7 +33,6 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            doc.PackageProperties.LastModifiedBy = (string)this.state;
                 return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.LastModifiedBy, 1));
         }
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)

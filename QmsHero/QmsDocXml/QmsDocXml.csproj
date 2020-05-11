@@ -55,6 +55,7 @@
     <Compile Include="DocumentPropertyCreatedTime.cs" />
     <Compile Include="DocumentPropertyCreator.cs" />
     <Compile Include="DocumentPropertyLastModifiedBy.cs" />
+    <Compile Include="DocumentPropertyManager.cs" />
     <Compile Include="QDocActionManagers\DocNameActionManager.cs" />
     <Compile Include="Audit\ExcelAuditRequires.cs" />
     <Compile Include="Audit\HeaderAudit.cs" />
