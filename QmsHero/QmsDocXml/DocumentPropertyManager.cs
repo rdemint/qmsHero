@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml.ExtendedProperties;
+using DocumentFormat.OpenXml.Packaging;
 using FluentResults;
 using QDoc.Core;
 using QmsDoc.Core;
@@ -69,7 +70,8 @@ namespace QmsDocXml
             {
                 props.Manager = new DocumentFormat.OpenXml.ExtendedProperties.Manager();
                 props.Manager.Text = (string)state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyManager("", 1));
+                //doc.ExtendedFilePropertiesPart.AddNewPart<Manager>(manager);
+                return Results.Ok<QDocProperty>(new DocumentPropertyManager(props.Manager.Text, 1));
             }
             return Results.Fail(new Error("Did not read the Company Manager Property"));
         }
@@ -87,7 +89,7 @@ namespace QmsDocXml
             {
                 props.Manager = new DocumentFormat.OpenXml.ExtendedProperties.Manager();
                 props.Manager.Text = (string)state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyManager("", 1));
+                return Results.Ok<QDocProperty>(new DocumentPropertyManager(props.Manager.Text, 1));
             }
             return Results.Fail(new Error("Did not read the Company Manager Property"));
         }

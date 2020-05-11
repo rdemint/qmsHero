@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml.ExtendedProperties;
+using DocumentFormat.OpenXml.Packaging;
 using FluentResults;
 using QDoc.Core;
 using QmsDoc.Core;
@@ -68,7 +69,7 @@ namespace QmsDocXml
             {
                 props.Company = new DocumentFormat.OpenXml.ExtendedProperties.Company();
                 props.Company.Text = (string)state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyCompany("", 1));
+                return Results.Ok<QDocProperty>(new DocumentPropertyCompany(props.Company.Text, 1));
             }
             return Results.Fail(new Error("Did not read the Company Document Property"));
         }
@@ -86,7 +87,7 @@ namespace QmsDocXml
             {
                 props.Company = new DocumentFormat.OpenXml.ExtendedProperties.Company();
                 props.Company.Text = (string)state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyCompany("", 1));
+                return Results.Ok<QDocProperty>(new DocumentPropertyCompany(props.Company.Text, 1));
             }
             return Results.Fail(new Error("Did not read the Company Document Property"));
         }

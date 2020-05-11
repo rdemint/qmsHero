@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using QmsDoc.Core;
+using QmsDoc.Docs.Excel;
 using QmsDoc.Docs.Word;
 using QmsDocXml;
 using System;
@@ -14,7 +15,7 @@ namespace QmsDocXml.Tests
     public class DocumentPropertyCreatorTests
     {
         [TestMethod()]
-        public void ReadTest()
+        public void ReadWordTest()
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
@@ -22,8 +23,29 @@ namespace QmsDocXml.Tests
             Assert.AreEqual("leanRAQAsystems", result.Value.State);
         }
 
+        [TestMethod()]
+        public void ReadExcelTest()
+        {
+            var fixture = new XmlFixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            var result = doc.Inspect(new DocumentPropertyCreator());
+            Assert.AreEqual("Maria", result.Value.State);
+        }
+
         [TestMethod]
-        public void WriteTest()
+        public void WriteExcelTest()
+        {
+            var fixture = new XmlFixture();
+            var doc = new ExcelDoc(fixture.ExcelSampleCopy);
+            var result = doc.Process(new DocumentPropertyCreator("Lean RAQA Systems"));
+            Assert.IsTrue(result.IsSuccess);
+            var resultInspect = doc.Inspect(new DocumentPropertyCreator());
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual("Lean RAQA Systems", result.Value.State);
+        }
+
+        [TestMethod]
+        public void WriteWordTest()
         {
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
