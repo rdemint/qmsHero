@@ -17,13 +17,10 @@
             <controls:QCheckTextBox QDisplay="Company" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyCompany.State}"/>
             <controls:QCheckTextBox QDisplay="Last Modified By" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyLastModifiedBy.State}"/>
             <controls:QCheckTextBox QDisplay="Manager" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyManager.State}"/>
-            <Separator
-                Height="150">
-                <Button 
-                    MaxWidth="450"
-                    Command="{Binding ProcessFilesCommand}" Content="Process Files"/>
+                    <Button 
+                        MaxWidth="450"
+                        Command="{Binding ProcessFilesCommand}" Content="Process Files"/>
                 
-            </Separator>
         </StackPanel>
     </Grid>
 </Page>
