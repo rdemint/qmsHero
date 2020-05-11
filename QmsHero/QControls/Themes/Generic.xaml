@@ -22,13 +22,21 @@
                 <ControlTemplate TargetType="{x:Type local:QCheckTextBox}">
                     <StackPanel Orientation="Horizontal">
                         <mah:ToggleSwitch
+                            OnLabel=""
+                            OffLabel=""
                             Name="myCheckTextBox"
                             IsChecked="{Binding Path=QIsValid, RelativeSource={RelativeSource TemplatedParent}}"/>
                         <Label Content="{Binding Path=QDisplay, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-                        <TextBox 
+                        <TextBox
+                            mah:TextBoxHelper.ClearTextButton="True"
                             MinWidth="200" 
-                            Text="{Binding Path=QState, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                            IsEnabled="{Binding ElementName=myCheckTextBox, Path=IsChecked}"/>
+                            Text="{Binding 
+                            Path=QState, 
+                            RelativeSource={RelativeSource TemplatedParent}, 
+                            Mode=TwoWay, 
+                            UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding ElementName=myCheckTextBox, Path=IsChecked}"
+                            />
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
