@@ -20,11 +20,18 @@ namespace QmsHero.Services
     internal class DialogService: AsyncDialogService
     {
         private readonly MetroWindow metroWindow;
-        public DialogService(MetroWindow metroWindow)
+
+        public DialogService()
         {
-            this.metroWindow = metroWindow;
-            //this.metroWindow = (MetroWindow)System.Windows.Application.Current.MainWindow;
+            this.metroWindow = (MetroWindow)System.Windows.Application.Current.MainWindow;
         }
+
+        //public DialogService(MetroWindow metroWindow)
+        //{
+        //    this.metroWindow = metroWindow;
+        //}
+
+        
 
         
         public Task<MessageDialogResult> AskQuestionAsync(string title, string message)
