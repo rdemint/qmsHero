@@ -12,9 +12,9 @@ namespace QmsHero.Services
     class DialogService : IDialogService
     {
         private readonly MetroWindow metroWindow;
-        public DialogService(MetroWindow metroWindow)
+        public DialogService()
         {
-            this.metroWindow = metroWindow;
+            this.metroWindow = (MetroWindow)System.Windows.Application.Current.MainWindow;
         }
 
         public Task ShowError(string message, string title, string buttonText, Action afterHideCallback)

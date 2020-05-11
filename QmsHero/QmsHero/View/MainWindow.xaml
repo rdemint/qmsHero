@@ -35,6 +35,18 @@
             <Image Source="Resources/Media/qaladder_logo.jpg"></Image>
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout
+                Position="Right"
+                AreAnimationsEnabled="True"
+                Header="File Settings">
+                <Frame
+                    Content="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel}">
+                </Frame>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
     <DockPanel>
         <Border 
             DockPanel.Dock="Top"

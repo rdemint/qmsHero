@@ -30,6 +30,9 @@ namespace QmsHero.ViewModel
         RelayCommand navToResultsViewModel;
         RelayCommand navToQuickActionsViewModel;
         RelayCommand navToFilePropertiesViewModel;
+        RelayCommand openConfigFlyout;
+        bool isSettingsFlyoutOpen;
+
         public MainViewModel()
         {
             this.navToQuickActionsViewModel = new RelayCommand(
@@ -41,8 +44,9 @@ namespace QmsHero.ViewModel
             this.navToResultsViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ResultsViewModel);
             this.navToConfigViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ConfigViewModel);
 
-                                    this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
+            this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
             this.activeViewModel = viewModelLocator.FilePropertiesViewModel;
+            this.openConfigFlyout = new RelayCommand(() => OpenFlyout());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -95,6 +99,21 @@ namespace QmsHero.ViewModel
 
         public RelayCommand NavToQuickActionsViewModel { get => navToQuickActionsViewModel; set => navToQuickActionsViewModel = value; }
         public RelayCommand NavToFilePropertiesViewModel { get => navToFilePropertiesViewModel; set => navToFilePropertiesViewModel = value; }
+        public bool IsSettingsFlyoutOpen { 
+            get => isSettingsFlyoutOpen;
+            set { 
+                if (value.Equals(isSettingsFlyoutOpen)) return; 
+                isSettingsFlyoutOpen = value; 
+                OnPropertyChanged("IsSettingsFlyoutOpen");
+            } 
+        }
+
+        private void OpenFlyout()
+        {
+            isSettingsFlyoutOpen = true;
+        }
+
+        public RelayCommand OpenConfigFlyout { get => openConfigFlyout; set => openConfigFlyout = value; }
     }
 
 
