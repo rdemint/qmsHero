@@ -15,8 +15,6 @@
     <StackPanel
         Margin="20"
         Background="AliceBlue">
-        <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
-        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
         <controls:QCheckFilePicker QDisplay="Logo" QOutput="{Binding Path=HeaderPropertyGroup.HeaderLogo.State}"/>
         <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=HeaderPropertyGroup.HeaderEffectiveDate.State}"/>
         <controls:QCheckTextBox QDisplay="Revision" QOutput="{Binding Path=HeaderPropertyGroup.HeaderRevision.State}"/>
