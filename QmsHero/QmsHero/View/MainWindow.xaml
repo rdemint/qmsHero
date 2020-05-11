@@ -56,11 +56,10 @@
                 <StackPanel
                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}"
                     >
-                    <Button Content="Config" Command="{Binding NavToConfigViewModel}"/>
-                    <Button Content="Custom" Command="{Binding NavToCustomProcessingViewModel}"/>
-                    <Button Content="Actions" Command="{Binding NavToQuickActionsViewModel}"/>
+                    <Button Content="Files" Command="{Binding NavToConfigViewModel}"/>
+                    <Button Content="File Headers" Command="{Binding NavToCustomProcessingViewModel}"/>
                     <Button Content="File Props." Command="{Binding NavToFilePropertiesViewModel}"/>
-                    <Button Content="DCN" Command="{Binding NavToDCNViewModel}"/>
+                    <Button Content="File Content" Command="{Binding NavToQuickActionsViewModel}"/>
                     <Button Content="Results" Command="{Binding NavToResultsViewModel}"/>
                 </StackPanel>
         </Expander>

@@ -94,7 +94,6 @@
     <Compile Include="Model\ProcessingResultsStore.cs" />
     <Compile Include="ViewModel\CustomProcessingViewModel.cs" />
     <Compile Include="ViewModel\ConfigViewModel.cs" />
-    <Compile Include="ViewModel\DCNViewModel.cs" />
     <Compile Include="ViewModel\FilePropertiesViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\QuickActionsViewModel.cs" />
@@ -110,10 +109,6 @@
       <DependentUpon>ResultsView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\FilePropertiesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DCNView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -139,9 +134,6 @@
     </Compile>
     <Compile Include="View\ConfigView.xaml.cs">
       <DependentUpon>ConfigView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DCNView.xaml.cs">
-      <DependentUpon>DCNView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

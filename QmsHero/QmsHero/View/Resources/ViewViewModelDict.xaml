@@ -12,9 +12,6 @@
     <DataTemplate DataType="{x:Type vm:CustomProcessingViewModel}">
         <view:CustomProcessingView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:DCNViewModel}">
-        <view:DCNView/>
-    </DataTemplate>
     <DataTemplate DataType="{x:Type vm:ResultsViewModel}">
         <view:ResultsView/>
     </DataTemplate>
