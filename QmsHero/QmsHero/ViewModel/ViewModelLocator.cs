@@ -19,6 +19,8 @@ using QmsDoc.Core;
 using QmsDoc.Docs.Word;
 using QmsDoc.Docs.Excel;
 using QmsHero.Model;
+using QmsHero.Services;
+using GalaSoft.MvvmLight.Views;
 
 namespace QmsHero.ViewModel
 {
@@ -32,30 +34,30 @@ namespace QmsHero.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                // Create design time view services and models
+            }
+            else
+            {
+                // Create run time view services and models
+                SimpleIoc.Default.Register<DialogService>();
 
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<ConfigViewModel>();
-            SimpleIoc.Default.Register<CustomProcessingViewModel>();
-            SimpleIoc.Default.Register<ResultsViewModel>();
-            SimpleIoc.Default.Register<QuickActionsViewModel>();
-            SimpleIoc.Default.Register<FilePropertiesViewModel>();
-            SimpleIoc.Default.Register<ManagerProcessingViewModel>();
+                SimpleIoc.Default.Register<MainViewModel>();
+                SimpleIoc.Default.Register<ConfigViewModel>();
+                SimpleIoc.Default.Register<CustomProcessingViewModel>();
+                SimpleIoc.Default.Register<ResultsViewModel>();
+                SimpleIoc.Default.Register<QuickActionsViewModel>();
+                SimpleIoc.Default.Register<FilePropertiesViewModel>();
+                SimpleIoc.Default.Register<ManagerProcessingViewModel>();
 
-            SimpleIoc.Default.Register<DocManager>();
-            SimpleIoc.Default.Register<ProcessingResultsStore>();
-            SimpleIoc.Default.Register<DocManagerConfig>();
-            SimpleIoc.Default.Register<WordDocConfig>();
-            SimpleIoc.Default.Register<ExcelDocConfig>();
+                SimpleIoc.Default.Register<DocManager>();
+                SimpleIoc.Default.Register<ProcessingResultsStore>();
+                SimpleIoc.Default.Register<DocManagerConfig>();
+                SimpleIoc.Default.Register<WordDocConfig>();
+                SimpleIoc.Default.Register<ExcelDocConfig>();
+            }
+
         }
 
         public ViewModelBase MainViewModel

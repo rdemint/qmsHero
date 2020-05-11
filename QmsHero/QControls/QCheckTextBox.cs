@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace QControls
 {
-    public class QCheckTextBox : QControlBase, INotifyDataErrorInfo
+    public class QCheckTextBox : QControlBase
     {
         static QCheckTextBox()
         {
