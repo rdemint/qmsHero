@@ -9,54 +9,58 @@ using System.Threading.Tasks;
 
 namespace QmsHero.Services
 {
-    class DialogService : IDialogService
+    
+    internal interface AsyncDialogService
+    {
+        Task<MessageDialogResult> AskQuestionAsync(string title, string message);
+        Task<ProgressDialogController> ShowProgressAsync(string title, string message);
+        Task ShowMessageAsync(string title, string message);
+    }
+    
+    internal class DialogService: AsyncDialogService
     {
         private readonly MetroWindow metroWindow;
-        public DialogService()
+        public DialogService(MetroWindow metroWindow)
         {
-            this.metroWindow = (MetroWindow)System.Windows.Application.Current.MainWindow;
+            this.metroWindow = metroWindow;
+            //this.metroWindow = (MetroWindow)System.Windows.Application.Current.MainWindow;
         }
 
-        public Task ShowError(string message, string title, string buttonText, Action afterHideCallback)
+        
+        public Task<MessageDialogResult> AskQuestionAsync(string title, string message)
         {
-            throw new NotImplementedException();
-        }
 
-        public Task ShowError(Exception error, string title, string buttonText, Action afterHideCallback)
+            var settings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "OK",
+                NegativeButtonText = "Cancel"
+            };
+            return metroWindow.ShowMessageAsync(
+                title, 
+                message, 
+                MessageDialogStyle.AffirmativeAndNegative, 
+                settings);
+        }
+        
+        public Task<ProgressDialogController> ShowProgressAsync(string title, string message)
         {
-            throw new NotImplementedException();
+            return metroWindow.ShowProgressAsync(title, message);
         }
-
-        public Task ShowMessage(string message, string title)
+        
+        public Task ShowMessageAsync(string message, string title)
         {
             var settings = new MetroDialogSettings()
             {
                 AffirmativeButtonText = "OK",
                 NegativeButtonText = "Cancel"
             };
-            return metroWindow.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegative, settings);
+            return metroWindow.ShowMessageAsync(
+                title, 
+                message, 
+                MessageDialogStyle.AffirmativeAndNegative, 
+                settings);
 
 
-        }
-
-        public Task ShowMessage(string message, string title, string buttonText, Action afterHideCallback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> ShowMessage(string message, string title, string buttonConfirmText, string buttonCancelText, Action<bool> afterHideCallback)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task ShowMessageBox(string message, string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ProgressDialogController> ShowProgressAsync(string title, string message)
-        {
-            return metroWindow.ShowProgressAsync(title, message);
         }
     }
 }

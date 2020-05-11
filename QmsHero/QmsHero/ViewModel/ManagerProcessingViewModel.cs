@@ -31,6 +31,7 @@ namespace QmsHero.ViewModel
         public async void Process(QDocPropertyCollection docPropertyCollection)
         {
 
+            var confirm = await dialogService.AskQuestionAsync("Process files?", "Are you sure?");
             var controller = await dialogService.ShowProgressAsync("In Progress", "Processing Files...");
             var docCollection = this.manager.Process(docPropertyCollection);
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
@@ -38,11 +39,11 @@ namespace QmsHero.ViewModel
             await controller.CloseAsync();
             if(docCollection.HasErrors())
             {
-                await dialogService.ShowProgressAsync("Finished", "Errors in processing the documents");
+                await dialogService.ShowMessageAsync("Finished", "Errors in processing the documents");
             }
             else
             {
-                await dialogService.ShowProgressAsync("Finished", "No errors identified");
+                await dialogService.ShowMessageAsync("Finished", "No errors identified");
             }
             //MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
 

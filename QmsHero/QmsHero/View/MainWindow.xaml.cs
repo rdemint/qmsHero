@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using QmsHero.ViewModel;
 
 namespace QmsHero.View
@@ -27,6 +28,23 @@ namespace QmsHero.View
         {
             InitializeComponent();
 
+        }
+
+        private async void ShowMessageDialog(object sender, RoutedEvent e)
+        {
+            MetroDialogOptions.ColorScheme = MahApps.Metro.Controls.Dialogs.MetroDialogColorScheme.Accented;
+            var dialogSettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Apply",
+                NegativeButtonText = "Cancel",
+                ColorScheme = MetroDialogColorScheme.Accented
+            };
+            MessageDialogResult result = await this.ShowMessageAsync("Hello world!", "This is the message text.", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
+            if(result!= MessageDialogResult.Affirmative)
+            {
+                //Do something
+            }
+            
         }
 
     }
