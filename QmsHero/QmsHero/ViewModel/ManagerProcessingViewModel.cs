@@ -11,11 +11,11 @@ using System.Windows;
 
 namespace QmsHero.ViewModel
 {
-    class FileProcessingViewModel : ViewModelBase
+    public class ManagerProcessingViewModel : ViewModelBase
     {
         DocManager manager;
         ResultsViewModel resultsViewModel;
-        public FileProcessingViewModel()
+        public ManagerProcessingViewModel()
         {
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();

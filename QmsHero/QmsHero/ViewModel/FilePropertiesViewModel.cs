@@ -13,21 +13,12 @@ using QmsHero.View;
 
 namespace QmsHero.ViewModel
 {
-    public class FilePropertiesViewModel : ViewModelBase
+    public class FilePropertiesViewModel : FileProcessingViewModelBase
     {
         DocumentPropertyPropertyGroup documentPropertyPropertyGroup;
-        FileProcessingViewModel fileProcessingViewModel;
-        ConfigViewModel configViewModel;
-        RelayCommand processFilesCommand;
 
-        public FilePropertiesViewModel()
+        public FilePropertiesViewModel(): base()
         {
-            this.fileProcessingViewModel = SimpleIoc.Default.GetInstance<FileProcessingViewModel>();
-            this.configViewModel = SimpleIoc.Default.GetInstance<ConfigViewModel>();
-            this.processFilesCommand = new RelayCommand(
-                () => ProcessFiles(),
-                () => CanProcessFiles()
-                );
             this.documentPropertyPropertyGroup = new DocumentPropertyPropertyGroup();
 
             //TestData
@@ -39,16 +30,13 @@ namespace QmsHero.ViewModel
             //TestData
         }
         public DocumentPropertyPropertyGroup DocumentPropertyPropertyGroup { get => documentPropertyPropertyGroup; set => documentPropertyPropertyGroup = value; }
-        public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
 
-        public void ProcessFiles()
+        public override void ProcessFiles()
         {
-            this.fileProcessingViewModel.Process(DocumentPropertyPropertyGroup.ToCollection());
+            this.managerProcessingViewModel.Process(DocumentPropertyPropertyGroup.ToCollection());
         }
 
-        public bool CanProcessFiles()
-        {
-            return this.configViewModel.ProcessingDirIsValid() && this.configViewModel.ReferenceDirIsValid();
-        }
+
+        
     }
 }

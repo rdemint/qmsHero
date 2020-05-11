@@ -13,16 +13,17 @@ namespace QmsHero.ViewModel
     public abstract class FileProcessingViewModelBase : ViewModelBase
     {
         string viewDisplayName;
-        FileProcessingViewModel fileProcessingViewModel;
-        ConfigViewModel configViewModel;
-        DocManager manager;
+        protected ManagerProcessingViewModel managerProcessingViewModel;
+        protected ConfigViewModel configViewModel;
+        protected DocManager manager;
         RelayCommand processFilesCommand;
 
 
         public FileProcessingViewModelBase(): base()
         {
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.fileProcessingViewModel = SimpleIoc.Default.GetInstance<FileProcessingViewModel>();
+            this.managerProcessingViewModel = SimpleIoc.Default.GetInstance<ManagerProcessingViewModel>();
+            this.configViewModel = SimpleIoc.Default.GetInstance<ConfigViewModel>();
             this.ProcessFilesCommand = new RelayCommand(() => ProcessFiles(), () => CanProcessFiles());
         }
         public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }

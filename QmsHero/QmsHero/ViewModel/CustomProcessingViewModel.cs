@@ -24,14 +24,14 @@ namespace QmsHero.ViewModel
         HeaderPropertyGroup headerPropertyGroup;
         string logoPath;
         ResultsViewModel resultsViewModel;
-        FileProcessingViewModel fileProcessingViewModel;
+        ManagerProcessingViewModel fileProcessingViewModel;
         ConfigViewModel configViewModel;
         public CustomProcessingViewModel(): base()
         {
 
             this.ViewDisplayName = "Custom";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.fileProcessingViewModel = SimpleIoc.Default.GetInstance<FileProcessingViewModel>();
+            this.fileProcessingViewModel = SimpleIoc.Default.GetInstance<ManagerProcessingViewModel>();
             
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
             this.ProcessFilesCommand = new RelayCommand(
