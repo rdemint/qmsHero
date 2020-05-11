@@ -28,62 +28,24 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            var prop = doc.PackageProperties.Creator;
-            if (prop != null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else if (prop == null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy("", 1));
-            }
-            return Results.Fail(new Error("Did not read the Company Document Property"));
-
+            return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.Creator, 1));
         }
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            var prop = doc.PackageProperties.Creator;
-            if (prop != null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else if (prop == null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy("", 1));
-            }
-            return Results.Fail(new Error("Did not read the Creator Property"));
+            doc.PackageProperties.Creator = (string)this.state;
+            return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.Creator, 1));
         }
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            var prop = doc.PackageProperties.Creator;
-            if (prop != null)
-            {
-                prop = (string)this.state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else
-            {
-                return Results.Fail(new Error("Did not read the Creator Property"));
-            }
+            doc.PackageProperties.Creator = (string)this.state;
+            return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.Creator, 1));
         }
 
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
-            var prop = doc.PackageProperties.Creator;
-            if (prop != null)
-            {
-                prop = (string)this.state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else
-            {
-                return Results.Fail(new Error("Did not read the Creator Property"));
-            }
+            doc.PackageProperties.Creator = (string)this.state;
+            return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.Creator, 1));
         }
     }
 }

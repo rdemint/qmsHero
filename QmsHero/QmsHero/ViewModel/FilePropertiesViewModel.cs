@@ -31,9 +31,9 @@ namespace QmsHero.ViewModel
             this.documentPropertyPropertyGroup = new DocumentPropertyPropertyGroup();
 
             //TestData
-            this.documentPropertyPropertyGroup.DocumentPropertyCompany.State = "Lean RAQA Systems";
-            this.documentPropertyPropertyGroup.DocumentPropertyCreator.State = "Michelle Lott";
-            this.documentPropertyPropertyGroup.DocumentPropertyLastModifiedBy.State = "Raines Demint";
+            this.DocumentPropertyPropertyGroup.DocumentPropertyCompany.State = "Lean RAQA Systems";
+            this.DocumentPropertyPropertyGroup.DocumentPropertyCreator.State = "Michelle Lott";
+            this.DocumentPropertyPropertyGroup.DocumentPropertyLastModifiedBy.State = "Raines Demint";
             //TestData
         }
         public DocumentPropertyPropertyGroup DocumentPropertyPropertyGroup { get => documentPropertyPropertyGroup; set => documentPropertyPropertyGroup = value; }

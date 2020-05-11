@@ -62,6 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DocumentPropertyCompanyTests.cs" />
+    <Compile Include="DocumentPropertyCreatorTests.cs" />
     <Compile Include="QDocActionManagers\DocNameManagerTests.cs" />
     <Compile Include="HeaderEffectiveDateTests.cs" />
     <Compile Include="QDocActionManagers\DocNumberActionManagerTests.cs" />

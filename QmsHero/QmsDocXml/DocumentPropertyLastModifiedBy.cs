@@ -28,69 +28,24 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            var prop = doc.PackageProperties.LastModifiedBy;
-            if (prop != null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else if (prop == null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy("", 1));
-            }
-            return Results.Fail(new Error("Did not read the Modifed By Document Property"));
-
+           return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.LastModifiedBy, 1));
         }
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            var prop = doc.PackageProperties.LastModifiedBy;
-            if (prop != null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else if (prop == null)
-            {
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy("", 1));
-            }
-            return Results.Fail(new Error("Did not read the Modifed By Property"));
+            doc.PackageProperties.LastModifiedBy = (string)this.state;
+                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.LastModifiedBy, 1));
         }
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
-            var prop = doc.PackageProperties.LastModifiedBy;
-            if (prop != null)
-            {
-                prop = (string)this.state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            //else if (prop == null)
-            //{
-            //var newProp = new DocumentFormat.OpenXml.Wordprocessing.DocPartProperties
-            //   prop = (string)state;
-            //    return Results.Ok<QDocProperty>(new LastModifiedByDocumentProperty("", 1));
-            //}
-
-            else
-            {
-                return Results.Fail(new Error("Did not read the Modified By Property"));
-            }
+            doc.PackageProperties.LastModifiedBy = (string)this.state;
+                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.LastModifiedBy, 1));
         }
 
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
-            var prop = doc.PackageProperties.LastModifiedBy;
-            if (prop != null)
-            {
-                prop = (string)this.state;
-                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(prop, 1));
-            }
-
-            else
-            {
-                return Results.Fail(new Error("Did not read the Modified By Property"));
-            }
+            doc.PackageProperties.LastModifiedBy = (string)this.state;
+                return Results.Ok<QDocProperty>(new DocumentPropertyLastModifiedBy(doc.PackageProperties.LastModifiedBy, 1));
         }
     }
 }

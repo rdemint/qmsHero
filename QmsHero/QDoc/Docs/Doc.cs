@@ -15,12 +15,10 @@ namespace QDoc.Docs
         FileInfo fileInfo;
         IDocConfig docConfig;
         QDocPropertyResultCollection propertyResultCollection;
-        bool hasErrors;
 
         public Doc()
         {
             propertyResultCollection = new QDocPropertyResultCollection();
-            hasErrors = false;
         }
 
         public Doc(System.IO.FileInfo fileInfo): this()
@@ -46,12 +44,9 @@ namespace QDoc.Docs
             set
             {
                 propertyResultCollection = value;
-                this.HasErrors = propertyResultCollection.Any(result => result.IsFailed);
             }
         }
-        public bool HasErrors { 
-            get => hasErrors; 
-            set => hasErrors = value; }
+        
         #endregion
 
         public virtual QDocPropertyResultCollection Process(QDocPropertyCollection docState)
@@ -85,6 +80,11 @@ namespace QDoc.Docs
         public virtual QDocPropertyResultCollection Inspect(QDocActionManager actionManager)
         {
             return actionManager.Inspect(this);
+        }
+
+        public bool HasPropertyProcessingErrors()
+        {
+            return propertyResultCollection.Any(prop => prop.IsFailed);
         }
         
 
