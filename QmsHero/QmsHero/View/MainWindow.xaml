@@ -83,6 +83,7 @@
         <StatusBar 
            Grid.Row="1"
             Grid.ColumnSpan="2"
+            Height="35"
             >
             <StatusBarItem
            >Processing Results</StatusBarItem>

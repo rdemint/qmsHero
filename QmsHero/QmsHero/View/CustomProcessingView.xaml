@@ -19,6 +19,7 @@
         <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=HeaderPropertyGroup.HeaderEffectiveDate.State}"/>
         <controls:QCheckTextBox QDisplay="Revision" QOutput="{Binding Path=HeaderPropertyGroup.HeaderRevision.State}"/>
         <Button 
+            Style="{StaticResource ChromelessButtonStyle}"
             Command="{Binding ProcessFilesCommand}" 
             Content="Process Files"/>
     </StackPanel>
