@@ -30,22 +30,22 @@ namespace QmsHero.View
 
         }
 
-        private async void ShowMessageDialog(object sender, RoutedEvent e)
-        {
-            MetroDialogOptions.ColorScheme = MahApps.Metro.Controls.Dialogs.MetroDialogColorScheme.Accented;
-            var dialogSettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Apply",
-                NegativeButtonText = "Cancel",
-                ColorScheme = MetroDialogColorScheme.Accented
-            };
-            MessageDialogResult result = await this.ShowMessageAsync("Hello world!", "This is the message text.", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
-            if(result!= MessageDialogResult.Affirmative)
-            {
-                //Do something
-            }
+        //private async void ShowMessageDialog(object sender, RoutedEvent e)
+        //{
+        //    MetroDialogOptions.ColorScheme = MahApps.Metro.Controls.Dialogs.MetroDialogColorScheme.Accented;
+        //    var dialogSettings = new MetroDialogSettings()
+        //    {
+        //        AffirmativeButtonText = "Apply",
+        //        NegativeButtonText = "Cancel",
+        //        ColorScheme = MetroDialogColorScheme.Accented
+        //    };
+        //    MessageDialogResult result = await this.ShowMessageAsync("Hello world!", "This is the message text.", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
+        //    if(result!= MessageDialogResult.Affirmative)
+        //    {
+        //        //Do something
+        //    }
             
-        }
+        //}
 
     }
 }

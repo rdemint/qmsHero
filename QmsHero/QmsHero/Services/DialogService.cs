@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 namespace QmsHero.Services
 {
     
-    internal interface AsyncDialogService
+    internal interface IAsyncDialogService
     {
         Task<MessageDialogResult> AskQuestionAsync(string title, string message);
         Task<ProgressDialogController> ShowProgressAsync(string title, string message);
         Task ShowMessageAsync(string title, string message);
     }
     
-    internal class DialogService: AsyncDialogService
+    internal class DialogService: IAsyncDialogService
     {
         private readonly MetroWindow metroWindow;
 

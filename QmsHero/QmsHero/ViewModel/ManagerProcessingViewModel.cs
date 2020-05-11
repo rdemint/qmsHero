@@ -18,12 +18,12 @@ namespace QmsHero.ViewModel
     {
         DocManager manager;
         ResultsViewModel resultsViewModel;
-        DialogService dialogService;
+        IAsyncDialogService dialogService;
         public ManagerProcessingViewModel()
         {
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
-            this.dialogService = SimpleIoc.Default.GetInstance<DialogService>();
+            this.dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
 
 
         }
