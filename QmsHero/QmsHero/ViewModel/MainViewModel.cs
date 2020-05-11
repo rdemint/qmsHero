@@ -38,8 +38,11 @@ namespace QmsHero.ViewModel
             this.navToFilePropertiesViewModel = new RelayCommand(
                 () => this.ActiveViewModel = this.viewModelLocator.FilePropertiesViewModel
                 );
+            this.navToDCNViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.DCNViewModel);
+            this.navToResultsViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ResultsViewModel);
+            this.navToConfigViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ConfigViewModel);
 
-            this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
+                                    this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
             this.activeViewModel = viewModelLocator.FilePropertiesViewModel;
         }
 
@@ -81,48 +84,15 @@ namespace QmsHero.ViewModel
             set => navToCustomProcessingViewModel = value; 
             } 
         public RelayCommand NavToConfigViewModel {
-            get {
-                if (this.navToConfigViewModel== null)
-                    {
-                        this.navToConfigViewModel = new RelayCommand(
-                                () => {
-                                    this.ActiveViewModel = this.viewModelLocator.ConfigViewModel;
-                                },
-                                () => this.activeViewModel != this.viewModelLocator.ConfigViewModel
-                                );
-                    }
-                return this.navToConfigViewModel;
-            } 
+            get => navToConfigViewModel;
             set => navToConfigViewModel = value; }
 
         public RelayCommand NavToDCNViewModel {
-            get { 
-                if (this.navToDCNViewModel == null)
-                    {
-                        this.navToDCNViewModel = new RelayCommand(
-                            () =>
-                            {
-                                this.ActiveViewModel = this.viewModelLocator.DCNViewModel;
-                            },
-                            () => this.activeViewModel != this.viewModelLocator.DCNViewModel
-                        );
-                    }
-                return this.navToDCNViewModel;
-                } 
+            get => navToDCNViewModel;
             set => navToDCNViewModel = value; }
 
         public RelayCommand NavToResultsViewModel {
-            get { 
-                if(this.navToResultsViewModel == null)
-                {
-                    this.navToResultsViewModel = new RelayCommand(
-                        () => this.ActiveViewModel = this.viewModelLocator.ResultsViewModel,
-                        () => this.ActiveViewModel != this.viewModelLocator.ResultsViewModel
-
-                        );
-                }
-                return this.navToResultsViewModel;
-            }
+            get => navToResultsViewModel;
             set => navToResultsViewModel = value; }
 
         public RelayCommand NavToQuickActionsViewModel { get => navToQuickActionsViewModel; set => navToQuickActionsViewModel = value; }

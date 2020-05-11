@@ -11,17 +11,15 @@
       Title="QuickActionsView">
 
     <StackPanel Orientation="Vertical">
-        <TextBox Text="Select the files to work with."/>
-        <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
-        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
+        <TextBlock Text="Perform common replacements throughout your project templates."/>
         <dragablz:TabablzControl>
             <TabItem Header="Doc Name">
                 <StackPanel Orientation="Vertical">
                     <TextBox Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
                     <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding CurrentDocumentName}"/>
                     <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding NewDocumentName}"/>
+                    <Button Command="{Binding ProcessFileNameCommand}"  Content="Replace"/>
                     <Button Command="{Binding InspectFileNameCommand}" Content="Inspect"/>
-                    <Button Command="{Binding ProcessFileNameCommand}"  Content="Rename"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Doc Number">
@@ -29,8 +27,8 @@
                     <TextBox Text="Renumber a document throughout the project, or renumber all documents with the same '-DDD' pattern."/>
                     <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileNumber}"/>
                     <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileNumber}"/>
+                    <Button Command="{Binding ProcessFileNumberCommand}"  Content="Replace"/>
                     <Button Command="{Binding InspectFileNumberCommand}" Content="Inspect"/>
-                    <Button Command="{Binding ProcessFileNumberCommand}"  Content="Renumber"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Doc Revision">
@@ -38,8 +36,8 @@
                     <TextBox Text="Inspect that the Revisions of the file and within the document match, or change the revision across the project."/>
                     <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileRevision}"/>
                     <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileRevision}"/>
+                    <Button Command="{Binding ProcessFileRevisionCommand}"  Content="Replace"/>
                     <Button Command="{Binding InspectFileRevisionCommand}" Content="Inspect"/>
-                    <Button Command="{Binding ProcessFileRevisionCommand}"  Content="Renumber"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Doc Text">
@@ -47,7 +45,7 @@
                     <TextBox Text="Inspect for instances of text across or project, replacing it as desired.  Careful!"/>
                     <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileText}"/>
                     <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileText}"/>
-                    <Button Command="{Binding ProcessFileTextCommand}"  Content="Renumber"/>
+                    <Button Command="{Binding ProcessFileTextCommand}"  Content="Replace"/>
                     <Button Command="{Binding InspectFileTextCommand}" Content="Inspect"/>
                 </StackPanel>
             </TabItem>

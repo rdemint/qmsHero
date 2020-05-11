@@ -31,7 +31,7 @@ namespace QmsHero.ViewModel
         }
         public DocumentPropertyPropertyGroup DocumentPropertyPropertyGroup { get => documentPropertyPropertyGroup; set => documentPropertyPropertyGroup = value; }
 
-        public override void ProcessFiles()
+        protected override void ProcessFiles()
         {
             this.managerProcessingViewModel.Process(DocumentPropertyPropertyGroup.ToCollection());
         }

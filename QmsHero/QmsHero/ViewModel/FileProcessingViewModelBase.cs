@@ -29,9 +29,9 @@ namespace QmsHero.ViewModel
         public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
         public string ViewDisplayName { get => viewDisplayName; set => viewDisplayName = value; }
 
-        public abstract void ProcessFiles();
+        protected abstract void ProcessFiles();
 
-        public virtual bool CanProcessFiles()
+        protected virtual bool CanProcessFiles()
         {
             return this.configViewModel.ProcessingDirIsValid() && this.configViewModel.ReferenceDirIsValid();
         }

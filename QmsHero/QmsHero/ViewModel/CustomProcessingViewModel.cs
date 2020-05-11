@@ -16,59 +16,27 @@ using System.Diagnostics;
 
 namespace QmsHero.ViewModel
 {
-    public class CustomProcessingViewModel: ViewModelBase
+    public class CustomProcessingViewModel: FileProcessingViewModelBase
     {
         string viewDisplayName;
-        DocManager manager;
-        RelayCommand processFilesCommand;
         HeaderPropertyGroup headerPropertyGroup;
         string logoPath;
-        ResultsViewModel resultsViewModel;
-        ManagerProcessingViewModel fileProcessingViewModel;
-        ConfigViewModel configViewModel;
         public CustomProcessingViewModel(): base()
         {
 
-            this.ViewDisplayName = "Custom";
-            this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.fileProcessingViewModel = SimpleIoc.Default.GetInstance<ManagerProcessingViewModel>();
-            
+            this.viewDisplayName = "Custom";
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
-            this.ProcessFilesCommand = new RelayCommand(
-                        () => ProcessFiles(),
-                        () => CanProcessFiles()
-                        );
+            
             //TestData
             this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference\\qaladder_logo.jpg";
             //
         }
 
-        public RelayCommand ProcessFilesCommand {
-            get {
-                  return this.processFilesCommand;
-            }
-            set {
-                if(this.processFilesCommand != value)
-                {
-                    this.processFilesCommand = value;
-                }
-            } 
-        }
-        private void ProcessFiles()
-        {
-
-            this.fileProcessingViewModel.Process(headerPropertyGroup.ToCollection());
-        }
-
-        public bool CanProcessFiles()
-        {
-            return this.configViewModel.ProcessingDirIsValid() && this.configViewModel.ReferenceDirIsValid();
-        }
-
         
-        public string ViewDisplayName { 
-            get => viewDisplayName; 
-            set => viewDisplayName = value; }
+        protected override void ProcessFiles()
+        {
+            this.managerProcessingViewModel.Process(headerPropertyGroup.ToCollection());
+        }
 
         public HeaderPropertyGroup HeaderPropertyGroup { get => headerPropertyGroup; set => headerPropertyGroup = value; }
         public string LogoPath { 
