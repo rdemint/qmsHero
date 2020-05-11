@@ -46,7 +46,6 @@ namespace QmsHero.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ConfigViewModel>();
             SimpleIoc.Default.Register<CustomProcessingViewModel>();
-            SimpleIoc.Default.Register<DCNViewModel>();
             SimpleIoc.Default.Register<ResultsViewModel>();
             SimpleIoc.Default.Register<QuickActionsViewModel>();
             SimpleIoc.Default.Register<FilePropertiesViewModel>();
@@ -79,10 +78,6 @@ namespace QmsHero.ViewModel
             get => ServiceLocator.Current.GetInstance<CustomProcessingViewModel>(); 
             }
 
-        public DCNViewModel DCNViewModel
-        {
-            get => ServiceLocator.Current.GetInstance<DCNViewModel>();
-        }
 
         public ResultsViewModel ResultsViewModel
         {

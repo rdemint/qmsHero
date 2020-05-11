@@ -38,7 +38,6 @@ namespace QmsHero.ViewModel
             this.navToFilePropertiesViewModel = new RelayCommand(
                 () => this.ActiveViewModel = this.viewModelLocator.FilePropertiesViewModel
                 );
-            this.navToDCNViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.DCNViewModel);
             this.navToResultsViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ResultsViewModel);
             this.navToConfigViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ConfigViewModel);
 
@@ -52,7 +51,6 @@ namespace QmsHero.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             this.NavToCustomProcessingViewModel.RaiseCanExecuteChanged();
             this.NavToConfigViewModel.RaiseCanExecuteChanged();
-            this.NavToDCNViewModel.RaiseCanExecuteChanged();
             this.NavToQuickActionsViewModel.RaiseCanExecuteChanged();
         }
         public ViewModelBase ActiveViewModel
