@@ -197,6 +197,8 @@ namespace QmsDocXml
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
 
+            bool foundImage = false;
+            int foundCount = 0;
             FileInfo imageFile = new FileInfo(this.State.ToString());
 
             if (!imageFile.Exists)
@@ -210,71 +212,79 @@ namespace QmsDocXml
             }
 
 
-            var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
-            var vmlParts = workSheetPart.VmlDrawingParts;
-            if(!vmlParts.Any())
-            {
-                return Results.Fail<QDocProperty>(new Error("Did not find an image in this document"));
-            }
-            var vmlPart = workSheetPart.VmlDrawingParts.First();
-
-            //get the content of the vmlPart 
-            string vmlContent = null;
-            using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
-            {
-                vmlContent = streamReader.ReadToEnd();
-                
-            }
-            var xEl = Xlinq.XElement.Parse(vmlContent);
-            var shapeNode = xEl.Descendants().Where(d => d.Name.LocalName == "shape").First();
-            var styleAttr = shapeNode.Attributes("style").First();
-
-            var imageNode = xEl.Descendants().Where(d=> d.Name.LocalName == "imagedata").First();
-            var imageNodeAttrs = imageNode.Attributes();
-            var imageAttr = imageNode.Attributes().Where(attr => attr.Name.LocalName == "title").First();
-
-            //get current image height in string
-            Match widthMatch = Regex.Match(styleAttr.Value, @"width:.*?pt");
-            Match heightMatch = Regex.Match(styleAttr.Value, @"height:.*?pt");
-            if(widthMatch.Success && heightMatch.Success)
-            {
-                string hStr = heightMatch.ToString().Replace("height:", "").Replace("pt", "");
-                double imageHeight;
-                bool rH = double.TryParse(hStr, out imageHeight);
-
-                double targetRatio = ImageXml.GetImageHeightWidthRatio(imageFile);
-                double newWidth = Math.Round(imageHeight / targetRatio, 1);
-                string newStyleWidth = "width:" + newWidth.ToString() + "pt";
-                string newStyleAttr = styleAttr.Value.Replace(widthMatch.ToString(), newStyleWidth);
-
-
-                //set new values
-                styleAttr.Value = newStyleAttr;
-                imageAttr.Value = imageFile.Name;
-
-                //generate new content and feed to VmlDrawingPart
-                string newVmlContent = xEl.ToString();
-
-                var vmlStream = new MemoryStream();
-                var writer = new StreamWriter(vmlStream);
-                writer.Write(newVmlContent);
-                writer.Flush();
-                vmlStream.Position = 0;
-                vmlPart.FeedData(vmlStream);
-
-                //overwrite current image with the new image
-                ImagePart imagePart = vmlPart.ImageParts.First();
-                using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            foreach (var workSheetPart in doc.WorkbookPart.WorksheetParts) {
+                var vmlParts = workSheetPart.VmlDrawingParts;
+                if (vmlParts.Any())
                 {
-                    imagePart.FeedData(stream);
+                    var vmlPart = workSheetPart.VmlDrawingParts.First();
+
+                    //get the content of the vmlPart 
+                    string vmlContent = null;
+                    using (StreamReader streamReader = new StreamReader(vmlPart.GetStream()))
+                    {
+                        vmlContent = streamReader.ReadToEnd();
+
+                    }
+                    var xEl = Xlinq.XElement.Parse(vmlContent);
+                    var shapeNode = xEl.Descendants().Where(d => d.Name.LocalName == "shape").First();
+                    var styleAttr = shapeNode.Attributes("style").First();
+
+                    var imageNode = xEl.Descendants().Where(d => d.Name.LocalName == "imagedata").First();
+                    var imageNodeAttrs = imageNode.Attributes();
+                    var imageAttr = imageNode.Attributes().Where(attr => attr.Name.LocalName == "title").First();
+
+                    //get current image height in string
+                    Match widthMatch = Regex.Match(styleAttr.Value, @"width:.*?pt");
+                    Match heightMatch = Regex.Match(styleAttr.Value, @"height:.*?pt");
+                    if (!widthMatch.Success && !heightMatch.Success)
+                    {
+                        return Results.Fail(new Error("Could not find the width and height specification for the current image."));
+                    }
+                    string hStr = heightMatch.ToString().Replace("height:", "").Replace("pt", "");
+                    double imageHeight;
+                    bool rH = double.TryParse(hStr, out imageHeight);
+
+                    double targetRatio = ImageXml.GetImageHeightWidthRatio(imageFile);
+                    double newWidth = Math.Round(imageHeight / targetRatio, 1);
+                    string newStyleWidth = "width:" + newWidth.ToString() + "pt";
+                    string newStyleAttr = styleAttr.Value.Replace(widthMatch.ToString(), newStyleWidth);
+
+
+                    //set new values
+                    styleAttr.Value = newStyleAttr;
+                    imageAttr.Value = imageFile.Name;
+
+                    //generate new content and feed to VmlDrawingPart
+                    string newVmlContent = xEl.ToString();
+
+                    var vmlStream = new MemoryStream();
+                    var writer = new StreamWriter(vmlStream);
+                    writer.Write(newVmlContent);
+                    writer.Flush();
+                    vmlStream.Position = 0;
+                    vmlPart.FeedData(vmlStream);
+
+                    //overwrite current image with the new image
+                    ImagePart imagePart = vmlPart.ImageParts.First();
+                    using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        imagePart.FeedData(stream);
+                    }
+                    foundImage = true;
+                    foundCount++;
                 }
-                return Results.Ok<QDocProperty>(new HeaderLogo(this.State, 1));
             }
+
+            //Done
+            if (foundImage == true)
+            {
+                return Results.Ok<QDocProperty>(new HeaderLogo(this.State, foundCount));
+            }
+
             else
             {
-                return Results.Fail(new Error("Could not find the width and height specification for the current image."));
+                return Results.Fail(new Error("Did not find any images in the document"));
             }
-
         }
     }
 }

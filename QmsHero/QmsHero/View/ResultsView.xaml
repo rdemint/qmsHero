@@ -27,7 +27,7 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn 
                     Header="Errors" 
-                    Binding="{Binding Path=HasErrors}" 
+                    Binding="{Binding Path=HasPropertyProcessingErrors}" 
                     IsReadOnly="True"
                     />
                 <DataGridTemplateColumn Header="Link">
