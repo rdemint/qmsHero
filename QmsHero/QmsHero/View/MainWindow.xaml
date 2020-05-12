@@ -96,6 +96,7 @@
                     Grid.Row="0"
                     x:Name="MainContentFrame"
                     Content="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.ActiveViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
         <StatusBar 
            Grid.Row="1"
             Grid.ColumnSpan="2"

@@ -9,7 +9,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="QuickActionsView">
-
+    <Page.Resources>
+        <ResourceDictionary Source="Resources/generic.xaml"/>
+    </Page.Resources>
     <StackPanel Orientation="Vertical">
         <TextBlock 
             HorizontalAlignment="Center"
@@ -30,8 +32,6 @@
                             MaxWidth="200"
                             Command="{Binding ProcessFileNameCommand}"  Content="Replace"/>
                         <Button 
-                            HorizontalAlignment="Center"
-                            MaxWidth="200"
                             Command="{Binding InspectFileNameCommand}" Content="Inspect"/>
                     </StackPanel>
                 </GroupBox>
@@ -43,12 +43,8 @@
                         <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileNumber}"/>
                         <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileNumber}"/>
                         <Button 
-                            HorizontalAlignment="Center"
-                            MaxWidth="200"
                             Command="{Binding ProcessFileNumberCommand}"  Content="Replace"/>
                         <Button 
-                            HorizontalAlignment="Center"
-                            MaxWidth="200"
                             Command="{Binding InspectFileNumberCommand}" Content="Inspect"/>
                     </StackPanel>
                 </GroupBox>
@@ -60,12 +56,8 @@
                         <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileRevision}"/>
                         <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileRevision}"/>
                         <Button 
-                            HorizontalAlignment="Center"
-                            MaxWidth="200"
                             Command="{Binding ProcessFileRevisionCommand}"  Content="Replace"/>
                         <Button 
-                            HorizontalAlignment="Center"
-                            MaxWidth="200"
                             Command="{Binding InspectFileRevisionCommand}" Content="Inspect"/>
                     </StackPanel>
                 </GroupBox>
