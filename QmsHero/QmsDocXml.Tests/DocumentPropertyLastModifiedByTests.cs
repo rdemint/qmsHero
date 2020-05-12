@@ -19,7 +19,7 @@ namespace QmsDocXml.Tests
             var fixture = new XmlFixture();
             var doc = new WordDoc(fixture.WordSampleCopy);
             var result = doc.Inspect(new DocumentPropertyLastModifiedBy());
-            Assert.AreEqual("leanRAQAsystems", result.Value.State);
+            Assert.AreEqual("Lean RAQA Systems", result.Value.State);
         }
 
         [TestMethod]

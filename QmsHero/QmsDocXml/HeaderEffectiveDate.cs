@@ -30,25 +30,36 @@ namespace QmsDocXml
         }
 
 
-        public WD.Paragraph FetchEffectiveDatePart(WordprocessingDocument doc, int row, int col)
+        public Result<WD.Paragraph> FetchEffectiveDatePart(WordprocessingDocument doc, int row, int col)
         {
 
-            WD.TableCell cell = WordPartHeaderTableCell.Get(doc, row, col);
-            WD.Paragraph p = cell.Elements<WD.Paragraph>().First();
-            return p;
+            Result<WD.TableCell> cellResult = WordPartHeaderTableCell.Get(doc, row, col);
+            if(cellResult.IsSuccess)
+            {
+                WD.Paragraph p = cellResult.Value.Elements<WD.Paragraph>().First();
+                return Results.Ok<WD.Paragraph>(p);
+            }
+            else
+            {
+                return Results.Fail(new Error("Did not find the table cell."));
+            }
         }
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-            WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
-            Match match = Regex.Match(par.InnerText, @"\d\d\d\d-\d\d-\d\d");
+            Result<WD.Paragraph> parResult = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
+            if(parResult.IsFailed)
+            {
+                return Results.Fail(new Error("Did not find the table cell."));
+            }
+            Match match = Regex.Match(parResult.Value.InnerText, @"\d\d\d\d-\d\d-\d\d");
             if(match.Success)
             {
                 return Results.Ok<QDocProperty>(new HeaderEffectiveDate(match.ToString(), 1));
             }
             else
             {
-                return Results.Fail(new Error($"Did not find any text of the pattern {this.state} in the document text '{par.InnerText}'."));
+                return Results.Fail(new Error($"Did not find any text of the pattern {this.state} in the document text '{parResult.Value.InnerText}'."));
             }
         }
 
@@ -80,12 +91,16 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-            WD.Paragraph par = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
-            WD.Run myRun = (WD.Run)par.Elements<WD.Run>().First().Clone();
-            par.RemoveAllChildren<WD.Run>();
+            Result<WD.Paragraph> parResult = FetchEffectiveDatePart(doc, docConfig.HeaderEffectiveDateRow, docConfig.HeaderEffectiveDateCol);
+            if(parResult.IsFailed)
+            {
+                return Results.Fail(new Error("Did not find the table cell."));
+            }
+            WD.Run myRun = (WD.Run)parResult.Value.Elements<WD.Run>().First().Clone();
+            parResult.Value.RemoveAllChildren<WD.Run>();
             WD.Text text = myRun.Elements<WD.Text>().First();
             text.Text = docConfig.HeaderEffectiveDateText + (string)this.State;
-            par.Append(myRun);
+            parResult.Value.Append(myRun);
             return Results.Ok<QDocProperty>(new HeaderEffectiveDate((string)this.State, 1));
         }
 

@@ -33,17 +33,36 @@ namespace QmsDocXml
         {
         }
 
-        public Paragraph FetchRevisionPart(WordprocessingDocument doc, WordDocConfig config)
+        public Result<Paragraph> FetchRevisionPart(WordprocessingDocument doc, WordDocConfig config)
         {
-            TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);
-            return cell.Elements<Paragraph>().First();
+            var tableCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);
+            if(tableCellResult.IsFailed)
+            {
+                return Results.Fail(new Error($"Did not identify the table cell at row {config.HeaderRevisionRow} and column {config.HeaderRevisionCol}."));
+            }
+            else
+            {
+                return Results.Ok<Paragraph>(tableCellResult.Value.Elements<Paragraph>().First());
+
+            }
         }
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            Paragraph par = FetchRevisionPart(doc, config);
-            Match match = config.HeaderRevisionRegex.Match(par.InnerText);
-            return Results.Ok<QDocProperty>(new HeaderRevision(match.ToString(), 1));
+            var parResult = FetchRevisionPart(doc, config);
+            if(parResult.IsFailed)
+            {
+                return Results.Fail(new Error("Did not identify the revision table cell in the document."));
+            }
+            Match match = config.HeaderRevisionRegex.Match(parResult.Value.InnerText);
+            if(match.Success)
+            {
+                return Results.Ok<QDocProperty>(new HeaderRevision(match.ToString(), 1));
+            }
+            else
+            {
+                return Results.Fail(new Error($"Pattern {config.HeaderRevisionRegex.ToString()} did not match any text in table cell paragraph text {parResult.Value.InnerText}."));
+            }
         }
 
         public override Result<QDocProperty> Read(SpreadsheetDocument doc, ExcelDocConfig config)
@@ -75,12 +94,16 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
-            Paragraph par = FetchRevisionPart(doc, config);
-            Match parMatch = config.HeaderRevisionRegex.Match(par.InnerText);
+            var parResult = FetchRevisionPart(doc, config);
+            if (parResult.IsFailed)
+            {
+                return Results.Fail(new Error("Did not identify the revision table cell in the document."));
+            }
+            Match parMatch = config.HeaderRevisionRegex.Match(parResult.Value.InnerText);
             if(parMatch.Success)
             {
                 var tempParList = new List<Paragraph>();
-                tempParList.Add(par);
+                tempParList.Add(parResult.Value);
                 TextXml.ReplaceParagraphElementText(tempParList, config.HeaderRevisionRegex, (string)this.state);
                 //Text text = par.Elements<Run>().First().Elements<Text>().First();
                 //text.Text = config.HeaderRevisionText + (string)this.State;
@@ -89,7 +112,7 @@ namespace QmsDocXml
             else
             {
                 return Results.Fail((
-                    new Error($"Did not identify header text, '{(string)this.state} in the target document text, '{par.InnerText}'.")));
+                    new Error($"Did not identify header text, '{(string)this.state} in the target document text, '{parResult.Value.InnerText}'.")));
             }
         }
 

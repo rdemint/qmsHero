@@ -46,9 +46,12 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig docConfig)
         {
-            DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
-
-            IEnumerable<Drawing> drawings = cell.Descendants<Drawing>()
+            var tableCellResult = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
+            if(tableCellResult.IsFailed)
+            {
+                return Results.Fail(new Error("Did not identify the table cell for the logo in the document."));
+            }
+            IEnumerable<Drawing> drawings = tableCellResult.Value.Descendants<Drawing>()
                 .Where(
                     d => d.Descendants<DrawingPictures.Picture>()
                       .Any(p => p.BlipFill.Blip.Embed != null)
@@ -56,7 +59,7 @@ namespace QmsDocXml
 
             if(drawings.Any())
             {
-                Drawing drawing = cell.Descendants<Drawing>().First();
+                Drawing drawing = tableCellResult.Value.Descendants<Drawing>().First();
                 DRAWING.GraphicData graphicData = drawing.Descendants<DRAWING.GraphicData>().First();
                 var els = graphicData.Elements().ToList();
                 var picture = graphicData.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.Picture>().First();
@@ -150,19 +153,23 @@ namespace QmsDocXml
             FileInfo imageFile = new FileInfo((string)this.State);
             if(!imageFile.Exists)
             {
-                return Results.Fail("The image does not exist.");
+                return Results.Fail(new Error($"The image at {imageFile.FullName} does not exist."));
             }
             
             if(imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")
             {
-                return Results.Fail("The image must be a .jpg or .jpeg type.");
+                return Results.Fail(new Error("The image must be a .jpg or .jpeg type."));
             }
 
-            DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
-            Paragraph cellPar = cell.Descendants<Paragraph>().First();
+            var tableCellResult = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
+            if(tableCellResult.IsFailed)
+            {
+                return Results.Fail(new Error($"Did not identify a table cell at row {docConfig.HeaderLogoRow} and column {docConfig.HeaderLogoCol} in the document for the logo."));
+            }
+            Paragraph cellPar = tableCellResult.Value.Descendants<Paragraph>().First();
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
 
-            IEnumerable<Drawing> drawings = cell.Descendants<Drawing>()
+            IEnumerable<Drawing> drawings = tableCellResult.Value.Descendants<Drawing>()
                 .Where(
                     d => d.Descendants<DrawingPictures.Picture>()
                       .Any(p => p.BlipFill.Blip.Embed != null)
@@ -194,7 +201,7 @@ namespace QmsDocXml
 
             if (!imageFile.Exists)
             {
-                return Results.Fail("The image does not exist.");
+                return Results.Fail($"The image at {imageFile.FullName} does not exist.");
             }
 
             if (imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")

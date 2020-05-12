@@ -58,8 +58,12 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Read(WordprocessingDocument doc, WordDocConfig config)
         {
-            Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
-            var par = cell.Elements<Wxml.Paragraph>().First();
+            var tableCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
+            if(tableCellResult.IsFailed)
+            {
+                return Results.Fail(new Error($"Did not identify the table cell at row {config.HeaderNameRow} and column {config.HeaderNameCol}."));
+            }
+            var par = tableCellResult.Value.Elements<Wxml.Paragraph>().First();
             string parText = par.InnerText;
             //string result = parText.Replace(config.HeaderNameText, "");
             //Match match = config.HeaderNameRegex.Match(result);
@@ -101,8 +105,12 @@ namespace QmsDocXml
 
         public override Result<QDocProperty> Write(WordprocessingDocument doc, WordDocConfig config)
         {
-            Wxml.TableCell cell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
-            var par = cell.Elements<Wxml.Paragraph>().First();
+            var tableCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
+            if (tableCellResult.IsFailed)
+            {
+                return Results.Fail(new Error($"Did not identify the table cell at row {config.HeaderNameRow} and column {config.HeaderNameCol}."));
+            }
+            var par = tableCellResult.Value.Elements<Wxml.Paragraph>().First();
             //Wxml.Run firstRunClone = (Wxml.Run)par.Elements<Wxml.Run>().First().Clone();
             //par.RemoveAllChildren<Wxml.Run>();
             //firstRunClone.Elements<Wxml.Text>().First().Text = config.HeaderNameText + (string)this.State;

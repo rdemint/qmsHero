@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Spreadsheet;
+using FluentResults;
 
 namespace QmsDocXml.Audit
 {
@@ -32,18 +34,29 @@ namespace QmsDocXml.Audit
 
         public override void Audit(WordprocessingDocument doc, WordDocConfig config)
         {
-            Wxml.TableCell headerCell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
-            this.CheckParsCount(headerCell.Elements<Wxml.Paragraph>().ToList());
-            
+            Result<Wxml.TableCell> headerCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
+            if (headerCellResult.IsSuccess) { 
+                this.CheckParsCount(headerCellResult.Value.Elements<Wxml.Paragraph>().ToList());
+            }
 
-            Wxml.TableCell revisionCell = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);
-            this.CheckParsCount(revisionCell.Elements<Wxml.Paragraph>().ToList());
+            var revisionCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderRevisionRow, config.HeaderRevisionCol);
+            if(revisionCellResult.IsSuccess)
+            {
+                this.CheckParsCount(revisionCellResult.Value.Elements<Wxml.Paragraph>().ToList());
 
-            Wxml.TableCell effectiveDateCell = WordPartHeaderTableCell.Get(doc, config.HeaderEffectiveDateRow, config.HeaderEffectiveDateCol);
-            this.CheckParsCount(effectiveDateCell.Elements<Wxml.Paragraph>().ToList());
+            }
 
-            Wxml.TableCell nameCell = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
-            this.CheckParsCount(nameCell.Elements<Wxml.Paragraph>().ToList());
+            var effectiveDateCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderEffectiveDateRow, config.HeaderEffectiveDateCol);
+            if(effectiveDateCellResult.IsSuccess)
+            {
+                this.CheckParsCount(effectiveDateCellResult.Value.Elements<Wxml.Paragraph>().ToList());
+            }
+
+            var nameCellResult = WordPartHeaderTableCell.Get(doc, config.HeaderNameRow, config.HeaderNameCol);
+            if(nameCellResult.IsSuccess)
+            {
+                this.CheckParsCount(nameCellResult.Value.Elements<Wxml.Paragraph>().ToList());
+            }
         }
 
         private void CheckParsCount(List<Wxml.Paragraph> pars)
