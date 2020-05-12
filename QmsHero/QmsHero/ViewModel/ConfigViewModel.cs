@@ -9,6 +9,7 @@ using QDoc.Core;
 using QmsDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using QmsHero.Services;
 
 namespace QmsHero.ViewModel
 {
@@ -20,13 +21,15 @@ namespace QmsHero.ViewModel
         int referenceFilesCount;
         DocManager manager;
         string viewDisplayName;
+        IAsyncDialogService dialogService;
+
         public ConfigViewModel()
         {
             this.viewDisplayName = "Configure Project Directories";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.ReferenceDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS";
             this.ProcessingDirPath = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS_Processing1";
-
+            this.dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
         }
 
         public string ReferenceDirPath
@@ -38,7 +41,6 @@ namespace QmsHero.ViewModel
                     () => ReferenceDirPath, ref referenceDirPath, value
                 );
 
-                //this.manager = ServiceLocator.Current.GetInstance<DocManager>();
                this.ReferenceFilesCount = manager.FileManager.SetReferenceDir(value);
             }
         }
@@ -50,7 +52,6 @@ namespace QmsHero.ViewModel
                 Set<string>(
                     () => ProcessingDirPath, ref processingDirPath, value
                 );
-                //this.manager = SimpleIoc.Default.GetInstance<DocManager>();
                 this.ProcessingFilesCount = manager.FileManager.SetProcessingDir(value);
             }
 

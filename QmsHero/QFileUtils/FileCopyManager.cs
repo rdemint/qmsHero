@@ -8,6 +8,7 @@ using Directory = System.IO.Directory;
 using DirectoryInfo = System.IO.DirectoryInfo;
 using FileInfo = System.IO.FileInfo;
 using QFileUtil.Exceptions;
+using FluentResults;
 
 namespace QFileUtil
 {
@@ -46,9 +47,14 @@ namespace QFileUtil
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 
         
-        public virtual int UpdateProcessingDirFilesIfNecessary()
+        public virtual Result<int> UpdateProcessingDirFilesIfNecessary()
         {
-
+            //Copies the References files to the ProcessingFiles, or resets ProcessingFiles as needed
+            if (processingDir != null && !processingDir.Exists)
+            {
+                processingFiles = new List<FileInfo>();
+                return Results.Ok<int>(0);
+            }
             if (
                 ReferenceDirAndProcessingDirAreNotNullandExist() &&
                 referenceDir.FullName != processingDir.FullName &&
@@ -58,15 +64,11 @@ namespace QFileUtil
                     CleanProcessingDir();
                     FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
                     var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                    //referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                     processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
 
                 return processingFiles.Count;
                 }
-            else
-            {
-                return -1;
-            }
+            return processingFiles.Count;
 
 
         }
@@ -81,14 +83,14 @@ namespace QFileUtil
         }
         
         
-        public int SetReferenceDir(string path)
+        public Result<int> SetReferenceDir(string path)
         {
             var dir = new DirectoryInfo(path);
             return SetReferenceDir(dir);
 
         }
 
-        public int SetReferenceDir(DirectoryInfo dir)
+        public Result<int> SetReferenceDir(DirectoryInfo dir)
         {
             this.referenceDir = dir;
             this.referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
@@ -99,23 +101,30 @@ namespace QFileUtil
         }
 
 
-        public int SetProcessingDir(string path)
+        public Result<int> SetProcessingDir(string path)
         {
             var dir = new DirectoryInfo(path);
             return SetProcessingDir(dir);
         }
 
-        public int SetProcessingDir(DirectoryInfo dir)
+        public Result<int> SetProcessingDir(DirectoryInfo dir)
         {
             this.processingDir = dir;
-            if (ReferenceDirAndProcessingDirAreNotNullandExist())
-            {
-                CleanProcessingDir();
-                FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
-                UpdateProcessingDirFilesIfNecessary();
-            }
             UpdateProcessingDirFilesIfNecessary();
             return this.ProcessingFiles.Count;
+        }
+
+        public bool CreateProcessingDirThatDoesNotExist()
+        {
+            if(!processingDir.Exists)
+            {
+                processingDir.Create();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         
         public virtual bool ReferenceDirAndProcessingDirAreNotNullandExist()

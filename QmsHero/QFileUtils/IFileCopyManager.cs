@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FluentResults;
+using System.Collections.Generic;
 using System.IO;
 
 namespace QFileUtil
@@ -13,13 +14,13 @@ namespace QFileUtil
         FileInfo CopyToProcessingDir(FileInfo file);
         int CleanProcessingDir();
 
-        int SetProcessingDir(string path);
-        int SetProcessingDir(DirectoryInfo dir);
-        int SetReferenceDir(string path);
-        int SetReferenceDir(DirectoryInfo dir);
+        Result<int> SetProcessingDir(string path);
+        Result<int> SetProcessingDir(DirectoryInfo dir);
+        Result<int> SetReferenceDir(string path);
+        Result<int> SetReferenceDir(DirectoryInfo dir);
         bool ProcessingDirIsClean();
         bool ReferenceDirAndProcessingDirAreNotNullandExist();
 
-        int UpdateProcessingDirFilesIfNecessary();
+        Result<int> UpdateProcessingDirFilesIfNecessary();
     }
 }

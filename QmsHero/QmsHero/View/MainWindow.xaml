@@ -26,12 +26,9 @@
     </mah:MetroWindow.Resources>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button 
-                Command="{Binding OpenConfigFlyout }"
-                ToolTip="Set the project files.">
-                <iconPacks:PackIconUnicons Width="15" Height="15" Kind="File"/>
-            </Button>
-            <ToggleButton Content="Config"
+            <ToggleButton 
+                ToolTip="Set the project files."
+                Content="Config"
                           IsChecked="{Binding ElementName=ConfigFlyout, Path=IsOpen}"
                           Cursor="Hand"/>
         </mah:WindowCommands>
