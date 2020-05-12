@@ -153,7 +153,7 @@ namespace QmsDocXml
                 return Results.Fail("The image does not exist.");
             }
             
-            if(imageFile.Extension != ".jpg" || imageFile.Extension != ".jpeg")
+            if(imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")
             {
                 return Results.Fail("The image must be a .jpg or .jpeg type.");
             }
@@ -197,7 +197,7 @@ namespace QmsDocXml
                 return Results.Fail("The image does not exist.");
             }
 
-            if (imageFile.Extension != ".jpg" || imageFile.Extension != ".jpeg")
+            if (imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")
             {
                 return Results.Fail("The image must be a .jpg or .jpeg type.");
             }

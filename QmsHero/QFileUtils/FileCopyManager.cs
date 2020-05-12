@@ -63,25 +63,9 @@ namespace QFileUtil
             return -1;
 
         }
+       
         
-        
-        public virtual int UpdateFiles2()
-        {
-            if(ReferenceDirAndProcessingDirAreNotNullandExist())
-            {
-                
-                
-                var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                if(refFiles.Any())
-                {
-                    referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                }
-                
-                return referenceFiles.Count + processingFiles.Count;
-            }
-            return -1;
-        }
+       
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {
             FileInfo fileCopy = FileUtil.FileCopy(file, ProcessingDir, true);
