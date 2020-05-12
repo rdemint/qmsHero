@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Ioc;
 using QmsDoc.Core;
+using QmsHero.ViewModel;
 
 namespace QmsHero
 {
@@ -23,10 +24,14 @@ namespace QmsHero
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             var exception = e.Exception;
-            var manager = SimpleIoc.Default.GetInstance<DocManager>();
             System.Windows.Forms.MessageBox.Show(exception.ToString());
             e.Handled = true;
             Shutdown();
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+
         }
     }
 }

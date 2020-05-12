@@ -23,30 +23,30 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
-    <mah:MetroWindow.LeftWindowCommands>
+    <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button 
                 Command="{Binding OpenConfigFlyout }"
                 ToolTip="Set the project files.">
                 <iconPacks:PackIconUnicons Width="15" Height="15" Kind="File"/>
             </Button>
+            <ToggleButton Content="Config"
+                          IsChecked="{Binding ElementName=ConfigFlyout, Path=IsOpen}"
+                          Cursor="Hand"/>
         </mah:WindowCommands>
-    </mah:MetroWindow.LeftWindowCommands>
-    <mah:MetroWindow.IconTemplate>
-        <DataTemplate>
-            <Image Source="Resources/Media/qaladder_logo.jpg"></Image>
-        </DataTemplate>
-    </mah:MetroWindow.IconTemplate>
+    </mah:MetroWindow.RightWindowCommands>
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl>
             <mah:Flyout
+                x:Name="ConfigFlyout"
                 Position="Left"
                 AreAnimationsEnabled="True"
+                IsOpen="True"
                 Header="File Settings"
-                IsOpen="{Binding IsSettingsFlyoutOpen, Mode=TwoWay}"
                 Theme="Accent"
                 >
-                <TextBlock Text="Your flyout is working" Width="200"/>
+                <view:ConfigView DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel}">
+                </view:ConfigView>
             </mah:Flyout>
         </mah:FlyoutsControl>
     </mah:MetroWindow.Flyouts>

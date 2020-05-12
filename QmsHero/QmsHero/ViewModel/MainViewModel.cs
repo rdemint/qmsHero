@@ -35,6 +35,8 @@ namespace QmsHero.ViewModel
 
         public MainViewModel()
         {
+            this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
+            this.activeViewModel = viewModelLocator.FilePropertiesViewModel;
             this.navToQuickActionsViewModel = new RelayCommand(
                 () => this.ActiveViewModel = this.viewModelLocator.QuickActionsViewModel
                 );
@@ -44,8 +46,6 @@ namespace QmsHero.ViewModel
             this.navToResultsViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ResultsViewModel);
             this.navToConfigViewModel = new RelayCommand(() => this.ActiveViewModel = this.viewModelLocator.ConfigViewModel);
 
-            this.viewModelLocator = App.Current.Resources["ViewModelLocator"] as ViewModelLocator;
-            this.activeViewModel = viewModelLocator.FilePropertiesViewModel;
             this.openConfigFlyout = new RelayCommand(() => OpenFlyout());
         }
 

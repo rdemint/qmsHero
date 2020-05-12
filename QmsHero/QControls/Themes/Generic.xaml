@@ -20,7 +20,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:QCheckTextBox}">
-                    <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            
+                        </Grid.RowDefinitions>
                         <CheckBox
                             Name="myCheckTextBox"
                             IsChecked="{Binding Path=QIsValid, RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -35,7 +43,7 @@
                             UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="{Binding ElementName=myCheckTextBox, Path=IsChecked}"
                             />
-                    </StackPanel>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

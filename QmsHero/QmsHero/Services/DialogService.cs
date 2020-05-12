@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace QmsHero.Services
 {
     
-    internal interface IAsyncDialogService
+    public interface IAsyncDialogService
     {
         Task<MessageDialogResult> AskQuestionAsync(string title, string message);
         Task<ProgressDialogController> ShowProgressAsync(string title, string message);
