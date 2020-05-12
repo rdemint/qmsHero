@@ -47,7 +47,10 @@ namespace QmsDocXml.Common.PropertyGroups
 
         public override QDocPropertyCollection ToCollection(bool filter = true)
         {
+            if(this.headerRevision.State != null)
+            {
             SetFileRevision(this.headerRevision.State.ToString());
+            }
             return base.ToCollection(filter);
         }
     }

@@ -26,6 +26,7 @@ using System.Text.RegularExpressions;
 using System.IO.Packaging;
 using System.Globalization;
 using FluentResults;
+using System.Drawing;
 
 namespace QmsDocXml
 {
@@ -147,6 +148,15 @@ namespace QmsDocXml
             //https://stackoverflow.com/questions/43320452/removing-images-in-header-with-openxml-sdk
 
             FileInfo imageFile = new FileInfo((string)this.State);
+            if(!imageFile.Exists)
+            {
+                return Results.Fail("The image does not exist.");
+            }
+            
+            if(imageFile.Extension != ".jpg" || imageFile.Extension != ".jpeg")
+            {
+                return Results.Fail("The image must be a .jpg or .jpeg type.");
+            }
 
             DocumentFormat.OpenXml.Wordprocessing.TableCell cell = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
             Paragraph cellPar = cell.Descendants<Paragraph>().First();
@@ -172,15 +182,27 @@ namespace QmsDocXml
                 string imageId = mainPart.HeaderParts.First().GetIdOfPart(imagePart);
                 ImageXml.Add(doc, imageId, cellPar, imageFile);
             }
-
             return Results.Ok<QDocProperty>(new HeaderLogo(this.State, 1));
+
+
         }
 
         public override Result<QDocProperty> Write(SpreadsheetDocument doc, ExcelDocConfig config)
         {
 
             FileInfo imageFile = new FileInfo(this.State.ToString());
-            
+
+            if (!imageFile.Exists)
+            {
+                return Results.Fail("The image does not exist.");
+            }
+
+            if (imageFile.Extension != ".jpg" || imageFile.Extension != ".jpeg")
+            {
+                return Results.Fail("The image must be a .jpg or .jpeg type.");
+            }
+
+
             var workSheetPart = doc.WorkbookPart.WorksheetParts.First();
             var vmlParts = workSheetPart.VmlDrawingParts;
             if(!vmlParts.Any())

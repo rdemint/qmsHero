@@ -28,7 +28,7 @@ namespace QmsHero.ViewModel
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
             
             //TestData
-            this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Test\\Reference\\qaladder_logo.jpg";
+            this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\logo_DotCup.png";
             //
         }
 
