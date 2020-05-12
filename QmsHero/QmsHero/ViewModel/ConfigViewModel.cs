@@ -16,6 +16,8 @@ namespace QmsHero.ViewModel
     {
         string referenceDirPath;
         string processingDirPath;
+        int processingFilesCount;
+        int referenceFilesCount;
         DocManager manager;
         string viewDisplayName;
         public ConfigViewModel()
@@ -37,7 +39,7 @@ namespace QmsHero.ViewModel
                 );
 
                 //this.manager = ServiceLocator.Current.GetInstance<DocManager>();
-                manager.FileManager.SetReferenceDir(value);
+               this.ReferenceFilesCount = manager.FileManager.SetReferenceDir(value);
             }
         }
         public string ProcessingDirPath
@@ -49,10 +51,19 @@ namespace QmsHero.ViewModel
                     () => ProcessingDirPath, ref processingDirPath, value
                 );
                 //this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-                manager.FileManager.SetProcessingDir(value);
+                this.ProcessingFilesCount = manager.FileManager.SetProcessingDir(value);
             }
 
         }
+
+        public int ProcessingFilesCount
+        {
+            get => processingFilesCount;
+            set { Set<int>(()=> ProcessingFilesCount, ref processingFilesCount, value); }
+        }
+        public int ReferenceFilesCount { 
+            get => referenceFilesCount;
+            set { Set<int>(() => ReferenceFilesCount, ref referenceFilesCount, value); } }
 
         public bool ProcessingDirIsValid()
         {

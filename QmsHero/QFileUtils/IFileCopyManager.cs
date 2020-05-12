@@ -13,13 +13,13 @@ namespace QFileUtil
         FileInfo CopyToProcessingDir(FileInfo file);
         int CleanProcessingDir();
 
-        void SetProcessingDir(string path);
-        void SetProcessingDir(DirectoryInfo dir);
-        void SetReferenceDir(string path);
-        void SetReferenceDir(DirectoryInfo dir);
+        int SetProcessingDir(string path);
+        int SetProcessingDir(DirectoryInfo dir);
+        int SetReferenceDir(string path);
+        int SetReferenceDir(DirectoryInfo dir);
         bool ProcessingDirIsClean();
         bool ReferenceDirAndProcessingDirAreNotNullandExist();
 
-        int UpdateFiles();
+        int UpdateProcessingDirFilesIfNecessary();
     }
 }

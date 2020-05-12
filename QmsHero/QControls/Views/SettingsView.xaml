@@ -16,6 +16,22 @@
         </UserControl.Resources>
     <StackPanel>
         <controls:QFolderPicker QDisplay="Project Directory" QOutput="{Binding Path=ReferenceDirPath}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Files: "/>
+            <TextBlock Grid.Column="1" Text="{Binding Path=ReferenceFilesCount}"/>
+        </Grid>
         <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Files: "/>
+            <TextBlock Grid.Column="1" Text="{Binding Path=ProcessingFilesCount}"/>
+        </Grid>
     </StackPanel>    
 </UserControl>

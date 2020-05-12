@@ -46,21 +46,28 @@ namespace QFileUtil
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 
         
-        public virtual int UpdateFiles()
+        public virtual int UpdateProcessingDirFilesIfNecessary()
         {
-            if (ReferenceDirAndProcessingDirAreNotNullandExist())
-            {
-              var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                if (refFiles.Any())
-                {
-                    referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-                }
 
-                return referenceFiles.Count + processingFiles.Count;
+            if (
+                ReferenceDirAndProcessingDirAreNotNullandExist() &&
+                referenceDir.FullName != processingDir.FullName &&
+                referenceFiles.Count > 0
+                )
+                {
+                    CleanProcessingDir();
+                    FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
+                    var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    //referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+
+                return processingFiles.Count;
+                }
+            else
+            {
+                return -1;
             }
 
-            return -1;
 
         }
        
@@ -69,44 +76,46 @@ namespace QFileUtil
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {
             FileInfo fileCopy = FileUtil.FileCopy(file, ProcessingDir, true);
-            UpdateFiles();
+            UpdateProcessingDirFilesIfNecessary();
             return fileCopy;
         }
         
         
-        public void SetReferenceDir(string path)
+        public int SetReferenceDir(string path)
         {
             var dir = new DirectoryInfo(path);
-            SetReferenceDir(dir);
+            return SetReferenceDir(dir);
+
         }
 
-        public void SetReferenceDir(DirectoryInfo dir)
+        public int SetReferenceDir(DirectoryInfo dir)
         {
             this.referenceDir = dir;
-            if (ReferenceDirAndProcessingDirAreNotNullandExist())
-            {
-                CleanProcessingDir();
-                FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
-                UpdateFiles();
-            }
+            this.referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+            
+                UpdateProcessingDirFilesIfNecessary();
+        
+            return this.ReferenceFiles.Count;
         }
 
-        public void SetProcessingDir(string path)
+
+        public int SetProcessingDir(string path)
         {
             var dir = new DirectoryInfo(path);
-            SetProcessingDir(dir);
+            return SetProcessingDir(dir);
         }
 
-        public void SetProcessingDir(DirectoryInfo dir)
+        public int SetProcessingDir(DirectoryInfo dir)
         {
             this.processingDir = dir;
             if (ReferenceDirAndProcessingDirAreNotNullandExist())
             {
                 CleanProcessingDir();
                 FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
-                UpdateFiles();
+                UpdateProcessingDirFilesIfNecessary();
             }
-            UpdateFiles();
+            UpdateProcessingDirFilesIfNecessary();
+            return this.ProcessingFiles.Count;
         }
         
         public virtual bool ReferenceDirAndProcessingDirAreNotNullandExist()
