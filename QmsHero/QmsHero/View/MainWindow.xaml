@@ -10,6 +10,7 @@
     xmlns:view="clr-namespace:QmsHero.View"
     xmlns:vm="clr-namespace:QmsHero.ViewModel"
     xmlns:controls="clr-namespace:QControls;assembly=QControls"
+    xmlns:controlViews="clr-namespace:QControls.Views;assembly=QControls"
     mc:Ignorable="d"
     Title="qmsHero" Height="450" Width="800"
     TextElement.FontWeight="Medium"
@@ -45,8 +46,8 @@
                 Header="File Settings"
                 Theme="Accent"
                 >
-                <view:ConfigView DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel}">
-                </view:ConfigView>
+                <controlViews:SettingsView DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ConfigViewModel}">
+                </controlViews:SettingsView>
             </mah:Flyout>
         </mah:FlyoutsControl>
     </mah:MetroWindow.Flyouts>
@@ -67,8 +68,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
             <Expander 
              Padding="5"
@@ -89,20 +90,21 @@
                     <Button Content="Results" Command="{Binding NavToResultsViewModel}"/>
                 </StackPanel>
         </Expander>
-            <Frame
-                NavigationUIVisibility="Hidden"
-                Grid.Column="1"
-                Grid.Row="0"
-                x:Name="MainContentFrame"
-                Content="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.ActiveViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Frame
+                    NavigationUIVisibility="Hidden"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    x:Name="MainContentFrame"
+                    Content="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel.ActiveViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <StatusBar 
            Grid.Row="1"
             Grid.ColumnSpan="2"
-            Height="35"
+            Height="auto"
             >
             <StatusBarItem
            >Processing Results</StatusBarItem>
-            <Separator Style="{StaticResource MetroStatusBarSeparator}"></Separator>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}">
+            </Separator>
             <StatusBarItem>Need to implement this feature</StatusBarItem>
         </StatusBar>
         </Grid>

@@ -10,17 +10,18 @@
       
       Title="FilePropertiesView">
 
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="Change the File properties across the project"/>
+        <StackPanel
+                HorizontalAlignment="Center">
+            <TextBlock 
+                    HorizontalAlignment="Center"
+                    Text="Change the File properties across the project"/>
             <controls:QCheckTextBox QDisplay="Creator" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyCreator.State}"/>
             <controls:QCheckTextBox QDisplay="Company" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyCompany.State}"/>
             <controls:QCheckTextBox QDisplay="Last Modified By" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyLastModifiedBy.State}"/>
             <controls:QCheckTextBox QDisplay="Manager" QOutput="{Binding DocumentPropertyPropertyGroup.DocumentPropertyManager.State}"/>
-                    <Button 
-                        MaxWidth="450"
-                        Command="{Binding ProcessFilesCommand}" Content="Process Files"/>
-                
+            <Button 
+                            MaxWidth="450"
+                            Command="{Binding ProcessFilesCommand}" Content="Process Files"/>
+
         </StackPanel>
-    </Grid>
 </Page>

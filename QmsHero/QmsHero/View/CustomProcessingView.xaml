@@ -6,20 +6,22 @@
       xmlns:local="clr-namespace:QmsHero.View"
       xmlns:core ="clr-namespace:QDoc.Core;assembly=QDoc"
       xmlns:controls ="clr-namespace:QControls;assembly=QControls"
+      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{
             Binding CustomProcessingViewModel, Source={StaticResource ViewModelLocator}}"
       ShowsNavigationUI="False"
       >
+    <Page.Resources>
+        <ResourceDictionary Source="Resources/generic.xaml"/>
+    </Page.Resources>
     <StackPanel
-        Margin="20"
-        Background="AliceBlue">
+        >
         <controls:QCheckFilePicker QDisplay="Logo" QOutput="{Binding Path=HeaderPropertyGroup.HeaderLogo.State}"/>
         <controls:QCheckTextBox QDisplay="Effective Date" QOutput="{Binding Path=HeaderPropertyGroup.HeaderEffectiveDate.State}"/>
         <controls:QCheckTextBox QDisplay="Revision" QOutput="{Binding Path=HeaderPropertyGroup.HeaderRevision.State}"/>
         <Button 
-            Style="{StaticResource ChromelessButtonStyle}"
             Command="{Binding ProcessFilesCommand}" 
             Content="Process Files"/>
     </StackPanel>

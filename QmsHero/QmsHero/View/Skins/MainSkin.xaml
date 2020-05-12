@@ -5,4 +5,8 @@
     </Color>
     <SolidColorBrush x:Key="mainBlueBrush"
  Color="{StaticResource mainBlue}" />
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="MinWidth" Value="200"/>
+    </Style>
 </ResourceDictionary>

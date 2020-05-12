@@ -11,46 +11,77 @@
       Title="QuickActionsView">
 
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="Perform common replacements throughout your project templates."/>
+        <TextBlock 
+            HorizontalAlignment="Center"
+            Text="Perform common replacements throughout your project templates."/>
         <mah:MetroAnimatedTabControl
+            HorizontalAlignment="Center"
             mah:TabControlHelper.IsUnderlined="True"
             mah:TabControlHelper.Transition="Default"
             >
             <TabItem Header="Doc Name">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
-                    <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding CurrentDocumentName}"/>
-                    <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding NewDocumentName}"/>
-                    <Button Command="{Binding ProcessFileNameCommand}"  Content="Replace"/>
-                    <Button Command="{Binding InspectFileNameCommand}" Content="Inspect"/>
-                </StackPanel>
+                <GroupBox>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Rename a document throughout the project, or inspect that the Header Name and File Name match."/>
+                        <controls:QCheckTextBox QDisplay="Current Document Name" QOutput="{Binding CurrentDocumentName}"/>
+                        <controls:QCheckTextBox QDisplay="New Document Name" QOutput="{Binding NewDocumentName}"/>
+                        <Button 
+                            HorizontalAlignment="Center"
+                            MaxWidth="200"
+                            Command="{Binding ProcessFileNameCommand}"  Content="Replace"/>
+                        <Button 
+                            HorizontalAlignment="Center"
+                            MaxWidth="200"
+                            Command="{Binding InspectFileNameCommand}" Content="Inspect"/>
+                    </StackPanel>
+                </GroupBox>
             </TabItem>
             <TabItem Header="Doc Number">
-                <StackPanel>
-                    <TextBlock Text="Renumber a document throughout the project, or renumber all documents with the same '-DDD' pattern."/>
-                    <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileNumber}"/>
-                    <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileNumber}"/>
-                    <Button Command="{Binding ProcessFileNumberCommand}"  Content="Replace"/>
-                    <Button Command="{Binding InspectFileNumberCommand}" Content="Inspect"/>
-                </StackPanel>
+                <GroupBox>
+                    <StackPanel>
+                        <TextBlock Text="Renumber a document throughout the project, or renumber all documents with the same '-DDD' pattern."/>
+                        <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileNumber}"/>
+                        <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileNumber}"/>
+                        <Button 
+                            HorizontalAlignment="Center"
+                            MaxWidth="200"
+                            Command="{Binding ProcessFileNumberCommand}"  Content="Replace"/>
+                        <Button 
+                            HorizontalAlignment="Center"
+                            MaxWidth="200"
+                            Command="{Binding InspectFileNumberCommand}" Content="Inspect"/>
+                    </StackPanel>
+                </GroupBox>
             </TabItem>
             <TabItem Header="Doc Revision">
-                <StackPanel>
-                    <TextBlock Text="Inspect that the Revisions of the file and within the document match, or change the revision across the project."/>
-                    <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileRevision}"/>
-                    <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileRevision}"/>
-                    <Button Command="{Binding ProcessFileRevisionCommand}"  Content="Replace"/>
-                    <Button Command="{Binding InspectFileRevisionCommand}" Content="Inspect"/>
-                </StackPanel>
+                <GroupBox>
+                    <StackPanel>
+                        <TextBlock Text="Inspect that the Revisions of the file and within the document match, or change the revision across the project."/>
+                        <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileRevision}"/>
+                        <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileRevision}"/>
+                        <Button 
+                            HorizontalAlignment="Center"
+                            MaxWidth="200"
+                            Command="{Binding ProcessFileRevisionCommand}"  Content="Replace"/>
+                        <Button 
+                            HorizontalAlignment="Center"
+                            MaxWidth="200"
+                            Command="{Binding InspectFileRevisionCommand}" Content="Inspect"/>
+                    </StackPanel>
+                </GroupBox>
             </TabItem>
             <TabItem Header="Doc Text">
-                <StackPanel>
-                    <TextBlock Text="Inspect for instances of text across or project, replacing it as desired.  Careful!"/>
-                    <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileText}"/>
-                    <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileText}"/>
-                    <Button Command="{Binding ProcessFileTextCommand}"  Content="Replace"/>
-                    <Button Command="{Binding InspectFileTextCommand}" Content="Inspect"/>
-                </StackPanel>
+                <GroupBox>
+                    <StackPanel>
+                        <TextBlock Text="Inspect for instances of text across or project, replacing it as desired.  Careful!"/>
+                        <controls:QCheckTextBox QDisplay="Current Number / Pattern" QOutput="{Binding CurrentFileText}"/>
+                        <controls:QCheckTextBox QDisplay="New Number / Pattern" QOutput="{Binding NewFileText}"/>
+                        <Button 
+                            Command="{Binding ProcessFileTextCommand}"  Content="Replace"/>
+                        <Button 
+                            Command="{Binding InspectFileTextCommand}" Content="Inspect"/>
+                    </StackPanel>
+                </GroupBox>
             </TabItem>
         </mah:MetroAnimatedTabControl>
     </StackPanel>
