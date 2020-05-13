@@ -32,7 +32,7 @@ namespace QmsHero.ViewModel
                 ()=>CanProcessFiles() == true);
             
             //TestData
-            this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS\\logo_DotCup.jpg";
+            this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS\\DotLogoFinal.png";
             //
         }
 
