@@ -49,7 +49,7 @@ namespace QFileUtil
             get => referenceDir;
             set
             {
-                SetReferenceDir(value);
+                referenceDir=value;
                 OnPropertyChanged();
             }
 
@@ -62,7 +62,7 @@ namespace QFileUtil
             get => processingDir;
             set
             {
-                SetProcessingDir(value);
+                processingDir =value;
                 OnPropertyChanged();
             }
             }
@@ -114,7 +114,11 @@ namespace QFileUtil
 
         public Result<int> SetReferenceDir(DirectoryInfo dir)
         {
-            this.referenceDir = dir;
+            this.ReferenceDir = dir;
+            if(!referenceDir.Exists)
+            {
+                return Results.Fail(new Error("The Directory does not exist").CausedBy(new DirectoryDoesNotExistResultError()));
+            }
             this.referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
             UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             return Results.Ok<int>(referenceFiles.Count);
@@ -129,7 +133,7 @@ namespace QFileUtil
 
         public Result<int> SetProcessingDir(DirectoryInfo dir)
         {
-            this.processingDir = dir;
+            this.ProcessingDir = dir;
             return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
         }
 

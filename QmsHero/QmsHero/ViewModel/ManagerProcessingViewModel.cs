@@ -41,7 +41,7 @@ namespace QmsHero.ViewModel
                 await dialogService.ShowMessageAsync("Something is not right...", "No documents were processed.  Please check your directories settings and files.");
             }
             
-            if(docCollection.HasErrors())
+            else if(docCollection.HasErrors())
             {
                 await dialogService.ShowMessageAsync(
                     "Something is not right...",
