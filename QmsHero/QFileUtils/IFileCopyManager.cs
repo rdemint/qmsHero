@@ -21,6 +21,7 @@ namespace QFileUtil
         bool ProcessingDirIsClean();
         bool ReferenceDirAndProcessingDirAreNotNullandExist();
 
-        Result<int> UpdateProcessingDirFilesIfNecessary();
+        Result<int> UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
+        bool CreateProcessingDirThatDoesNotExist();
     }
 }

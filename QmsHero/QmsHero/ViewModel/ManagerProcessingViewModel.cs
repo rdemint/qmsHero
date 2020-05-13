@@ -44,7 +44,6 @@ namespace QmsHero.ViewModel
             {
                 await dialogService.ShowMessageAsync($"Finished processing {docCollection.Count} documents.", "No errors identified");
             }
-            //MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
 
         }
     }

@@ -10,6 +10,11 @@ using QmsDoc.Core;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
 using QmsHero.Services;
+using System.Security.AccessControl;
+using System.IO;
+using QFileUtil.Exceptions;
+using FluentResults;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace QmsHero.ViewModel
 {
@@ -37,11 +42,19 @@ namespace QmsHero.ViewModel
             get => referenceDirPath;
             set
             {
-                Set<string>(
+               var countResult = manager.FileManager.SetReferenceDir(value);
+                if(countResult.IsSuccess)
+                {
+                    this.ReferenceFilesCount = countResult.Value;
+                    Set<string>(
                     () => ReferenceDirPath, ref referenceDirPath, value
                 );
-
-               this.ReferenceFilesCount = manager.FileManager.SetReferenceDir(value);
+                }
+                else
+                {
+                    this.dialogService.ShowMessageAsync(
+                        $"Error in setting the Reference Directory to {value}", $"{countResult.Errors.ToString()}");
+                }
             }
         }
         public string ProcessingDirPath
@@ -49,12 +62,42 @@ namespace QmsHero.ViewModel
             get => processingDirPath;
             set
             {
-                Set<string>(
+                var countResult = manager.FileManager.SetProcessingDir(value);
+                if(countResult.IsSuccess)
+                {
+                    this.ProcessingFilesCount = countResult.Value;
+                    Set<string>(
                     () => ProcessingDirPath, ref processingDirPath, value
                 );
-                this.ProcessingFilesCount = manager.FileManager.SetProcessingDir(value);
+                }
+                else
+                {
+                    EvaluateDirErrorsResult(countResult, value);
+                }
             }
 
+        }
+
+        private  async void EvaluateDirErrorsResult(Result<int> countResult, string newDirPath)
+        {
+            if (countResult.HasError<DirectoryDoesNotExistResultError>())
+            {
+                var resultEnum = await dialogService.AskQuestionAsync(
+                    $"Create Directory?", 
+                    $"The directory at {newDirPath} does not exist, would you like to create it?"
+                    );
+                if(resultEnum == MessageDialogResult.Affirmative)
+                {
+                    manager.FileManager.CreateProcessingDirThatDoesNotExist();
+                }
+
+            }
+
+            else
+            {
+                await this.dialogService.ShowMessageAsync(
+                    $"Error in setting the Reference Directory to {newDirPath}", $"{countResult.Errors.ToString()}");
+            }
         }
 
         public int ProcessingFilesCount

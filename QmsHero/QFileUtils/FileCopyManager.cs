@@ -9,6 +9,7 @@ using DirectoryInfo = System.IO.DirectoryInfo;
 using FileInfo = System.IO.FileInfo;
 using QFileUtil.Exceptions;
 using FluentResults;
+using System.Diagnostics;
 
 namespace QFileUtil
 {
@@ -47,14 +48,16 @@ namespace QFileUtil
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 
         
-        public virtual Result<int> UpdateProcessingDirFilesIfNecessary()
+        public virtual Result<int> UpdateProcessingDirFilesIfNecessaryAndGetResultCount()
         {
             //Copies the References files to the ProcessingFiles, or resets ProcessingFiles as needed
             if (processingDir != null && !processingDir.Exists)
             {
                 processingFiles = new List<FileInfo>();
-                return Results.Ok<int>(0);
+                return Results.Fail(new Error($"The directory at {processingDir.FullName} does not exist.")
+                    .CausedBy(new DirectoryNotFoundException()));
             }
+
             if (
                 ReferenceDirAndProcessingDirAreNotNullandExist() &&
                 referenceDir.FullName != processingDir.FullName &&
@@ -65,10 +68,8 @@ namespace QFileUtil
                     FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
                     var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                     processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-
-                return processingFiles.Count;
                 }
-            return processingFiles.Count;
+            return Results.Ok<int>(processingFiles.Count);
 
 
         }
@@ -78,7 +79,7 @@ namespace QFileUtil
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {
             FileInfo fileCopy = FileUtil.FileCopy(file, ProcessingDir, true);
-            UpdateProcessingDirFilesIfNecessary();
+            UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             return fileCopy;
         }
         
@@ -94,10 +95,8 @@ namespace QFileUtil
         {
             this.referenceDir = dir;
             this.referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-            
-                UpdateProcessingDirFilesIfNecessary();
-        
-            return this.ReferenceFiles.Count;
+            UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
+            return Results.Ok<int>(referenceFiles.Count);
         }
 
 
@@ -110,8 +109,7 @@ namespace QFileUtil
         public Result<int> SetProcessingDir(DirectoryInfo dir)
         {
             this.processingDir = dir;
-            UpdateProcessingDirFilesIfNecessary();
-            return this.ProcessingFiles.Count;
+            return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
         }
 
         public bool CreateProcessingDirThatDoesNotExist()
