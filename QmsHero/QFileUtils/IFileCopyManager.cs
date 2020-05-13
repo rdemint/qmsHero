@@ -6,8 +6,8 @@ namespace QFileUtil
 {
     public interface IFileCopyManager
     {
-        DirectoryInfo ProcessingDir { get; }
-        DirectoryInfo ReferenceDir { get; }
+        DirectoryInfo ProcessingDir { get; set;  }
+        DirectoryInfo ReferenceDir { get; set; }
         List<FileInfo> ProcessingFiles { get; }
         List<FileInfo> ReferenceFiles { get; }
 
@@ -23,5 +23,6 @@ namespace QFileUtil
 
         Result<int> UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
         Result<int> CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
+        Result<int> MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix();
     }
 }

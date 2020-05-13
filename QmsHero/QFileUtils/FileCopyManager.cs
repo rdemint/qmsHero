@@ -10,10 +10,11 @@ using FileInfo = System.IO.FileInfo;
 using QFileUtil.Exceptions;
 using FluentResults;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace QFileUtil
 {
-    public class FileCopyManager : IFileCopyManager
+    public class FileCopyManager : INotifyPropertyChanged, IFileCopyManager
     {
         //Provids blueprint functionality to create and clean a Fixture directory
         //within the current or specified directory.
@@ -22,6 +23,14 @@ namespace QFileUtil
         DirectoryInfo referenceDir;
         List<FileInfo> referenceFiles;
         List<FileInfo> processingFiles;
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
         public FileCopyManager()
         {
@@ -38,12 +47,24 @@ namespace QFileUtil
          public DirectoryInfo ReferenceDir
         {
             get => referenceDir;
+            set
+            {
+                SetReferenceDir(value);
+                OnPropertyChanged();
+            }
 
         }
-        public List<FileInfo> ReferenceFiles { get => referenceFiles;}
+        public List<FileInfo> ReferenceFiles { 
+            get => referenceFiles;
+        }
     
         public DirectoryInfo ProcessingDir { 
             get => processingDir;
+            set
+            {
+                SetProcessingDir(value);
+                OnPropertyChanged();
+            }
             }
         public List<FileInfo> ProcessingFiles { get => processingFiles; }
 

@@ -53,7 +53,7 @@ namespace QmsHero.ViewModel
                     $"Finished processing {docCollection.Count} documents. with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
                 if(dialogResult == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
                 {
-
+                    manager.FileManager.MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix();
                 }
             }
 
