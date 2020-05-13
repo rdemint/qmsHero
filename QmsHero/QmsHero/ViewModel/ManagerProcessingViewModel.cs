@@ -30,9 +30,12 @@ namespace QmsHero.ViewModel
 
         }
 
-        public void Inspect(QDocActionManager actionManager)
+        public async void Inspect(QDocActionManager actionManager)
         {
-            throw new NotImplementedException();
+            var controller = await dialogService.ShowProgressAsync("In Progress", "Processing Files");
+            var docCollection = this.manager.Inspect(actionManager);
+            await controller.CloseAsync();
+            ProcessBase(docCollection);
         }
 
         public async void Process(QDocActionManager actionManager)
@@ -40,7 +43,33 @@ namespace QmsHero.ViewModel
             var controller = await dialogService.ShowProgressAsync("In Progress", "Processing Files...");
             var docCollection = this.manager.Process(actionManager);
             await controller.CloseAsync();
-            ProcessBase(docCollection);
+            InspectBase(docCollection);
+        }
+
+        private async void InspectBase(DocCollection docCollection)
+        {
+            int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
+            resultsViewModel.DocCollection = docCollection;
+
+            if (docCollection.Count == 0)
+            {
+                await dialogService.ShowMessageAsync("Something is not right...", "No documents were inspected.  Please check your directories settings and files.");
+            }
+
+            else if (docCollection.HasErrors())
+            {
+                await dialogService.ShowMessageAsync(
+                    "Something is not right...",
+                    $"Finished inspecting {docCollection.Count} documents with {docCollection.CountErrors()} errors. Please review the results for details.");
+            }
+            else
+            {
+                await dialogService.ShowMessageAsync(
+                    "Success.",
+                    $"Finished inspecting {docCollection.Count} documents with no errors.");
+            }
+
+
         }
 
         public void Inspect(QDocPropertyCollection docPropertyCollection)
@@ -77,7 +106,7 @@ namespace QmsHero.ViewModel
             else
             {
                 var dialogResult = await dialogService.AskQuestionAsync(
-                    $"Finished processing {docCollection.Count} documents with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
+                    $"Success.  Finished processing {docCollection.Count} documents with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
                 if (dialogResult == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
                 {
                     var configViewModel = SimpleIoc.Default.GetInstance<ConfigViewModel>();

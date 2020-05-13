@@ -37,6 +37,9 @@ namespace QmsHero.ViewModel
         string currentFileText;
         string newFileText;
 
+        string numberNamePatternText;
+        RelayCommand processNumberNamePatternCommand;
+
         string referenceDirPath;
         string processingDirPath;
         ResultsViewModel resultsViewModel;
@@ -47,6 +50,10 @@ namespace QmsHero.ViewModel
             this.Manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.resultsViewModel = SimpleIoc.Default.GetInstance<ResultsViewModel>();
 
+            this.processNumberNamePatternCommand = new RelayCommand(
+                () => InspectNumberName()
+                );
+            
             this.inspectFileNameCommand = new RelayCommand(
                     () => InspectFilesName(),
                     () => CanInspectFiles()
@@ -163,6 +170,16 @@ namespace QmsHero.ViewModel
         public string NewFileNumber { get => newFileNumber; set { Set<string>(() => NewFileNumber, ref newFileNumber, value); }}
         public string CurrentFileText { get => currentFileText; set { Set<string>(() => CurrentFileText, ref currentFileText, value); }}
         public string NewFileText { get => newFileText; set { Set<string>(() => NewFileText, ref newFileText, value);} }
+        public string NumberNamePatternText { 
+            get => numberNamePatternText;
+            set { Set<string>(() => NumberNamePatternText, ref numberNamePatternText, value); } }
+
+        public RelayCommand ProcessNumberNamePatternCommand { get => processNumberNamePatternCommand; set => processNumberNamePatternCommand = value; }
+
+        private void InspectNumberName()
+        {
+            InspectFiles(new MustContainDocNameLetterPatternActionManager(numberNamePatternText));
+        }
 
         private void InspectFilesName()
         {

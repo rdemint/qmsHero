@@ -75,6 +75,16 @@
                     </StackPanel>
                 </GroupBox>
             </TabItem>
+            <TabItem Header="Special">
+                <GroupBox>
+                    <StackPanel>
+                        <TextBlock Text="Inspect for instances of mis-named procedures in the 'SOP-### abc' or 'F-###a abc' pattern. Inspect only."/>
+                        <controls:QCheckTextBox QDisplay="Correct Number / Pattern" QOutput="{Binding NumberNamePatternText}"/>
+                        <Button 
+                            Command="{Binding ProcessNumberNamePatternCommand}" Content="Inspect"/>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
         </mah:MetroAnimatedTabControl>
     </StackPanel>
 </Page>

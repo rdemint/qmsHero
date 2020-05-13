@@ -26,9 +26,9 @@ namespace QDoc.Docs
         {
             this.FileRevisionText = "Rev";
             this.FileSopNumberRegex = new Regex(@"SOP-\d\d\d");
-            this.FileSopNumberAndFirstThreeLettersRegex = new Regex(@"SOP-\d\d\d\s\w\w\w");
+            this.FileSopNumberAndFirstThreeLettersRegex = new Regex(@"SOP-\d\d\d,?\s\w\w\w");
             this.FileFormNumberRegex = new Regex(@"F-\d\d\d\w");
-            this.FileFormNumberAndFirstThreeLettersNameRegex = new Regex(@"F-\d\d\d\w\s\w\w\w");
+            this.FileFormNumberAndFirstThreeLettersNameRegex = new Regex(@"F-\d\d\d,?\s\w\w\w");
             this.FileNumberRegex = new Regex(@"-\d\d\d");
             this.LastModifiedByText = "Lean RAQA Systems";
             this.CreatorText = "Lean RAQA Systems";

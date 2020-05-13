@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace QmsDocXml.QDocActionManagers
 {
-    class MustContainDocNameLetterPatternActionManager : QDocActionManager
+    public class MustContainDocNameLetterPatternActionManager : QDocActionManager
     {
         public MustContainDocNameLetterPatternActionManager()
         {
