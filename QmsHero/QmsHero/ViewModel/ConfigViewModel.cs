@@ -115,6 +115,7 @@ namespace QmsHero.ViewModel
                     var updatedResult = manager.FileManager.CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
                     if(updatedResult.IsSuccess)
                     {
+                        this.ProcessingDirPath = newDirPath;
                         this.ProcessingFilesCount = updatedResult.Value;
                     }
                 }

@@ -75,8 +75,10 @@ namespace QFileUtil
                 processingDir =value;
                 if(processingDir.Exists)
                 {
+                    
                     processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                     OnPropertyChanged("ProcessingFiles");
+                    CopyReferenceToProcessingIfPossible();
 
                 }
                 OnPropertyChanged("ProcessingDir");
@@ -122,8 +124,7 @@ namespace QFileUtil
             if (
                 ReferenceDirAndProcessingDirAreNotNullandExist() &&
                 referenceDir.FullName != processingDir.FullName &&
-                referenceFiles.Count > 0 && 
-                referenceFiles.Count != processingFiles.Count
+                referenceFiles.Count > 0 
                 )
                 {
                     CleanProcessingDir();
@@ -159,7 +160,7 @@ namespace QFileUtil
             {
                 return Results.Fail(new Error("The Directory does not exist").CausedBy(new DirectoryDoesNotExistResultError()));
             }
-            CopyReferenceToProcessingIfPossible();
+                CopyReferenceToProcessingIfPossible();
             return Results.Ok<int>(ReferenceDir.GetFiles("*", SearchOption.AllDirectories).ToList().Count);
         }
 
@@ -173,7 +174,7 @@ namespace QFileUtil
         public Result<int> SetProcessingDir(DirectoryInfo dir)
         {
            ProcessingDir = dir;
-            CopyReferenceToProcessingIfPossible();
+                CopyReferenceToProcessingIfPossible();
             if(ProcessingDir.Exists)
             {
                 return Results.Ok<int>(ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList().Count());
@@ -189,6 +190,7 @@ namespace QFileUtil
             if(!processingDir.Exists)
             {
                 processingDir.Create();
+                ProcessingDir = new DirectoryInfo(processingDir.FullName);
                 return CopyReferenceToProcessingIfPossible();
             }
             else
@@ -201,6 +203,7 @@ namespace QFileUtil
         public Result<int> MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix()
         {
             var oldProcessingDirPath = processingDir.FullName;
+            var tempDir = new DirectoryInfo(Path.Combine(referenceDir.FullName, "_temp"));
             var newDirName = processingDir.Name + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
             var newDirPath = Path.Combine(processingDir.Parent.FullName, newDirName);
             SetProcessingDir(newDirPath);

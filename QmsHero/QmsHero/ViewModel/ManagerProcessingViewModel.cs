@@ -82,8 +82,8 @@ namespace QmsHero.ViewModel
                 {
                     var configViewModel = SimpleIoc.Default.GetInstance<ConfigViewModel>();
                     manager.FileManager.MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix();
-                    configViewModel.ProcessingDirPath = manager.FileManager.ProcessingDir.FullName;
                     configViewModel.ReferenceDirPath = manager.FileManager.ReferenceDir.FullName;
+                    configViewModel.ProcessingDirPath = manager.FileManager.ProcessingDir.FullName;
                 }
             }
         }
