@@ -36,13 +36,25 @@ namespace QmsHero.ViewModel
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;
             await controller.CloseAsync();
+            if(docCollection.Count == 0)
+            {
+                await dialogService.ShowMessageAsync("Something is not right...", "No documents were processed.  Please check your directories settings and files.");
+            }
+            
             if(docCollection.HasErrors())
             {
-                await dialogService.ShowMessageAsync($"Finished processing {docCollection.Count} documents.", "Errors in processing the documents");
+                await dialogService.ShowMessageAsync(
+                    "Something is not right...",
+                    $"Finished processing {docCollection.Count} documents with {docCollection.CountErrors()} errors. Please review the results for details.");
             }
             else
             {
-                await dialogService.ShowMessageAsync($"Finished processing {docCollection.Count} documents.", "No errors identified");
+                var dialogResult = await dialogService.AskQuestionAsync(
+                    $"Finished processing {docCollection.Count} documents. with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
+                if(dialogResult == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
+                {
+
+                }
             }
 
         }

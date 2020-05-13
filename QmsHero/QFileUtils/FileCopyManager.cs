@@ -124,6 +124,16 @@ namespace QFileUtil
                 return Results.Ok<int>(processingFiles.Count);
             }
         }
+
+        public Result<int> MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix()
+        {
+            SetReferenceDir(processingDir.FullName);
+            var newDirName = processingDir.Name + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
+            var newDirPath = processingDir.Parent.FullName + newDirName;
+            SetProcessingDir(newDirPath);
+            return CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
+
+        }
         
         public virtual bool ReferenceDirAndProcessingDirAreNotNullandExist()
         {

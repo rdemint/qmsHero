@@ -26,6 +26,11 @@ namespace QDoc.Core
         {
             return this.Any(result => result.IsFailed == true);
         }
+        
+        public int CountErrors()
+        {
+            return this.Where(result => result.IsFailed).Count();
+        }
 
         public bool EachItemSharesState()
         {

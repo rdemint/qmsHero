@@ -10,6 +10,10 @@ namespace QDoc.Docs
 {
     public class DocCollection : ObservableCollection<Doc>
     {
+        int errorsCount;
+
+        public int ErrorsCount { get => errorsCount; set => errorsCount = value; }
+
         public DocCollection()
         {
         }
@@ -32,6 +36,19 @@ namespace QDoc.Docs
                 }
             }
             return false;
+        }
+
+        public int CountErrors()
+        {
+            int count = 0;
+            foreach(Doc doc in this)
+            {
+                if(doc.PropertyResultCollection.HasErrors())
+                {
+                    count += doc.PropertyResultCollection.CountErrors();
+                }
+            }
+            return count;
         }
 
         public DocCollection DocumentsWithErrors()
