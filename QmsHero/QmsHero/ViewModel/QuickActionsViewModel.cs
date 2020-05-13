@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 
 namespace QmsHero.ViewModel
 {
-    public class QuickActionsViewModel: ViewModelBase
+    public class QuickActionsViewModel: FileProcessingViewModelBase
     {
         string viewDisplayName;
         DocManager manager;
@@ -113,13 +113,6 @@ namespace QmsHero.ViewModel
 
         public RelayCommand ProcessFileNameCommand {
             get { 
-                if(processFileNameCommand == null)
-                {
-                    processFileNameCommand = new RelayCommand(
-                        () => ProcessFilesName(),
-                        () => CanProcessFiles()
-                        );
-                }
                 return processFileNameCommand;
             }
             set
@@ -147,13 +140,6 @@ namespace QmsHero.ViewModel
         {
             get
             {
-                if (inspectFileNameCommand == null)
-                {
-                    inspectFileNameCommand = new RelayCommand(
-                    () => InspectFilesName(),
-                    () => CanInspectFiles()
-                    );
-                }
                 return inspectFileNameCommand;
             }
             set
@@ -178,17 +164,10 @@ namespace QmsHero.ViewModel
         public string CurrentFileText { get => currentFileText; set { Set<string>(() => CurrentFileText, ref currentFileText, value); }}
         public string NewFileText { get => newFileText; set { Set<string>(() => NewFileText, ref newFileText, value);} }
 
-        private void ConfigManagerDir()
-        {
-            this.manager.FileManager.SetReferenceDir(this.referenceDirPath);
-            this.manager.FileManager.SetProcessingDir(this.processingDirPath);
-        }
-        
         private void InspectFilesName()
         {
-            ConfigManagerDir();
             var docNameManager = new DocNameActionManager(currentDocumentName);
-            ShareResults(this.manager.Inspect(docNameManager));
+            managerProcessingViewModel.Process(docNameManager);
         }
         
         private void ProcessFilesName()

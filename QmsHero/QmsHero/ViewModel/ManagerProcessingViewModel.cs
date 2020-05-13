@@ -2,11 +2,13 @@
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using QDoc.Core;
+using QDoc.Docs;
 using QmsDoc.Core;
 using QmsHero.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,20 +30,37 @@ namespace QmsHero.ViewModel
 
         }
 
+        public async void Process(QDocActionManager actionManager)
+        {
+            var controller = await dialogService.ShowProgressAsync("In Progress", "Processing Files...");
+            var docCollection = this.manager.Process(actionManager);
+            await controller.CloseAsync();
+            ProcessBase(docCollection);
+        }
+
+        
+
         public async void Process(QDocPropertyCollection docPropertyCollection)
         {
 
             var controller = await dialogService.ShowProgressAsync("In Progress", "Processing Files...");
             var docCollection = this.manager.Process(docPropertyCollection);
+            await controller.CloseAsync();
+            ProcessBase(docCollection);
+
+        }
+
+        public async void ProcessBase(DocCollection docCollection)
+        {
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;
-            await controller.CloseAsync();
-            if(docCollection.Count == 0)
+
+            if (docCollection.Count == 0)
             {
                 await dialogService.ShowMessageAsync("Something is not right...", "No documents were processed.  Please check your directories settings and files.");
             }
-            
-            else if(docCollection.HasErrors())
+
+            else if (docCollection.HasErrors())
             {
                 await dialogService.ShowMessageAsync(
                     "Something is not right...",
@@ -51,12 +70,14 @@ namespace QmsHero.ViewModel
             {
                 var dialogResult = await dialogService.AskQuestionAsync(
                     $"Finished processing {docCollection.Count} documents. with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
-                if(dialogResult == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
+                if (dialogResult == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
                 {
+                    var configViewModel = SimpleIoc.Default.GetInstance<ConfigViewModel>();
                     manager.FileManager.MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix();
+                    configViewModel.ProcessingDirPath = manager.FileManager.ProcessingDir.FullName;
+                    configViewModel.ReferenceDirPath = manager.FileManager.ReferenceDir.FullName;
                 }
             }
-
         }
     }
 }

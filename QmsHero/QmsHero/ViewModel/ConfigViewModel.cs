@@ -20,8 +20,6 @@ namespace QmsHero.ViewModel
 {
     public class ConfigViewModel : ViewModelBase
     {
-        DirectoryInfo referenceDir;
-        DirectoryInfo processingDir;
         string referenceDirPath;
         string processingDirPath;
         int processingFilesCount;
@@ -36,8 +34,8 @@ namespace QmsHero.ViewModel
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.manager.FileManager.SetReferenceDir("C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS");
             this.manager.FileManager.SetProcessingDir("C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS_Processing1");
-            this.ReferenceDir = manager.FileManager.ReferenceDir;
-            this.ProcessingDir = manager.FileManager.ProcessingDir;
+            ReferenceDirPath = manager.FileManager.ReferenceDir.FullName;
+            ProcessingDirPath = manager.FileManager.ProcessingDir.FullName;
             this.dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
         }
 
@@ -91,19 +89,6 @@ namespace QmsHero.ViewModel
         }
 
 
-        public DirectoryInfo ReferenceDir { 
-            get => referenceDir;
-            set {
-                referenceDir = value;
-                ReferenceDirPath = referenceDir.FullName;
-            } }
-
-        public DirectoryInfo ProcessingDir {
-            get => processingDir;
-            set {
-                processingDir = value;
-                ProcessingDirPath = processingDir.FullName;
-            } }
         private  async void EvaluateDirErrorsResult(Result<int> countResult, string newDirPath)
         {
             if (countResult.HasError<DirectoryDoesNotExistResultError>())

@@ -154,7 +154,7 @@ namespace QFileUtil
         {
             SetReferenceDir(processingDir.FullName);
             var newDirName = processingDir.Name + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
-            var newDirPath = processingDir.Parent.FullName + newDirName;
+            var newDirPath = Path.Combine(processingDir.Parent.FullName, newDirName);
             SetProcessingDir(newDirPath);
             return CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
 
