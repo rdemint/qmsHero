@@ -53,7 +53,12 @@ namespace QmsHero.ViewModel
                         this.ReferenceFilesCount = countResult.Value;
                         Set<string>(
                         () => ReferenceDirPath, ref referenceDirPath, value
-                    );
+                        );
+                        var newDir = new DirectoryInfo(value);
+                        if(newDir.Exists)
+                        {
+                            ReferenceFilesCount = newDir.GetFiles("*", SearchOption.AllDirectories).Count();
+                        }
                     }
                     else
                     {
@@ -77,7 +82,13 @@ namespace QmsHero.ViewModel
                         this.ProcessingFilesCount = countResult.Value;
                         Set<string>(
                         () => ProcessingDirPath, ref processingDirPath, value
-                    );
+                        );
+                        var newDir = new DirectoryInfo(value);
+                        if(newDir.Exists)
+                        {
+                            ProcessingFilesCount = newDir.GetFiles("*", SearchOption.AllDirectories).Count();
+                        }
+
                     }
                     else
                     {

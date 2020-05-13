@@ -61,6 +61,11 @@ namespace QFileUtil
         }
         public List<FileInfo> ReferenceFiles { 
             get => referenceFiles;
+            set
+            {
+                referenceFiles = value;
+                OnPropertyChanged("ReferenceFiles");
+            }
         }
     
         public DirectoryInfo ProcessingDir { 
@@ -78,23 +83,41 @@ namespace QFileUtil
             }
             }
         public List<FileInfo> ProcessingFiles { 
-            get => processingFiles; }
+            get => processingFiles; 
+            set
+            {
+                processingFiles = value;
+                OnPropertyChanged("ProcessingFiles");
+            }
+        }
 
         
-        public virtual Result<int> UpdateProcessingDirFilesIfNecessaryAndGetResultCount()
+        public virtual Result<int> UpdateFiles()
+        {
+            if(referenceDir!=null && referenceDir.Exists) {
+                ReferenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+            }
+            if(processingDir!=null && processingDir.Exists) {
+                ProcessingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+            }
+            return Results.Ok<int>(referenceFiles.Count);
+
+        }
+        
+        public virtual Result<int> CopyReferenceToProcessingIfPossible()
         {
             //Copies the References files to the ProcessingFiles, or resets ProcessingFiles as needed
-            if (processingDir != null && !processingDir.Exists)
-            {
-                processingFiles = new List<FileInfo>();
-                return Results.Fail(new Error($"The directory at {processingDir.FullName} does not exist.")
-                    .CausedBy(new DirectoryDoesNotExistResultError()));
-            }
+            //if (processingDir != null && !processingDir.Exists)
+            //{
+            //    processingFiles = new List<FileInfo>();
+            //    return Results.Fail(new Error($"The directory at {processingDir.FullName} does not exist.")
+            //        .CausedBy(new DirectoryDoesNotExistResultError()));
+            //}
 
-            if(processingDir != null && processingDir.Exists)
-            {
-                processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-            }
+            //if(processingDir != null && processingDir.Exists)
+            //{
+            //    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+            //}
 
             if (
                 ReferenceDirAndProcessingDirAreNotNullandExist() &&
@@ -105,7 +128,7 @@ namespace QFileUtil
                 {
                     CleanProcessingDir();
                     FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
-                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    ProcessingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                 }
             return Results.Ok<int>(processingFiles.Count);
 
@@ -117,7 +140,7 @@ namespace QFileUtil
         public virtual FileInfo CopyToProcessingDir(FileInfo file)
         {
             FileInfo fileCopy = FileUtil.FileCopy(file, ProcessingDir, true);
-            UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
+            CopyReferenceToProcessingIfPossible();
             return fileCopy;
         }
         
@@ -131,14 +154,13 @@ namespace QFileUtil
 
         public Result<int> SetReferenceDir(DirectoryInfo dir)
         {
-            this.ReferenceDir = dir;
+            ReferenceDir = dir;
             if(!referenceDir.Exists)
             {
                 return Results.Fail(new Error("The Directory does not exist").CausedBy(new DirectoryDoesNotExistResultError()));
             }
-            this.referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
-            UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
-            return Results.Ok<int>(referenceFiles.Count);
+            CopyReferenceToProcessingIfPossible();
+            return Results.Ok<int>(ReferenceDir.GetFiles("*", SearchOption.AllDirectories).ToList().Count);
         }
 
 
@@ -150,8 +172,16 @@ namespace QFileUtil
 
         public Result<int> SetProcessingDir(DirectoryInfo dir)
         {
-            this.ProcessingDir = dir;
-            return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
+           ProcessingDir = dir;
+            CopyReferenceToProcessingIfPossible();
+            if(ProcessingDir.Exists)
+            {
+                return Results.Ok<int>(ProcessingDir.GetFiles("*", SearchOption.AllDirectories).ToList().Count());
+            }
+            else
+            {
+                return Results.Fail(new Error("Directory does not exist").CausedBy(new DirectoryDoesNotExistResultError()));
+            }
         }
 
         public Result<int> CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount()
@@ -159,8 +189,7 @@ namespace QFileUtil
             if(!processingDir.Exists)
             {
                 processingDir.Create();
-                //ProcessingDir = processingDir;
-                return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
+                return CopyReferenceToProcessingIfPossible();
             }
             else
             {
@@ -171,10 +200,11 @@ namespace QFileUtil
 
         public Result<int> MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix()
         {
-            SetReferenceDir(processingDir.FullName);
+            var oldProcessingDirPath = processingDir.FullName;
             var newDirName = processingDir.Name + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
             var newDirPath = Path.Combine(processingDir.Parent.FullName, newDirName);
             SetProcessingDir(newDirPath);
+            SetReferenceDir(oldProcessingDirPath);
             return CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
 
         }

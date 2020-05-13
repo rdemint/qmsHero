@@ -8,8 +8,8 @@ namespace QFileUtil
     {
         DirectoryInfo ProcessingDir { get; set;  }
         DirectoryInfo ReferenceDir { get; set; }
-        List<FileInfo> ProcessingFiles { get; }
-        List<FileInfo> ReferenceFiles { get; }
+        List<FileInfo> ProcessingFiles { get; set; }
+        List<FileInfo> ReferenceFiles { get; set; }
 
         FileInfo CopyToProcessingDir(FileInfo file);
         int CleanProcessingDir();
@@ -21,7 +21,7 @@ namespace QFileUtil
         bool ProcessingDirIsClean();
         bool ReferenceDirAndProcessingDirAreNotNullandExist();
 
-        Result<int> UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
+        Result<int> CopyReferenceToProcessingIfPossible();
         Result<int> CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
         Result<int> MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix();
     }
