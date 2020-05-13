@@ -26,7 +26,7 @@ namespace QFileUtil
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
+        protected void OnPropertyChanged( String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -50,7 +50,12 @@ namespace QFileUtil
             set
             {
                 referenceDir=value;
-                OnPropertyChanged();
+                if(referenceDir.Exists)
+                {
+                    referenceFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    OnPropertyChanged("ReferenceFiles");
+                }
+                OnPropertyChanged("ReferenceDir");
             }
 
         }
@@ -63,10 +68,17 @@ namespace QFileUtil
             set
             {
                 processingDir =value;
-                OnPropertyChanged();
+                if(processingDir.Exists)
+                {
+                    processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+                    OnPropertyChanged("ProcessingFiles");
+
+                }
+                OnPropertyChanged("ProcessingDir");
             }
             }
-        public List<FileInfo> ProcessingFiles { get => processingFiles; }
+        public List<FileInfo> ProcessingFiles { 
+            get => processingFiles; }
 
         
         public virtual Result<int> UpdateProcessingDirFilesIfNecessaryAndGetResultCount()
@@ -79,6 +91,11 @@ namespace QFileUtil
                     .CausedBy(new DirectoryDoesNotExistResultError()));
             }
 
+            if(processingDir != null && processingDir.Exists)
+            {
+                processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
+            }
+
             if (
                 ReferenceDirAndProcessingDirAreNotNullandExist() &&
                 referenceDir.FullName != processingDir.FullName &&
@@ -88,7 +105,6 @@ namespace QFileUtil
                 {
                     CleanProcessingDir();
                     FileUtil.DirectoryCopy(ReferenceDir.FullName, ProcessingDir.FullName, true);
-                    var refFiles = referenceDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                     processingFiles = processingDir.GetFiles("*", SearchOption.AllDirectories).ToList();
                 }
             return Results.Ok<int>(processingFiles.Count);
@@ -143,6 +159,7 @@ namespace QFileUtil
             if(!processingDir.Exists)
             {
                 processingDir.Create();
+                //ProcessingDir = processingDir;
                 return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             }
             else
@@ -150,6 +167,7 @@ namespace QFileUtil
                 return Results.Ok<int>(processingFiles.Count);
             }
         }
+
 
         public Result<int> MakeCurrentProcessingDirTheReferenceDirAndCreateNewProcessingDirWithTimeSuffix()
         {
