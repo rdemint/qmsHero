@@ -28,15 +28,16 @@ namespace QmsHero.ViewModel
         string viewDisplayName;
         IAsyncDialogService dialogService;
 
-        public ConfigViewModel()
+        public ConfigViewModel(IAsyncDialogService asyncDialogService)
         {
+            dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
             this.viewDisplayName = "Configure Project Directories";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
             this.manager.FileManager.SetReferenceDir("C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS");
             this.manager.FileManager.SetProcessingDir("C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS_Processing1");
             ReferenceDirPath = manager.FileManager.ReferenceDir.FullName;
             ProcessingDirPath = manager.FileManager.ProcessingDir.FullName;
-            this.dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
+            //this.dialogService = asyncDialogService;
         }
 
         public string ReferenceDirPath

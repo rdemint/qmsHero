@@ -33,9 +33,8 @@ namespace QmsDoc.Tests.Core
 
             
             DocCollection processedDocs = manager.Process(fileGroup.ToCollection());
-            var docs = manager.ToUnprocessedDocCollection();
-            Assert.IsTrue(docs.Count >= 1);
-            foreach(var doc in manager.ToUnprocessedDocCollection())
+            Assert.IsTrue(processedDocs.Count >= 1);
+            foreach(var doc in processedDocs)
             {
                 var result = doc?.Inspect(new FileRevision());
                 Assert.IsTrue(result.IsSuccess);

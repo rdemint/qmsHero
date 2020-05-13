@@ -82,7 +82,8 @@ namespace QFileUtil
             if (
                 ReferenceDirAndProcessingDirAreNotNullandExist() &&
                 referenceDir.FullName != processingDir.FullName &&
-                referenceFiles.Count > 0
+                referenceFiles.Count > 0 && 
+                referenceFiles.Count != processingFiles.Count
                 )
                 {
                     CleanProcessingDir();

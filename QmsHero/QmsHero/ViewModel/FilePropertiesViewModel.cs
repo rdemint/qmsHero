@@ -16,10 +16,12 @@ namespace QmsHero.ViewModel
     public class FilePropertiesViewModel : FileProcessingViewModelBase
     {
         DocumentPropertyPropertyGroup documentPropertyPropertyGroup;
+        RelayCommand processFilesCommand;
 
         public FilePropertiesViewModel(): base()
         {
             this.documentPropertyPropertyGroup = new DocumentPropertyPropertyGroup();
+            processFilesCommand = new RelayCommand(() => ProcessFiles(documentPropertyPropertyGroup.ToCollection()));
 
             //TestData
             this.DocumentPropertyPropertyGroup.DocumentPropertyCompany.State = "Lean RAQA Systems";
@@ -30,13 +32,6 @@ namespace QmsHero.ViewModel
             //TestData
         }
         public DocumentPropertyPropertyGroup DocumentPropertyPropertyGroup { get => documentPropertyPropertyGroup; set => documentPropertyPropertyGroup = value; }
-
-        protected override void ProcessFiles()
-        {
-            this.managerProcessingViewModel.Process(DocumentPropertyPropertyGroup.ToCollection());
-        }
-
-
-        
+        public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
     }
 }

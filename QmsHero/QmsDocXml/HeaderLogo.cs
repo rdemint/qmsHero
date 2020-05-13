@@ -156,11 +156,6 @@ namespace QmsDocXml
                 return Results.Fail(new Error($"The image at {imageFile.FullName} does not exist."));
             }
             
-            if(imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")
-            {
-                return Results.Fail(new Error("The image must be a .jpg or .jpeg type."));
-            }
-
             var tableCellResult = WordPartHeaderTableCell.Get(doc, docConfig.HeaderLogoRow, docConfig.HeaderLogoCol);
             if(tableCellResult.IsFailed)
             {
@@ -178,7 +173,19 @@ namespace QmsDocXml
             if(drawings.Any())
             {
                 MainDocumentPart mainPart = doc.MainDocumentPart;
-                ImagePart imagePart = mainPart.HeaderParts.First().AddImagePart(ImagePartType.Jpeg);
+                ImagePart imagePart;
+                if(imageFile.Extension == ".jpeg" | imageFile.Extension == ".jpg")
+                {
+                    imagePart = mainPart.HeaderParts.First().AddImagePart(ImagePartType.Jpeg);
+                }
+                else if(imageFile.Extension == ".png")
+                {
+                    imagePart = mainPart.HeaderParts.First().AddImagePart(ImagePartType.Png);
+                }
+                else
+                {
+                    return Results.Fail(new Error($"Image file type {imageFile.Extension} can not be processed."));
+                }
                 //Alternative does not work
                 //ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
                 using (FileStream stream = new FileStream(imageFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -206,10 +213,10 @@ namespace QmsDocXml
                 return Results.Fail($"The image at {imageFile.FullName} does not exist.");
             }
 
-            if (imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")
-            {
-                return Results.Fail("The image must be a .jpg or .jpeg type.");
-            }
+            //if (imageFile.Extension != ".jpg" && imageFile.Extension != ".jpeg")
+            //{
+            //    return Results.Fail("The image must be a .jpg or .jpeg type.");
+            //}
 
 
             foreach (var workSheetPart in doc.WorkbookPart.WorksheetParts) {

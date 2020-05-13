@@ -21,11 +21,15 @@ namespace QmsHero.ViewModel
         string viewDisplayName;
         HeaderPropertyGroup headerPropertyGroup;
         string logoPath;
+        RelayCommand processFilesCommand;
         public CustomProcessingViewModel(): base()
         {
 
             this.viewDisplayName = "Custom";
             this.HeaderPropertyGroup = new HeaderPropertyGroup();
+            processFilesCommand = new RelayCommand(
+                () => ProcessFiles(headerPropertyGroup.ToCollection()), 
+                ()=>CanProcessFiles() == true);
             
             //TestData
             this.HeaderPropertyGroup.HeaderLogo.State = "C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS\\logo_DotCup.jpg";
@@ -33,11 +37,6 @@ namespace QmsHero.ViewModel
         }
 
         
-        protected override void ProcessFiles()
-        {
-            this.managerProcessingViewModel.Process(headerPropertyGroup.ToCollection());
-        }
-
         public HeaderPropertyGroup HeaderPropertyGroup { get => headerPropertyGroup; set => headerPropertyGroup = value; }
         public string LogoPath { 
             get => logoPath;
@@ -46,5 +45,7 @@ namespace QmsHero.ViewModel
                     () => LogoPath, ref logoPath, value
                     );
             } }
+
+        public RelayCommand ProcessFilesCommand { get => processFilesCommand; set => processFilesCommand = value; }
     }
 }

@@ -67,7 +67,7 @@ namespace QmsDocXml.Tests
             {
                 Assert.IsFalse(doc.HasPropertyProcessingErrors());
             }
-            foreach (var doc in manager.ToUnprocessedDocCollection())
+            foreach (var doc in resultDocCollection)
             {
                 var resultInspect = doc.Inspect(new DocumentPropertyCreator());
                 Assert.AreEqual("Lean RAQA Systems", resultInspect.Value.State);

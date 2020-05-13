@@ -47,8 +47,7 @@ namespace QmsHero.ViewModel
                 SimpleIoc.Default.Register<WordDocConfig>();
                 SimpleIoc.Default.Register<ExcelDocConfig>();
 
-            SimpleIoc.Default.Register<IAsyncDialogService, DialogService>();
-            SimpleIoc.Default.Register<MainViewModel>();
+                SimpleIoc.Default.Register<IAsyncDialogService, DialogService>();
 
                 SimpleIoc.Default.Register<ConfigViewModel>();
                 SimpleIoc.Default.Register<CustomProcessingViewModel>();
@@ -56,6 +55,7 @@ namespace QmsHero.ViewModel
                 SimpleIoc.Default.Register<QuickActionsViewModel>();
                 SimpleIoc.Default.Register<FilePropertiesViewModel>();
                 SimpleIoc.Default.Register<ManagerProcessingViewModel>();
+                SimpleIoc.Default.Register<MainViewModel>();
 
                 
             //}

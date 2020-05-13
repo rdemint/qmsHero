@@ -64,7 +64,6 @@ namespace QDoc.Core
             {
                 return Results.Fail(new Error("Could not process file"));
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             return doc;
         }
 
@@ -82,7 +81,6 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             return docCollection;
         }
 
@@ -99,7 +97,6 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             return docCollection;
         }
 
@@ -119,7 +116,6 @@ namespace QDoc.Core
 
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             return docCollection;
         }
 
@@ -136,7 +132,6 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
 
             return docCollection;
         }
@@ -156,7 +151,6 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
 
             return docCollection;
         }
@@ -176,7 +170,6 @@ namespace QDoc.Core
                     docCollection.Add(doc);
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
 
             return docCollection;
         }
@@ -193,8 +186,6 @@ namespace QDoc.Core
                    docs.Add(docResult.Value);
                 }
             }
-            this.fileManager.UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
-
             return docs;
         }
 

@@ -77,7 +77,7 @@ namespace QmsHero.ViewModel
             else
             {
                 var dialogResult = await dialogService.AskQuestionAsync(
-                    $"Finished processing {docCollection.Count} documents. with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
+                    $"Finished processing {docCollection.Count} documents with no errors.", "Would you like to make the results your new project directory, and create a new processing directory?");
                 if (dialogResult == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
                 {
                     var configViewModel = SimpleIoc.Default.GetInstance<ConfigViewModel>();
