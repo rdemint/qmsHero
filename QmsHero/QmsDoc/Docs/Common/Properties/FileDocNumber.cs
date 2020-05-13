@@ -36,15 +36,20 @@ namespace QmsDoc.Docs.Common.Properties
             Match fileMatch;
             string patternToInspectFile = (string)this.state;
             Match isValidFormPatternMatch = config.FileFormNumberRegex.Match(patternToInspectFile);
+
             Match isValidSopPatternMatch = config.FileSopNumberRegex.Match(patternToInspectFile);
             Match isValidNumberPatternMatch = config.FileNumberRegex.Match(patternToInspectFile);
 
+            
+            
             if (isValidFormPatternMatch.Success)
             {
                 fileMatch = config.FileFormNumberRegex.Match(file.Name);
                 return WriteBase(file, fileMatch);
 
             }
+
+            
             else if (isValidSopPatternMatch.Success)
             {
                 fileMatch = config.FileSopNumberRegex.Match(file.Name);

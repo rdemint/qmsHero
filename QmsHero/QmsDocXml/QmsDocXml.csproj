@@ -63,6 +63,7 @@
     <Compile Include="Common\TextXml.cs" />
     <Compile Include="QDocActionManagers\DocNumberActionManager.cs" />
     <Compile Include="QDocActionManagers\DocRevisionActionManager.cs" />
+    <Compile Include="QDocActionManagers\MustContainDocNameLetterPatternActionManager.cs" />
     <Compile Include="QDocActionManagers\TextActionManager.cs" />
     <Compile Include="TextFindReplace.cs" />
     <Compile Include="Common\ImageXml.cs" />

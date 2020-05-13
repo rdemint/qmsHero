@@ -12,5 +12,7 @@ namespace QDoc.Interfaces
         Regex FileNumberRegex { get; set; }
         Regex FileSopNumberRegex { get; set; }
         Regex FileFormNumberRegex { get; set; }
+        Regex FileFormNumberAndFirstThreeLettersNameRegex { get; set; }
+        Regex FileSopNumberAndFirstThreeLettersRegex { get; set; }
     }
 }

@@ -29,13 +29,19 @@ namespace QmsDocXml
         {
         }
 
-        private TextFindReplace(string findPattern) : this()
+        public TextFindReplace(Regex regex): this()
+        {
+            this.regex = regex;
+            this.state = regex.ToString();
+        }
+        
+        public TextFindReplace(string findPattern) : this()
         {
             this.regex = new Regex(findPattern);
             this.state = findPattern;
         }
 
-        private TextFindReplace(string findPattern, int count) : this()
+        public TextFindReplace(string findPattern, int count) : this()
         {
             this.regex = new Regex(findPattern);
             this.state = findPattern;
@@ -54,7 +60,7 @@ namespace QmsDocXml
             this.stateCount = count;
         }
 
-        public TextFindReplace(object state, int stateCount) : base(state, stateCount)
+        private TextFindReplace(object state, int stateCount) : base(state, stateCount)
         {
         }
 
@@ -66,7 +72,7 @@ namespace QmsDocXml
             return new TextFindReplace(findPattern);
         }
 
-        private static TextFindReplace Create(string findPattern, int count)
+        public static TextFindReplace Create(string findPattern, int count)
         {
             return new TextFindReplace(findPattern, count);
         }
