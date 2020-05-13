@@ -30,6 +30,11 @@ namespace QmsHero.ViewModel
 
         }
 
+        public void Inspect(QDocActionManager actionManager)
+        {
+            throw new NotImplementedException();
+        }
+
         public async void Process(QDocActionManager actionManager)
         {
             var controller = await dialogService.ShowProgressAsync("In Progress", "Processing Files...");
@@ -38,7 +43,10 @@ namespace QmsHero.ViewModel
             ProcessBase(docCollection);
         }
 
-        
+        public void Inspect(QDocPropertyCollection docPropertyCollection)
+        {
+            throw new NotImplementedException();
+        }
 
         public async void Process(QDocPropertyCollection docPropertyCollection)
         {
@@ -50,7 +58,7 @@ namespace QmsHero.ViewModel
 
         }
 
-        public async void ProcessBase(DocCollection docCollection)
+        private async void ProcessBase(DocCollection docCollection)
         {
             int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
             resultsViewModel.DocCollection = docCollection;

@@ -150,7 +150,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\DialogService.cs" />
-    <Compile Include="ViewModel\DesignDataViewModel.cs" />
     <Compile Include="ViewModel\ManagerProcessingViewModel.cs" />
     <Compile Include="ViewModel\FileProcessingViewModelBase.cs" />
     <Compile Include="View\FilePropertiesView.xaml.cs">

@@ -167,25 +167,26 @@ namespace QmsHero.ViewModel
         private void InspectFilesName()
         {
             var docNameManager = new DocNameActionManager(currentDocumentName);
-            managerProcessingViewModel.Process(docNameManager);
+            InspectFiles(docNameManager);
         }
+        
         
         private void ProcessFilesName()
         {
             var docNameManager = new DocNameActionManager(currentDocumentName, newDocumentName);
-            this.manager.Process(docNameManager);
+            ProcessFiles(docNameManager);
         }
 
         private void InspectFilesText()
         {
             var actionManager = new TextActionManager(currentFileText);
-            this.manager.Process(actionManager);
+            InspectFiles(actionManager);
         }
 
         private void ProcessFilesText()
         {
             var actionManager = new TextActionManager(currentFileText, newFileText);
-            this.manager.Process(actionManager);
+            ProcessFiles(actionManager);
 
 
         }
@@ -193,37 +194,31 @@ namespace QmsHero.ViewModel
         private void InspectFilesRevision()
         {
             var actionManager = new DocRevisionActionManager(currentFileRevision);
-            this.manager.Process(actionManager);
+            InspectFiles(actionManager);
             
         }
 
         private void ProcessFilesRevision()
         {
             var actionManager = new DocRevisionActionManager(currentFileRevision, newFileRevision);
-            this.manager.Process(actionManager);
+            ProcessFiles(actionManager);
 
         }
 
         private void InspectFilesNumber()
         {
             var actionManager = new DocNumberActionManager(currentFileNumber);
-            this.manager.Process(actionManager);
+            InspectFiles(actionManager);
 
         }
 
         private void ProcessFilesNumber()
         {
             var actionManager = new DocNumberActionManager(currentFileNumber, newFileNumber);
-            this.manager.Process(actionManager);
+            ProcessFiles(actionManager);
 
         }
 
-        private void ShareResults(DocCollection docCollection)
-        {
-            int errorCount = docCollection.Where(doc => doc.PropertyResultCollection.Any(result => result.IsSuccess == false)).Count();
-            resultsViewModel.DocCollection = docCollection;
-            MessageBox.Show($"Finished Processing the files. {docCollection.Count} files were processed and {errorCount} files had errors.");
-        }
 
         private bool ProcessingDirIsValid()
         {
@@ -248,5 +243,6 @@ namespace QmsHero.ViewModel
             var result2 = ReferenceDirIsValid();
             return result1 && result2;
         }
+
     }
 }
