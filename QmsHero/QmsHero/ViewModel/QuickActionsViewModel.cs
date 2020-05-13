@@ -172,55 +172,50 @@ namespace QmsHero.ViewModel
         
         private void ProcessFilesName()
         {
-            ConfigManagerDir();
             var docNameManager = new DocNameActionManager(currentDocumentName, newDocumentName);
-            ShareResults(this.manager.Process(docNameManager));
+            this.manager.Process(docNameManager);
         }
 
         private void InspectFilesText()
         {
-            ConfigManagerDir();
-            var docNameManager = new TextActionManager(currentFileText);
-            ShareResults(this.manager.Process(docNameManager));
+            var actionManager = new TextActionManager(currentFileText);
+            this.manager.Process(actionManager);
         }
 
         private void ProcessFilesText()
         {
-            ConfigManagerDir();
-            var docNameManager = new TextActionManager(currentFileText, newFileText);
-            ShareResults(this.manager.Process(docNameManager));
+            var actionManager = new TextActionManager(currentFileText, newFileText);
+            this.manager.Process(actionManager);
+
+
         }
 
         private void InspectFilesRevision()
         {
-            ConfigManagerDir();
-            var docNameManager = new DocRevisionActionManager(currentFileRevision);
-            ShareResults(this.manager.Process(docNameManager));
+            var actionManager = new DocRevisionActionManager(currentFileRevision);
+            this.manager.Process(actionManager);
+            
         }
 
         private void ProcessFilesRevision()
         {
-            ConfigManagerDir();
-            var docNameManager = new DocRevisionActionManager(currentFileRevision, newFileRevision);
-            ShareResults(this.manager.Process(docNameManager));
+            var actionManager = new DocRevisionActionManager(currentFileRevision, newFileRevision);
+            this.manager.Process(actionManager);
+
         }
 
         private void InspectFilesNumber()
         {
-            ConfigManagerDir();
-            var docNameManager = new DocNumberActionManager(currentFileNumber);
-            ShareResults(this.manager.Process(docNameManager));
+            var actionManager = new DocNumberActionManager(currentFileNumber);
+            this.manager.Process(actionManager);
+
         }
-
-        
-
-        
 
         private void ProcessFilesNumber()
         {
-            ConfigManagerDir();
-            var docNameManager = new DocNumberActionManager(currentFileNumber, newFileNumber);
-            ShareResults(this.manager.Process(docNameManager));
+            var actionManager = new DocNumberActionManager(currentFileNumber, newFileNumber);
+            this.manager.Process(actionManager);
+
         }
 
         private void ShareResults(DocCollection docCollection)
