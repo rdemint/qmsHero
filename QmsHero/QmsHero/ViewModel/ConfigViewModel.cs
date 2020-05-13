@@ -88,7 +88,11 @@ namespace QmsHero.ViewModel
                     );
                 if(resultEnum == MessageDialogResult.Affirmative)
                 {
-                    manager.FileManager.CreateProcessingDirThatDoesNotExist();
+                    var updatedResult = manager.FileManager.CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
+                    if(updatedResult.IsSuccess)
+                    {
+                        this.processingFilesCount = updatedResult.Value;
+                    }
                 }
 
             }
@@ -96,7 +100,7 @@ namespace QmsHero.ViewModel
             else
             {
                 await this.dialogService.ShowMessageAsync(
-                    $"Error in setting the Reference Directory to {newDirPath}", $"{countResult.Errors.ToString()}");
+                    $"Error in setting the Processing Directory to {newDirPath}", $"{countResult.Errors.ToString()}");
             }
         }
 

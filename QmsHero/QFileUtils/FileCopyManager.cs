@@ -55,7 +55,7 @@ namespace QFileUtil
             {
                 processingFiles = new List<FileInfo>();
                 return Results.Fail(new Error($"The directory at {processingDir.FullName} does not exist.")
-                    .CausedBy(new DirectoryNotFoundException()));
+                    .CausedBy(new DirectoryDoesNotExistResultError()));
             }
 
             if (
@@ -112,16 +112,16 @@ namespace QFileUtil
             return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
         }
 
-        public bool CreateProcessingDirThatDoesNotExist()
+        public Result<int> CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount()
         {
             if(!processingDir.Exists)
             {
                 processingDir.Create();
-                return true;
+                return UpdateProcessingDirFilesIfNecessaryAndGetResultCount();
             }
             else
             {
-                return false;
+                return Results.Ok<int>(processingFiles.Count);
             }
         }
         
