@@ -27,14 +27,14 @@
             <Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Content="Files: "/>
             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{Binding Path=ReferenceFilesCount}"/>
         </Grid>
-        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath}"/>
+        <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath, Mode=TwoWay}"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label VerticalAlignment="Center" Grid.Column="0" Content="Files: "/>
-            <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding Path=ProcessingFilesCount}"/>
+            <TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding Path=ProcessingFilesCount, Mode=TwoWay}"/>
         </Grid>
     </StackPanel>    
 </UserControl>

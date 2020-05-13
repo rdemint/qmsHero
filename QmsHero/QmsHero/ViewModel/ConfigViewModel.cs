@@ -58,7 +58,7 @@ namespace QmsHero.ViewModel
                     else
                     {
                         this.dialogService.ShowMessageAsync(
-                            $"Error in setting the Reference Directory to {value}", $"{countResult.Errors.ToString()}");
+                            $"Could not set the Reference Directory to {value}", $"{countResult.Errors.ToString()}.  It likely does not exist.");
                     }
                 }
                 
@@ -81,6 +81,7 @@ namespace QmsHero.ViewModel
                     }
                     else
                     {
+                        this.ProcessingFilesCount = 0;
                         EvaluateDirErrorsResult(countResult, value);
                     }
                 }
@@ -103,7 +104,7 @@ namespace QmsHero.ViewModel
                     var updatedResult = manager.FileManager.CreateProcessingDirIfDoesNotExistAndUpdateWithReferenceFilesAndNewFileCount();
                     if(updatedResult.IsSuccess)
                     {
-                        this.processingFilesCount = updatedResult.Value;
+                        this.ProcessingFilesCount = updatedResult.Value;
                     }
                 }
 
