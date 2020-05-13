@@ -25,7 +25,7 @@ namespace QmsDocXml
     {
         Regex regex;
 
-        private TextFindReplace() : base()
+        public TextFindReplace() : base()
         {
         }
 

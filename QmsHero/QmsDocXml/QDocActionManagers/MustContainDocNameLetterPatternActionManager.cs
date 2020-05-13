@@ -42,7 +42,9 @@ namespace QmsDocXml.QDocActionManagers
                     using(WordprocessingDocument wdoc = WordprocessingDocument.Open(doc.FileInfo.FullName, false))
                     {
                         matches = TextXml.Search(wdoc, doc.DocConfig.FileFormNumberAndFirstThreeLettersNameRegex);
+                        return EvaluateMatches(matches, col);  
                     }
+                    
 
                 }
 
@@ -52,16 +54,41 @@ namespace QmsDocXml.QDocActionManagers
                     using (WordprocessingDocument wdoc = WordprocessingDocument.Open(doc.FileInfo.FullName, false))
                     {
                         matches = TextXml.Search(wdoc, doc.DocConfig.FileSopNumberAndFirstThreeLettersRegex);
+                        return EvaluateMatches(matches, col);
                     }
                 }
 
                 else
                 {
                     col.Add(Results.Fail(new Error(
-                        $"Did not match the input pattern {(string)currentState} to {(string)sopRx} or {(string)formRx}.")))
+                        $"Did not match the input pattern {(string)currentState} to {sopRx.ToString()} or {formRx.ToString()}."
+                        )));
                 }
 
             }
+            return col;
+        }
+
+        private QDocPropertyResultCollection EvaluateMatches(MatchCollection matches, QDocPropertyResultCollection col)
+        {
+            int count = 0;
+            foreach (var match in matches)
+            {
+                if (match.ToString() != (string)currentState)
+                {
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                col.Add(Results.Fail(new Error($"Procedure Number Name patterns not matching {currentState.ToString()} were found {count} times in the document. There is likely a misnamed procedured")));
+            }
+
+            else
+            {
+                col.Add(Results.Ok<QDocProperty>(new TextFindReplace()));
+            }
+
             return col;
         }
     }
