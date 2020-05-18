@@ -15,6 +15,7 @@ using System.IO;
 using QFileUtil.Exceptions;
 using FluentResults;
 using MahApps.Metro.Controls.Dialogs;
+using GalaSoft.MvvmLight.Command;
 
 namespace QmsHero.ViewModel
 {
@@ -27,16 +28,14 @@ namespace QmsHero.ViewModel
         DocManager manager;
         string viewDisplayName;
         IAsyncDialogService dialogService;
+        RelayCommand updateDirsCommand;
 
         public ConfigViewModel(IAsyncDialogService asyncDialogService)
         {
             dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
             this.viewDisplayName = "Configure Project Directories";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
-            this.manager.FileManager.SetReferenceDir("C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS");
-            this.manager.FileManager.SetProcessingDir("C:\\Users\\raine\\Desktop\\qmsProcessing\\Dot Cup\\QMS_Processing1");
-            ReferenceDirPath = manager.FileManager.ReferenceDir.FullName;
-            ProcessingDirPath = manager.FileManager.ProcessingDir.FullName;
+
             //this.dialogService = asyncDialogService;
         }
 
@@ -102,6 +101,8 @@ namespace QmsHero.ViewModel
         }
 
 
+
+
         private  async void EvaluateDirErrorsResult(Result<int> countResult, string newDirPath)
         {
             if (countResult.HasError<DirectoryDoesNotExistResultError>())
@@ -138,7 +139,7 @@ namespace QmsHero.ViewModel
             get => referenceFilesCount;
             set { Set<int>(() => ReferenceFilesCount, ref referenceFilesCount, value); } }
 
-        
+        public RelayCommand UpdateDirsCommand1 { get => updateDirsCommand; set => updateDirsCommand = value; }
 
         public bool ProcessingDirIsValid()
         {

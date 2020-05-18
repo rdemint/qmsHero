@@ -25,9 +25,9 @@ namespace QmsHero.ViewModel
 
             //TestData
             this.DocumentPropertyPropertyGroup.DocumentPropertyCompany.State = "Lean RAQA Systems";
-            this.DocumentPropertyPropertyGroup.DocumentPropertyCreator.State = "Michelle Lott";
+            this.DocumentPropertyPropertyGroup.DocumentPropertyCreator.State = "Lean RAQA Systems";
             this.DocumentPropertyPropertyGroup.DocumentPropertyLastModifiedBy.State = "Lean RAQA Systems";
-            this.DocumentPropertyPropertyGroup.DocumentPropertyManager.State = "Michelle Lott";
+            this.DocumentPropertyPropertyGroup.DocumentPropertyManager.State = "Lean RAQA Systems";
 
             //TestData
         }
