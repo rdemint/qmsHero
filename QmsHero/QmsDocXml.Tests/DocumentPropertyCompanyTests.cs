@@ -44,7 +44,7 @@ namespace QmsDocXml
             Assert.IsFalse(resultDocCollection.HasErrors());
             foreach (var doc in resultDocCollection)
             {
-                Assert.IsFalse(doc.HasPropertyProcessingErrors());
+                Assert.IsFalse(doc.UpdatePropertyProcessingErrors());
             }
             foreach (var docFileInfo in manager.FileManager.ProcessingFiles)
             {

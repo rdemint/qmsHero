@@ -15,17 +15,27 @@ namespace QDoc.Docs
         FileInfo fileInfo;
         IDocConfig docConfig;
         QDocPropertyResultCollection propertyResultCollection;
+        bool hasProcessingErrors;
+        bool? isModified;
+        QFileChangeInspector fileChangeInspector;
 
         public Doc()
         {
             propertyResultCollection = new QDocPropertyResultCollection();
         }
 
+        
+
         public Doc(System.IO.FileInfo fileInfo): this()
         {
             this.FileInfo = fileInfo;
             this.DocConfig = new DocConfig();
         }
+
+        //public Doc(System.IO.FileInfo fileInfo, QFileChangeInspector fileChangeInspector) : this(fileInfo)
+        //{
+        //    this.fileChangeInspector = fileChangeInspector;
+        //}
 
         public Doc(FileInfo fileInfo, IDocConfig docConfig): this()
         {
@@ -46,7 +56,10 @@ namespace QDoc.Docs
                 propertyResultCollection = value;
             }
         }
-        
+
+        public bool? IsModified { get => isModified; set => isModified = value; }
+        public bool? HasProcessingErrors { get => hasProcessingErrors; }
+
         #endregion
 
         public virtual QDocPropertyResultCollection Process(QDocPropertyCollection docState)
@@ -82,9 +95,10 @@ namespace QDoc.Docs
             return actionManager.Inspect(this);
         }
 
-        public bool HasPropertyProcessingErrors()
+        public bool UpdatePropertyProcessingErrors()
         {
-            return propertyResultCollection.Any(prop => prop.IsFailed);
+            this.hasProcessingErrors = propertyResultCollection.Any(prop => prop.IsFailed);
+            return hasProcessingErrors;
         }
         
 
