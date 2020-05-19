@@ -25,6 +25,7 @@ namespace QmsHero.ViewModel
         string processingDirPath;
         int processingFilesCount;
         int referenceFilesCount;
+        bool dirsHaveChanged;
         DocManager manager;
         string viewDisplayName;
         IAsyncDialogService dialogService;
@@ -33,10 +34,40 @@ namespace QmsHero.ViewModel
         public ConfigViewModel(IAsyncDialogService asyncDialogService)
         {
             dialogService = SimpleIoc.Default.GetInstance<IAsyncDialogService>();
-            this.viewDisplayName = "Configure Project Directories";
             this.manager = SimpleIoc.Default.GetInstance<DocManager>();
+            this.viewDisplayName = "Configure Project Directories";
+            updateDirsCommand = new RelayCommand(() => UpdateDirs(), ()=> CanUpdateDirs());
 
-            //this.dialogService = asyncDialogService;
+            //TestData
+            ReferenceDirPath = @"C:\Users\raine\Desktop\qmsProcessing\Dot Cup\QMS";
+            ProcessingDirPath = @"C:\Users\raine\Desktop\qmsProcessing\Dot Cup\Processing";
+        }
+
+        private bool CanUpdateDirs()
+        {
+            return dirsHaveChanged;
+        }
+
+        private void UpdateDirs()
+        {
+            var referenceCountResult = manager.FileManager.SetReferenceDir(referenceDirPath);
+            if (referenceCountResult.IsFailed)
+            {
+                this.ReferenceFilesCount = 0;
+                EvaluateDirErrorsResult(referenceCountResult, referenceDirPath);
+                //this.dialogService.ShowMessageAsync(
+                //    $"Could not set the Reference Directory to {referenceDirPath}", $"{countResult.Errors.ToString()}.  It likely does not exist.");
+            }
+            
+            var processingCountResult = manager.FileManager.SetProcessingDir(processingDirPath);
+            if (processingCountResult.IsFailed)
+            {
+                this.ProcessingFilesCount = 0;
+                EvaluateDirErrorsResult(processingCountResult, processingDirPath);
+
+            }
+            dirsHaveChanged = false;
+            UpdateDirsCommand.RaiseCanExecuteChanged();
         }
 
         public string ReferenceDirPath
@@ -46,28 +77,26 @@ namespace QmsHero.ViewModel
             {
                if(referenceDirPath!=value)
                 {
-                    var countResult = manager.FileManager.SetReferenceDir(value);
-                    if (countResult.IsSuccess)
+                Set<string>(
+                    () => ReferenceDirPath, ref referenceDirPath, value
+                    );
+                    var newDir = new DirectoryInfo(value);
+                    if(newDir.Exists)
                     {
-                        this.ReferenceFilesCount = countResult.Value;
-                        Set<string>(
-                        () => ReferenceDirPath, ref referenceDirPath, value
-                        );
-                        var newDir = new DirectoryInfo(value);
-                        if(newDir.Exists)
-                        {
-                            ReferenceFilesCount = newDir.GetFiles("*", SearchOption.AllDirectories).Count();
-                        }
+                        ReferenceFilesCount = newDir.GetFiles("*", SearchOption.AllDirectories).Count();
                     }
-                    else
+
+                        else
                     {
-                        this.dialogService.ShowMessageAsync(
-                            $"Could not set the Reference Directory to {value}", $"{countResult.Errors.ToString()}.  It likely does not exist.");
+                        ReferenceFilesCount = 0;
                     }
+                    dirsHaveChanged = true;
+                    UpdateDirsCommand.RaiseCanExecuteChanged();
                 }
-                
             }
+                
         }
+
         public string ProcessingDirPath
         {
             get => processingDirPath;
@@ -75,11 +104,7 @@ namespace QmsHero.ViewModel
             {
                 if(processingDirPath != value)
                 {
-                    var countResult = manager.FileManager.SetProcessingDir(value);
-                    if (countResult.IsSuccess)
-                    {
-                        this.ProcessingFilesCount = countResult.Value;
-                        Set<string>(
+                     Set<string>(
                         () => ProcessingDirPath, ref processingDirPath, value
                         );
                         var newDir = new DirectoryInfo(value);
@@ -88,19 +113,17 @@ namespace QmsHero.ViewModel
                             ProcessingFilesCount = newDir.GetFiles("*", SearchOption.AllDirectories).Count();
                         }
 
-                    }
-                    else
-                    {
-                        this.ProcessingFilesCount = 0;
-                        EvaluateDirErrorsResult(countResult, value);
-                    }
+                        else
+                        {
+                            this.ProcessingFilesCount = 0;
+                        }
+                    dirsHaveChanged = true;
+                    UpdateDirsCommand.RaiseCanExecuteChanged();
+
                 }
-                
             }
 
         }
-
-
 
 
         private  async void EvaluateDirErrorsResult(Result<int> countResult, string newDirPath)
@@ -139,7 +162,7 @@ namespace QmsHero.ViewModel
             get => referenceFilesCount;
             set { Set<int>(() => ReferenceFilesCount, ref referenceFilesCount, value); } }
 
-        public RelayCommand UpdateDirsCommand1 { get => updateDirsCommand; set => updateDirsCommand = value; }
+        public RelayCommand UpdateDirsCommand { get => updateDirsCommand; set => updateDirsCommand = value; }
 
         public bool ProcessingDirIsValid()
         {

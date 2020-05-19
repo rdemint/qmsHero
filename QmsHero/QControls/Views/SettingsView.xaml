@@ -25,7 +25,11 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Content="Files: "/>
-            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Text="{Binding Path=ReferenceFilesCount}"/>
+            <TextBlock 
+                VerticalAlignment="Center" 
+                Grid.Row="0" 
+                Grid.Column="1" 
+                Text="{Binding Path=ReferenceFilesCount}"/>
         </Grid>
         <controls:QFolderPicker QDisplay="Output Directory" QOutput="{Binding Path=ProcessingDirPath, Mode=TwoWay}"/>
         <Grid>
@@ -33,15 +37,22 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Files: " Margin="0,2.14" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
-            <TextBlock Grid.Column="1" Text="{Binding Path=ProcessingFilesCount, Mode=TwoWay}" HorizontalAlignment="Left" Margin="0,7.14" Width="0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
-            <Button 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Content="Files: "/>
+            <TextBlock
+                VerticalAlignment="Center"
+                Grid.Row ="0" 
+                Grid.Column="1" 
+                Text="{Binding Path=ProcessingFilesCount, Mode=TwoWay}"/>
+            
+        </Grid>
+        <Button 
                 Command="{Binding Path=UpdateDirsCommand}"
                 x:Name="button" 
-                Content="Update" 
-                Grid.Column="1" 
+                Content="Copy Files" 
                 HorizontalAlignment="Left" 
-                Margin="15,31,-566.5,0" Width="75" d:LayoutOverrides="Height"/>
-        </Grid>
+                Margin="50,81,-73.8,-49.6" Width="75" Grid.ColumnSpan="2"/>
     </StackPanel>
 </UserControl>
